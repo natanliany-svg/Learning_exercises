@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>כרטיסיות למידה — Python &amp; FastAPI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --card: #131a2b;
+            --card-hover: #1a2540;
+            --border: #1e2d4a;
+            --text: #e2e8f0;
+            --text-dim: #64748b;
+            --blue: #3b82f6;
+            --green: #22c55e;
+            --orange: #f59e0b;
+            --red: #ef4444;
+            --purple: #a855f7;
+            --cyan: #06b6d4;
+            --pink: #ec4899;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+        }
+
+        /* ===== TOP NAV ===== */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 12px 16px;
+        }
+
+        .top-nav h1 {
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        .top-nav .subtitle {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        /* ===== MODE TABS ===== */
+        .mode-tabs {
+            display: flex;
+            gap: 0;
+            padding: 12px 16px 0;
+            position: sticky;
+            top: 54px;
+            z-index: 99;
+            background: var(--bg);
+        }
+
+        .mode-tab {
+            flex: 1;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dim);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .mode-tab.active {
+            color: var(--blue);
+            border-bottom-color: var(--blue);
+        }
+
+        /* ===== CONTENT AREAS ===== */
+        .tab-content { display: none; padding: 16px; }
+        .tab-content.active { display: block; }
+
+        /* ===== FLASHCARD MODE ===== */
+        .flashcard-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 8px;
+        }
+
+        .fc-progress {
+            font-size: 13px;
+            color: var(--text-dim);
+            margin-bottom: 12px;
+        }
+
+        .fc-card {
+            width: 100%;
+            max-width: 400px;
+            min-height: 240px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .fc-card.flipped {
+            background: var(--card-hover);
+            border-color: var(--blue);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .fc-label {
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-dim);
+            background: rgba(255,255,255,0.05);
+            padding: 2px 10px;
+            border-radius: 10px;
+        }
+
+        .fc-category {
+            position: absolute;
+            top: 14px;
+            left: 16px;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .fc-category.dict { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
+        .fc-category.list { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+        .fc-category.func { background: rgba(168, 85, 247, 0.15); color: var(--purple); }
+        .fc-category.general { background: rgba(245, 158, 11, 0.15); color: var(--orange); }
+
+        .fc-question {
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .fc-hint {
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        .fc-answer {
+            display: none;
+        }
+
+        .fc-card.flipped .fc-question,
+        .fc-card.flipped .fc-hint { display: none; }
+        .fc-card.flipped .fc-answer { display: block; }
+
+        .fc-answer .answer-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .fc-answer code {
+            direction: ltr;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--green);
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .fc-answer .code-block {
+            direction: ltr;
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: rgba(0,0,0,0.3);
+            color: var(--green);
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin: 10px 0;
+            line-height: 1.7;
+            overflow-x: auto;
+        }
+
+        .fc-nav {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .fc-nav button {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 600;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .fc-nav button:active { transform: scale(0.96); }
+        .fc-nav button.know { border-color: rgba(34, 197, 94, 0.3); }
+        .fc-nav button.know:active { background: rgba(34, 197, 94, 0.15); }
+        .fc-nav button.dont-know { border-color: rgba(239, 68, 68, 0.3); }
+        .fc-nav button.dont-know:active { background: rgba(239, 68, 68, 0.15); }
+
+        .fc-shuffle {
+            margin-top: 16px;
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 13px;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+        }
+
+        /* ===== QUIZ MODE ===== */
+        .quiz-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .quiz-q {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            line-height: 1.7;
+        }
+
+        .quiz-q code {
+            direction: ltr;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--cyan);
+            padding: 1px 6px;
+            border-radius: 4px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .quiz-opt {
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            font-size: 14px;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+            text-align: right;
+            transition: all 0.2s;
+            line-height: 1.5;
+        }
+
+        .quiz-opt:active { transform: scale(0.98); }
+
+        .quiz-opt.correct {
+            border-color: var(--green);
+            background: rgba(34, 197, 94, 0.12);
+            color: var(--green);
+        }
+
+        .quiz-opt.wrong {
+            border-color: var(--red);
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--red);
+        }
+
+        .quiz-opt.disabled { pointer-events: none; }
+
+        .quiz-explain {
+            display: none;
+            margin-top: 12px;
+            padding: 12px 16px;
+            background: rgba(59, 130, 246, 0.06);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--blue);
+        }
+
+        .quiz-explain.show { display: block; }
+
+        .quiz-score {
+            text-align: center;
+            padding: 20px;
+            font-size: 15px;
+            color: var(--text-dim);
+        }
+
+        .quiz-score .score-num {
+            font-size: 48px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ===== CHEATSHEET MODE ===== */
+        .cheat-section {
+            margin-bottom: 20px;
+        }
+
+        .cheat-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cheat-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            align-items: flex-start;
+        }
+
+        .cheat-cmd {
+            direction: ltr;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            color: var(--green);
+            background: rgba(34, 197, 94, 0.08);
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 100px;
+            text-align: left;
+        }
+
+        .cheat-desc {
+            font-size: 14px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        /* ===== SCORE BAR ===== */
+        .score-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 23, 0.92);
+            backdrop-filter: blur(16px);
+            border-top: 1px solid var(--border);
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-item .num {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .score-item .num.green { color: var(--green); }
+        .score-item .num.red { color: var(--red); }
+        .score-item .num.blue { color: var(--blue); }
+
+        .score-item .lbl {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        body { padding-bottom: 70px; }
+
+        /* Swipe hint animation */
+        @keyframes tapHint {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .tap-hint { animation: tapHint 2s infinite; font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+    </style>
+</head>
+<body>
+
+<nav class="top-nav">
+    <h1>📱 כרטיסיות למידה — Python</h1>
+    <div class="subtitle">שיעור 1: מילונים, רשימות, פונקציות</div>
+</nav>
+
+<div class="mode-tabs">
+    <button class="mode-tab active" onclick="switchTab('flashcards')">🃏 כרטיסיות</button>
+    <button class="mode-tab" onclick="switchTab('quiz')">❓ חידון</button>
+    <button class="mode-tab" onclick="switchTab('cheatsheet')">📋 שליפה</button>
+</div>
+
+<!-- ===== FLASHCARDS TAB ===== -->
+<div class="tab-content active" id="tab-flashcards">
+    <div class="flashcard-container">
+        <div class="fc-progress" id="fcProgress">1 / 15</div>
+        <div class="fc-card" id="fcCard" onclick="flipCard()">
+            <span class="fc-label" id="fcLabel">לחץ לתשובה</span>
+            <span class="fc-category" id="fcCat"></span>
+            <div class="fc-question" id="fcQuestion"></div>
+            <div class="fc-hint" id="fcHint"></div>
+            <div class="fc-answer" id="fcAnswer"></div>
+        </div>
+        <div class="tap-hint">👆 לחץ על הכרטיסיה לחשוף את התשובה</div>
+        <div class="fc-nav">
+            <button class="know" onclick="nextCard(true)">✅ ידעתי</button>
+            <button class="dont-know" onclick="nextCard(false)">❌ לא ידעתי</button>
+        </div>
+        <button class="fc-shuffle" onclick="shuffleCards()">🔀 ערבב כרטיסיות</button>
+    </div>
+</div>
+
+<!-- ===== QUIZ TAB ===== -->
+<div class="tab-content" id="tab-quiz">
+    <div id="quizContainer"></div>
+    <div class="quiz-score" id="quizScore" style="display:none">
+        <div class="score-num" id="quizScoreNum"></div>
+        <div>תשובות נכונות</div>
+        <button style="margin-top:16px; padding:12px 32px; border-radius:10px; border:1px solid var(--blue); background:rgba(59,130,246,0.1); color:var(--blue); font-size:15px; font-family:'Heebo'; cursor:pointer;" onclick="resetQuiz()">🔄 התחל מחדש</button>
+    </div>
+</div>
+
+<!-- ===== CHEATSHEET TAB ===== -->
+<div class="tab-content" id="tab-cheatsheet">
+
+    <div class="cheat-section">
+        <div class="cheat-title">📦 מילונים (Dictionaries)</div>
+        <div class="cheat-item"><span class="cheat-cmd">d[key]</span><span class="cheat-desc">גישה ישירה — קורס אם המפתח לא קיים</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">d.get(key)</span><span class="cheat-desc">גישה בטוחה — מחזיר None אם לא קיים</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">d.get(k, def)</span><span class="cheat-desc">גישה בטוחה עם ערך ברירת מחדל</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">d[key] = val</span><span class="cheat-desc">הוספה (אם חדש) או עדכון (אם קיים)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">del d[key]</span><span class="cheat-desc">מחיקה לגמרי מהמילון</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">d.pop(key)</span><span class="cheat-desc">מוחק ומחזיר את הערך</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">key in d</span><span class="cheat-desc">בודק אם מפתח קיים (True/False)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">d.keys()</span><span class="cheat-desc">כל המפתחות</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">d.values()</span><span class="cheat-desc">כל הערכים</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">d.items()</span><span class="cheat-desc">זוגות מפתח+ערך (ללולאה)</span></div>
+    </div>
+
+    <div class="cheat-section">
+        <div class="cheat-title">📋 רשימות (Lists)</div>
+        <div class="cheat-item"><span class="cheat-cmd">lst[0]</span><span class="cheat-desc">גישה לאיבר ראשון (אינדקס מתחיל מ-0)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">lst.append(x)</span><span class="cheat-desc">מוסיף איבר לסוף הרשימה</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">lst.remove(x)</span><span class="cheat-desc">מוחק איבר ספציפי</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">len(lst)</span><span class="cheat-desc">אורך הרשימה (כמה איברים)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">[x for x in lst if ...]</span><span class="cheat-desc">סינון בשורה אחת (List Comprehension)</span></div>
+    </div>
+
+    <div class="cheat-section">
+        <div class="cheat-title">🔧 פונקציות</div>
+        <div class="cheat-item"><span class="cheat-cmd">def name():</span><span class="cheat-desc">הגדרת פונקציה חדשה</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">return val</span><span class="cheat-desc">החזרת ערך (בלי זה = None)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">def f(a="x"):</span><span class="cheat-desc">פרמטר עם ערך ברירת מחדל</span></div>
+    </div>
+</div>
+
+<!-- ===== SCORE BAR ===== -->
+<div class="score-bar" id="scoreBar">
+    <div class="score-item"><span class="num green" id="knownCount">0</span><div class="lbl">ידעתי</div></div>
+    <div class="score-item"><span class="num red" id="unknownCount">0</span><div class="lbl">לא ידעתי</div></div>
+    <div class="score-item"><span class="num blue" id="remainCount">15</span><div class="lbl">נשאר</div></div>
+</div>
+
+<script>
+// ===== FLASHCARD DATA =====
+const allCards = [
+    { cat: "dict", q: "איך יוצרים מילון ריק?", hint: "סוגריים מסולסלים...", a: '<div class="code-block">d = {}</div>' },
+    { cat: "dict", q: "איך ניגשים לערך בצורה ישירה?", hint: "סוגריים מרובעים", a: '<div class="code-block">weapon["model"]</div><div class="answer-text">⚠️ אם המפתח לא קיים — KeyError!</div>' },
+    { cat: "dict", q: "איך ניגשים לערך בצורה בטוחה?", hint: "פונקציה מובנית של מילון", a: '<div class="code-block">weapon.get("model")\nweapon.get("color", "N/A")</div><div class="answer-text">אם לא קיים — מחזיר None או ערך ברירת מחדל</div>' },
+    { cat: "dict", q: "איך מוסיפים או מעדכנים ערך?", hint: "אותה פקודה לשניהם", a: '<div class="code-block">d["key"] = "value"</div><div class="answer-text">אם המפתח קיים = עדכון. אם חדש = הוספה</div>' },
+    { cat: "dict", q: "מה ההבדל בין del ל-pop?", hint: "אחד מהם מחזיר ערך...", a: '<div class="code-block">del d["key"]     # מוחק ושולח לפח\nval = d.pop("key")  # מוחק ושומר</div><div class="answer-text">pop מחזיר את הערך שנמחק, del לא</div>' },
+    { cat: "dict", q: 'מה מחזיר "rifle" in weapon?', hint: "in בודק מפתחות או ערכים?", a: '<div class="answer-text"><strong>False!</strong> כי <code>in</code> בודק רק <strong>מפתחות</strong>, לא ערכים. "rifle" הוא ערך, לא מפתח.</div>' },
+    { cat: "dict", q: "איך עוברים על זוגות מפתח-ערך בלולאה?", hint: "הפקודה הכי חשובה!", a: '<div class="code-block">for key, value in d.items():\n    print(key, value)</div>' },
+    { cat: "dict", q: "מה ההבדל בין keys, values ו-items?", hint: "שלוש דרכים לעבור על מילון", a: '<div class="answer-text"><code>keys()</code> — רק מפתחות<br><code>values()</code> — רק ערכים<br><code>items()</code> — זוגות של שניהם</div>' },
+    { cat: "list", q: "איך מוסיפים איבר לסוף רשימה?", hint: "פקודה של רשימה", a: '<div class="code-block">lst.append({"id": 4})</div>' },
+    { cat: "list", q: "מה האינדקס של האיבר הראשון ברשימה?", hint: "לא 1...", a: '<div class="answer-text"><strong>0</strong> (אפס). אינדקסים בפייתון תמיד מתחילים מ-0!</div><div class="code-block">weapons[0]  # האיבר הראשון</div>' },
+    { cat: "list", q: "כתוב List Comprehension שמסנן רק נשקים חדשים", hint: "[... for ... in ... if ...]", a: '<div class="code-block">[w for w in weapons\n if w["condition"] == "new"]</div>' },
+    { cat: "list", q: "איך סופרים כמה איברים יש ברשימה?", hint: "פונקציה מובנית של פייתון", a: '<div class="code-block">len(weapons)  # מספר האיברים</div>' },
+    { cat: "func", q: "מה קורה אם שוכחים return בפונקציה?", hint: "ערך מיוחד...", a: '<div class="answer-text">הפונקציה מחזירה <strong>None</strong> (כלום). ב-FastAPI, הלקוח יקבל null!</div>' },
+    { cat: "func", q: "מה ההבדל בין parameter ל-argument?", hint: "הגדרה מול שימוש", a: '<div class="answer-text"><strong>Parameter</strong> = שם המשתנה בהגדרת הפונקציה<br><strong>Argument</strong> = הערך שמעבירים בזמן הקריאה</div><div class="code-block">def greet(name):  # name = parameter\ngreet("Natan")    # "Natan" = argument</div>' },
+    { cat: "func", q: "מה הקשר בין return לבין FastAPI?", hint: "מה הלקוח מקבל?", a: '<div class="answer-text">מה שהפונקציה מחזירה עם <code>return</code> — זה בדיוק מה ש<strong>הלקוח של ה-API</strong> מקבל כתשובה (JSON)!</div>' }
+];
+
+let cards = [...allCards];
+let currentIdx = 0;
+let known = 0, unknown = 0;
+
+function showCard() {
+    const card = cards[currentIdx];
+    const el = document.getElementById('fcCard');
+    el.classList.remove('flipped');
+    document.getElementById('fcProgress').textContent = `${currentIdx + 1} / ${cards.length}`;
+    document.getElementById('fcQuestion').textContent = card.q;
+    document.getElementById('fcHint').textContent = card.hint;
+    document.getElementById('fcAnswer').innerHTML = card.a;
+    document.getElementById('fcLabel').textContent = 'לחץ לתשובה';
+    const catEl = document.getElementById('fcCat');
+    catEl.className = 'fc-category ' + card.cat;
+    catEl.textContent = card.cat === 'dict' ? 'מילון' : card.cat === 'list' ? 'רשימה' : 'פונקציה';
+    updateScores();
+}
+
+function flipCard() {
+    const el = document.getElementById('fcCard');
+    el.classList.toggle('flipped');
+    document.getElementById('fcLabel').textContent = el.classList.contains('flipped') ? 'תשובה' : 'לחץ לתשובה';
+}
+
+function nextCard(didKnow) {
+    if (didKnow) known++; else unknown++;
+    currentIdx++;
+    if (currentIdx >= cards.length) {
+        currentIdx = 0;
+        cards = cards.filter((_, i) => true); // keep going
+    }
+    showCard();
+}
+
+function shuffleCards() {
+    for (let i = cards.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [cards[i], cards[j]] = [cards[j], cards[i]];
+    }
+    currentIdx = 0;
+    known = 0; unknown = 0;
+    showCard();
+}
+
+function updateScores() {
+    document.getElementById('knownCount').textContent = known;
+    document.getElementById('unknownCount').textContent = unknown;
+    document.getElementById('remainCount').textContent = Math.max(0, cards.length - currentIdx);
+}
+
+// ===== QUIZ DATA =====
+const quizData = [
+    { q: 'מה יקרה אם נכתוב <code>weapon["color"]</code> והמפתח לא קיים?', opts: ['יוחזר None', 'יוחזר 0', 'תיזרק שגיאת KeyError', 'יוחזר False'], correct: 2, explain: 'גישה ישירה עם סוגריים מרובעים זורקת KeyError אם המפתח לא קיים. לכן עדיף .get()' },
+    { q: 'מה מדפיס <code>weapon.get("color", "N/A")</code>?', opts: ['None', 'N/A', 'color', 'שגיאה'], correct: 1, explain: '"color" לא קיים במילון, אז .get() מחזיר את ערך ברירת המחדל "N/A"' },
+    { q: '<code>in</code> בודק:', opts: ['גם מפתחות וגם ערכים', 'רק ערכים', 'רק מפתחות', 'רק סוגי נתונים'], correct: 2, explain: 'in בודק רק מפתחות! כדי לבדוק ערכים צריך: value in d.values()' },
+    { q: 'מה האינדקס של האיבר הראשון ברשימה?', opts: ['1', '0', '-1', 'first'], correct: 1, explain: 'אינדקסים בפייתון תמיד מתחילים מ-0! lst[0] = האיבר הראשון.' },
+    { q: 'מה מחזירה פונקציה בלי <code>return</code>?', opts: ['0', 'False', 'None', 'שגיאה'], correct: 2, explain: 'כל פונקציה בפייתון שלא כותבים בה return מחזירה None באופן אוטומטי.' },
+    { q: 'מה ההבדל בין <code>del d["x"]</code> ל-<code>d.pop("x")</code>?', opts: ['אין הבדל', 'del מהיר יותר', 'pop מחזיר את הערך שנמחק', 'pop לא מוחק באמת'], correct: 2, explain: 'pop מוחק את המפתח ומחזיר את הערך, כדי שנוכל להשתמש בו. del פשוט מוחק.' },
+    { q: 'איזו פקודה מוסיפה איבר לסוף רשימה?', opts: ['add()', 'push()', 'append()', 'insert()'], correct: 2, explain: 'append() מוסיף לסוף. insert() מוסיף למיקום ספציפי. push() לא קיים בפייתון.' },
+    { q: 'מה עושה <code>.items()</code>?', opts: ['מחזיר רק מפתחות', 'מחזיר רק ערכים', 'מחזיר זוגות מפתח-ערך', 'מוחק את כל הפריטים'], correct: 2, explain: '.items() מחזיר זוגות (tuples) של מפתח וערך — הכי שימושי ללולאה!' },
+];
+
+let quizAnswered = 0, quizCorrect = 0;
+
+function renderQuiz() {
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    document.getElementById('quizScore').style.display = 'none';
+    quizAnswered = 0; quizCorrect = 0;
+
+    quizData.forEach((q, qi) => {
+        const card = document.createElement('div');
+        card.className = 'quiz-card';
+        card.innerHTML = `
+            <div class="quiz-q">${qi + 1}. ${q.q}</div>
+            <div class="quiz-options" id="qopts-${qi}">
+                ${q.opts.map((opt, oi) => `<button class="quiz-opt" onclick="answerQuiz(${qi}, ${oi})">${opt}</button>`).join('')}
+            </div>
+            <div class="quiz-explain" id="qexp-${qi}">${q.explain}</div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function answerQuiz(qi, oi) {
+    const opts = document.querySelectorAll(`#qopts-${qi} .quiz-opt`);
+    opts.forEach((o, i) => {
+        o.classList.add('disabled');
+        if (i === quizData[qi].correct) o.classList.add('correct');
+        if (i === oi && oi !== quizData[qi].correct) o.classList.add('wrong');
+    });
+    document.getElementById(`qexp-${qi}`).classList.add('show');
+    quizAnswered++;
+    if (oi === quizData[qi].correct) quizCorrect++;
+
+    if (quizAnswered === quizData.length) {
+        setTimeout(() => {
+            document.getElementById('quizScore').style.display = 'block';
+            document.getElementById('quizScoreNum').textContent = `${quizCorrect} / ${quizData.length}`;
+        }, 600);
+    }
+}
+
+function resetQuiz() { renderQuiz(); }
+
+// ===== TAB SWITCHING =====
+function switchTab(name) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+
+    // Show/hide score bar only for flashcards
+    document.getElementById('scoreBar').style.display = name === 'flashcards' ? 'flex' : 'none';
+}
+
+// ===== INIT =====
+showCard();
+renderQuiz();
+</script>
+
+</body>
+</html>
