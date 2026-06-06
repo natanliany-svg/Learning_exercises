@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שיעור 1: מילונים ופונקציות</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-sec: #94a3b8;
+            --accent: #3b82f6;
+            --success: #10b981;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+        .audio-player { background: var(--card-bg); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid var(--accent); text-align: center; }
+        audio { width: 100%; margin-top: 1rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; }
+        h1, h2, h3 { color: var(--accent); margin-top: 2rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; }
+        p { margin-bottom: 1rem; }
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
+        pre code { background: none; padding: 0; color: #e2e8f0; }
+        blockquote { border-right: 4px solid var(--accent); background: rgba(59, 130, 246, 0.1); padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th, td { border: 1px solid #334155; padding: 0.75rem; text-align: right; }
+        th { background: #0f172a; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <div class="nav">
+        <a href="index.html">← חזרה למרכז הלמידה</a>
+    </div>
+
+    <div class="container">
+        
+        <div class="audio-player">
+            <h3>🎧 האזן לשיעור עכשיו</h3>
+            <p>הפעל את הקריינות כדי לשמוע את ההסבר של המורה במקביל לקריאת החומר.</p>
+            <!-- Assuming the audio file was uploaded or will be available -->
+            <audio controls>
+                <source src="https://raw.githubusercontent.com/natanliany-svg/Learning_exercises/main/lesson_1_audio_premium.mp3" type="audio/mpeg">
+                הדפדפן שלך אינו תומך בנגן האודיו.
+            </audio>
+        </div>
+
+        <div class="content" id="markdown-content">
+            טוען את השיעור...
+        </div>
+    </div>
+
+    <script>
+        const markdown = `
+# 📚 שיעור 1 — הבסיס: מילונים, רשימות, פונקציות
+
+> **מטרה**: לחזק את הבסיס שצריך כדי לבנות שרת FastAPI — בלי הבסיס הזה, אי אפשר להתקדם.  
+> **זמן משוער**: 60-90 דקות  
+> **מה תדע בסוף**: איך ליצור, לקרוא, לעדכן ולמחוק נתונים ממילון — בדיוק מה שה-API עושה!
+
+---
+
+## 🧱 חלק 1 — מילונים (Dictionaries)
+
+### מה זה מילון?
+
+מילון (dictionary) הוא מבנה נתונים שמחזיק **זוגות של מפתח וערך** (key-value pairs).  
+תחשוב על זה כמו אוצר מילים — לכל מילה (מפתח/key) יש הגדרה (ערך/value).
+
+### 🔑 מושגים באנגלית שחייבים לדעת
+
+| מושג באנגלית | משמעות בעברית | דוגמה |
+|---|---|---|
+| **dictionary** (dict) | מילון | \`{}\` |
+| **key** | מפתח — מזהה ייחודי | \`"name"\` |
+| **value** | ערך — המידע ששמור | \`"M4"\` |
+| **key-value pair** | זוג מפתח-ערך | \`"name": "M4"\` |
+| **lookup** | חיפוש ערך לפי מפתח | \`d["name"]\` |
+
+### 📝 סינטקס בסיסי
+
+#### יצירת מילון
+\`\`\`python
+# מילון ריק
+weapon = {}
+
+# מילון עם נתונים
+weapon = {
+    "type": "rifle",
+    "model": "M4",
+    "ammo_type": "5.56mm",
+    "condition": "new"
+}
+\`\`\`
+> 💡 שים לב: המפתחות הם **מחרוזות** (strings) בתוך גרשיים
+
+#### גישה לערך (Lookup)
+\`\`\`python
+weapon = {"type": "rifle", "model": "M4", "condition": "new"}
+
+# גישה ישירה — אם המפתח לא קיים, קורסת שגיאה!
+print(weapon["model"])     # M4
+
+# גישה בטוחה — אם המפתח לא קיים, מחזיר None (או ברירת מחדל)
+print(weapon.get("model"))         # M4
+print(weapon.get("color", "N/A"))  # N/A
+\`\`\`
+> ⚠️ \`d["key"]\` = מסוכן (KeyError אם לא קיים)  
+> ✅ \`d.get("key")\` = בטוח (מחזיר None)
+
+#### הוספה ועדכון
+\`\`\`python
+weapon = {"type": "rifle", "model": "M4"}
+
+# הוספת מפתח חדש
+weapon["condition"] = "new"
+
+# עדכון ערך קיים
+weapon["condition"] = "damaged"
+
+print(weapon)
+# {"type": "rifle", "model": "M4", "condition": "damaged"}
+\`\`\`
+> 💡 אותה פקודה — אם המפתח קיים זה **עדכון**, אם לא קיים זה **הוספה**
+
+#### מחיקה
+\`\`\`python
+weapon = {"type": "rifle", "model": "M4", "condition": "new"}
+
+# מחיקה עם del
+del weapon["condition"]
+
+# מחיקה עם pop (מחזיר את הערך שנמחק)
+model = weapon.pop("model")
+print(model)    # "M4"
+print(weapon)   # {"type": "rifle"}
+\`\`\`
+
+#### בדיקה אם מפתח קיים
+\`\`\`python
+weapon = {"type": "rifle", "model": "M4"}
+
+# בדיקה עם in
+if "model" in weapon:
+    print("יש מודל!")
+
+# ⚠️ in בודק רק מפתחות, לא ערכים!
+print("rifle" in weapon)   # False!  (כי "rifle" הוא ערך, לא מפתח)
+print("type" in weapon)    # True    (כי "type" הוא מפתח)
+\`\`\`
+
+#### מעבר על מילון (Iteration)
+\`\`\`python
+weapon = {"type": "rifle", "model": "M4", "condition": "new"}
+
+# מעבר על מפתחות בלבד
+for key in weapon:
+    print(key)                  # type, model, condition
+
+# מעבר על ערכים בלבד
+for value in weapon.values():
+    print(value)                # rifle, M4, new
+
+# מעבר על זוגות מפתח-ערך (הכי שימושי!)
+for key, value in weapon.items():
+    print(f"{key}: {value}")    # type: rifle, model: M4, ...
+\`\`\`
+> 💡 \`items()\` = הפקודה הכי חשובה לעבודה עם מילונים בלולאה
+
+---
+
+## 📋 חלק 2 — רשימות (Lists)
+
+### מה זה רשימה?
+רשימה (list) זה כמו "מערך" — אוסף מסודר של פריטים. במבחן, כל **רשימת הנשקים במחסן** היא list של dictionaries.
+
+#### יצירה וגישה
+\`\`\`python
+# רשימה של מספרים
+numbers = [1, 2, 3, 4, 5]
+
+# רשימה של מילונים (!) — ככה נראים הנתונים במבחן!
+weapons = [
+    {"id": 1, "type": "rifle", "model": "M4"},
+    {"id": 2, "type": "machine_gun", "model": "MAG"},
+    {"id": 3, "type": "rifle", "model": "Tavor"}
+]
+
+# גישה לפריט לפי אינדקס (מתחיל מ-0!)
+print(weapons[0])           # {"id": 1, "type": "rifle", ...}
+print(weapons[0]["model"])  # "M4"
+\`\`\`
+
+#### הוספה ומחיקה
+\`\`\`python
+weapons = [{"id": 1, "type": "rifle"}]
+
+# הוספה לסוף הרשימה
+weapons.append({"id": 2, "type": "launcher"})
+
+# מחיקת פריט ספציפי
+weapons.remove({"id": 1, "type": "rifle"})
+
+# אורך הרשימה
+print(len(weapons))  # 1
+\`\`\`
+
+#### סינון רשימה (List Comprehension) ⭐
+\`\`\`python
+weapons = [
+    {"id": 1, "type": "rifle", "condition": "new"},
+    {"id": 2, "type": "rifle", "condition": "damaged"},
+    {"id": 3, "type": "launcher", "condition": "new"}
+]
+
+# סינון — רק נשקים במצב "new"
+new_weapons = [w for w in weapons if w["condition"] == "new"]
+
+# סינון — רק רובים (rifles)
+rifles = [w for w in weapons if w["type"] == "rifle"]
+\`\`\`
+> ⭐ **זה קריטי למבחן!** הרבה מה-endpoints דורשים סינון
+
+---
+
+## 🔧 חלק 3 — פונקציות (Functions)
+
+### למה צריך פונקציות?
+פונקציה (function) זה בלוק קוד שאפשר לקרוא לו שוב ושוב. ב-FastAPI, **כל endpoint הוא פונקציה!**
+
+#### הגדרת פונקציה
+\`\`\`python
+# פונקציה בסיסית
+def greet():
+    print("שלום!")
+
+greet()  # קורא לפונקציה → מדפיס "שלום!"
+
+# פונקציה עם פרמטר (parameter)
+def greet(name):
+    print(f"שלום {name}!")
+
+greet("נתן")  # "שלום נתן!"
+\`\`\`
+
+#### החזרת ערך (return)
+\`\`\`python
+# פונקציה שמחזירה ערך
+def add(a, b):
+    return a + b
+
+result = add(3, 5)
+print(result)  # 8
+
+# ⚠️ בלי return, הפונקציה מחזירה None
+def add_broken(a, b):
+    a + b  # שכחנו return!
+
+result = add_broken(3, 5)
+print(result)  # None!
+\`\`\`
+> ⭐ ב-FastAPI, מה שהפונקציה מחזירה (return) — זה מה שהלקוח מקבל!
+
+---
+
+## 🎮 חלק 4 — תרגול אינטראקטיבי (פתור ב-IDE שלך)
+
+### תרגיל 1 — יצירה וגישה
+צור מילון בשם \`soldier\` עם המפתחות הבאים:
+- \`"name"\` עם הערך \`"Natan"\`
+- \`"unit"\` עם הערך \`"Golani"\`
+- \`"rank"\` עם הערך \`"private"\`
+
+ואז הדפס רק את שם היחידה.
+
+### תרגיל 2 — עדכון
+בהינתן המילון \`weapon = {"type": "rifle", "model": "M4", "condition": "new"}\`
+כתוב קוד שמשנה את ה-\`condition\` ל-\`"damaged"\` ומוסיף מפתח חדש \`"ammo_type"\` עם הערך \`"5.56mm"\`.
+
+### תרגיל 3 — סינון רשימה ⭐
+כתוב List Comprehension שמחזיר רק את הנשקים מסוג \`"rifle"\` שהם במצב \`"new"\` מתוך רשימת \`weapons\`.
+
+### תרגיל 5 — ספירה לפי סוג
+כתוב פונקציה \`summary_by_type\` שמקבלת רשימת נשקים ומחזירה מילון עם כמות מכל סוג נשק.
+        `;
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+    </script>
+</body>
+</html>
