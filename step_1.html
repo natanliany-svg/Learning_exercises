@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שלב 1: הבסיס - החיבור ל-Database</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #3b82f6; --success: #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; }
+        h1, h2, h3 { color: var(--accent); margin-top: 2rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; }
+        p { margin-bottom: 1rem; }
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
+        pre code { background: none; padding: 0; color: #e2e8f0; }
+        blockquote { border-right: 4px solid var(--accent); background: rgba(59, 130, 246, 0.1); padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="container">
+        <div class="content" id="markdown-content">טוען את השיעור...</div>
+    </div>
+    <script>
+        const markdown = `
+# 🏗️ שלב 1: הבסיס - החיבור ל-Database
+
+ברוך הבא לשלב הראשון בבניית ה-API שלך! אנחנו תמיד מתחילים "מלמטה" – מהחיבור לאחסון.
+הקובץ שעליו נעבוד נקרא \`db.py\` והוא הקובץ שמחבר את קוד הפייתון שלנו למסד הנתונים (MySQL).
+
+> [!NOTE]
+> **הקשר למכללה:** זה בדיוק מה שאתה לומד עכשיו במכללה! הספרייה שבה משתמשים כדי לעשות את החיבור הזה נקראת \`mysql-connector-python\`.
+
+---
+
+## מה בעצם קובץ ה-db.py עושה?
+
+דמיין שמסד הנתונים שלך (MySQL) הוא בניין משרדים סגור, והקוד שלך הוא שליח שרוצה למסור מכתבים.
+קובץ ה-\`db.py\` הוא למעשה פונקציה שעושה שני דברים:
+1. **מתקשרת לבניין:** יוצרת חיבור מאובטח (Connection) באמצעות כתובת, שם משתמש וסיסמה.
+2. **נותנת אישור כניסה (Cursor):** היא מחזירה "סמן" שדרכו הראוטר או ה-Repository יוכלו לשלוח בקשות SQL אמיתיות בעתיד.
+
+## איך זה נראה בקוד (דוגמה מפרויקט טיפול בחיות מחמד)?
+
+הנה דוגמה לאיך נראה קובץ חיבור גנרי שמחבר חנות חיות למסד הנתונים:
+
+\`\`\`python
+import mysql.connector
+
+def get_db_connection():
+    # פונקציה זו יוצרת חיבור טלפוני (Connection) בין פייתון לבין מסד הנתונים
+    
+    # שלב 1: ניסיון לחייג אל מסד הנתונים בעזרת פרטי ההתחברות (config)
+    connection = mysql.connector.connect(
+        host="localhost",      # הכתובת (איפה יושב מסד הנתונים - במקרה שלנו במחשב המקומי)
+        user="root",           # שם המשתמש למסד הנתונים (בדרך כלל root בדוקר מקומי)
+        password="secret",     # הסיסמה שהגדרנו כשפתחנו את הדוקר!
+        database="pet_db"      # לאיזה מסד נתונים ספציפי אנחנו רוצים להיכנס
+    )
+    
+    # שלב 2: מחזירים את כבל החיבור החוצה, כדי ששאר המערכת תוכל להשתמש בו
+    return connection
+\`\`\`
+
+## המשימה שלך לפרויקט ה-Item Manager:
+
+עליך ללכת לתיקייה המקומית של הפרויקט שלך (במחשב שלך: \`week_9\\item Manager API\\project\`) ולפתוח את הקובץ \`db.py\`.
+
+1. עליך לייבא את הספרייה \`mysql.connector\` (שים לב שהיא מותקנת אצלך, ואם לא - תצטרך להתקין \`pip install mysql-connector-python\`).
+2. עליך לכתוב פונקציה (נקרא לה \`get_db_connection\`).
+3. הפונקציה צריכה להתחבר למסד נתונים בשם שמתאים לפרויקט שלך (למשל \`item_manager_db\`).
+4. הפונקציה צריכה להחזיר את החיבור שיצרת.
+
+> [!TIP]
+> **הערה חשובה למטלת המכללה מחר:** במטלה שיש לך להגיש ב-DDL למחר, עליך להתחבר בדיוק ככה, ליצור אובייקט *Cursor*, ולבצע (\`execute\`) פקודות כמו \`CREATE TABLE\`. ב-API נקי (כמו שלנו) אנחנו נפריד את ה-Cursor לקובץ ה-Repository, אבל החיבור הבסיסי של ה-Connection הוא **זהה**.
+
+כשתסיים לכתוב את קובץ ה-\`db.py\` שלך בפרויקט ה-Item Manager – תעדכן אותי, ונבדוק יחד אם עשית את זה נכון!
+        `;
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdown.replace(/\[!NOTE\]/g, '<strong>📌 שימו לב:</strong>').replace(/\[!TIP\]/g, '<strong>💡 טיפ:</strong>'));
+    </script>
+</body>
+</html>

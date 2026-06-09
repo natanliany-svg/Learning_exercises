@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחסן הסינטאקס 🧠</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #8b5cf6; --success: #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
+        h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; }
+        p { margin-bottom: 1rem; }
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
+        pre code { background: none; padding: 0; color: #e2e8f0; }
+        .explanation { border-right: 4px solid var(--accent); background: rgba(139, 92, 246, 0.1); padding: 1rem; margin-bottom: 2rem; border-radius: 4px; }
+        .explanation p { margin-bottom: 0.5rem; }
+        .explanation p:last-child { margin-bottom: 0; }
+        .highlight { color: #fcd34d; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="container">
+        <div class="content" id="markdown-content">טוען את מחסן הסינטאקס...</div>
+    </div>
+    <script>
+        const markdown = `
+# מחסן הסינטאקס 🧠
+
+ברוך הבא למחסן. כאן לא תמצא פתרונות מוכנים לפרויקט שלך, אלא **מילון עברי-פייתוני** לכל הסינטאקס. כל שורת קוד מוסברת במדויק.
+
+---
+
+## 1. מסדי נתונים (SQL ו-Python)
+
+כשאנחנו רוצים לפנות למסד נתונים, אנחנו משתמשים ב-\`mysql-connector-python\`. הנה איך בונים שאילתה בצורה נכונה (למשל כדי לקבל רשימת ספרים).
+
+\`\`\`python
+import mysql.connector
+
+def get_all_books():
+    # יצירת החיבור. מתחברים לשרת ה-DB שרץ על המחשב שלנו.
+    conn = mysql.connector.connect(host="localhost", user="root", password="123", database="library")
+    
+    # ה-Cursor (סמן). בעזרתו אנחנו עוקבים ושולחים את הפקודות. 'dictionary=True' אומר שהתוצאה תהיה מילון ולא סתם רשימה.
+    cursor = conn.cursor(dictionary=True)
+    
+    # השאילתה (Query) בשפת SQL נטו.
+    query = "SELECT * FROM books WHERE price > 50;"
+    
+    # ההוצאה לפועל (Execute). שולחים את השאילתה ל-DB.
+    cursor.execute(query)
+    
+    # משיכת הנתונים. fetchall מביא את כל השורות שה-Cursor מצא.
+    results = cursor.fetchall()
+    
+    # סגירת הדלתות אחרי שסיימנו, כדי לא לבזבז משאבים (חשוב מאוד!)
+    cursor.close()
+    conn.close()
+    
+    return results
+\`\`\`
+
+<div class="explanation">
+<p><span class="highlight">import mysql.connector</span>: טוען את ספריית העזר שמקשרת בין פייתון ל-MySQL.</p>
+<p><span class="highlight">conn = mysql.connector.connect(...)</span>: מחייג ל-MySQL. ה-host הוא הכתובת, ה-user/password הם אישורי הכניסה.</p>
+<p><span class="highlight">cursor(dictionary=True)</span>: יוצר את הסמן. הגדרת המילון גורמת לכך שנקבל את המידע ככה: <code>{"id": 1, "name": "Book"}</code> במקום ככה: <code>(1, "Book")</code>.</p>
+<p><span class="highlight">cursor.execute(query)</span>: מצית את האש. רק פה באמת נשלחת הבקשה אל מסד הנתונים והוא רץ לחפש.</p>
+<p><span class="highlight">cursor.fetchall()</span>: 'תביא לי הכל'. אוסף את כל הרשומות שהסמן עבר עליהן ושומר בתוך משתנה.</p>
+</div>
+
+---
+
+## 2. FastAPI: ראוטרים (Routers) ומודלים (Pydantic)
+
+כשאנחנו רוצים לפתוח נתיב (Route) שמקבל מידע מלקוח, אנחנו משתמשים ב-FastAPI ובמודלים (Models) של Pydantic שיוודאו שהמידע חוקי (Validation).
+
+\`\`\`python
+from fastapi import APIRouter
+from pydantic import BaseModel
+
+# זהו הראוטר (פקיד הקבלה) שמטפל בכל מה שקשור ל"ספרים"
+router = APIRouter(prefix="/books", tags=["Books"])
+
+# הגדרת מודל (Model) לאימות נתונים. הלקוח חייב לשלוח את כל הנתונים הללו כדי ש-FastAPI יאשר אותו.
+class BookRequest(BaseModel):
+    title: str
+    price: float
+
+# כאן אנחנו מגדירים נתיב מסוג POST. הוא יתפוס כל בקשה שתישלח לכתובת localhost/books/
+@router.post("/")
+def create_new_book(request_body: BookRequest):
+    # הפונקציה מקבלת את גוף הבקשה (Body) מהלקוח אל תוך המשתנה request_body.
+    
+    # FastAPI כבר בדק בשבילנו שה-title הוא טקסט וה-price הוא מספר (Validation).
+    # עכשיו אפשר לגשת לנתונים בעזרת נקודה:
+    print(request_body.title)
+    
+    return {"message": "Book created successfully", "book": request_body}
+\`\`\`
+
+<div class="explanation">
+<p><span class="highlight">APIRouter(...)</span>: יוצר שלוחה חדשה. הקידומת <code>prefix="/books"</code> אומרת שכל נתיב פה יתחיל אוטומטית במילה books.</p>
+<p><span class="highlight">class BookRequest(BaseModel)</span>: מחלקה שיורשת מ-BaseModel (Pydantic). היא אומרת: "הלקוח רוצה ליצור ספר? הוא חייב להעביר כותרת (טקסט) ומחיר (מספר עשרוני)". אם הוא יעביר משהו אחר, הלקוח יקבל שגיאה אוטומטית.</p>
+<p><span class="highlight">@router.post("/")</span>: "מעטר" (Decorator) שמגדיר שהפונקציה מתחתיו עונה רק לבקשות מסוג POST שמיועדות לכתובת של הראוטר.</p>
+<p><span class="highlight">def create_new_book(request_body: BookRequest)</span>: הפונקציה שאשכרה רצה. אנחנו מכריחים את גוף הבקשה להיות מסוג BookRequest. זה מה שעושה את הקסם של ה-Validation.</p>
+</div>
+
+---
+
+## 3. פריקת מילונים (\*\*) וקווים תחתונים (\_)
+
+אחת הפעולות הכי שימושיות כשאנחנו מעבירים נתונים מהמודל של ה-API לתוך ה-Repository.
+
+\`\`\`python
+# נניח שיש לנו מילון עם נתוני ספר
+my_book_dict = {"title": "Harry Potter", "price": 45.5}
+
+# הפונקציה הזו מחכה לקבל במדויק שני פרמטרים: כותרת ומחיר
+def print_book_info(title, price):
+    print(f"The book {title} costs {price}")
+
+# איך נעביר את המילון? אפשר לעשות ככה:
+print_book_info(title=my_book_dict["title"], price=my_book_dict["price"])
+
+# אבל יש דרך קסומה בפייתון שנקראת 'פריקה' (Unpacking) עם שתי כוכביות:
+print_book_info(**my_book_dict)
+
+
+# --- דוגמה לקו תחתון ---
+# כשאנחנו רוצים לרוץ על רשימה ולעשות משהו 5 פעמים, אבל לא אכפת לנו מהמספר (אינדקס) עצמו:
+for _ in range(5):
+    print("Hello!")
+\`\`\`
+
+<div class="explanation">
+<p><span class="highlight">**my_book_dict</span>: פייתון לוקח את המילון ו"מפזר" אותו החוצה. זה שקול לחלוטין לכתיבה הידנית של כל משתנה בנפרד. זה חוסך המון שורות קוד כשיש מילון עצום (למשל משתמש עם 20 שדות).</p>
+<p><span class="highlight">_ (קו תחתון)</span>: מוסכמה (Convention). פייתון מחייב לכתוב משתנה בלולאת for (כמו i), אבל אם נכתוב i ולא נשתמש בו בתוך הלולאה, ה-IDE יתלונן שיש משתנה ללא שימוש. קו תחתון אומר "אני יודע שאני חייב לכתוב פה משהו, אבל אני אומר לך מראש שאני לא מתכוון להשתמש בו".</p>
+</div>
+
+        `;
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+    </script>
+</body>
+</html>
