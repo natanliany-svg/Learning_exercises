@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז ידע: FastAPI ושרתים 🚀</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #3b82f6; --success: #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
+        h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; }
+        p { margin-bottom: 1rem; }
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
+        pre code { background: none; padding: 0; color: #e2e8f0; }
+        ul { margin-right: 2rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="container">
+        <div class="content" id="markdown-content">טוען את מדריך הידע...</div>
+    </div>
+    <script>
+        const markdown = `
+# 📘 מדריך לימוד: FastAPI ושרתים
+
+מדריך זה מסכם את עקרונות הליבה של פיתוח שרתים מבוססי REST API באמצעות ספריית FastAPI ב-Python.
+
+## 1. הגדרות של מושגי ליבה (Core Concepts)
+
+* **Router (ראוטר / נתב):** רכיב האחראי על ניתוב הבקשות הנכנסות לשרת אל הפונקציות המתאימות. מומלץ להשתמש ב-\`APIRouter\` כדי לחלק את האפליקציה למספר קבצים (למשל \`users_router.py\`).
+* **Path Parameters (פרמטרי נתיב):** משתנים דינמיים המועברים כחלק מכתובת ה-URL ומשמשים לזיהוי משאב ספציפי (למשל: \`/users/{user_id}\`).
+* **Query Parameters (פרמטרי שאילתה):** משתנים המצורפים לסוף ה-URL עם סימני שאלה ו-&. משמשים לרוב לסינון. ב-FastAPI כל פרמטר שאינו נתיב, הופך אוטומטית לשאילתה.
+* **Request Body (גוף הבקשה):** הנתונים (לרוב כ-JSON) שנשלחים על ידי הלקוח לשרת, בדרך כלל בבקשות מסוג POST (יצירה) או PUT (עדכון).
+* **Response Model (מודל תגובה):** נעשה שימוש בספריית Pydantic (\`BaseModel\`) כדי לאכוף ולידציה של הנתונים שהלקוח שולח או מקבל.
+
+---
+
+## 2. דוגמאות תחביר לפעולות בסיסיות
+
+\`\`\`python
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI()
+
+# 1. הגדרת Request Body בעזרת Pydantic
+class User(BaseModel):
+    name: str
+    role: str = "guest"
+    age: int
+
+# 2. פעולת GET עם Path Parameter ו-Query Parameter
+@app.get("/users/{user_id}")
+def get_user(user_id: int, include_details: bool = False):
+    if user_id == 999:
+        raise HTTPException(status_code=404, detail="User not found")
+    return {"user_id": user_id, "include_details": include_details}
+
+# 3. פעולת POST ליצירת משאב עם גוף הבקשה
+@app.post("/users", status_code=201)
+def create_user(user: User):
+    return {"message": "User created", "user": user}
+\`\`\`
+
+---
+
+## 3. כללי זהב (Best Practices)
+
+1. **קודי סטטוס (Status Codes):** 
+   * \`200 OK\` להצלחה.
+   * \`201 Created\` ליצירת משאב (POST).
+   * \`404 Not Found\` כשמשאב לא קיים.
+   * \`400 Bad Request\` על שגיאת לקוח.
+2. **ולידציה:** עבודה תמיד מול מחלקות \`Pydantic\` ולא מול מילונים גולמיים בעת קבלת נתונים מבחוץ.
+3. **Swagger UI:** FastAPI יוצר תיעוד אוטומטי בכתובת \`/docs\`. השתמש בו כדי לבדוק שאתה מחזיר ומקבל את מה שציפית!
+4. **תיעוד שגיאות:** רשום לוגים (\`logger.error\`) על כל שגיאת מערכת ו-(404) כדי שיהיה לך מעקב כשהאתר רץ בייצור.
+
+---
+
+## 4. אינטגרציה: מודל השכבות
+
+כדי לא ליצור קוד מבולגן, מחלקים את ה-API ל-3 שכבות (The Clean Architecture):
+1. **שכבת Routers:** מקבלת בקשה, מוודאת את תקינותה, מעבירה הלאה לשירות (Service) ומחזירה תשובה מסודרת ללקוח. לא מכילה לוגיקה מסובכת!
+2. **שכבת Services:** הלוגיקה וה"מוח". חישובים, אלגוריתמים והכנת הנתונים לשמירה.
+3. **שכבת Repositories/DB:** מדברת ישירות עם מסד הנתונים בעזרת SQL.
+
+**זרימת מידע אופיינית:**
+Client ➡️ Router ➡️ Service ➡️ Repository ➡️ DB
+        `;
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+    </script>
+</body>
+</html>

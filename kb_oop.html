@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז ידע: OOP ופיתוח API 🏗️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #8b5cf6; --success: #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
+        h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; }
+        p { margin-bottom: 1rem; }
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
+        pre code { background: none; padding: 0; color: #e2e8f0; }
+        ul { margin-right: 2rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="container">
+        <div class="content" id="markdown-content">טוען את מדריך הידע...</div>
+    </div>
+    <script>
+        const markdown = `
+# 🏗️ מדריך למידה: OOP ופיתוח API
+
+מדריך זה מתמקד בעקרונות תכנות מונחה עצמים (OOP) ב-Python הרלוונטיים במיוחד לבניית APIs ומערכות שכבות.
+
+## 1. הגדרות (Core Concepts)
+
+* **מחלקה (Class):** תבנית (Blueprint) ליצירת אובייקטים המגדירה תכונות (Attributes) ופעולות (Methods).
+* **אובייקט (Object / Instance):** מופע ספציפי של המחלקה. (למשל, המחלקה היא התבנית "משתמש", והאובייקט הוא המשתמש הספציפי "נתן").
+* **מתודת אתחול (\`__init__\`):** פונקציה (Constructor) המופעלת אוטומטית בעת יצירת אובייקט. לרוב משמשת לקבלת חיבור למסד הנתונים בעת הקמת השירות.
+* **ירושה (Inheritance):** מחלקה היורשת תכונות ממחלקה אחרת, למניעת כפילות קוד.
+* **מחלקה אבסטרקטית (Abstract Class):** חוזה (Contract) המחייב מחלקות יורשות לממש מתודות מסוימות. לא ניתן לייצר ממנה אובייקטים.
+
+---
+
+## 2. דוגמאות תחביר
+
+### יצירת מחלקה ומתודות
+
+\`\`\`python
+class UserService:
+    # אתחול המחלקה - מקבלים פנימה את החיבור למסד הנתונים
+    def __init__(self, db_connection):
+        self.db = db_connection
+    
+    # פעולה (Method) של המחלקה
+    def get_user(self, user_id: int):
+        return {"id": user_id, "name": "Natan"}
+
+# יצירת המופע (אובייקט) והעברת ה-DB:
+my_service = UserService(db_connection="my_database")
+my_service.get_user(1)
+\`\`\`
+
+### מחלקה אבסטרקטית
+
+\`\`\`python
+from abc import ABC, abstractmethod
+
+# החוזה הראשי
+class BaseRepository(ABC):
+    @abstractmethod
+    def save(self, data):
+        pass
+
+# מחלקה יורשת (חייבת לממש את save)
+class MySQLRepository(BaseRepository):
+    def save(self, data):
+        print("Saving to MySQL...")
+\`\`\`
+
+---
+
+## 3. כללי זהב ל-API ו-OOP
+
+1. **הזרקת תלויות (Dependency Injection):** אל תיצור את חיבור ה-DB *בתוך* ה-Service! העבר אותו מבחוץ דרך ה-\`__init__\`. כך יהיה קל לבדוק (Test) את הקוד שלך.
+2. **הפרדת תחומי אחריות (SoC):** פצל קבצים - \`Router\` נפרד, \`Service\` נפרד ו-\`Repository\` נפרד. כל מחלקה עושה אך ורק את התפקיד שלה.
+3. **Pydantic Validation:** אל תשתמש במילונים (\`dict\`) עבור נתונים שעוברים בין ראוטר לסרביס - השתמש במודלים המייצגים את הישויות בצורה בטוחה.
+
+---
+
+## 4. אינטגרציה: Pydantic vs ORM (התמונה הגדולה)
+
+חשוב להבין את ההבדל:
+* **Pydantic Models:** מחלקות אלו נועדו לאמת נתונים (Validation) **מול הלקוח** (ב-FastAPI).
+* **DB ORM Models / SQL:** אלו מחלקות או פקודות שמדברות אך ורק **מול מסד הנתונים**.
+* **תפקיד הסרביס:** ה-Service לוקח את אובייקט ה-Pydantic שהגיע מהראוטר, מוציא ממנו את המידע, וקורא ל-Repository שישמור אותו בעזרת ה-ORM או ה-SQL המקורי.
+        `;
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
+    </script>
+</body>
+</html>

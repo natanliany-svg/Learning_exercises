@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז ידע: מסדי נתונים ו-SQL 🐬</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #f43f5e; --success: #10b981; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
+        h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; }
+        p { margin-bottom: 1rem; }
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
+        pre code { background: none; padding: 0; color: #e2e8f0; }
+        ul { margin-right: 2rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+        blockquote { border-right: 4px solid var(--accent); background: rgba(244, 63, 94, 0.1); padding: 1rem; margin-bottom: 1.5rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="container">
+        <div class="content" id="markdown-content">טוען את מדריך הידע...</div>
+    </div>
+    <script>
+        const markdown = `
+# 🐬 מדריך לימוד: SQL ומסדי נתונים בפייתון
+
+חיבור קוד הפייתון למסד הנתונים באמצעות הספרייה \`mysql-connector-python\`.
+
+## 1. הגדרות (Core Concepts)
+
+* **מפתח ראשי (Primary Key):** עמודה המזהה כל רשומה בטבלה באופן חד-ערכי (כמו \`id\` או תעודת זהות).
+* **סמן (Cursor):** אובייקט ב-Python המשמש לביצוע פקודות SQL מול המסד ולמעבר על התוצאות שחזרו, שורה אחר שורה.
+* **ביצוע (Execute):** הפקודה שאשכרה "לוחצת Enter" ושולחת את ה-SQL למסד.
+* **DDL מול DML:**
+  * **DDL (Data Definition Language):** פקודות ליצירת הטבלאות עצמן (CREATE TABLE, DROP).
+  * **DML (Data Manipulation Language):** פקודות למשחק עם הנתונים בטבלאות (SELECT, INSERT, UPDATE, DELETE).
+
+---
+
+## 2. דוגמאות תחביר (CRUD)
+
+### הוספת נתונים - INSERT & Commit
+\`\`\`python
+# הנחה: כבר יש לנו אובייקט connection שעשינו ב-db.py
+cursor = connection.cursor()
+
+# השאילתה - אנחנו שמים סימני %s איפה שהערכים צריכים להיכנס
+query = "INSERT INTO items (name, price) VALUES (%s, %s)"
+
+# הערכים עצמם בתוך מופע (Tuple)
+values = ("Laptop", 1200.50)
+
+# הרצת השאילתה
+cursor.execute(query, values)
+
+# חובה! בלי commit הנתונים לא באמת יישמרו במסד הנתונים!
+connection.commit()
+\`\`\`
+
+### שליפת נתונים - SELECT
+\`\`\`python
+cursor = connection.cursor(dictionary=True) # שימושי מאוד: מחזיר מילון!
+
+query = "SELECT * FROM items WHERE price > %s"
+values = (1000,) # פסיק בסוף חובה כדי שייחשב כ-Tuple גם לאיבר אחד!
+
+cursor.execute(query, values)
+results = cursor.fetchall() # משיכת הכל
+for row in results:
+    print(row['name'])
+\`\`\`
+
+---
+
+## 3. כללי זהב (Best Practices)
+
+> [!IMPORTANT]
+> **לעולם אל תשרשר מחרוזות! (SQL Injection)**  
+> אל תעשה: \`query = f"SELECT * FROM items WHERE name = '{name}'"\`  
+> זה מאפשר להאקרים לפרוץ לאתר שלך ולמחוק לך את המסד הנתונים בעזרת קוד זדוני.
+> **הדרך הנכונה:** תמיד השתמש בסימני \`%s\` (כמו בדוגמה למעלה) כדי שספריית ה-Connector תגן עליך אוטומטית.
+
+1. **Commit:** רק בשאילתות שמשנות נתונים (INSERT, UPDATE, DELETE) חייבים לבצע \`connection.commit()\`. ב-SELECT לא צריך.
+2. **סגירת דלתות:** תמיד סגור את ה-cursor וה-connection בסיום הפעולה בבלוק \`finally\`. משאבי השרת מוגבלים.
+3. **Repository Pattern:** אל תכתוב SQL בתוך הראוטר. כתוב מחלקה בשם \`ItemRepository\` ותכניס לשם את כל פונקציות ה-SQL. הראוטר פשוט יקרא להן!
+        `;
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdown.replace(/\[!IMPORTANT\]/g, '<strong>🚨 אזהרת אבטחה חמורה:</strong>'));
+    </script>
+</body>
+</html>
