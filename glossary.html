@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מילון המושגים והתמונה הגדולה 📖</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f172a;
@@ -30,8 +30,12 @@
             border-right: 4px solid var(--accent);
         }
         .concept-title { font-size: 1.3rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff; }
-        .concept-eng { color: var(--success); font-family: monospace; font-size: 1.1rem; }
-        .concept-desc { color: var(--text-sec); }
+        .concept-eng { color: var(--success); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; }
+        .concept-desc { color: var(--text-sec); margin-bottom: 1rem; }
+        
+        code.inline { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; font-size: 0.9em; }
+        pre { background: #0f172a; padding: 1rem; border-radius: 8px; overflow-x: auto; margin-top: 0.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
+        pre code { font-family: 'JetBrains Mono', monospace; color: #e2e8f0; font-size: 0.9em; }
         
         .big-picture {
             background-color: rgba(16, 185, 129, 0.1);
@@ -61,7 +65,7 @@
                 <span class="bp-title">השרת (Server / FastAPI):</span> המתווך החכם ("המלצר"). מקבל בקשות מהלקוח, בודק שהן חוקיות, לוקח אותן אל "המטבח" (הקוד שלך) כדי לעבד אותן, ואז מחזיר ללקוח את התשובה בצורה מסודרת (לרוב כ-JSON).
             </div>
             <div class="bp-item">
-                <span class="bp-title">הראוטר (Router):</span> מרכזיית הניתוב ("פקיד קבלה"). מסתכל על כתובת הבקשה (כמו `/items`) ועל סוג הבקשה (GET/POST), ומנתב אותה לפונקציה הספציפית בקוד שלך שאמורה לטפל בה.
+                <span class="bp-title">הראוטר (Router):</span> מרכזיית הניתוב ("פקיד קבלה"). מסתכל על כתובת הבקשה (כמו <code class="inline">/items</code>) ועל סוג הבקשה (GET/POST), ומנתב אותה לפונקציה הספציפית בקוד שלך שאמורה לטפל בה.
             </div>
             <div class="bp-item">
                 <span class="bp-title">קורסור (Cursor):</span> האצבע שעוקבת אחרי השורות בדאטה-בייס. כשמסד הנתונים מכיל מיליוני רשומות, ה-Cursor מאפשר לפייתון לקרוא אותן שורה אחרי שורה כדי שהשרת לא יקרוס מעומס זיכרון.
@@ -74,66 +78,106 @@
             </div>
         </div>
 
-        <h2 class="section-title">מילון מושגים מהיר 📝</h2>
+        <h2 class="section-title">מילון מושגים מהיר (עם דוגמאות) 📝</h2>
 
         <div class="concept-card">
             <div class="concept-title">שאילתה <span class="concept-eng">(Query)</span></div>
-            <div class="concept-desc">בקשה למידע ממסד הנתונים. זוהי הפקודה שאנחנו שולחים ל-SQL כדי לשלוף או לשנות נתונים. ב-API, קיימים גם 'Query Parameters' שמסננים את הנתונים בשורת הכתובת.</div>
+            <div class="concept-desc">בקשה למידע ממסד הנתונים. זוהי פקודת SQL טהורה שנשלחת למסד הנתונים כדי לשלוף או לשנות נתונים.</div>
+<pre><code>query = "SELECT * FROM users WHERE age > %s"
+cursor.execute(query, (18,))</code></pre>
+        </div>
+
+        <div class="concept-card">
+            <div class="concept-title">פרמטר נתיב <span class="concept-eng">(Path Parameter)</span></div>
+            <div class="concept-desc">משתנה שהוא חלק בלתי נפרד מכתובת ה-URL, נועד לזיהוי משאב ספציפי וחובה לספק אותו.</div>
+<pre><code>@app.get("/items/{item_id}") # item_id is the path parameter
+def read_item(item_id: int):
+    return {"item_id": item_id}</code></pre>
+        </div>
+
+        <div class="concept-card">
+            <div class="concept-title">פרמטר שאילתה <span class="concept-eng">(Query Parameter)</span></div>
+            <div class="concept-desc">מופיע בסוף ה-URL אחרי סימן שאלה (?), לרוב משמש לסינון וחיפוש (אינו חלק מהנתיב עצמו).</div>
+<pre><code># URL: /items/?skip=0&limit=10
+@app.get("/items/")
+def read_items(skip: int = 0, limit: int = 10):
+    return {"skip": skip, "limit": limit}</code></pre>
+        </div>
+
+        <div class="concept-card">
+            <div class="concept-title">שמירת שינויים במסד נתונים <span class="concept-eng">(Commit)</span></div>
+            <div class="concept-desc">פקודה שמודיעה למסד הנתונים שהשינויים שעשינו (הוספה/עדכון/מחיקה) סופיים ויש לשמור אותם הרדיסק. בלעדיה השינויים ייעלמו.</div>
+<pre><code>cursor.execute("INSERT INTO users (name) VALUES ('Natan')")
+connection.commit() # חובה!</code></pre>
+        </div>
+
+        <div class="concept-card">
+            <div class="concept-title">מודל אימות <span class="concept-eng">(Pydantic BaseModel)</span></div>
+            <div class="concept-desc">מחלקה שמוודאת שהנתונים הנכנסים ויוצאים תקינים לחלוטין לפני שהם נוגעים בלוגיקה שלנו.</div>
+<pre><code>from pydantic import BaseModel
+
+class User(BaseModel):
+    name: str
+    age: int</code></pre>
+        </div>
+
+        <div class="concept-card">
+            <div class="concept-title">גוף הבקשה <span class="concept-eng">(Request Body)</span></div>
+            <div class="concept-desc">הנתונים שהלקוח שולח (לרוב כ-JSON) ביצירת אובייקט חדש (POST) או עדכונו (PUT). הראוטר אוסף אותם מה-Body.</div>
+<pre><code>@app.post("/users/")
+def create_user(user: User): # ה'user' מגיע מגוף הבקשה (Body)
+    return user</code></pre>
         </div>
 
         <div class="concept-card">
             <div class="concept-title">תבנית רפוזיטורי <span class="concept-eng">(Repository)</span></div>
-            <div class="concept-desc">שכבה בקוד שמרכזת את כל הפניות ל-Database במקום אחד. כך הראוטר או הסרביס לא כותבים SQL בעצמם, אלא מבקשים מה-Repository "להביא את הפריט", מה ששומר על הקוד נקי ומסודר (הפרדת תפקידים).</div>
-        </div>
-
-        <div class="concept-card">
-            <div class="concept-title">אימות נתונים <span class="concept-eng">(Validation)</span></div>
-            <div class="concept-desc">תהליך שמוודא שהנתונים שהלקוח שלח הם תקינים. לדוגמה: אימייל מכיל '@' או שהשם לא ריק. ב-FastAPI זה נעשה באמצעות ספריית Pydantic (ה-Models שלנו).</div>
+            <div class="concept-desc">מחלקה שמרכזת את כל פקודות ה-SQL. הראוטר פונה רק אליה ולא כותב SQL בעצמו.</div>
+<pre><code>class UserRepository:
+    def get_user_by_id(self, user_id):
+        cursor.execute("SELECT * FROM users WHERE id = %s", (user_id,))
+        return cursor.fetchone()</code></pre>
         </div>
 
         <div class="concept-card">
             <div class="concept-title">ביצוע <span class="concept-eng">(Execute)</span></div>
-            <div class="concept-desc">הפעולה של הוצאה לפועל. שליחת ה-Query (השאילתה) שהכנו ל-Database כדי שתרוץ בפועל.</div>
+            <div class="concept-desc">פעולת שיגור השאילתה אל המסד דרך ה-Cursor.</div>
+<pre><code>cursor.execute("DELETE FROM users WHERE id = %s", (5,))</code></pre>
         </div>
 
         <div class="concept-card">
             <div class="concept-title">חריגות ושגיאות <span class="concept-eng">(Exceptions)</span></div>
-            <div class="concept-desc">מקרים לא צפויים בזמן ריצה (למשל פריט שלא נמצא). אנו "תופסים" אותן (try/except) כדי למנוע קריסה של השרת ולהחזיר למשתמש הודעת שגיאה ברורה.</div>
-        </div>
-
-        <div class="concept-card">
-            <div class="concept-title">ייחודי <span class="concept-eng">(Unique)</span></div>
-            <div class="concept-desc">אילוץ ב-SQL שמוודא שערך לא מופיע פעמיים בטבלה. דוגמה: כתובת אימייל או תעודת זהות לא יכולות לחזור על עצמן למשתמשים שונים.</div>
-        </div>
-
-        <div class="concept-card">
-            <div class="concept-title">גוף הבקשה <span class="concept-eng">(Body)</span></div>
-            <div class="concept-desc">החלק בבקשת ה-API שמכיל את הנתונים שאנחנו רוצים לשלוח (לרוב כ-JSON), כמו למשל שם הפריט ומחירו בעת יצירת פריט חדש.</div>
-        </div>
-
-        <div class="concept-card">
-            <div class="concept-title">שפת הגדרת נתונים <span class="concept-eng">(DDL)</span></div>
-            <div class="concept-desc">משפחת פקודות ב-SQL שאחראית להגדרת *המבנה* של הטבלה ולא הנתונים עצמם (CREATE TABLE, DROP, ALTER).</div>
-        </div>
-
-        <div class="concept-card">
-            <div class="concept-title">הגדרות <span class="concept-eng">(Config)</span></div>
-            <div class="concept-desc">קובץ או משתנים שמכילים את ההגדרות של המערכת: לאיזה דאטה-בייס להתחבר, מפתחות סודיים, ופורטים.</div>
+            <div class="concept-desc">שליטה על התרסקויות קוד. אם משהו קורס ב-try, בלוק ה-except יתפוס את זה כדי שהתוכנה לא תעצור לגמרי.</div>
+<pre><code>try:
+    result = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero!")</code></pre>
         </div>
 
         <div class="concept-card">
             <div class="concept-title">מתודה אבסטרקטית <span class="concept-eng">(AbstractMethod)</span></div>
-            <div class="concept-desc">פונקציה המוגדרת כ"חוזה" ריק מתוכן, המחייבת כל מחלקה שיורשת ממנה לממש בעצמה את הלוגיקה. שומר על המערכת חוקית ומאורגנת.</div>
+            <div class="concept-desc">פונקציה שהיא "חוזה" ריק. היא מכריחה מחלקות-בנות ליישם אותה (למשל כל סוג של Repository יהיה חייב להחזיק מתודת save).</div>
+<pre><code>from abc import ABC, abstractmethod
+
+class BaseRepo(ABC):
+    @abstractmethod
+    def save(self, data):
+        pass # לא עושים כלום כאן</code></pre>
         </div>
 
         <div class="concept-card">
-            <div class="concept-title">כוכביות כפולות <span class="concept-eng">(**kwargs)</span></div>
-            <div class="concept-desc">סימון בפייתון המשמש ל"פריקה" (Unpacking) של מילון ישירות כארגומנטים לתוך פונקציה.</div>
+            <div class="concept-title">פריקת מילון <span class="concept-eng">(**kwargs)</span></div>
+            <div class="concept-desc">לוקח מילון ושופך את כל תוכנו כפרמטרים נפרדים לתוך קריאה לפונקציה.</div>
+<pre><code>my_dict = {"name": "Natan", "age": 20}
+# שקול ל: create_user(name="Natan", age=20)
+create_user(**my_dict)</code></pre>
         </div>
 
         <div class="concept-card">
-            <div class="concept-title">קו תחתון <span class="concept-eng">(_)</span></div>
-            <div class="concept-desc">משמש כשם משתנה שאנחנו חייבים לרשום אבל לא נשתמש בו, או כקידומת המעידה שזוהי פונקציה/משתנה "פרטיים" לשימוש פנימי בלבד.</div>
+            <div class="concept-title">קו תחתון פנוי <span class="concept-eng">(_)</span></div>
+            <div class="concept-desc">הסכמה בפייתון שאומרת: "המשתנה הזה נדרש תחבירית, אבל אני מתכוון להתעלם ממנו ולא להשתמש בו".</div>
+<pre><code># אנחנו עושים לולאה של 5 פעמים, אבל ה'אינדקס' לא מעניין אותנו
+for _ in range(5):
+    print("Hello!")</code></pre>
         </div>
 
     </div>
