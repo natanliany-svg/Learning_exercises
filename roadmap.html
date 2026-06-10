@@ -16,15 +16,24 @@
         .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
         h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
         h1 { font-size: 2.5rem; margin-top: 0; text-align: center; }
-        .intro { text-align: center; color: var(--text-sec); font-size: 1.2rem; margin-bottom: 3rem; }
         p { margin-bottom: 1rem; }
-        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
-        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
-        pre code { background: none; padding: 0; color: #e2e8f0; }
+        
+        /* Code blocks */
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; font-size: 0.95rem; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; margin-top: 0.5rem; border: 1px solid #334155; direction: ltr; text-align: left; }
+        pre code { background: none; padding: 0; color: #e2e8f0; display: block; text-align: left; }
+        
         ul { margin-right: 2rem; margin-bottom: 1rem; }
         li { margin-bottom: 0.5rem; }
-        .step-block { margin-top: 1.5rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-right: 4px solid var(--success); }
-        .step-num { font-weight: bold; color: var(--success); margin-bottom: 0.5rem; display: block; font-size: 1.1rem; }
+        
+        /* Blockquotes act as step-blocks */
+        blockquote { margin-top: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-right: 4px solid var(--success); margin-right: 0; }
+        blockquote p:first-child strong { color: var(--success); margin-bottom: 0.5rem; display: block; font-size: 1.2rem; }
+        blockquote p:last-child { margin-bottom: 0; }
+        
+        /* Reset pre inside blockquote to ensure proper LTR */
+        blockquote pre { direction: ltr !important; text-align: left !important; }
+        blockquote code { direction: ltr !important; text-align: left !important; }
     </style>
 </head>
 <body>
@@ -33,7 +42,7 @@
         <div class="content" id="markdown-content">טוען את מפת הדרכים...</div>
     </div>
     <script>
-        const markdown = `
+        const markdown = \`
 # 🗺️ מפת דרכים: איך לגשת לכל פרויקט API מאפס
 
 המדריך שלפניך לא ילמד אותך איך לכתוב אפליקציית ספריה או גן חיות. הוא ילמד אותך **שיטה**. 
@@ -44,219 +53,187 @@
 
 ## שכבה 1: תשתיות וסביבת עבודה (Infrastructure)
 
-<div class="step-block">
-<span class="step-num">1. מהות והגדרת השכבה</span>
-לפני שכותבים שורת קוד אחת, חייבים להכין את ה"קרקע". סביבה וירטואלית מוודאת שהספריות שנתקין לא יתנגשו עם פרויקטים אחרים, ותשתיות כמו Docker יספקו לנו מסד נתונים נקי מבלי להתקין שרת MySQL כבד על המחשב הפיזי שלנו.
-</div>
+> **1. מהות והגדרת השכבה**
+> לפני שכותבים שורת קוד אחת, חייבים להכין את ה"קרקע". סביבה וירטואלית מוודאת שהספריות שנתקין לא יתנגשו עם פרויקטים אחרים, ותשתיות כמו Docker יספקו לנו מסד נתונים נקי מבלי להתקין שרת MySQL כבד על המחשב הפיזי שלנו.
 
-<div class="step-block">
-<span class="step-num">2. פעולות נדרשות בפועל (CMD)</span>
-<ul>
-    <li>פתיחת טרמינל ויצירת סביבה וירטואלית: <code>python -m venv venv</code></li>
-    <li>הפעלת הסביבה: <code>.\\venv\\Scripts\\activate</code></li>
-    <li>התקנת הספריות הבסיסיות: <code>pip install fastapi uvicorn mysql-connector-python pydantic</code></li>
-    <li>הפעלת קונטיינר Docker עם MySQL:
-<pre><code>docker run -d --name my-mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=my_db -p 3306:3306 mysql:8</code></pre>
-    </li>
-</ul>
-</div>
+> **2. פעולות נדרשות בפועל (CMD)**
+> * פתיחת טרמינל ויצירת סביבה וירטואלית: \`python -m venv venv\`
+> * הפעלת הסביבה: \`.\\venv\\Scripts\\activate\`
+> * התקנת הספריות הבסיסיות: \`pip install fastapi uvicorn mysql-connector-python pydantic\`
+> * הפעלת קונטיינר Docker עם MySQL:
+> \`\`\`bash
+> docker run -d --name my-mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=my_db -p 3306:3306 mysql:8
+> \`\`\`
 
-<div class="step-block">
-<span class="step-num">3. היכן ייכתב הקוד ולמה?</span>
-שלב זה אינו מצריך קובץ קוד פייתון. כל הפעולות מבוצעות בטרמינל (Terminal / CMD) בתיקיית השורש של הפרויקט. התיקייה תכלול כעת רק תיקייה פנימית בשם <code>venv</code>.
-</div>
+> **3. היכן ייכתב הקוד ולמה?**
+> שלב זה אינו מצריך קובץ קוד פייתון. כל הפעולות מבוצעות בטרמינל (Terminal / CMD) בתיקיית השורש של הפרויקט. התיקייה תכלול כעת רק תיקייה פנימית בשם \`venv\`.
 
 ---
 
 ## שכבה 2: חיבור למסד הנתונים (Database Setup)
 
-<div class="step-block">
-<span class="step-num">1. מהות והגדרת השכבה</span>
-היכולת שלנו לדבר עם ה-MySQL. בשכבה זו ניצור צינור תקשורת מרכזי (Connection) שכל האפליקציה תשתמש בו כדי שלא נצטרך לכתוב מחדש את הסיסמה ל-DB בכל פעם.
-</div>
+> **1. מהות והגדרת השכבה**
+> היכולת שלנו לדבר עם ה-MySQL. בשכבה זו ניצור צינור תקשורת מרכזי (Connection) שכל האפליקציה תשתמש בו כדי שלא נצטרך לכתוב מחדש את הסיסמה ל-DB בכל פעם.
 
-<div class="step-block">
-<span class="step-num">2. פעולות נדרשות בפועל</span>
-יצירת קובץ התחברות חכם שיחזיר לנו חיבור מוכן בכל פעם שנקרא לו. הגדרת משתני החיבור: HOST (מיקום השרת), USER (שם משתמש), PASSWORD (סיסמה), ו-DATABASE (שם המסד שבו נעבוד).
-</div>
+> **2. פעולות נדרשות בפועל**
+> יצירת קובץ התחברות חכם שיחזיר לנו חיבור מוכן בכל פעם שנקרא לו. הגדרת משתני החיבור: HOST (מיקום השרת), USER (שם משתמש), PASSWORD (סיסמה), ו-DATABASE (שם המסד שבו נעבוד).
 
-<div class="step-block">
-<span class="step-num">3. היכן ייכתב הקוד ולמה?</span>
-בקובץ בודד בתיקייה הראשית בשם <code>database.py</code>. הסיבה: זהו קובץ הגדרות תשתית (Config) ואין סיבה להחביא אותו.
-</div>
+> **3. היכן ייכתב הקוד ולמה?**
+> בקובץ בודד בתיקייה הראשית בשם \`database.py\`. הסיבה: זהו קובץ הגדרות תשתית (Config) ואין סיבה להחביא אותו.
 
-<div class="step-block">
-<span class="step-num">4. הסבר מפורט על ה-Imports</span>
-<pre><code>import mysql.connector</code></pre>
-ייבוא הספרייה שהתקנו קודם. היא "המתורגמנית" שיודעת לקחת פקודות מפייתון ולתרגם אותן לשפה ששרת ה-MySQL מבין מבעד לחיבור הרשת.
-</div>
+> **4. הסבר מפורט על ה-Imports**
+> \`\`\`python
+> import mysql.connector
+> \`\`\`
+> ייבוא הספרייה שהתקנו קודם. היא "המתורגמנית" שיודעת לקחת פקודות מפייתון ולתרגם אותן לשפה ששרת ה-MySQL מבין מבעד לחיבור הרשת.
 
-<div class="step-block">
-<span class="step-num">5. הסבר על הקוד שורה-אחר-שורה</span>
-<pre><code># יצירת פונקציה שכאשר קוראים לה, תחזיר צינור תקשורת פתוח
-def get_connection():
-    # קריאה לפונקציית החיבור מתוך הספרייה
-    return mysql.connector.connect(
-        host="localhost",   # השרת רץ על המחשב שלנו (בתוך דוקר)
-        user="root",        # משתמש ברירת המחדל החזק ביותר
-        password="1234",    # הסיסמה שהגדרנו למעלה בפקודת ה-Docker
-        database="my_db"    # שם מסד הנתונים הספציפי שאליו אנו פונים
-    )</code></pre>
-</div>
+> **5. הסבר על הקוד שורה-אחר-שורה**
+> \`\`\`python
+> # יצירת פונקציה שכאשר קוראים לה, תחזיר צינור תקשורת פתוח
+> def get_connection():
+>     # קריאה לפונקציית החיבור מתוך הספרייה
+>     return mysql.connector.connect(
+>         host="localhost",   # השרת רץ על המחשב שלנו (בתוך דוקר)
+>         user="root",        # משתמש ברירת המחדל החזק ביותר
+>         password="1234",    # הסיסמה שהגדרנו למעלה בפקודת ה-Docker
+>         database="my_db"    # שם מסד הנתונים הספציפי שאליו אנו פונים
+>     )
+> \`\`\`
 
-<div class="step-block">
-<span class="step-num">6. בדיקה ותיקוף (Verification)</span>
-איך נדע שזה עובד לפני שנמשיך? נוסיף בתחתית הקובץ טסט קטן:
-<pre><code>if __name__ == "__main__":
-    conn = get_connection()
-    print("Database connected successfully!")
-    conn.close()</code></pre>
-נריץ <code>python database.py</code> ונוודא שאין שגיאות.
-</div>
+> **6. בדיקה ותיקוף (Verification)**
+> איך נדע שזה עובד לפני שנמשיך? נוסיף בתחתית הקובץ טסט קטן:
+> \`\`\`python
+> if __name__ == "__main__":
+>     conn = get_connection()
+>     print("Database connected successfully!")
+>     conn.close()
+> \`\`\`
+> נריץ בטרמינל \`python database.py\` ונוודא שאין שגיאות.
 
 ---
 
 ## שכבה 3: גישה לנתונים - ה-Repository / DAL (OOP)
 
-<div class="step-block">
-<span class="step-num">1. מהות והגדרת השכבה</span>
-שכבת ה-Data Access Layer (DAL) היא השכבה היחידה בפרויקט שמורשית לכתוב משפטי SQL! היא מסתירה את המסד משאר האפליקציה. המהות שלה היא ביצוע פעולות **CRUD**:
-* **C**reate (INSERT) - הוספת נתון חדש.
-* **R**ead (SELECT) - שליפת נתונים.
-* **U**pdate (UPDATE) - עדכון נתון קיים.
-* **D**elete (DELETE) - מחיקה.
-אנו נשתמש בתכנות מונחה עצמים (OOP) וניצור "מחלקה" שתאגד את כל הפעולות האלו.
-</div>
+> **1. מהות והגדרת השכבה**
+> שכבת ה-Data Access Layer (DAL) היא השכבה היחידה בפרויקט שמורשית לכתוב משפטי SQL! היא מסתירה את המסד משאר האפליקציה. המהות שלה היא ביצוע פעולות **CRUD**:
+> * **C**reate (INSERT) - הוספת נתון חדש.
+> * **R**ead (SELECT) - שליפת נתונים.
+> * **U**pdate (UPDATE) - עדכון נתון קיים.
+> * **D**elete (DELETE) - מחיקה.
+> אנו נשתמש בתכנות מונחה עצמים (OOP) וניצור "מחלקה" שתאגד את כל הפעולות האלו.
 
-<div class="step-block">
-<span class="step-num">2. פעולות נדרשות בפועל</span>
-יצירת מחלקה עם פונקציות שאחראיות לקבל חיבור מהשכבה הקודמת (database.py), לפתוח Cursor, להריץ שאילתה, ולעשות Commit במידת הצורך.
-</div>
+> **2. פעולות נדרשות בפועל**
+> יצירת מחלקה עם פונקציות שאחראיות לקבל חיבור מהשכבה הקודמת (database.py), לפתוח Cursor, להריץ שאילתה, ולעשות Commit במידת הצורך.
 
-<div class="step-block">
-<span class="step-num">3. היכן ייכתב הקוד ולמה?</span>
-נייצר תיקייה בשם <code>dal</code> ובתוכה קובץ בשם <code>my_repository.py</code>. ההפרדה לתיקייה נועדה לסדר – ייתכן שבעתיד יהיו לנו מספר קבצי Repository (למשתמשים, לפריטים, וכו').
-</div>
+> **3. היכן ייכתב הקוד ולמה?**
+> נייצר תיקייה בשם \`dal\` ובתוכה קובץ בשם \`my_repository.py\`. ההפרדה לתיקייה נועדה לסדר – ייתכן שבעתיד יהיו לנו מספר קבצי Repository (למשתמשים, לפריטים, וכו').
 
-<div class="step-block">
-<span class="step-num">4. הסבר מפורט על ה-Imports</span>
-<pre><code>from database import get_connection</code></pre>
-אנו מייבאים את פונקציית החיבור שיצרנו בשכבה 2, כדי שהמחלקה שלנו תוכל לפתוח ערוץ למסד הנתונים כשהיא צריכה.
-</div>
+> **4. הסבר מפורט על ה-Imports**
+> \`\`\`python
+> from database import get_connection
+> \`\`\`
+> אנו מייבאים את פונקציית החיבור שיצרנו בשכבה 2, כדי שהמחלקה שלנו תוכל לפתוח ערוץ למסד הנתונים כשהיא צריכה.
 
-<div class="step-block">
-<span class="step-num">5. הסבר על הקוד שורה-אחר-שורה</span>
-<pre><code>class GenericRepository:
-    
-    # פונקציה מסוג Create
-    def create_item(self, item_name):
-        # 1. קריאה לשכבה 2 כדי להביא חיבור
-        connection = get_connection()
-        # 2. פתיחת 'סמן' שמבצע פקודות בפועל
-        cursor = connection.cursor()
-        
-        # 3. הכנת השאילתה - שימו לב ל-%s שמונע SQL Injection
-        query = "INSERT INTO items (name) VALUES (%s)"
-        
-        # 4. ביצוע השאילתה - מעבירים כ-Tuple את הערך
-        cursor.execute(query, (item_name,))
-        
-        # 5. שמירת הפעולה במסד (חובה ב-INSERT/UPDATE/DELETE)
-        connection.commit()
-        
-        # 6. סגירת הדלתות (שחרור משאבים)
-        cursor.close()
-        connection.close()</code></pre>
-</div>
+> **5. הסבר על הקוד שורה-אחר-שורה**
+> \`\`\`python
+> class GenericRepository:
+>     
+>     # פונקציה מסוג Create
+>     def create_item(self, item_name):
+>         # 1. קריאה לשכבה 2 כדי להביא חיבור
+>         connection = get_connection()
+>         # 2. פתיחת 'סמן' שמבצע פקודות בפועל
+>         cursor = connection.cursor()
+>         
+>         # 3. הכנת השאילתה - שימו לב ל-%s שמונע SQL Injection
+>         query = "INSERT INTO items (name) VALUES (%s)"
+>         
+>         # 4. ביצוע השאילתה - מעבירים כ-Tuple את הערך
+>         cursor.execute(query, (item_name,))
+>         
+>         # 5. שמירת הפעולה במסד (חובה ב-INSERT/UPDATE/DELETE)
+>         connection.commit()
+>         
+>         # 6. סגירת הדלתות (שחרור משאבים)
+>         cursor.close()
+>         connection.close()
+> \`\`\`
 
 ---
 
 ## שכבה 4: השרת והראוטרים (FastAPI)
 
-<div class="step-block">
-<span class="step-num">1. מהות והגדרת השכבה</span>
-הגענו ל"פקיד הקבלה". כאן יושב השרת שמאזין לבקשות מהאינטרנט (כמו דפדפנים או ניידים). תפקידו לנתב את הבקשות, לוודא שהלקוח שלח נתונים נכונים (Validation), ולקרוא לשכבה 3 (DAL) כדי לבצע את הפעולה במאגר.
-</div>
+> **1. מהות והגדרת השכבה**
+> הגענו ל"פקיד הקבלה". כאן יושב השרת שמאזין לבקשות מהאינטרנט (כמו דפדפנים או ניידים). תפקידו לנתב את הבקשות, לוודא שהלקוח שלח נתונים נכונים (Validation), ולקרוא לשכבה 3 (DAL) כדי לבצע את הפעולה במאגר.
 
-<div class="step-block">
-<span class="step-num">2. פעולות נדרשות בפועל</span>
-הפעלת אפליקציית FastAPI, יצירת אובייקט של ה-Repository, והגדרת פונקציות עם "עיטורים" (Decorators) שקובעים את הכתובת (למשל <code>@app.post("/items")</code>).
-</div>
+> **2. פעולות נדרשות בפועל**
+> הפעלת אפליקציית FastAPI, יצירת אובייקט של ה-Repository, והגדרת פונקציות עם "עיטורים" (Decorators) שקובעים את הכתובת (למשל \`@app.post("/items")\`).
 
-<div class="step-block">
-<span class="step-num">3. היכן ייכתב הקוד ולמה?</span>
-בקובץ הראשי של הפרויקט שייקרא <code>main.py</code>. מפה הכל מתחיל.
-</div>
+> **3. היכן ייכתב הקוד ולמה?**
+> בקובץ הראשי של הפרויקט שייקרא \`main.py\`. מפה הכל מתחיל.
 
-<div class="step-block">
-<span class="step-num">4. הסבר מפורט על ה-Imports</span>
-<pre><code>from fastapi import FastAPI
-from pydantic import BaseModel
-from dal.my_repository import GenericRepository</code></pre>
-ייבוא <code>FastAPI</code> כדי לבנות את השרת, <code>BaseModel</code> מ-pydantic כדי להגדיר מודלים שיוודאו את הנתונים הנכנסים, ואת ה-<code>GenericRepository</code> משכבה 3 כדי שנוכל לדבר עם ה-DB.
-</div>
+> **4. הסבר מפורט על ה-Imports**
+> \`\`\`python
+> from fastapi import FastAPI
+> from pydantic import BaseModel
+> from dal.my_repository import GenericRepository
+> \`\`\`
+> ייבוא \`FastAPI\` כדי לבנות את השרת, \`BaseModel\` מ-pydantic כדי להגדיר מודלים שיוודאו את הנתונים הנכנסים, ואת ה-\`GenericRepository\` משכבה 3 כדי שנוכל לדבר עם ה-DB.
 
-<div class="step-block">
-<span class="step-num">5. הסבר על הקוד שורה-אחר-שורה</span>
-<pre><code># הקמת תשתית השרת
-app = FastAPI()
+> **5. הסבר על הקוד שורה-אחר-שורה**
+> \`\`\`python
+> # הקמת תשתית השרת
+> app = FastAPI()
+> 
+> # יצירת מופע (Object) מהמחלקה שבנינו בשכבה 3
+> repo = GenericRepository()
+> 
+> # הגדרת "מודל אימות" - הלקוח יחויב לשלוח משתנה בשם 'name' מסוג מחרוזת
+> class ItemRequest(BaseModel):
+>     name: str
+> 
+> # הגדרת נתיב מסוג POST לכתובת השורש /items
+> @app.post("/items")
+> def create_new_item(request_body: ItemRequest):
+>     # קריאה ל-DAL לביצוע השמירה. אנו מוסרים לו את השם מהבקשה
+>     repo.create_item(request_body.name)
+>     
+>     # החזרת הודעת הצלחה ללקוח כ-JSON
+>     return {"message": "Item was created successfully"}
+> \`\`\`
 
-# יצירת מופע (Object) מהמחלקה שבנינו בשכבה 3
-repo = GenericRepository()
-
-# הגדרת "מודל אימות" - כל מי שיפנה לשרת יחויב לשלוח משתנה בשם 'name' מסוג מחרוזת
-class ItemRequest(BaseModel):
-    name: str
-
-# הגדרת נתיב מסוג POST לכתובת השורש /items
-@app.post("/items")
-def create_new_item(request_body: ItemRequest):
-    # קריאה ל-DAL לביצוע השמירה. אנו מוסרים לו את השם מתוך הגוף של הבקשה.
-    repo.create_item(request_body.name)
-    
-    # החזרת הודעת הצלחה ללקוח (FastAPI ממיר אוטומטית ל-JSON)
-    return {"message": "Item was created successfully"}</code></pre>
-</div>
-
-<div class="step-block">
-<span class="step-num">6. בדיקה ותיקוף</span>
-בחלון הטרמינל מריצים את שרת הפיתוח: <code>uvicorn main:app --reload</code>, ונכנסים בדפדפן ל-<code>http://127.0.0.1:8000/docs</code>. משתמשים בממשק שם כדי לשלוח בקשה ורואים אם היא מצליחה.
-</div>
+> **6. בדיקה ותיקוף**
+> בחלון הטרמינל מריצים את שרת הפיתוח: \`uvicorn main:app --reload\`, ונכנסים בדפדפן ל-\`http://127.0.0.1:8000/docs\`. משתמשים בממשק כדי לשלוח בקשה ורואים אם היא מצליחה.
 
 ---
 
 ## שכבה 5: תיעוד ולוגים (Logging)
 
-<div class="step-block">
-<span class="step-num">1. מהות והגדרת השכבה</span>
-ללא לוגים אנחנו עיוורים. כל בקשה שמגיעה לשרת וכל שגיאה פוטנציאלית חייבות להירשם. זוהי שכבת המעטפת (Wrapper).
-</div>
+> **1. מהות והגדרת השכבה**
+> ללא לוגים אנחנו עיוורים. כל בקשה שמגיעה לשרת וכל שגיאה פוטנציאלית חייבות להירשם. זוהי שכבת המעטפת (Wrapper).
 
-<div class="step-block">
-<span class="step-num">3. היכן ולמה?</span>
-הלוגים בדרך כלל משולבים ישירות בתוך הראוטרים ב-<code>main.py</code> ובתוך הלוגיקה ב-<code>dal</code>, כדי לשקף את הזרימה בזמן אמת.
-</div>
+> **3. היכן ולמה?**
+> הלוגים בדרך כלל משולבים ישירות בתוך הראוטרים ב-\`main.py\` ובתוך הלוגיקה ב-\`dal\`, כדי לשקף את הזרימה בזמן אמת.
 
-<div class="step-block">
-<span class="step-num">5. הסבר שילוב בקוד</span>
-<pre><code>import logging
-# הגדרת פורמט הלוגר לכל הפרויקט (בראש ה-main.py)
-logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
-
-@app.post("/items")
-def create_new_item(request_body: ItemRequest):
-    logging.info(f"Received request to create item: {request_body.name}")
-    try:
-        repo.create_item(request_body.name)
-        logging.info("Item created successfully in DB")
-        return {"message": "Success"}
-    except Exception as e:
-        # הקסם! הפקודה הזו תדפיס ללוג את כל מסלול השגיאה שהקריסה את השרת
-        logging.exception("Failed to create item")
-        return {"error": "Internal server error"}</code></pre>
-</div>
-
-        `;
+> **5. הסבר שילוב בקוד**
+> \`\`\`python
+> import logging
+> # הגדרת פורמט הלוגר לכל הפרויקט (בראש ה-main.py)
+> logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+> 
+> @app.post("/items")
+> def create_new_item(request_body: ItemRequest):
+>     logging.info(f"Received request to create item: {request_body.name}")
+>     try:
+>         repo.create_item(request_body.name)
+>         logging.info("Item created successfully in DB")
+>         return {"message": "Success"}
+>     except Exception as e:
+>         # פקודה זו תדפיס ללוג את כל מסלול השגיאה שהקריסה את השרת
+>         logging.exception("Failed to create item")
+>         return {"error": "Internal server error"}
+> \`\`\`
+        \`;
         document.getElementById('markdown-content').innerHTML = marked.parse(markdown);
     </script>
 </body>
