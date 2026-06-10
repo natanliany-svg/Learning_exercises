@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>לוח מטלות ופרויקטים 🎯</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #ec4899; --success: #10b981; --warning: #f59e0b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 950px; margin: 2rem auto; padding: 0 1.5rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
+        h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; text-align: center; }
+        p { margin-bottom: 1rem; }
+        
+        /* Code blocks */
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; font-size: 0.95rem; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; margin-top: 0.5rem; border: 1px solid #334155; direction: ltr; text-align: left; }
+        pre code { background: none; padding: 0; color: #e2e8f0; display: block; text-align: left; }
+        
+        ul { margin-right: 2rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+        
+        blockquote { margin-top: 2rem; padding: 1.5rem; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border-right: 4px solid var(--warning); margin-right: 0; }
+        blockquote p:first-child strong { color: var(--warning); margin-bottom: 0.5rem; display: block; font-size: 1.2rem; }
+        blockquote p:last-child { margin-bottom: 0; }
+        blockquote pre { direction: ltr !important; text-align: left !important; }
+        blockquote code { direction: ltr !important; text-align: left !important; }
+        
+        .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.85rem; font-weight: bold; margin-bottom: 1rem; }
+        .badge.active { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+        .badge.project { background: rgba(236, 72, 153, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="container">
+        <div class="content" id="markdown-content">טוען את המטלות...</div>
+    </div>
+    
+    <script type="text/markdown" id="md-source">
+# 🎯 לוח מטלות ופרויקטים
+
+כאן מרוכזות המטלות הפעילות שלך ופרויקט הגמר מתוך אתר המכללה. המטלות מפורקות לצעדים כדי להקל על הביצוע.
+
+---
+
+## מטלה פעילה: תרגול DDL באמצעות פייתון
+<span class="badge active">מטלת בית</span> <span style="font-size: 0.9rem; color: var(--text-sec);">מקור: Practice_DDL_mysql_connector.pdf</span>
+
+תרגול זה נועד לבדוק את יכולתך ליצור טבלאות במסד הנתונים ישירות דרך קוד פייתון.
+במקום לפתוח מסוף SQL ולהקליד פקודות, אתה שולח אותן כטקסט מתוך סקריפט ה-Python שלך.
+
+> **דרישות המטלה:**
+> 1. לפתוח חיבור תקין ל-MySQL.
+> 2. לכתוב מחלקה/פונקציה המייצרת טבלת משתמשים (`users`) אם היא לא קיימת.
+> 3. הטבלה צריכה להכיל: `id` (מפתח ראשי ומזהה אוטומטי), `first_name`, `last_name`, ו-`email` (ייחודי).
+> 4. לכתוב פקודת `DROP TABLE` למקרה ונרצה לאפס את המסד (אופציונלי אך מומלץ).
+
+**איך מתחילים?**
+השתמש במה שלמדנו ב[מרכז הידע של SQL](kb_sql.html). פתח חיבור, פתח Cursor, ושלח לו בתוך פקודת `execute` מחרוזת המכילה את פקודת ה-`CREATE TABLE`.
+
+---
+
+## פרויקט גמר (שלב א'): Item Manager API
+<span class="badge project">פרויקט ראשי</span> <span style="font-size: 0.9rem; color: var(--text-sec);">מקור: Project_Item_Manager_API.pdf</span>
+
+זהו פרויקט הדגל שמחבר את כל מה שלמדת: פייתון, מסדי נתונים, ושרתי רשת (FastAPI). המטרה היא לבנות מערכת שלמה לניהול פריטים במלאי שניתן לדבר איתה דרך האינטרנט.
+
+> **שלבי הפרויקט (מבוסס על "מפת הדרכים"):**
+> * **שלב 1:** הקמת סביבה וקונטיינר MySQL ב-Docker.
+> * **שלב 2:** יצירת חיבור למסד הנתונים (`database.py`).
+> * **שלב 3:** הקמת שכבת ה-DAL וכתיבת פקודות CRUD לניהול פריטים (הוספה, מחיקה, עדכון, שליפה).
+> * **שלב 4:** בניית הראוטרים ב-FastAPI שיקבלו בקשות מהמשתמשים ויפעילו את ה-DAL.
+> * **שלב 5:** עטיפת הכל בלוגים כדי לנטר שגיאות בשרת בזמן אמת.
+
+**נקודת מוצא:**
+כדי להתחיל את הפרויקט בצורה מסודרת ונכונה ארכיטקטונית, היכנס ל[מפת הדרכים המלאה: בניית פרויקט מאפס](roadmap.html) ובצע אותה שלב אחר שלב.
+
+    </script>
+
+    <script>
+        const markdownText = document.getElementById('md-source').textContent;
+        // Allows rendering raw HTML tags embedded in the markdown securely
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdownText);
+    </script>
+</body>
+</html>
