@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחסן הסינטאקס והכנה למבחן 🛠️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #8b5cf6; --success: #10b981; --warning: #f59e0b; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
+        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
+        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .container { max-width: 950px; margin: 2rem auto; padding: 0 1.5rem; }
+        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
+        h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
+        h1 { font-size: 2.5rem; margin-top: 0; text-align: center; }
+        p { margin-bottom: 1rem; }
+        
+        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; font-size: 0.95rem; }
+        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; margin-top: 0.5rem; border: 1px solid #334155; direction: ltr; text-align: left; }
+        pre code { background: none; padding: 0; color: #e2e8f0; display: block; text-align: left; }
+        
+        ul { margin-right: 2rem; margin-bottom: 1rem; }
+        li { margin-bottom: 0.5rem; }
+        
+        blockquote { margin-top: 2rem; padding: 1.5rem; background: rgba(139, 92, 246, 0.05); border-radius: 8px; border-right: 4px solid var(--accent); margin-right: 0; }
+        blockquote p:first-child strong { color: var(--accent); margin-bottom: 0.5rem; display: block; font-size: 1.2rem; }
+        blockquote p:last-child { margin-bottom: 0; }
+        
+        .tip-box { background: rgba(245, 158, 11, 0.1); border-right: 4px solid var(--warning); padding: 1rem; border-radius: 4px; margin-bottom: 1.5rem; }
+        .tip-box strong { color: var(--warning); }
+    </style>
+</head>
+<body>
+    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="container">
+        <div class="content" id="markdown-content">טוען את מחסן הסינטאקס...</div>
+    </div>
+    
+    <script type="text/markdown" id="md-source">
+# 🛠️ מחסן הסינטאקס (והכוונה למבחנים)
+
+ריכזנו עבורך את הפקודות השכיחות ביותר שחוזרות על עצמן בכל פרויקט. המטרה היא לשנן את רוטינת ההקמה כ"טייס אוטומטי", וכך לפנות את הראש ללוגיקה המורכבת יותר של האפליקציה.
+כמו כן, תמצא כאן הכוונה מדויקת איך "לדוג" סינטאקס מתוך האתרים המותרים במבחן.
+
+---
+
+## 1. רוטינת הקמת פרויקט מאפס (WSL / Linux)
+**את הפקודות האלו יש לשנן בעל פה. הן מבוצעות בטרמינל כדי להרים סביבת עבודה תוך פחות מ-2 דקות:**
+
+```bash
+# 1. יצירת תיקיית הפרויקט וכניסה אליה
+mkdir my_project
+cd my_project
+
+# 2. הקמת סביבה וירטואלית מבודדת לפייתון
+python3 -m venv venv
+
+# 3. הפעלת הסביבה הווירטואלית (שים לב לשינוי בין ווינדוס ל-WSL)
+source venv/bin/activate
+
+# 4. התקנת חבילות הבסיס
+pip install fastapi uvicorn mysql-connector-python pydantic
+
+# 5. שמירת רשימת החבילות המותקנות לקובץ, כדי שנוכל להעביר לשרת בעתיד
+pip freeze > requirements.txt
+```
+
+---
+
+## 2. שרת FastAPI בסיסי (Boilerplate)
+**זהו הקוד המינימלי שנדרש כדי ששרת יעבוד. בדרך כלל הוא נכתב בקובץ `main.py`:**
+
+```python
+from fastapi import FastAPI
+import uvicorn
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, Server is running!"}
+
+# הרצה אוטומטית מקובץ הפייתון עצמו
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+```
+
+---
+
+## 3. הכוונה וטיפים למבחן (Open Book) 🌐
+
+במבחנים רבים מותר השימוש באתרים רשמיים כגון **W3Schools** ו-**docs.python.org**. במקום לשנן סינטאקס של SQL או ספריות מורכבות, חשוב לדעת **איך לחפש מהר**.
+
+<div class="tip-box">
+    <strong>💡 איך מוצאים פקודות SQL או התחברות ל-MySQL במבחן?</strong><br>
+    היכנס ל- <code>w3schools.com</code>. בתפריט העליון בחר ב- <strong>Tutorials</strong> ואז <strong>Learn MySQL</strong> (לפקודות SQL טהורות) או <strong>Learn Python</strong> (ואז תגלול למטה ל-Python MySQL).
+    <ul>
+        <li><strong>חיבור למסד:</strong> חפש "MySQL Get Started" בצד שמאל - תמצא שם את הקוד המדויק ל-<code>mysql.connector.connect(...)</code>.</li>
+        <li><strong>הוספת נתונים:</strong> חפש "MySQL Insert" בצד שמאל. תמצא את הסינטאקס שמסביר על שימוש ב-<code>%s</code> למניעת פריצות.</li>
+        <li><strong>שליפה (SELECT):</strong> חפש "MySQL Select". שם מוסבר איך עושים <code>fetchall()</code> ורצים על התוצאות בלולאת <code>for</code>.</li>
+    </ul>
+</div>
+
+<div class="tip-box">
+    <strong>💡 איך מוצאים דברים מתקדמים בפייתון (מילונים, Lists, שגיאות)?</strong><br>
+    היכנס ל- <code>docs.python.org/3/tutorial</code>. זהו המדריך הרשמי שמופיע בראש האתר.
+    <ul>
+        <li><strong>מבני נתונים (Data Structures):</strong> תחת פרק 5 (Data Structures) תמצא הסברים על מתודות של רשימות, ואיך לעבוד עם מילונים.</li>
+        <li><strong>שגיאות ו-Exceptions:</strong> תחת פרק 8 (Errors and Exceptions) תוכל להעתיק את מבנה ה-<code>try...except</code> המדויק.</li>
+    </ul>
+</div>
+
+    </script>
+
+    <script>
+        const markdownText = document.getElementById('md-source').textContent;
+        document.getElementById('markdown-content').innerHTML = marked.parse(markdownText);
+    </script>
+</body>
+</html>
