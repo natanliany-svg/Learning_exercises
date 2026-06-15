@@ -114,126 +114,115 @@
 
 ---
 
-## שכבה 3: גישה לנתונים - ה-Repository / DAL (OOP)
+## שכבה 3: גישה לנתונים - ה-Repository (DAL)
 
 > **1. מהות והגדרת השכבה**
-> שכבת ה-Data Access Layer (DAL) היא השכבה היחידה בפרויקט שמורשית לכתוב משפטי SQL! היא מסתירה את המסד משאר האפליקציה. המהות שלה היא ביצוע פעולות **CRUD**:
-> * **C**reate (INSERT) - הוספת נתון חדש.
-> * **R**ead (SELECT) - שליפת נתונים.
-> * **U**pdate (UPDATE) - עדכון נתון קיים.
-> * **D**elete (DELETE) - מחיקה.
-> אנו נשתמש בתכנות מונחה עצמים (OOP) וניצור "מחלקה" שתאגד את כל הפעולות האלו.
+> שכבת ה-Data Access Layer (DAL) היא השכבה היחידה בפרויקט שמורשית לכתוב משפטי SQL! היא מסתירה את המסד משאר האפליקציה. 
+> תפקידה לעשות פעולות מול המסד (CRUD) **ללא שום לוגיקה עסקית**.
 
-> **2. פעולות נדרשות בפועל**
-> יצירת מחלקה עם פונקציות שאחראיות לקבל חיבור מהשכבה הקודמת (database.py), לפתוח Cursor, להריץ שאילתה, ולעשות Commit במידת הצורך.
+> **2. היכן ייכתב הקוד ולמה?**
+> נייצר תיקייה בשם `repositories` ובתוכה קובץ בשם `item_repository.py`. זה שומר על סדר כשיש לנו מספר טבלאות.
 
-> **3. היכן ייכתב הקוד ולמה?**
-> נייצר תיקייה בשם `dal` ובתוכה קובץ בשם `my_repository.py`. ההפרדה לתיקייה נועדה לסדר – ייתכן שבעתיד יהיו לנו מספר קבצי Repository (למשתמשים, לפריטים, וכו').
-
-> **4. הסבר מפורט על ה-Imports**
+> **3. הסבר על הקוד שורה-אחר-שורה**
 > ```python
-> from database import get_connection
-> ```
-> אנו מייבאים את פונקציית החיבור שיצרנו בשכבה 2, כדי שהמחלקה שלנו תוכל לפתוח ערוץ למסד הנתונים כשהיא צריכה.
-
-> **5. הסבר על הקוד שורה-אחר-שורה**
-> ```python
-> class GenericRepository:
->     
->     # פונקציה מסוג Create
->     def create_item(self, item_name):
->         # 1. קריאה לשכבה 2 כדי להביא חיבור
+> from db import get_connection
+> 
+> class ItemRepository:
+>     def create_item(self, item_name, price):
 >         connection = get_connection()
->         # 2. פתיחת 'סמן' שמבצע פקודות בפועל
 >         cursor = connection.cursor()
->         
->         # 3. הכנת השאילתה - שימו לב ל-%s שמונע SQL Injection
->         query = "INSERT INTO items (name) VALUES (%s)"
->         
->         # 4. ביצוע השאילתה - מעבירים כ-Tuple את הערך
->         cursor.execute(query, (item_name,))
->         
->         # 5. שמירת הפעולה במסד (חובה ב-INSERT/UPDATE/DELETE)
+>         query = "INSERT INTO items (name, price) VALUES (%s, %s)"
+>         cursor.execute(query, (item_name, price))
 >         connection.commit()
->         
->         # 6. סגירת הדלתות (שחרור משאבים)
 >         cursor.close()
 >         connection.close()
 > ```
 
 ---
 
-## שכבה 4: השרת והראוטרים (FastAPI)
+## שכבה 4: לוגיקה עסקית - ה-Service
 
 > **1. מהות והגדרת השכבה**
-> הגענו ל"פקיד הקבלה". כאן יושב השרת שמאזין לבקשות מהאינטרנט (כמו דפדפנים או ניידים). תפקידו לנתב את הבקשות, לוודא שהלקוח שלח נתונים נכונים (Validation), ולקרוא לשכבה 3 (DAL) כדי לבצע את הפעולה במאגר.
+> זוהי ה"מוח" של המערכת. שכבת ה-Service מקבלת בקשות מהראוטר, מפעילה עליהן חוקים עסקיים (למשל: "האם המחיר שלילי?"), ואם הכל תקין - היא קוראת לשכבת ה-Repository כדי לשמור או לשלוף נתונים. 
 
-> **2. פעולות נדרשות בפועל**
-> הפעלת אפליקציית FastAPI, יצירת אובייקט של ה-Repository, והגדרת פונקציות עם "עיטורים" (Decorators) שקובעים את הכתובת (למשל `@app.post("/items")`).
+> **2. היכן ייכתב הקוד ולמה?**
+> בתוך תיקייה בשם `services` בקובץ `item_service.py`.
 
-> **3. היכן ייכתב הקוד ולמה?**
-> בקובץ הראשי של הפרויקט שייקרא `main.py`. מפה הכל מתחיל.
-
-> **4. הסבר מפורט על ה-Imports**
+> **3. הסבר מפורט על ה-Imports**
 > ```python
-> from fastapi import FastAPI
-> from pydantic import BaseModel
-> from dal.my_repository import GenericRepository
+> from repositories.item_repository import ItemRepository
 > ```
-> ייבוא `FastAPI` כדי לבנות את השרת, `BaseModel` מ-pydantic כדי להגדיר מודלים שיוודאו את הנתונים הנכנסים, ואת ה-`GenericRepository` משכבה 3 כדי שנוכל לדבר עם ה-DB.
+> הסרוויס חייב להכיר את הריפוזיטורי כדי לבקש ממנו לשמור נתונים.
 
-> **5. הסבר על הקוד שורה-אחר-שורה**
+> **4. הסבר על הקוד**
 > ```python
-> # הקמת תשתית השרת
-> app = FastAPI()
+> class ItemService:
+>     def __init__(self):
+>         # הזרקת תלויות: הסרוויס מחזיק עותק של הריפוזיטורי
+>         self.repo = ItemRepository()
 > 
-> # יצירת מופע (Object) מהמחלקה שבנינו בשכבה 3
-> repo = GenericRepository()
-> 
-> # הגדרת "מודל אימות" - הלקוח יחויב לשלוח משתנה בשם 'name' מסוג מחרוזת
-> class ItemRequest(BaseModel):
->     name: str
-> 
-> # הגדרת נתיב מסוג POST לכתובת השורש /items
-> @app.post("/items")
-> def create_new_item(request_body: ItemRequest):
->     # קריאה ל-DAL לביצוע השמירה. אנו מוסרים לו את השם מהבקשה
->     repo.create_item(request_body.name)
->     
->     # החזרת הודעת הצלחה ללקוח כ-JSON
->     return {"message": "Item was created successfully"}
+>     def add_new_item(self, name, price):
+>         # לוגיקה עסקית: בדיקה שהמחיר תקין
+>         if price < 0:
+>             raise ValueError("Price cannot be negative!")
+>         
+>         # אם תקין, קורא לשכבה 3 (המסד)
+>         self.repo.create_item(name, price)
 > ```
-
-> **6. בדיקה ותיקוף**
-> בחלון הטרמינל מריצים את שרת הפיתוח: `uvicorn main:app --reload`, ונכנסים בדפדפן ל-`http://127.0.0.1:8000/docs`. משתמשים בממשק כדי לשלוח בקשה ורואים אם היא מצליחה.
 
 ---
 
-## שכבה 5: תיעוד ולוגים (Logging)
+## שכבה 5: השרת והראוטרים (FastAPI)
 
 > **1. מהות והגדרת השכבה**
-> ללא לוגים אנחנו עיוורים. כל בקשה שמגיעה לשרת וכל שגיאה פוטנציאלית חייבות להירשם. זוהי שכבת המעטפת (Wrapper).
+> פקיד הקבלה. הראוטר מאזין לבקשות HTTP. תפקידו לעשות ולידציה בסיסית דרך מודלים של Pydantic, ולקרוא ל-Service בלבד! (הוא לעולם לא פונה ישירות למסד הנתונים).
 
-> **3. היכן ולמה?**
-> הלוגים בדרך כלל משולבים ישירות בתוך הראוטרים ב-`main.py` ובתוך הלוגיקה ב-`dal`, כדי לשקף את הזרימה בזמן אמת.
+> **2. היכן ייכתב הקוד ולמה?**
+> מודלים ייכתבו בתיקיית `models/item_model.py`.
+> הראוטרים ייכתבו בתיקיית `routers/item_router.py`.
+> קובץ ה-`main.py` הראשי רק "ייבא" (include) את הראוטרים ויפעיל את השרת.
 
-> **5. הסבר שילוב בקוד**
+> **3. הסבר על הקוד בראוטר**
 > ```python
-> import logging
-> # הגדרת פורמט הלוגר לכל הפרויקט (בראש ה-main.py)
-> logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
+> from fastapi import APIRouter, HTTPException
+> from models.item_model import ItemRequest
+> from services.item_service import ItemService
 > 
-> @app.post("/items")
+> router = APIRouter()
+> service = ItemService()
+> 
+> @router.post("/items")
 > def create_new_item(request_body: ItemRequest):
->     logging.info(f"Received request to create item: {request_body.name}")
 >     try:
->         repo.create_item(request_body.name)
->         logging.info("Item created successfully in DB")
->         return {"message": "Success"}
->     except Exception as e:
->         # פקודה זו תדפיס ללוג את כל מסלול השגיאה שהקריסה את השרת
->         logging.exception("Failed to create item")
->         return {"error": "Internal server error"}
+>         # הראוטר מעביר את הבקשה לסרוויס שיטפל בלוגיקה
+>         service.add_new_item(request_body.name, request_body.price)
+>         return {"message": "Item created successfully"}
+>     except ValueError as e:
+>         # אם הסרוויס זרק שגיאת ולידציה (מחיר שלילי)
+>         raise HTTPException(status_code=400, detail=str(e))
+> ```
+
+---
+
+## שכבה 6: תיעוד ולוגים (Logging)
+
+> **1. מהות והגדרת השכבה**
+> חובה במערכות שרת לתעד כל פעולה. ניצור קובץ ייעודי בתיקיית `utils` שיגדיר לוגר אחיד לכל הפרויקט.
+
+> **2. היכן ולמה?**
+> ניצור את `utils/logger.py` שבו תהיה ההגדרה, ונשתמש בו בכל השכבות (בסרוויס ובראוטר).
+
+> **3. הסבר שילוב בקוד**
+> ```python
+> # utils/logger.py
+> import logging
+> logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
+> logger = logging.getLogger(__name__)
+> 
+> # שימוש מתוך ה-Service
+> from utils.logger import logger
+> logger.info(f"Created item with name={name}")
+> logger.error(f"Failed to create item, negative price")
 > ```
     </script>
 
