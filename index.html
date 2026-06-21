@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Learning Dashboard 🚀</title>
+    <title>מרכז הלמידה: JavaScript 🚀</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -15,6 +15,7 @@
             --accent-green: #34d399;
             --accent-purple: #c084fc;
             --accent-red: #fb7185;
+            --accent-orange: #f97316;
         }
 
         body {
@@ -72,6 +73,7 @@
         .card:nth-child(3) { border-top-color: var(--accent-purple); }
         .card:nth-child(4) { border-top-color: var(--accent-red); }
         .card:nth-child(5) { border-top-color: var(--accent-blue); }
+        .card:nth-child(6) { border-top-color: var(--accent-orange); }
 
         h2 {
             margin-top: 0;
@@ -90,126 +92,151 @@
             color: #e2e8f0;
             font-family: 'Fira Code', 'Courier New', monospace;
             border: 1px solid #334155;
+            direction: ltr; /* Code is always LTR */
+            text-align: left;
         }
 
         .instruction {
             color: var(--text-secondary);
             font-size: 0.95rem;
             margin-top: 1rem;
-            border-left: 3px solid var(--accent-blue);
-            padding-left: 10px;
+            border-right: 3px solid var(--accent-blue);
+            padding-right: 10px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>JavaScript Master Dashboard 🚀</h1>
-        <p class="subtitle">Comprehensive reference cards for modern JavaScript development.</p>
-        <p><a href="javascript_bookmarks.html" style="color: var(--accent-js); text-decoration: none;">🔗 Open JS Bookmarks</a></p>
+        <h1>מרכז שליטה: JavaScript 🚀</h1>
+        <p class="subtitle">הכרטיסיות והחומרים המקיפים לפיתוח Web מודרני בעברית.</p>
+        <p><a href="javascript_bookmarks.html" style="color: var(--accent-js); text-decoration: none;">🔗 פתח סימניות מקצועיות</a></p>
     </header>
 
     <div class="dashboard-grid">
         
         <!-- Basics -->
         <div class="card">
-            <h2>📜 1. JS Basics & Variables</h2>
-            <pre><code>// let: Block-scoped, re-assignable
+            <h2>📜 1. יסודות ומשתנים</h2>
+            <pre><code>// let: משתנה שאפשר לשנות (ניתן להשמה מחדש)
 let count = 0;
 count = 1;
 
-// const: Block-scoped, read-only
+// const: משתנה קבוע (לקריאה בלבד)
 const user = { name: "Alice" };
-user.name = "Bob"; // Allowed! (Mutating object)
+user.name = "Bob"; // מותר! משנה את התוכן, לא את ההצבעה
 
-// Primitive Types
-const str = "Hello";    // String
-const num = 42;         // Number
-const isTrue = true;    // Boolean
-const arr = [1, 2, 3];  // Array</code></pre>
-            <p class="instruction">💡 <strong>Tip:</strong> Use <code>const</code> by default, and use <code>let</code> only if you know the value will be reassigned.</p>
+// סוגי נתונים (Primitive Types)
+const str = "Hello";    // מחרוזת טקסט
+const num = 42;         // מספר
+const isTrue = true;    // בוליאני (אמת/שקר)
+const arr = [1, 2, 3];  // מערך (רשימה)</code></pre>
+            <p class="instruction">💡 <strong>טיפ:</strong> תמיד תשתמש ב-<code>const</code> כברירת מחדל. תעבור ל-<code>let</code> רק אם אתה יודע מראש שהערך של המשתנה ישתנה בעתיד (כמו מונה בלולאה).</p>
         </div>
 
         <!-- DOM Manipulation -->
         <div class="card">
-            <h2>🖥️ 2. DOM Manipulation</h2>
-            <pre><code>// Selecting elements
+            <h2>🖥️ 2. שליטה במסך (DOM)</h2>
+            <pre><code>// בחירת אלמנטים מהמסך
 const btn = document.querySelector('#myBtn');
 const items = document.querySelectorAll('.item');
 
-// Event Listeners
+// מאזינים לאירועים (לחיצת כפתור)
 btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    console.log('Button clicked!');
+    e.preventDefault(); // מונע התנהגות ברירת מחדל
+    console.log('הכפתור נלחץ!');
 });
 
-// Creating and Appending elements
+// יצירת אלמנטים חדשים והוספתם למסך
 const div = document.createElement('div');
-div.textContent = 'New Element';
-div.classList.add('highlight');
+div.textContent = 'אלמנט חדש';
+div.classList.add('highlight'); // הוספת מחלקת CSS
 document.body.appendChild(div);</code></pre>
-            <p class="instruction">💡 <strong>Tip:</strong> <code>querySelector</code> selects the first match, whereas <code>querySelectorAll</code> returns a NodeList of all matches.</p>
+            <p class="instruction">💡 <strong>טיפ:</strong> <code>querySelector</code> מוצא רק את התוצאה הראשונה, בעוד ש-<code>querySelectorAll</code> מביא לך רשימה של כל האלמנטים התואמים שתוכל לרוץ עליה עם לולאה.</p>
         </div>
 
         <!-- ES6+ Features -->
         <div class="card">
-            <h2>✨ 3. ES6+ Features</h2>
-            <pre><code>// Destructuring
-const { name, age } = user;
+            <h2>✨ 3. כתיבה מודרנית (ES6+)</h2>
+            <pre><code>// פירוק מבנה (Destructuring)
+const { name, age } = user; // שולף ישירות למשתנים
 const [first, second] = arr;
 
-// Spread & Rest Operator
-const newArr = [...arr, 4, 5];
-const newUser = { ...user, age: 30 };
+// שילוב ופריסה (Spread Operator)
+const newArr = [...arr, 4, 5]; // מוסיף למערך קיים
+const newUser = { ...user, age: 30 }; // מעתיק אובייקט
 
-// Arrow Functions
+// פונקציות חץ (Arrow Functions)
 const add = (a, b) => a + b;
 
-// Template Literals
-const greeting = `Hello, ${name}!`;</code></pre>
-            <p class="instruction">💡 <strong>Tip:</strong> Destructuring and the spread operator make state manipulation much cleaner, especially in modern frameworks.</p>
+// מחרוזות חכמות (Template Literals)
+const greeting = `שלום, ${name}!`;</code></pre>
+            <p class="instruction">💡 <strong>טיפ:</strong> שלוש הנקודות <code>...</code> מאפשרות להעתיק או למזג מערכים ואובייקטים בקלות, חוסך המון שורות קוד לעומת פייתון.</p>
+        </div>
+
+        <!-- Python vs JS -->
+        <div class="card">
+            <h2>🐍 VS 🟨 4. פייתון לעומת JavaScript</h2>
+            <pre><code>// פייתון: dict | ג'אווה-סקריפט: Object
+// בפייתון מפתחות חיבים מירכאות, ב-JS לא
+const dict = { key: "value" }; 
+
+// פייתון: print() | JS: console.log()
+console.log("מדפיס למסך");
+
+// פייתון: def my_func(): | JS: function myFunc() {}
+function sayHi() {
+    // ב-JS חייבים סוגריים מסולסלים {} להגדרת בלוק קוד
+    // ולא משתמשים בהזחות (אינדנטציה) כחובה
+}
+
+// בפייתון שוויון: == | ב-JS שוויון: ===
+if (5 === 5) { /* תמיד תשתמש ב-3 פעמים שווה! */ }</code></pre>
+            <p class="instruction">💡 <strong>טיפ מעבר:</strong> ההבדל הכי קשה למעבר מפייתון הוא הסוגריים המסולסלים <code>{}</code> והנקודה-פסיק <code>;</code> בסוף כל שורה. תתרגל לזה שסוף השורה לא נקבע על ידי שורת חדשה כמו בפייתון.</p>
         </div>
 
         <!-- Async JS -->
         <div class="card">
-            <h2>⏳ 4. Asynchronous JS</h2>
-            <pre><code>// Promises
+            <h2>⏳ 5. אסינכרוניות (קוד שממתין)</h2>
+            <pre><code>// המתנה דמוית sleep בפייתון
 const wait = (ms) => new Promise(resolve => 
     setTimeout(resolve, ms)
 );
 
-// Async / Await
+// פונקציה אסינכרונית
 async function executeTask() {
     try {
-        console.log('Task started...');
-        await wait(2000); // Waits for 2 seconds
-        console.log('Task finished!');
+        console.log('המשימה התחילה...');
+        await wait(2000); // ממתין 2 שניות
+        console.log('המשימה הסתיימה!');
     } catch (err) {
-        console.error('Error:', err);
+        console.error('שגיאה:', err);
     }
 }</code></pre>
-            <p class="instruction">💡 <strong>Tip:</strong> <code>async/await</code> is syntactic sugar over Promises, allowing async code to look and behave synchronously.</p>
+            <p class="instruction">💡 <strong>טיפ:</strong> המילה השמורה <code>await</code> אומרת לתוכנית "תעצור כאן ותחכה שהפעולה תסתיים לפני שאתה ממשיך". ממש כמו בפייתון!</p>
         </div>
 
         <!-- API Requests -->
         <div class="card">
-            <h2>🌐 5. API Requests (Fetch)</h2>
-            <pre><code>async function fetchUser() {
+            <h2>🌐 6. בקשות רשת ושרת (Fetch)</h2>
+            <pre><code>// מקביל לספריית Requests בפייתון
+async function fetchUser() {
     try {
         const res = await fetch('https://api.example.com/user');
         
-        // fetch doesn't throw on HTTP errors
+        // חייבים לבדוק ידנית אם השרת החזיר שגיאה
         if (!res.ok) {
             throw new Error(`HTTP Error: ${res.status}`);
         }
         
+        // מקביל ל- res.json() בפייתון
         const data = await res.json();
-        console.log('User data:', data);
+        console.log('נתונים:', data);
     } catch (error) {
-        console.error('Fetch failed:', error);
+        console.error('הבקשה נכשלה:', error);
     }
 }</code></pre>
-            <p class="instruction">💡 <strong>Tip:</strong> Always check <code>res.ok</code> because <code>fetch</code> only rejects on network failures, not on 404 or 500 responses.</p>
+            <p class="instruction">💡 <strong>טיפ:</strong> פקודת ה-<code>fetch</code> לא זורקת שגיאה באופן אוטומטי אם השרת החזיר 404 (לא נמצא). חייבים לבדוק את התנאי <code>res.ok</code> כדי לוודא שהבקשה באמת הצליחה.</p>
         </div>
 
     </div>
