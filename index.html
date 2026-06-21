@@ -1,223 +1,215 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מרכז הלמידה של נתן 🚀</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>JavaScript Learning Dashboard 🚀</title>
     <style>
         :root {
-            --bg: #0f172a;
+            --bg-color: #0f172a;
             --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-sec: #94a3b8;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --success: #10b981;
-            --warning: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent-js: #f7df1e;
+            --accent-blue: #38bdf8;
+            --accent-green: #34d399;
+            --accent-purple: #c084fc;
+            --accent-red: #fb7185;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Heebo', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 2rem;
             line-height: 1.6;
         }
+
         header {
-            background-color: var(--card-bg);
-            padding: 2rem;
             text-align: center;
-            border-bottom: 2px solid #334155;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
         }
-        h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 0.5rem; }
-        .subtitle { color: var(--text-sec); font-size: 1.2rem; }
-        
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+
+        h1 {
+            color: var(--accent-js);
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--card-bg);
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        p.subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
+
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 1.5rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: 1px solid #334155;
-            display: flex;
-            flex-direction: column;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid var(--accent-blue);
         }
+
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-            border-color: var(--accent);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
         }
-        .card-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-        .card-title { font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 600; }
-        .card-desc { color: var(--text-sec); margin-bottom: 1.5rem; flex-grow: 1; }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--accent);
-            color: white;
-            padding: 0.75rem 1.5rem;
+
+        .card:nth-child(1) { border-top-color: var(--accent-js); }
+        .card:nth-child(2) { border-top-color: var(--accent-green); }
+        .card:nth-child(3) { border-top-color: var(--accent-purple); }
+        .card:nth-child(4) { border-top-color: var(--accent-red); }
+        .card:nth-child(5) { border-top-color: var(--accent-blue); }
+
+        h2 {
+            margin-top: 0;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.4rem;
+        }
+
+        pre {
+            background-color: #0b1120;
+            padding: 1rem;
             border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            text-align: center;
-            transition: background-color 0.2s;
-        }
-        .btn:hover { background-color: var(--accent-hover); }
-        .btn-success { background-color: var(--success); }
-        .btn-success:hover { background-color: #059669; }
-        
-        .progress-section {
-            background-color: var(--card-bg);
-            margin: 2rem auto;
-            max-width: 1000px;
-            padding: 2rem;
-            border-radius: 12px;
+            overflow-x: auto;
+            color: #e2e8f0;
+            font-family: 'Fira Code', 'Courier New', monospace;
             border: 1px solid #334155;
         }
-        .progress-bar {
-            height: 12px;
-            background-color: #334155;
-            border-radius: 6px;
+
+        .instruction {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
             margin-top: 1rem;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background-color: var(--success);
-            width: 25%; /* To be updated dynamically by agents */
-            transition: width 0.5s ease-in-out;
+            border-left: 3px solid var(--accent-blue);
+            padding-left: 10px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>מרכז הלמידה של נתן 🚀</h1>
-        <p class="subtitle">FastAPI, Python, Databases ועוד. הכל במקום אחד.</p>
+        <h1>JavaScript Master Dashboard 🚀</h1>
+        <p class="subtitle">Comprehensive reference cards for modern JavaScript development.</p>
+        <p><a href="javascript_bookmarks.html" style="color: var(--accent-js); text-decoration: none;">🔗 Open JS Bookmarks</a></p>
     </header>
 
-    <div class="progress-section">
-        <h2>התקדמות קורס ממוקדת 📈</h2>
-        <p style="color: var(--text-sec); margin-top: 0.5rem;">סטטוס נוכחי: לימוד מבנה ה-API (שלב אחר שלב).</p>
-        <div class="progress-bar">
-            <div class="progress-fill" style="width: 5%"></div>
-        </div>
-        <p style="text-align: left; font-size: 0.9rem; margin-top: 0.5rem; color: var(--text-sec);">שלב 1: הבנת בסיס הנתונים (db.py)</p>
-    </div>
-
-    <div class="container">
+    <div class="dashboard-grid">
         
-        <!-- Glossary -->
+        <!-- Basics -->
         <div class="card">
-            <div class="card-icon">📖</div>
-            <div class="card-title">מילון המושגים והתמונה הגדולה</div>
-            <div class="card-desc">מה זה ראוטר? מה זה AbstractMethod? פה נמצא כל ההסבר שמחבר את הפאזל יחד לסיפור שלם ואמיתי. חובה לקרוא!</div>
-            <a href="glossary.html" class="btn btn-success">פתח מילון מושגים</a>
+            <h2>📜 1. JS Basics & Variables</h2>
+            <pre><code>// let: Block-scoped, re-assignable
+let count = 0;
+count = 1;
+
+// const: Block-scoped, read-only
+const user = { name: "Alice" };
+user.name = "Bob"; // Allowed! (Mutating object)
+
+// Primitive Types
+const str = "Hello";    // String
+const num = 42;         // Number
+const isTrue = true;    // Boolean
+const arr = [1, 2, 3];  // Array</code></pre>
+            <p class="instruction">💡 <strong>Tip:</strong> Use <code>const</code> by default, and use <code>let</code> only if you know the value will be reassigned.</p>
         </div>
 
-        <!-- Roadmap -->
-        <div class="card" style="border-right-color: #f59e0b; background: rgba(245, 158, 11, 0.05); border: 2px solid #f59e0b;">
-            <div class="card-icon">🗺️</div>
-            <div class="card-title" style="color: #f59e0b;">מפת הדרכים: פרויקט מאפס</div>
-            <div class="card-desc">המדריך המלא: איך ניגשים לבניית פרויקט API שכבה אחר שכבה (כולל SQL, OOP, FastAPI, Logs). שלב אחרי שלב!</div>
-            <a href="roadmap.html" class="btn" style="background-color: #f59e0b; color: #000;">התחל את מפת הדרכים</a>
-        </div>
-
-        <!-- Assignments -->
-        <div class="card" style="border-right-color: #ec4899; background: rgba(236, 72, 153, 0.05); border: 2px solid #ec4899;">
-            <div class="card-icon">🎯</div>
-            <div class="card-title" style="color: #ec4899;">לוח מטלות ופרויקטים</div>
-            <div class="card-desc">מעקב אחרי שיעורי הבית ומטלות ההגשה של המכללה. כרגע: תרגול DDL ופרויקט Item Manager API.</div>
-            <a href="assignments.html" class="btn" style="background-color: #ec4899; color: #fff;">מעבר למטלות</a>
-        </div>
-
-        <!-- Syntax Warehouse -->
-        <div class="card" style="border-right-color: #8b5cf6; background: rgba(139, 92, 246, 0.05); border: 2px solid #8b5cf6;">
-            <div class="card-icon">🛠️</div>
-            <div class="card-title" style="color: #8b5cf6;">מחסן הסינטאקס</div>
-            <div class="card-desc">אוטומציה ושינון: רוטינת הקמת פרויקט (בסביבת לינוקס/WSL) וטיפים מנצחים למבחנים איך "לדוג" סינטאקס מ-W3Schools.</div>
-            <a href="syntax.html" class="btn" style="background-color: #8b5cf6; color: #fff;">מעבר למחסן הסינטאקס</a>
-        </div>
-
-        <!-- Layer by layer -->
+        <!-- DOM Manipulation -->
         <div class="card">
-            <div class="card-icon">🏗️</div>
-            <div class="card-title">פרויקט Item Manager: שלב 1</div>
-            <div class="card-desc">מתחילים מלמטה. בוא נלמד מה זה קובץ `db.py` ומסד נתונים, ולמה המערכת צריכה אותו כדי לרוץ.</div>
-            <a href="step_1.html" class="btn" style="background-color: var(--accent);">התחל שלב 1</a>
+            <h2>🖥️ 2. DOM Manipulation</h2>
+            <pre><code>// Selecting elements
+const btn = document.querySelector('#myBtn');
+const items = document.querySelectorAll('.item');
+
+// Event Listeners
+btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    console.log('Button clicked!');
+});
+
+// Creating and Appending elements
+const div = document.createElement('div');
+div.textContent = 'New Element';
+div.classList.add('highlight');
+document.body.appendChild(div);</code></pre>
+            <p class="instruction">💡 <strong>Tip:</strong> <code>querySelector</code> selects the first match, whereas <code>querySelectorAll</code> returns a NodeList of all matches.</p>
         </div>
 
-    </div>
-
-    <div class="progress-section" style="margin-top: 3rem; background: transparent; border: none; padding: 0;">
-        <h2 style="text-align: center; color: var(--accent); margin-bottom: 2rem;">מרכז ידע והעמקה 📚</h2>
-        <div class="container" style="margin: 0; max-width: 100%;">
-            
-            <div class="card" style="border-top: 4px solid var(--accent);">
-                <div class="card-icon">🚀</div>
-                <div class="card-title">שרתים (FastAPI)</div>
-                <div class="card-desc">כל מה שצריך לדעת על בניית ראוטרים, סוגי בקשות, מודלים של Pydantic וזרימת הנתונים בשרת.</div>
-                <a href="kb_fastapi.html" class="btn" style="background-color: #3b82f6;">היכנס למדריך</a>
-            </div>
-
-            <div class="card" style="border-top: 4px solid var(--accent);">
-                <div class="card-icon">🐬</div>
-                <div class="card-title">מסדי נתונים (SQL)</div>
-                <div class="card-desc">חיבור בעזרת mysql-connector-python, פקודות CRUD ומניעת פרצות אבטחה.</div>
-                <a href="kb_sql.html" class="btn" style="background-color: #f43f5e;">היכנס למדריך</a>
-            </div>
-
-            <div class="card" style="border-top: 4px solid var(--accent);">
-                <div class="card-icon">🏗️</div>
-                <div class="card-title">תכנות מונחה עצמים (OOP)</div>
-                <div class="card-desc">איך בונים מחלקות, מחלקות אבסטרקטיות, Pydantic, ואיך מיישמים את תבנית ה-Repository.</div>
-                <a href="kb_oop.html" class="btn" style="background-color: #8b5cf6;">היכנס למדריך</a>
-            </div>
-
-            <div class="card" style="border-top: 4px solid var(--accent);">
-                <div class="card-icon">📝</div>
-                <div class="card-title">תיעוד ולוגים (Logging)</div>
-                <div class="card-desc">הקופסה השחורה של המערכת. איך להגדיר לוגים, לתפוס שגיאות ולמנוע אזעקות שווא.</div>
-                <a href="kb_logs.html" class="btn" style="background-color: #f59e0b;">היכנס למדריך</a>
-            </div>
-
-            <div class="card" style="border-top: 4px solid var(--success);">
-                <div class="card-icon">📱</div>
-                <div class="card-title">תרגול למובייל: מושגי ליבה</div>
-                <div class="card-desc">אפליקציית כרטיסיות (Flashcards) מיוחדת שמרכזת את המושגים ממרכז הידע. מושלם לחזרה בדרכים.</div>
-                <a href="kb_flashcards.html" class="btn btn-success">פתח כרטיסיות (לנייד)</a>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="container">
-
-        <!-- Syntax Warehouse -->
+        <!-- ES6+ Features -->
         <div class="card">
-            <div class="card-icon">🧠</div>
-            <div class="card-title">מחסן הסינטאקס</div>
-            <div class="card-desc">מאגר רחב ומסודר של דוגמאות קוד, מחולק לקטגוריות. ללמוד איך לכתוב נכון פונקציות, לולאות, שליפות מ-DB ועוד.</div>
-            <a href="syntax_warehouse.html" class="btn btn-success" style="background-color: #8b5cf6;">כנס למחסן</a>
+            <h2>✨ 3. ES6+ Features</h2>
+            <pre><code>// Destructuring
+const { name, age } = user;
+const [first, second] = arr;
+
+// Spread & Rest Operator
+const newArr = [...arr, 4, 5];
+const newUser = { ...user, age: 30 };
+
+// Arrow Functions
+const add = (a, b) => a + b;
+
+// Template Literals
+const greeting = `Hello, ${name}!`;</code></pre>
+            <p class="instruction">💡 <strong>Tip:</strong> Destructuring and the spread operator make state manipulation much cleaner, especially in modern frameworks.</p>
         </div>
 
-        <!-- Archive -->
-        <div class="card" style="opacity: 0.8;">
-            <div class="card-icon">🗄️</div>
-            <div class="card-title">ארכיון: תרגול קודם</div>
-            <div class="card-desc">
-                <a href="mobile_cards.html" style="color: var(--accent); display: block; margin-bottom: 0.5rem;">📱 אפליקציית כרטיסיות (פלאש)</a>
-                <a href="lesson_1.html" style="color: var(--accent); display: block;">💻 שיעור 1: מילונים ופונקציות</a>
-            </div>
-            <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-sec);">הוקפא זמנית לצורך למידת פרויקט ה-API.</div>
+        <!-- Async JS -->
+        <div class="card">
+            <h2>⏳ 4. Asynchronous JS</h2>
+            <pre><code>// Promises
+const wait = (ms) => new Promise(resolve => 
+    setTimeout(resolve, ms)
+);
+
+// Async / Await
+async function executeTask() {
+    try {
+        console.log('Task started...');
+        await wait(2000); // Waits for 2 seconds
+        console.log('Task finished!');
+    } catch (err) {
+        console.error('Error:', err);
+    }
+}</code></pre>
+            <p class="instruction">💡 <strong>Tip:</strong> <code>async/await</code> is syntactic sugar over Promises, allowing async code to look and behave synchronously.</p>
+        </div>
+
+        <!-- API Requests -->
+        <div class="card">
+            <h2>🌐 5. API Requests (Fetch)</h2>
+            <pre><code>async function fetchUser() {
+    try {
+        const res = await fetch('https://api.example.com/user');
+        
+        // fetch doesn't throw on HTTP errors
+        if (!res.ok) {
+            throw new Error(`HTTP Error: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        console.log('User data:', data);
+    } catch (error) {
+        console.error('Fetch failed:', error);
+    }
+}</code></pre>
+            <p class="instruction">💡 <strong>Tip:</strong> Always check <code>res.ok</code> because <code>fetch</code> only rejects on network failures, not on 404 or 500 responses.</p>
         </div>
 
     </div>
