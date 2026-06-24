@@ -134,12 +134,12 @@ function openModal(topic) {
     const data = modalData[topic];
     if(!data) return;
 
-    document.getElementById('modalBody').innerHTML = \`
+    document.getElementById('modalBody').innerHTML = `
         <div class="modal-header">
-            <h2>\${data.title}</h2>
+            <h2>${data.title}</h2>
         </div>
-        \${data.content}
-    \`;
+        ${data.content}
+    `;
     
     document.getElementById('fullPageModal').classList.add('open');
 
@@ -203,21 +203,21 @@ function initBankSimulator() {
 
     document.getElementById('btnShowAll').addEventListener('click', () => {
         const custs = BankManager.getCustomers();
-        logToTerminal(\`--- רשימת לקוחות (\${custs.length}) ---\`);
+        logToTerminal(`--- רשימת לקוחות (${custs.length}) ---`);
         custs.forEach(c => {
-            logToTerminal(\`[\${c.id}] \${c.fullName} - יתרה: ₪\${c.account.getBalance()}\`);
+            logToTerminal(`[${c.id}] ${c.fullName} - יתרה: ₪${c.account.getBalance()}`);
         });
     });
 
     document.getElementById('btnStats').addEventListener('click', () => {
         const stats = BankManager.getStats();
-        logToTerminal(\`סה"כ לקוחות: \${stats.count} | סה"כ כסף: ₪\${stats.total}\`);
+        logToTerminal(`סה"כ לקוחות: ${stats.count} | סה"כ כסף: ₪${stats.total}`);
     });
 
     document.getElementById('btnDeposit').addEventListener('click', () => {
         try {
             const newBal = BankManager.deposit('456', 1500);
-            logToTerminal(\`הופקדו ₪1500 ללקוח משה כהן. יתרה: ₪\${newBal}\`);
+            logToTerminal(`הופקדו ₪1500 ללקוח משה כהן. יתרה: ₪${newBal}`);
         } catch (e) {
             logToTerminal(e.message, true);
         }
