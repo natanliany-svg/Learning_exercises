@@ -25,9 +25,12 @@ function scrollToSection(id) {
     };
     
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    if (event && event.target) {
-        event.target.classList.add('active');
-    }
+    document.querySelectorAll('.nav-item').forEach(el => {
+        const onClickAttr = el.getAttribute('onclick');
+        if (onClickAttr && onClickAttr.includes(`'${id}'`)) {
+            el.classList.add('active');
+        }
+    });
     
     const targetId = sectionMap[id] || id;
     const targetElement = document.getElementById(targetId);
@@ -327,3 +330,9 @@ function closeFreezer() {
 }
 
 // Initial setup (removed window.onload to prevent null errors)
+
+// --- Sidebar Toggle ---
+function toggleSidebar() {
+    document.querySelector('.sidebar').classList.toggle('collapsed');
+    document.querySelector('.content').classList.toggle('expanded');
+}
