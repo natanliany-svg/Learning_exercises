@@ -109,13 +109,22 @@ import { apiURL, fetchData } from './file1.js';</pre>
                     <!-- File Explorer Sidebar -->
                     <div class="ide-sidebar">
                         <div class="ide-sidebar-header">BANK_ACCOUNT... 📄 📁 🔄 ⚙</div>
-                        <div class="ide-folder">▸ .git</div>
-                        <div class="ide-folder">▾ Factorys</div>
-                        <div class="ide-file indented" onclick="switchIdeFile('Account_Factory.js')"><span style="color:#f7df1e">JS</span> Account_Factory.js</div>
-                        <div class="ide-file indented" onclick="switchIdeFile('Customer_Factory.js')"><span style="color:#f7df1e">JS</span> Customer_Factory.js</div>
-                        <div class="ide-folder">▾ node_modules</div>
-                        <div class="ide-folder indented">▸ readline-sync</div>
-                        <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
+                        <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
+                        <div id="folder-git" style="display:none;"></div>
+                        
+                        <div class="ide-folder" onclick="toggleFolder('folder-factorys', this)">▾ Factorys</div>
+                        <div id="folder-factorys">
+                            <div class="ide-file indented" onclick="switchIdeFile('Account_Factory.js')"><span style="color:#f7df1e">JS</span> Account_Factory.js</div>
+                            <div class="ide-file indented" onclick="switchIdeFile('Customer_Factory.js')"><span style="color:#f7df1e">JS</span> Customer_Factory.js</div>
+                        </div>
+                        
+                        <div class="ide-folder" onclick="toggleFolder('folder-modules', this)">▾ node_modules</div>
+                        <div id="folder-modules">
+                            <div class="ide-folder indented" onclick="toggleFolder('folder-readline', this)">▸ readline-sync</div>
+                            <div id="folder-readline" style="display:none;"></div>
+                            <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
+                        </div>
+                        
                         <div class="ide-file active" onclick="switchIdeFile('BankManager.js')"><span style="color:#f7df1e">JS</span> BankManager.js</div>
                         <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
                         <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
@@ -245,6 +254,19 @@ const ideFiles = {
 <div class="code-line"><span class="line-num">3</span><span class="line-code">}</span></div>
     `
 };
+
+function toggleFolder(folderId, element) {
+    const folder = document.getElementById(folderId);
+    if (!folder) return;
+    
+    if (folder.style.display === 'none') {
+        folder.style.display = 'block';
+        element.innerHTML = element.innerHTML.replace('▸', '▾');
+    } else {
+        folder.style.display = 'none';
+        element.innerHTML = element.innerHTML.replace('▾', '▸');
+    }
+}
 
 function switchIdeFile(fileName) {
     // Update active tab

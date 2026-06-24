@@ -441,6 +441,7 @@ body.steigen-mode .dynamic-island {
     border-right: 1px solid #30363d;
     display: flex;
     flex-direction: column;
+    overflow-y: auto; /* Allow scrolling for large file trees */
 }
 
 .ide-sidebar-header {
@@ -470,6 +471,11 @@ body.steigen-mode .dynamic-island {
     display: flex;
     align-items: center;
     gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+.ide-folder:hover {
+    background: #21262d;
 }
 
 .indented {
