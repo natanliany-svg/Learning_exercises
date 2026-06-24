@@ -3,243 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מרכז הלמידה: JavaScript 🚀</title>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --accent-js: #f7df1e;
-            --accent-blue: #38bdf8;
-            --accent-green: #34d399;
-            --accent-purple: #c084fc;
-            --accent-red: #fb7185;
-            --accent-orange: #f97316;
-        }
-
-        body {
-            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            margin: 0;
-            padding: 2rem;
-            line-height: 1.6;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        h1 {
-            color: var(--accent-js);
-            font-size: 2.5rem;
-            border-bottom: 2px solid var(--card-bg);
-            display: inline-block;
-            padding-bottom: 10px;
-            margin-bottom: 0.5rem;
-        }
-
-        p.subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-top: 4px solid var(--accent-blue);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-
-        .card:nth-child(1) { border-top-color: var(--accent-js); }
-        .card:nth-child(2) { border-top-color: var(--accent-green); }
-        .card:nth-child(3) { border-top-color: var(--accent-purple); }
-        .card:nth-child(4) { border-top-color: var(--accent-red); }
-        .card:nth-child(5) { border-top-color: var(--accent-blue); }
-        .card:nth-child(6) { border-top-color: var(--accent-orange); }
-
-        h2 {
-            margin-top: 0;
-            color: var(--text-primary);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.4rem;
-        }
-
-        pre {
-            background-color: #0b1120;
-            padding: 1rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            color: #e2e8f0;
-            font-family: 'Fira Code', 'Courier New', monospace;
-            border: 1px solid #334155;
-            direction: ltr; /* Code is always LTR */
-            text-align: left;
-        }
-
-        .instruction {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-top: 1rem;
-            border-right: 3px solid var(--accent-blue);
-            padding-right: 10px;
-        }
-    </style>
+    <title>מערכת למידה - JavaScript</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="dashboard">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>💻 JS Master</h2>
+            </div>
+            <nav class="menu">
+                <button class="nav-item active" data-target="home">🏠 דף הבית</button>
+                <button class="nav-item" data-target="overview">🚁 מבט על</button>
+                <button class="nav-item" data-target="bank">🏦 Bank Account Manager</button>
+                <button class="nav-item" data-target="closures">🔒 Closures & Factories</button>
+                <button class="nav-item" data-target="modules">📦 Modules (ES6 vs Node)</button>
+                <button class="nav-item" data-target="cleancode">🧹 Clean Code</button>
+            </nav>
+        </aside>
 
-    <header>
-        <h1>מרכז שליטה: JavaScript 🚀</h1>
-        <p class="subtitle">הכרטיסיות והחומרים המקיפים לפיתוח Web מודרני בעברית.</p>
-        <p><a href="javascript_bookmarks.html" style="color: var(--accent-js); text-decoration: none;">🔗 פתח סימניות מקצועיות</a></p>
-    </header>
+        <!-- Main Content Area -->
+        <main class="content">
+            <header>
+                <h1>ברוך הבא לסביבת הפיתוח שלך</h1>
+                <p>כאן תוכל למצוא את כל המטלות, ההסברים ואפילו להריץ קוד!</p>
+            </header>
 
-    <div class="dashboard-grid">
-        
-        <!-- Basics -->
-        <div class="card">
-            <h2>📜 1. יסודות ומשתנים</h2>
-            <pre><code>// let: משתנה שאפשר לשנות (ניתן להשמה מחדש)
-let count = 0;
-count = 1;
+            <!-- Home Section -->
+            <section id="home" class="page-section active">
+                <div class="cards-grid">
+                    <div class="card glass-effect" onclick="document.querySelector('[data-target=\\'bank\\']').click()">
+                        <h3>🏦 פרויקט בנק</h3>
+                        <p>הקלק למעבר להרצת מסוף הבנק בסביבת הווב.</p>
+                    </div>
+                    <div class="card glass-effect" onclick="document.querySelector('[data-target=\\'closures\\']').click()">
+                        <h3>🔒 Closures</h3>
+                        <p>הקלק למעבר להסברים מעשיים ודוגמאות חיות.</p>
+                    </div>
+                    <div class="card glass-effect" onclick="document.querySelector('[data-target=\\'overview\\']').click()">
+                        <h3>🚁 מבט על</h3>
+                        <p>סיכום קצר וקולע של המושגים החדשים.</p>
+                    </div>
+                </div>
+            </section>
 
-// const: משתנה קבוע (לקריאה בלבד)
-const user = { name: "Alice" };
-user.name = "Bob"; // מותר! משנה את התוכן, לא את ההצבעה
+            <!-- Overview Section -->
+            <section id="overview" class="page-section">
+                <h2>מבט על: מושגי ליבה ב-JS 🚁</h2>
+                <div class="cards-grid">
+                    <div class="card glass-effect">
+                        <h3>מה זה Closure?</h3>
+                        <p>פונקציה שיש לה "זיכרון". היא זוכרת את המשתנים מסביבת היצירה שלה גם אחרי שאותה סביבה סיימה לרוץ. זהו הכלי המרכזי ב-JS להסתרת מידע (Private State).</p>
+                    </div>
+                    <div class="card glass-effect">
+                        <h3>Factory Function</h3>
+                        <p>פונקציה שפשוט בונה ומחזירה אובייקט חדש בכל קריאה אליה. בניגוד ל-Classes, היא לא דורשת שימוש במילה <code>new</code> או <code>this</code>, מה שמקטין באגים.</p>
+                    </div>
+                    <div class="card glass-effect">
+                        <h3>Modules (ES6)</h3>
+                        <p>דרך לחלק את הקוד למספר קבצים. בעזרת <code>export</code> מוציאים פונקציות החוצה, ובעזרת <code>import</code> מכניסים אותן לקובץ אחר (בדומה ל-import בפייתון).</p>
+                    </div>
+                </div>
+            </section>
 
-// סוגי נתונים (Primitive Types)
-const str = "Hello";    // מחרוזת טקסט
-const num = 42;         // מספר
-const isTrue = true;    // בוליאני (אמת/שקר)
-const arr = [1, 2, 3];  // מערך (רשימה)</code></pre>
-            <p class="instruction">💡 <strong>טיפ:</strong> תמיד תשתמש ב-<code>const</code> כברירת מחדל. תעבור ל-<code>let</code> רק אם אתה יודע מראש שהערך של המשתנה ישתנה בעתיד (כמו מונה בלולאה).</p>
-        </div>
+            <!-- Bank Project Section -->
+            <section id="bank" class="page-section">
+                <h2>מערכת ניהול חשבונות בנק 🏦</h2>
+                <p>פרויקט הבנק שפותח בתיקיית <code>C:\Bank_Account_Manager</code> עבר סימולציה לרשת! (הלוגיקה שוחזרה ב-JS של האתר)</p>
+                <div class="terminal-container">
+                    <div class="terminal-header">
+                        <span class="btn red"></span>
+                        <span class="btn yellow"></span>
+                        <span class="btn green"></span>
+                        <span class="title">bash - BankManager</span>
+                    </div>
+                    <div class="terminal-body" id="terminalOutput">
+                        <p>> המערכת מאותחלת...</p>
+                        <p>> הקלד 'help' לקבלת רשימת פקודות או השתמש בכפתורים למטה.</p>
+                    </div>
+                    <div class="terminal-controls">
+                        <button id="btnShowAll">הצג את כל הלקוחות</button>
+                        <button id="btnStats">הצג סטטיסטיקות</button>
+                        <button id="btnDeposit">הפקדה לדוגמה</button>
+                    </div>
+                </div>
+            </section>
 
-        <!-- DOM Manipulation -->
-        <div class="card">
-            <h2>🖥️ 2. שליטה במסך (DOM)</h2>
-            <pre><code>// בחירת אלמנטים מהמסך
-const btn = document.querySelector('#myBtn');
-const items = document.querySelectorAll('.item');
-
-// מאזינים לאירועים (לחיצת כפתור)
-btn.addEventListener('click', (e) => {
-    e.preventDefault(); // מונע התנהגות ברירת מחדל
-    console.log('הכפתור נלחץ!');
-});
-
-// יצירת אלמנטים חדשים והוספתם למסך
-const div = document.createElement('div');
-div.textContent = 'אלמנט חדש';
-div.classList.add('highlight'); // הוספת מחלקת CSS
-document.body.appendChild(div);</code></pre>
-            <p class="instruction">💡 <strong>טיפ:</strong> <code>querySelector</code> מוצא רק את התוצאה הראשונה, בעוד ש-<code>querySelectorAll</code> מביא לך רשימה של כל האלמנטים התואמים שתוכל לרוץ עליה עם לולאה.</p>
-        </div>
-
-        <!-- ES6+ Features -->
-        <div class="card">
-            <h2>✨ 3. כתיבה מודרנית (ES6+)</h2>
-            <pre><code>// פירוק מבנה (Destructuring)
-const { name, age } = user; // שולף ישירות למשתנים
-const [first, second] = arr;
-
-// שילוב ופריסה (Spread Operator)
-const newArr = [...arr, 4, 5]; // מוסיף למערך קיים
-const newUser = { ...user, age: 30 }; // מעתיק אובייקט
-
-// פונקציות חץ (Arrow Functions)
-const add = (a, b) => a + b;
-
-// מחרוזות חכמות (Template Literals)
-const greeting = `שלום, ${name}!`;</code></pre>
-            <p class="instruction">💡 <strong>טיפ:</strong> שלוש הנקודות <code>...</code> מאפשרות להעתיק או למזג מערכים ואובייקטים בקלות, חוסך המון שורות קוד לעומת פייתון.</p>
-        </div>
-
-        <!-- Python vs JS -->
-        <div class="card">
-            <h2>🐍 VS 🟨 4. פייתון לעומת JavaScript</h2>
-            <pre><code>// פייתון: dict | ג'אווה-סקריפט: Object
-// בפייתון מפתחות חיבים מירכאות, ב-JS לא
-const dict = { key: "value" }; 
-
-// פייתון: print() | JS: console.log()
-console.log("מדפיס למסך");
-
-// פייתון: def my_func(): | JS: function myFunc() {}
-function sayHi() {
-    // ב-JS חייבים סוגריים מסולסלים {} להגדרת בלוק קוד
-    // ולא משתמשים בהזחות (אינדנטציה) כחובה
+            <!-- Closures Section -->
+            <section id="closures" class="page-section">
+                <h2>Closures & Factories 🔒</h2>
+                <div class="content-box glass-effect">
+                    <h3>מה זה Closure?</h3>
+                    <p>קלוז'ר (Closure) קורה כשפונקציה פנימית "זוכרת" את הסביבה שבה היא נוצרה (Scope), גם אחרי שהפונקציה העוטפת סיימה לרוץ.</p>
+                    <pre><code>function createCounter() {
+    let count = 0; // State is protected!
+    return function() {
+        count++;
+        return count;
+    }
 }
+const myCounter = createCounter();
+console.log(myCounter()); // 1</code></pre>
+                    <button class="interactive-btn" id="runCounterBtn">הרץ Counter בעצמך!</button>
+                    <span id="counterResult" class="result-badge">0</span>
+                </div>
+            </section>
 
-// בפייתון שוויון: == | ב-JS שוויון: ===
-if (5 === 5) { /* תמיד תשתמש ב-3 פעמים שווה! */ }</code></pre>
-            <p class="instruction">💡 <strong>טיפ מעבר:</strong> ההבדל הכי קשה למעבר מפייתון הוא הסוגריים המסולסלים <code>{}</code> והנקודה-פסיק <code>;</code> בסוף כל שורה. תתרגל לזה שסוף השורה לא נקבע על ידי שורת חדשה כמו בפייתון.</p>
-        </div>
+            <!-- Modules Section -->
+            <section id="modules" class="page-section">
+                <h2>Modules (ES6 vs CommonJS) 📦</h2>
+                <div class="content-box glass-effect">
+                    <div class="split-view">
+                        <div class="col">
+                            <h3>CommonJS (Node.js ישן)</h3>
+                            <pre><code>// ייצוא
+module.exports = { myFunction };
 
-        <!-- Async JS -->
-        <div class="card">
-            <h2>⏳ 5. אסינכרוניות (קוד שממתין)</h2>
-            <pre><code>// המתנה דמוית sleep בפייתון
-const wait = (ms) => new Promise(resolve => 
-    setTimeout(resolve, ms)
-);
+// ייבוא
+const { myFunction } = require('./file');</code></pre>
+                        </div>
+                        <div class="col">
+                            <h3>ES6 Modules (מודרני)</h3>
+                            <pre><code>// ייצוא
+export function myFunction() {}
 
-// פונקציה אסינכרונית
-async function executeTask() {
-    try {
-        console.log('המשימה התחילה...');
-        await wait(2000); // ממתין 2 שניות
-        console.log('המשימה הסתיימה!');
-    } catch (err) {
-        console.error('שגיאה:', err);
-    }
-}</code></pre>
-            <p class="instruction">💡 <strong>טיפ:</strong> המילה השמורה <code>await</code> אומרת לתוכנית "תעצור כאן ותחכה שהפעולה תסתיים לפני שאתה ממשיך". ממש כמו בפייתון!</p>
-        </div>
+// ייבוא
+import { myFunction } from './file.js';</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- API Requests -->
-        <div class="card">
-            <h2>🌐 6. בקשות רשת ושרת (Fetch)</h2>
-            <pre><code>// מקביל לספריית Requests בפייתון
-async function fetchUser() {
-    try {
-        const res = await fetch('https://api.example.com/user');
-        
-        // חייבים לבדוק ידנית אם השרת החזיר שגיאה
-        if (!res.ok) {
-            throw new Error(`HTTP Error: ${res.status}`);
-        }
-        
-        // מקביל ל- res.json() בפייתון
-        const data = await res.json();
-        console.log('נתונים:', data);
-    } catch (error) {
-        console.error('הבקשה נכשלה:', error);
-    }
-}</code></pre>
-            <p class="instruction">💡 <strong>טיפ:</strong> פקודת ה-<code>fetch</code> לא זורקת שגיאה באופן אוטומטי אם השרת החזיר 404 (לא נמצא). חייבים לבדוק את התנאי <code>res.ok</code> כדי לוודא שהבקשה באמת הצליחה.</p>
-        </div>
+            <!-- Clean Code Section -->
+            <section id="cleancode" class="page-section">
+                <h2>Clean Code & Debugging 🧹</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>שמות משמעותיים</h3>
+                        <p>השתמש בשמות כמו <code>customerBalance</code> במקום <code>x</code>.</p>
+                    </div>
+                    <div class="card">
+                        <h3>פונקציות קצרות</h3>
+                        <p>כל פונקציה צריכה לעשות דבר אחד בלבד (Single Responsibility).</p>
+                    </div>
+                    <div class="card">
+                        <h3>Debugging</h3>
+                        <p>במקום לנחש, השתמש ב-<code>debugger;</code> וב-DevTools של כרום לעצירת הקוד.</p>
+                    </div>
+                </div>
+            </section>
 
+        </main>
     </div>
-
+    <script src="app.js"></script>
 </body>
 </html>
