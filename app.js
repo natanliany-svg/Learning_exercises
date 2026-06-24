@@ -108,10 +108,19 @@ import { apiURL, fetchData } from './file1.js';</pre>
                 <div class="ide-top">
                     <!-- File Explorer Sidebar -->
                     <div class="ide-sidebar">
-                        <div class="ide-sidebar-header">Files</div>
-                        <div class="ide-file active" onclick="switchIdeFile('BankManager.js')">📄 BankManager.js</div>
-                        <div class="ide-file" onclick="switchIdeFile('Customer_Factory.js')">📄 Customer_Factory.js</div>
-                        <div class="ide-file" onclick="switchIdeFile('main.js')">📄 main.js</div>
+                        <div class="ide-sidebar-header">BANK_ACCOUNT... 📄 📁 🔄 ⚙</div>
+                        <div class="ide-folder">▸ .git</div>
+                        <div class="ide-folder">▾ Factorys</div>
+                        <div class="ide-file indented" onclick="switchIdeFile('Account_Factory.js')"><span style="color:#f7df1e">JS</span> Account_Factory.js</div>
+                        <div class="ide-file indented" onclick="switchIdeFile('Customer_Factory.js')"><span style="color:#f7df1e">JS</span> Customer_Factory.js</div>
+                        <div class="ide-folder">▾ node_modules</div>
+                        <div class="ide-folder indented">▸ readline-sync</div>
+                        <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
+                        <div class="ide-file active" onclick="switchIdeFile('BankManager.js')"><span style="color:#f7df1e">JS</span> BankManager.js</div>
+                        <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
+                        <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
+                        <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
+                        <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
                     </div>
                     
                     <!-- Code Editor View with Story -->
@@ -164,8 +173,20 @@ function closeModal() {
 // --- Bank Simulator IDE Logic ---
 
 const ideFiles = {
+    'Account_Factory.js': `
+<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">export function</span> <span class="function">createAccount</span>() {</span><span class="line-story">המפעל הבסיסי ביותר! מייצר לנו אובייקט עם יתרה התחלתית של 0.</span></div>
+<div class="code-line"><span class="line-num">2</span><span class="line-code">    <span class="keyword">let</span> <span class="variable">balance</span> = 0;</span><span class="line-story">משתנה פרטי בתוך ה-Closure, כך שאף אחד לא יכול לערוך אותו ישירות!</span></div>
+<div class="code-line"><span class="line-num">3</span><span class="line-code">    <span class="keyword">return</span> {</span></div>
+<div class="code-line"><span class="line-num">4</span><span class="line-code">        <span class="function">getBalance</span>: () => balance,</span></div>
+<div class="code-line"><span class="line-num">5</span><span class="line-code">        <span class="function">deposit</span>: (amount) => {</span></div>
+<div class="code-line"><span class="line-num">6</span><span class="line-code">            balance += amount;</span><span class="line-story">כאן מתבצעת הלוגיקה של ההפקדה, והיא מעדכנת את המשתנה המוגן שלנו.</span></div>
+<div class="code-line"><span class="line-num">7</span><span class="line-code">            <span class="keyword">return</span> balance;</span></div>
+<div class="code-line"><span class="line-num">8</span><span class="line-code">        }</span></div>
+<div class="code-line"><span class="line-num">9</span><span class="line-code">    };</span></div>
+<div class="code-line"><span class="line-num">10</span><span class="line-code">}</span></div>
+    `,
     'BankManager.js': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./Customer_Factory.js'</span>;</span><span class="line-story">כאן אנחנו מייבאים את פונקציית המפעל שלנו. במקום לכתוב הכל בקובץ אחד ענק ומבולגן, אנחנו עובדים חכם עם Modules!</span></div>
+<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./Factorys/Customer_Factory.js'</span>;</span><span class="line-story">כאן אנחנו מייבאים את פונקציית המפעל שלנו. במקום לכתוב הכל בקובץ אחד ענק ומבולגן, אנחנו עובדים חכם עם Modules!</span></div>
 <div class="code-line"><span class="line-num">2</span><span class="line-code"></span></div>
 <div class="code-line"><span class="line-num">3</span><span class="line-code"><span class="keyword">let</span> <span class="variable">customers</span> = [];</span><span class="line-story">זהו ה"מסד נתונים" הזמני שלנו. זה מערך פשוט שבו נשמור את כל הלקוחות. הוא לא נגיש מבחוץ ישירות, רק דרך הפונקציות שאנחנו מייצאים.</span></div>
 <div class="code-line"><span class="line-num">4</span><span class="line-code"></span></div>
@@ -179,7 +200,7 @@ const ideFiles = {
 <div class="code-line"><span class="line-num">12</span><span class="line-code">}</span></div>
     `,
     'Customer_Factory.js': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">import</span> { createAccount } <span class="keyword">from</span> <span class="string">'./Account_Factory.js'</span>;</span><span class="line-story">כמו לגו! הלקוח צריך חשבון, אז אנחנו מביאים את המפעל שמייצר חשבונות.</span></div>
+<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">import</span> { createAccount } <span class="keyword">from</span> <span class="string">'./Account_Factory.js'</span>;</span><span class="line-story">כמו לגו! הלקוח צריך חשבון, אז אנחנו מביאים את המפעל שמייצר חשבונות מתוך אותה תיקייה (Factorys).</span></div>
 <div class="code-line"><span class="line-num">2</span><span class="line-code"></span></div>
 <div class="code-line"><span class="line-num">3</span><span class="line-code"><span class="keyword">export function</span> <span class="function">createCustomer</span>(id, fullName) {</span><span class="line-story">זו הפונקציה שאחראית לייצר את אובייקט הלקוח. תשים לב שאין פה שימוש במחלקה (Class), הכל פשוט וברור!</span></div>
 <div class="code-line"><span class="line-num">4</span><span class="line-code">    <span class="keyword">return</span> {</span><span class="line-story">אנחנו מחזירים אובייקט JS טהור.</span></div>
@@ -192,11 +213,36 @@ const ideFiles = {
     'main.js': `
 <div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="comment">// קובץ ההרצה הראשי (Entry Point)</span></span></div>
 <div class="code-line"><span class="line-num">2</span><span class="line-code"><span class="keyword">import</span> * <span class="keyword">as</span> BankManager <span class="keyword">from</span> <span class="string">'./BankManager.js'</span>;</span><span class="line-story">כאן אנחנו מייבאים את כל מה שהבנק מציע תחת משתנה אחד שקוראים לו BankManager.</span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">4</span><span class="line-code">BankManager.<span class="function">addCustomer</span>(<span class="string">'123'</span>, <span class="string">'ישראל ישראלי'</span>);</span><span class="line-story">בדיוק כמו בפייתון, אנחנו משתמשים בפונקציות כדי לאתחל את המערכת עם נתוני דמה לבדיקה.</span></div>
-<div class="code-line"><span class="line-num">5</span><span class="line-code">BankManager.<span class="function">addCustomer</span>(<span class="string">'456'</span>, <span class="string">'משה כהן'</span>);</span></div>
-<div class="code-line"><span class="line-num">6</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">7</span><span class="line-code"><span class="comment">// הטרמינל מאזין לפקודות שאתה מקליד כאן...</span></span><span class="line-story">במציאות זה נעשה על ידי 'readline-sync', אבל פה סימלצנו את זה על המסך! תנסה לכתוב בטרמינל למטה :)</span></div>
+<div class="code-line"><span class="line-num">3</span><span class="line-code"><span class="keyword">import</span> { isPositive } <span class="keyword">from</span> <span class="string">'./utils.js'</span>;</span><span class="line-story">מייבא פונקציית עזר מקובץ ה-utils לבדיקת תקינות.</span></div>
+<div class="code-line"><span class="line-num">4</span><span class="line-code"><span class="keyword">import</span> rl <span class="keyword">from</span> <span class="string">'readline-sync'</span>;</span><span class="line-story">החבילה החיצונית מתיקיית node_modules! בטרמינל שלנו כאן אנחנו לא באמת צריכים אותה, אבל זו הלוגיקה שלך.</span></div>
+<div class="code-line"><span class="line-num">5</span><span class="line-code"></span></div>
+<div class="code-line"><span class="line-num">6</span><span class="line-code">BankManager.<span class="function">addCustomer</span>(<span class="string">'123'</span>, <span class="string">'ישראל ישראלי'</span>);</span><span class="line-story">בדיוק כמו בפייתון, אנחנו משתמשים בפונקציות כדי לאתחל את המערכת עם נתוני דמה לבדיקה.</span></div>
+<div class="code-line"><span class="line-num">7</span><span class="line-code">BankManager.<span class="function">addCustomer</span>(<span class="string">'456'</span>, <span class="string">'משה כהן'</span>);</span></div>
+<div class="code-line"><span class="line-num">8</span><span class="line-code"></span></div>
+<div class="code-line"><span class="line-num">9</span><span class="line-code"><span class="comment">// הטרמינל מאזין לפקודות שאתה מקליד כאן...</span></span><span class="line-story">במציאות זה נעשה על ידי 'readline-sync', אבל פה סימלצנו את זה על המסך! תנסה לכתוב בטרמינל למטה :)</span></div>
+    `,
+    'package.json': `
+<div class="code-line"><span class="line-num">1</span><span class="line-code">{</span><span class="line-story">זה ה"תעודת זהות" של הפרויקט. מכיל את כל ההגדרות, הגרסאות, והחבילות המותקנות.</span></div>
+<div class="code-line"><span class="line-num">2</span><span class="line-code">  <span class="string">"name"</span>: <span class="string">"bank_account_manager"</span>,</span></div>
+<div class="code-line"><span class="line-num">3</span><span class="line-code">  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span></div>
+<div class="code-line"><span class="line-num">4</span><span class="line-code">  <span class="string">"type"</span>: <span class="string">"module"</span>,</span><span class="line-story">הגדרה קריטית! זה מה שמאפשר לנו להשתמש ב-import/export במקום require הישן.</span></div>
+<div class="code-line"><span class="line-num">5</span><span class="line-code">  <span class="string">"main"</span>: <span class="string">"main.js"</span>,</span></div>
+<div class="code-line"><span class="line-num">6</span><span class="line-code">  <span class="string">"dependencies"</span>: {</span></div>
+<div class="code-line"><span class="line-num">7</span><span class="line-code">    <span class="string">"readline-sync"</span>: <span class="string">"^1.4.10"</span></span><span class="line-story">הספרייה שהתקנת כדי לקבל קלט מהמשתמש דרך הטרמינל.</span></div>
+<div class="code-line"><span class="line-num">8</span><span class="line-code">  }</span></div>
+<div class="code-line"><span class="line-num">9</span><span class="line-code">}</span></div>
+    `,
+    'package-lock.json': `
+<div class="code-line"><span class="line-num">1</span><span class="line-code">{</span><span class="line-story">זה קובץ אוטומטי ש-NPM מייצר. אסור לגעת בו! הוא נועל את כל תתי-הגרסאות של החבילות כדי שחברי הצוות שלך יתקינו בדיוק אותו דבר.</span></div>
+<div class="code-line"><span class="line-num">2</span><span class="line-code">  <span class="string">"name"</span>: <span class="string">"bank_account_manager"</span>,</span></div>
+<div class="code-line"><span class="line-num">3</span><span class="line-code">  <span class="string">"lockfileVersion"</span>: 2,</span></div>
+<div class="code-line"><span class="line-num">4</span><span class="line-code">  ...</span></div>
+<div class="code-line"><span class="line-num">5</span><span class="line-code">}</span></div>
+    `,
+    'utils.js': `
+<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">export function</span> <span class="function">isPositive</span>(num) {</span><span class="line-story">קובץ utils ("כלים") משמש בדרך כלל לפונקציות עזר קטנות שחוזרות על עצמן בהרבה מקומות בפרויקט.</span></div>
+<div class="code-line"><span class="line-num">2</span><span class="line-code">    <span class="keyword">return</span> num > 0;</span></div>
+<div class="code-line"><span class="line-num">3</span><span class="line-code">}</span></div>
     `
 };
 

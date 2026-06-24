@@ -463,6 +463,22 @@ body.steigen-mode .dynamic-island {
     transition: background 0.2s;
 }
 
+.ide-folder {
+    padding: 8px 15px;
+    color: #c9d1d9;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.indented {
+    padding-left: 35px;
+}
+.indented-more {
+    padding-left: 55px;
+}
+
 .ide-file:hover {
     background: #21262d;
 }
