@@ -3,101 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JS Master - Interactive Dashboard</title>
-    <link rel="stylesheet" href="style.css?v=4">
+    <title>JS Master - מערכת הלמידה האולטימטיבית</title>
+    <link rel="stylesheet" href="style.css?v=5">
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Steigen On The Go (Dynamic Island) -->
-    <div id="dynamicIsland" class="dynamic-island" onclick="toggleSteigenMode()">
+    <!-- Dynamic Island -->
+    <div class="dynamic-island" onclick="toggleSteigenMode()">
         <span class="island-icon">🏝️</span>
         <span class="island-text">שטייגען בדרכים</span>
     </div>
 
-    <div class="dashboard" id="dashboard">
-        <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
-            <div class="logo">
-                <h2>💻 JS Master</h2>
-                <p>הדור הבא של הלמידה</p>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h1>🟨 JS Master</h1>
+            <p>מערכת למידה אולטימטיבית</p>
+        </div>
+        <div class="nav-section">
+            <span class="nav-label">יסודות</span>
+            <div class="nav-item active" onclick="scrollToSection('basics')">📐 JS Basics</div>
+            <div class="nav-item" onclick="scrollToSection('loops')">🔄 לולאות ותנאים</div>
+            <div class="nav-item" onclick="scrollToSection('functions')">🎯 פונקציות</div>
+        </div>
+        <div class="nav-section">
+            <span class="nav-label">מתקדם</span>
+            <div class="nav-item" onclick="scrollToSection('closures')">🔒 Closures</div>
+            <div class="nav-item" onclick="scrollToSection('factories')">🏭 Factories</div>
+            <div class="nav-item" onclick="scrollToSection('modules')">📦 Modules</div>
+            <div class="nav-item" onclick="scrollToSection('destructuring')">🧩 Destructuring</div>
+        </div>
+        <div class="nav-section">
+            <span class="nav-label">Web & API</span>
+            <div class="nav-item" onclick="scrollToSection('dom')">🌐 DOM</div>
+            <div class="nav-item" onclick="scrollToSection('async')">⚡ Async</div>
+            <div class="nav-item" onclick="scrollToSection('fetch')">🌍 Fetch API</div>
+        </div>
+        <div class="nav-section">
+            <span class="nav-label">מתודות מובנות</span>
+            <div class="nav-item" onclick="scrollToSection('arrayMethods')">📊 מערכים</div>
+            <div class="nav-item" onclick="scrollToSection('stringMethods')">📝 מחרוזות</div>
+            <div class="nav-item" onclick="scrollToSection('objectMethods')">🗂️ אובייקטים</div>
+        </div>
+        <div class="nav-section">
+            <span class="nav-label">כלים מיוחדים</span>
+            <div class="nav-item" onclick="scrollToSection('syntaxWarehouse')">🏪 מחסן סינטקסים</div>
+            <div class="nav-item" onclick="scrollToSection('pythonVsJs')">🐍 Python vs JS</div>
+            <div class="nav-item" onclick="scrollToSection('ironRules')">⚔️ כללי ברזל</div>
+            <div class="nav-item" onclick="scrollToSection('keyboard')">⌨️ קיצורי מקלדת</div>
+            <div class="nav-item" onclick="scrollToSection('libraries')">📚 ספריות</div>
+        </div>
+        <div class="nav-section">
+            <span class="nav-label">פרויקטים</span>
+            <div class="nav-item special" onclick="scrollToSection('bank')">🏦 Bank IDE</div>
+        </div>
+
+        <!-- Freezer Button -->
+        <div class="freezer-btn" onclick="openFreezer()">
+            <span>🧊</span>
+            <span>המקפיא (Python)</span>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content">
+        <!-- Section: יסודות -->
+        <div class="section-header" id="section-basics">
+            <h2>📚 יסודות JavaScript</h2>
+            <p>הבסיס שעליו הכל בנוי</p>
+        </div>
+        <div class="bubbles-grid">
+            <div class="bubble" onclick="openModal('basics')" id="basics">
+                <div class="bubble-icon">📐</div>
+                <h3>JS Basics & Variables</h3>
+                <p>let, const, var, טיפוסים בסיסיים</p>
             </div>
-            
-            <nav class="menu">
-                <button class="nav-item active" onclick="openSubject('overview')">🚁 מבט על</button>
-                <button class="nav-item" onclick="openSubject('bank')">🏦 Bank Account Manager</button>
-                <button class="nav-item" onclick="openSubject('closures')">🔒 Closures & Factories</button>
-                <button class="nav-item" onclick="openSubject('modules')">📦 Modules (ES6)</button>
-                <button class="nav-item" onclick="openSubject('cleancode')">🧹 Clean Code</button>
-            </nav>
-
-            <!-- Python Freezer -->
-            <div class="freezer-section">
-                <button class="freezer-btn" onclick="openFreezer()">
-                    <span class="freezer-icon">🧊</span>
-                    <span class="freezer-text">המקפיא (Python & SQL)</span>
-                </button>
+            <div class="bubble" onclick="openModal('loops')" id="loops">
+                <div class="bubble-icon">🔄</div>
+                <h3>לולאות ותנאים</h3>
+                <p>if/else, switch, ternary, for, for..of, for..in</p>
             </div>
-        </aside>
+            <div class="bubble" onclick="openModal('functions')" id="functions">
+                <div class="bubble-icon">🎯</div>
+                <h3>פונקציות</h3>
+                <p>Declaration, Expression, Arrow Functions</p>
+            </div>
+        </div>
 
-        <!-- Main Content -->
-        <main class="content" id="mainContent">
-            
-            <header class="top-header">
-                <h1>מרכז הלמידה: <span>JavaScript</span></h1>
-                <p>ברוך הבא למערכת האינטראקטיבית. לחץ על נושא כדי לצלול לעומק!</p>
-            </header>
+        <!-- Section: מתקדם -->
+        <div class="section-header" id="section-advanced">
+            <h2>🚀 נושאים מתקדמים</h2>
+            <p>הרמה הבאה של JavaScript</p>
+        </div>
+        <div class="bubbles-grid">
+            <div class="bubble" onclick="openModal('closures')" id="closures">
+                <div class="bubble-icon">🔒</div>
+                <h3>Closures</h3>
+                <p>פונקציות עם "זיכרון" וגישה למשתנים פרטיים</p>
+            </div>
+            <div class="bubble" onclick="openModal('factories')" id="factories">
+                <div class="bubble-icon">🏭</div>
+                <h3>Factory Functions</h3>
+                <p>יצירת אובייקטים ללא Classes וללא new</p>
+            </div>
+            <div class="bubble" onclick="openModal('modules')" id="modules">
+                <div class="bubble-icon">📦</div>
+                <h3>ES6 Modules</h3>
+                <p>חלוקת הקוד למספר קבצים (import/export)</p>
+            </div>
+            <div class="bubble" onclick="openModal('destructuring')" id="destructuring">
+                <div class="bubble-icon">🧩</div>
+                <h3>Destructuring & Spread</h3>
+                <p>פירוק מבנה, אופרטור הפיזור, Rest</p>
+            </div>
+        </div>
 
-            <!-- Welcome / Overview Bubbles -->
-            <section class="bubbles-grid active" id="overview-grid">
-                <div class="topic-bubble glass-card" onclick="openModal('closures')">
-                    <div class="bubble-icon">🔒</div>
-                    <h3>Closures</h3>
-                    <p>פונקציות עם "זיכרון" וגישה למשתנים פרטיים.</p>
-                </div>
-                <div class="topic-bubble glass-card" onclick="openModal('factories')">
-                    <div class="bubble-icon">🏭</div>
-                    <h3>Factories</h3>
-                    <p>יצירת אובייקטים ללא Classes וללא `new`.</p>
-                </div>
-                <div class="topic-bubble glass-card" onclick="openModal('modules')">
-                    <div class="bubble-icon">📦</div>
-                    <h3>Modules</h3>
-                    <p>חלוקת הקוד למספר קבצים (import/export).</p>
-                </div>
-                <div class="topic-bubble glass-card highlight-bubble" onclick="openModal('bank')">
-                    <div class="bubble-icon">🏦</div>
-                    <h3>פרויקט בנק</h3>
-                    <p>סימולטור אינטראקטיבי מלא.</p>
-                </div>
-            </section>
+        <!-- Section: Web & API -->
+        <div class="section-header" id="section-web">
+            <h2>🌐 Web & API</h2>
+            <p>הדפדפן, ה-DOM, וניהול בקשות</p>
+        </div>
+        <div class="bubbles-grid">
+            <div class="bubble" onclick="openModal('dom')" id="dom">
+                <div class="bubble-icon">🌐</div>
+                <h3>DOM Manipulation</h3>
+                <p>querySelector, events, createElement</p>
+            </div>
+            <div class="bubble" onclick="openModal('async')" id="async">
+                <div class="bubble-icon">⚡</div>
+                <h3>Async & Promises</h3>
+                <p>Promises, async/await, שרשור</p>
+            </div>
+            <div class="bubble" onclick="openModal('fetch')" id="fetch">
+                <div class="bubble-icon">🌍</div>
+                <h3>API & Fetch</h3>
+                <p>בקשות HTTP, JSON, טיפול בשגיאות</p>
+            </div>
+        </div>
 
-        </main>
-    </div>
+        <!-- Section: מתודות מובנות -->
+        <div class="section-header" id="section-methods">
+            <h2>🛠️ מתודות מובנות</h2>
+            <p>כל הפונקציות החשובות – כמו במאגר הקלאס רום שלך</p>
+        </div>
+        <div class="bubbles-grid">
+            <div class="bubble" onclick="openModal('arrayMethods')" id="arrayMethods">
+                <div class="bubble-icon">📊</div>
+                <h3>Array Methods</h3>
+                <p>forEach, map, filter, find, push, pop, reduce</p>
+            </div>
+            <div class="bubble" onclick="openModal('stringMethods')" id="stringMethods">
+                <div class="bubble-icon">📝</div>
+                <h3>String Methods</h3>
+                <p>split, slice, replace, includes, trim</p>
+            </div>
+            <div class="bubble" onclick="openModal('objectMethods')" id="objectMethods">
+                <div class="bubble-icon">🗂️</div>
+                <h3>Object Methods</h3>
+                <p>keys, values, entries, assign, freeze</p>
+            </div>
+        </div>
 
-    <!-- The Full-Page Modal System -->
-    <div id="fullPageModal" class="full-page-modal">
+        <!-- Section: כלים מיוחדים -->
+        <div class="section-header" id="section-tools">
+            <h2>🔧 כלים מיוחדים</h2>
+            <p>מחסנים, השוואות, כללים, קיצורים וספריות</p>
+        </div>
+        <div class="bubbles-grid">
+            <div class="bubble special-bubble" onclick="openModal('syntaxWarehouse')" id="syntaxWarehouse">
+                <div class="bubble-icon">🏪</div>
+                <h3>מחסן הסינטקסים</h3>
+                <p>כל הסינטקסים במקום אחד – חיפוש מהיר</p>
+            </div>
+            <div class="bubble special-bubble" onclick="openModal('pythonVsJs')" id="pythonVsJs">
+                <div class="bubble-icon">🐍↔️🟨</div>
+                <h3>Python מול JavaScript</h3>
+                <p>טבלת השוואה ענקית: "בפייתון X, ב-JS Y"</p>
+            </div>
+            <div class="bubble special-bubble" onclick="openModal('ironRules')" id="ironRules">
+                <div class="bubble-icon">⚔️</div>
+                <h3>כללי ברזל</h3>
+                <p>Iron Rules – חוקים שלא שוברים לעולם</p>
+            </div>
+            <div class="bubble special-bubble" onclick="openModal('keyboard')" id="keyboard">
+                <div class="bubble-icon">⌨️</div>
+                <h3>קיצורי מקלדת</h3>
+                <p>קיצורי VS Code עם אנימציות</p>
+            </div>
+            <div class="bubble special-bubble" onclick="openModal('libraries')" id="libraries">
+                <div class="bubble-icon">📚</div>
+                <h3>ספריות מיוחדות</h3>
+                <p>readline-sync, lodash, express, chalk</p>
+            </div>
+        </div>
+
+        <!-- Section: פרויקטים -->
+        <div class="section-header" id="section-projects">
+            <h2>🏗️ פרויקטים</h2>
+            <p>סביבת פיתוח אינטראקטיבית</p>
+        </div>
+        <div class="bubbles-grid">
+            <div class="bubble bank-bubble" onclick="openModal('bank')" id="bank">
+                <div class="bubble-icon">🏦</div>
+                <h3>Bank Account Simulator</h3>
+                <p>סביבת IDE מלאה עם טרמינל אינטראקטיבי</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Full Page Modal -->
+    <div class="full-page-modal" id="fullPageModal">
         <div class="modal-overlay" onclick="closeModal()"></div>
         <div class="modal-content glass-card">
-            <button class="close-btn" onclick="closeModal()">✖</button>
+            <button class="close-btn" onclick="closeModal()">✕</button>
             <div id="modalBody"></div>
         </div>
     </div>
 
-    <!-- The Python Freezer Modal -->
-    <div id="freezerModal" class="full-page-modal">
+    <!-- Python Freezer Modal -->
+    <div class="full-page-modal" id="freezerModal">
         <div class="modal-overlay" onclick="closeFreezer()"></div>
-        <div class="modal-content freezer-content glass-card">
-            <button class="close-btn" onclick="closeFreezer()">✖</button>
-            <h2>🧊 המקפיא: ארכיון Python ו-SQL</h2>
-            <p>כאן שמורים כל חומרי הלמידה הישנים שלך למקרה שתצטרך לשלוף אותם.</p>
-            <div class="freezer-links">
-                <a href="mobile_cards.html" class="freezer-link">📱 כרטיסיות Python (Mobile)</a>
-                <a href="syntax_warehouse.html" class="freezer-link">🧱 מחסן תחביר (Syntax)</a>
-                <a href="kb_flashcards.html" class="freezer-link">🃏 כרטיסיות נשק (Dictionary)</a>
-                <a href="kb_fastapi.html" class="freezer-link">🚀 מבוא ל-FastAPI</a>
-                <a href="kb_sql.html" class="freezer-link">🗄️ מסדי נתונים (SQL)</a>
-                <a href="kb_oop.html" class="freezer-link">🧬 תכנות מונחה עצמים (OOP)</a>
+        <div class="modal-content glass-card">
+            <button class="close-btn" onclick="closeFreezer()">✕</button>
+            <div class="freezer-content">
+                <h2>🧊 המקפיא של פייתון</h2>
+                <p>כל החומרים מהתקופה של פייתון, SQL ו-FastAPI שמורים כאן בקור.</p>
+                <div class="freezer-grid">
+                    <a href="mobile_cards.html" class="freezer-item">📱 Python Mobile Cards</a>
+                    <a href="syntax_warehouse.html" class="freezer-item">🧱 מחסן סינטקסים (Python)</a>
+                    <a href="kb_flashcards.html" class="freezer-item">🃏 Flash Cards</a>
+                    <a href="kb_fastapi.html" class="freezer-item">🚀 FastAPI Intro</a>
+                    <a href="kb_sql.html" class="freezer-item">🗄️ SQL Databases</a>
+                    <a href="kb_oop.html" class="freezer-item">🧬 OOP</a>
+                    <a href="glossary.html" class="freezer-item">📖 מילון מונחים</a>
+                    <a href="lesson_1.html" class="freezer-item">📝 שיעור 1</a>
+                    <a href="syntax.html" class="freezer-item">📋 Syntax Cheatsheet</a>
+                    <a href="roadmap.html" class="freezer-item">🗺️ Roadmap</a>
+                </div>
             </div>
         </div>
     </div>
@@ -107,6 +250,9 @@
         נוצר ע''י החייל 'נתן ליאני' באמצעות סיעתא דשמייא גדולה 🙌
     </footer>
 
-    <script src="app.js?v=4"></script>
+    <script src="content_part1.js?v=1"></script>
+    <script src="content_part2.js?v=1"></script>
+    <script src="content_part3.js?v=1"></script>
+    <script src="app.js?v=6"></script>
 </body>
 </html>

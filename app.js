@@ -4,14 +4,313 @@ function toggleSteigenMode() {
     isSteigenMode = !isSteigenMode;
     if (isSteigenMode) {
         document.body.classList.add('steigen-mode');
-        document.querySelector('.island-text').innerText = "יציאה משטייגען";
+        document.querySelector('.island-text').innerText = 'מצב רגיל';
     } else {
-        document.body.classList.remove('steigen-mode');
-        document.querySelector('.island-text').innerText = "שטייגען בדרכים";
+        document.body.classList.add('removing-steigen');
+        setTimeout(() => {
+            document.body.classList.remove('steigen-mode', 'removing-steigen');
+            document.querySelector('.island-text').innerText = 'שטייגען בדרכים';
+        }, 500);
     }
 }
 
-// --- Python Freezer ---
+function scrollToSection(id) {
+    const sectionMap = {
+        'basics': 'section-basics', 'loops': 'section-basics', 'functions': 'section-basics',
+        'closures': 'section-advanced', 'factories': 'section-advanced', 'modules': 'section-advanced', 'destructuring': 'section-advanced',
+        'dom': 'section-web', 'async': 'section-web', 'fetch': 'section-web',
+        'arrayMethods': 'section-methods', 'stringMethods': 'section-methods', 'objectMethods': 'section-methods',
+        'syntaxWarehouse': 'section-tools', 'pythonVsJs': 'section-tools', 'ironRules': 'section-tools', 'keyboard': 'section-tools', 'libraries': 'section-tools',
+        'bank': 'section-projects'
+    };
+    
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    const targetId = sectionMap[id] || id;
+    const targetElement = document.getElementById(targetId);
+    if(targetElement) {
+        window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+        });
+    }
+}
+
+// --- Bank IDE Data ---
+const bankIdeData = {
+    title: "Bank Account Simulator 🏦 (IDE Mode)",
+    content: `
+        <div class="ide-container">
+            <div class="ide-top">
+                <div class="ide-sidebar">
+                    <div class="ide-sidebar-header">BANK_ACCOUNT... 📄 📁 🔄 ⚙</div>
+                    <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
+                    <div id="folder-git" style="display:none;"></div>
+                    
+                    <div class="ide-folder" onclick="toggleFolder('folder-factorys', this)">▾ Factorys</div>
+                    <div id="folder-factorys">
+                        <div class="ide-file indented" onclick="switchIdeFile('Account_Factory.js')"><span style="color:#f7df1e">JS</span> Account_Factory.js</div>
+                        <div class="ide-file indented" onclick="switchIdeFile('Customer_Factory.js')"><span style="color:#f7df1e">JS</span> Customer_Factory.js</div>
+                    </div>
+                    
+                    <div class="ide-folder" onclick="toggleFolder('folder-modules', this)">▾ node_modules</div>
+                    <div id="folder-modules">
+                        <div class="ide-folder indented" onclick="toggleFolder('folder-readline', this)">▸ readline-sync</div>
+                        <div id="folder-readline" style="display:none;"></div>
+                        <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
+                    </div>
+                    
+                    <div class="ide-file active" onclick="switchIdeFile('BankManager.js')"><span style="color:#f7df1e">JS</span> BankManager.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
+                    <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
+                    <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
+                </div>
+                
+                <div class="ide-editor" id="ideEditorContent">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+            <div class="ide-terminal">
+                <div class="term-header"><span>bash - BankManager</span></div>
+                <div class="term-output" id="terminalOutput">
+                    <p>> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות.</p>
+                </div>
+                <div class="term-input-wrapper">
+                    <span class="term-prompt">natan@ubuntu:~/bank$</span>
+                    <input type="text" class="term-input" id="terminalInput" autocomplete="off" spellcheck="false" onkeypress="handleTerminal(event)">
+                </div>
+            </div>
+        </div>
+    `
+};
+
+// --- Merge Content ---
+// contentPart1, contentPart2, contentPart3 are loaded from external files in index.html
+const modalData = {
+    ...contentPart1,
+    ...contentPart2,
+    ...contentPart3,
+    bank: bankIdeData
+};
+
+// --- Modal Logic ---
+function openModal(topic) {
+    const data = modalData[topic];
+    if (!data) return;
+
+    const modalBody = document.getElementById('modalBody');
+    modalBody.innerHTML = `
+        <div class="modal-header">
+            <h2>${data.title}</h2>
+        </div>
+        ${data.content}
+    `;
+
+    document.getElementById('fullPageModal').classList.add('open');
+    document.body.style.overflow = 'hidden'; // Prevent background scroll
+}
+
+function closeModal() {
+    document.getElementById('fullPageModal').classList.remove('open');
+    document.body.style.overflow = 'auto'; // Restore scroll
+}
+
+// --- IDE Logic ---
+const fileContents = {
+    'BankManager.js': `<span class="keyword">import</span> { Account } <span class="keyword">from</span> <span class="string">'./Factorys/Account_Factory.js'</span>;
+<span class="keyword">import</span> { Customer } <span class="keyword">from</span> <span class="string">'./Factorys/Customer_Factory.js'</span>;
+
+<span class="keyword">export const</span> BankManager = {
+    customers: [],
+    
+    addCustomer(id, name) {
+        <span class="keyword">const</span> newCustomer = Customer(id, name);
+        <span class="keyword">this</span>.customers.push(newCustomer);
+        <span class="keyword">return</span> newCustomer;
+    },
+
+    getCustomer(id) {
+        <span class="keyword">return this</span>.customers.find(c => c.id === id);
+    }
+};`,
+    'main.js': `<span class="keyword">import</span> { BankManager } <span class="keyword">from</span> <span class="string">'./BankManager.js'</span>;
+
+<span class="comment">// 1. יצירת לקוחות</span>
+<span class="keyword">const</span> c1 = BankManager.addCustomer(<span class="number">1</span>, <span class="string">"Natan"</span>);
+
+<span class="comment">// 2. הפקדת כספים באמצעות מתודות</span>
+c1.account.deposit(<span class="number">5000</span>);
+c1.account.withdraw(<span class="number">200</span>);
+
+<span class="comment">// 3. בדיקת יתרה</span>
+console.log(<span class="string">"Balance:"</span>, c1.account.getBalance());`,
+    'Account_Factory.js': `<span class="comment">// Factory Function with Closure</span>
+<span class="keyword">export function</span> Account(initialBalance = <span class="number">0</span>) {
+    <span class="comment">// Private state</span>
+    <span class="keyword">let</span> balance = initialBalance;
+
+    <span class="keyword">return</span> {
+        deposit(amount) {
+            <span class="keyword">if</span> (amount > <span class="number">0</span>) {
+                balance += amount;
+                <span class="keyword">return true</span>;
+            }
+            <span class="keyword">return false</span>;
+        },
+        withdraw(amount) {
+            <span class="keyword">if</span> (amount > <span class="number">0</span> && balance >= amount) {
+                balance -= amount;
+                <span class="keyword">return true</span>;
+            }
+            <span class="keyword">return false</span>;
+        },
+        getBalance() {
+            <span class="keyword">return</span> balance;
+        }
+    };
+}`,
+    'Customer_Factory.js': `<span class="keyword">import</span> { Account } <span class="keyword">from</span> <span class="string">'./Account_Factory.js'</span>;
+
+<span class="keyword">export function</span> Customer(id, name) {
+    <span class="keyword">return</span> {
+        id,
+        name,
+        account: Account(<span class="number">0</span>)
+    };
+}`,
+    'package.json': `{
+  <span class="string">"name"</span>: <span class="string">"bank-simulator"</span>,
+  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,
+  <span class="string">"type"</span>: <span class="string">"module"</span>,
+  <span class="string">"dependencies"</span>: {
+    <span class="string">"readline-sync"</span>: <span class="string">"^1.4.10"</span>
+  }
+}`,
+    'package-lock.json': `<span class="comment">// קובץ אוטומטי המכיל את גרסאות העץ המדויקות של התלויות.</span>
+<span class="comment">// אין לערוך קובץ זה ידנית!</span>
+{
+  <span class="string">"name"</span>: <span class="string">"bank-simulator"</span>,
+  <span class="string">"lockfileVersion"</span>: <span class="number">3</span>,
+  <span class="string">"requires"</span>: <span class="keyword">true</span>,
+  <span class="string">"packages"</span>: { ... }
+}`,
+    'utils.js': `<span class="keyword">export const</span> isPositive = (num) => num > <span class="number">0</span>;
+<span class="keyword">export const</span> formatCurrency = (amount) => \`\$\${amount.toFixed(2)}\`;`
+};
+
+const storyMap = {
+    'BankManager.js': [
+        "מייבאים את תבניות הלקוח והחשבון",
+        "",
+        "המנהל (אובייקט גלובלי) שמחזיק את כל הלקוחות",
+        "",
+        "",
+        "פונקציה ליצירת לקוח חדש",
+        "שימוש ב-Factory ליצירת האובייקט",
+        "שמירת הלקוח במערך",
+        "החזרת הלקוח שנוצר",
+        "",
+        "",
+        "פונקציית חיפוש לקוח",
+        "שימוש במתודת מערך find עם פונקציית חץ",
+        ""
+    ],
+    'main.js': [
+        "מייבאים את אובייקט הניהול המרכזי",
+        "",
+        "",
+        "יוצרים לקוח מספר 1",
+        "",
+        "",
+        "הפקדת 5000",
+        "משיכת 200",
+        "",
+        "",
+        "הדפסת היתרה הסופית - אין גישה ישירה ל-balance!"
+    ]
+};
+
+function switchIdeFile(filename) {
+    document.querySelectorAll('.ide-file').forEach(el => {
+        el.classList.remove('active');
+        if (el.innerText.includes(filename)) {
+            el.classList.add('active');
+        }
+    });
+
+    const content = fileContents[filename] || '<span class="comment">// קובץ ריק</span>';
+    const stories = storyMap[filename] || [];
+    
+    const lines = content.split('\\n');
+    let html = '';
+    
+    lines.forEach((line, index) => {
+        const storyHtml = stories[index] ? \`<div class="line-story">\${stories[index]}</div>\` : '';
+        html += \`<div class="code-line"><div class="line-num">\${index + 1}</div><div class="line-code">\${line}</div>\${storyHtml}</div>\`;
+    });
+
+    document.getElementById('ideEditorContent').innerHTML = html;
+}
+
+function toggleFolder(folderId, element) {
+    const folder = document.getElementById(folderId);
+    if (folder.style.display === 'none') {
+        folder.style.display = 'block';
+        element.innerText = element.innerText.replace('▸', '▾');
+    } else {
+        folder.style.display = 'none';
+        element.innerText = element.innerText.replace('▾', '▸');
+    }
+}
+
+// --- Terminal Simulator ---
+let customers = [];
+function handleTerminal(event) {
+    if (event.key === 'Enter') {
+        const input = event.target.value.trim();
+        event.target.value = '';
+        
+        const output = document.getElementById('terminalOutput');
+        output.innerHTML += \`<p><span class="term-prompt">natan@ubuntu:~/bank$</span> \${input}</p>\`;
+        
+        const args = input.split(' ');
+        const cmd = args[0].toLowerCase();
+        
+        if (cmd === 'help') {
+            output.innerHTML += \`<p>פקודות: add_customer [id] [name], deposit [id] [amount], show_all, clear</p>\`;
+        } else if (cmd === 'clear') {
+            output.innerHTML = '';
+        } else if (cmd === 'add_customer') {
+            if (args.length < 3) {
+                output.innerHTML += \`<p class="term-error">Error: Missing arguments.</p>\`;
+            } else {
+                customers.push({ id: args[1], name: args[2], balance: 0 });
+                output.innerHTML += \`<p class="term-success">Customer \${args[2]} added successfully.</p>\`;
+            }
+        } else if (cmd === 'deposit') {
+            const c = customers.find(x => x.id === args[1]);
+            if (!c) {
+                output.innerHTML += \`<p class="term-error">Error: Customer not found.</p>\`;
+            } else {
+                c.balance += Number(args[2] || 0);
+                output.innerHTML += \`<p class="term-success">Deposited \${args[2]} to \${c.name}. New balance: \${c.balance}</p>\`;
+            }
+        } else if (cmd === 'show_all') {
+            output.innerHTML += \`<p>Total customers: \${customers.length}</p>\`;
+            customers.forEach(c => {
+                output.innerHTML += \`<p>- [\${c.id}] \${c.name}: $\${c.balance}</p>\`;
+            });
+        } else if (cmd !== '') {
+            output.innerHTML += \`<p class="term-error">bash: \${cmd}: command not found</p>\`;
+        }
+        
+        output.scrollTop = output.scrollHeight;
+    }
+}
+
+// --- Freezer Logic ---
 function openFreezer() {
     document.getElementById('freezerModal').classList.add('open');
 }
@@ -19,394 +318,7 @@ function closeFreezer() {
     document.getElementById('freezerModal').classList.remove('open');
 }
 
-// --- Main Bubble Modals Data ---
-const modalData = {
-    closures: {
-        title: "🔒 Closures (סגירות)",
-        content: `
-            <div class="modal-grid">
-                <div class="modal-card">
-                    <h4>📝 מה זה בכלל?</h4>
-                    <p>פונקציה ש"זוכרת" את סביבת היצירה שלה גם אחרי שהיא סיימה לרוץ. זה מאפשר ליצור משתנים "פרטיים" שלא נגישים מבחוץ.</p>
-                </div>
-                <div class="modal-card">
-                    <h4>💻 דוגמת קוד (Syntax)</h4>
-                    <pre>
-function createCounter() {
-    let count = 0; // State is protected!
-    return function() {
-        count++;
-        return count;
-    }
-}
-const myCounter = createCounter();
-console.log(myCounter()); // 1</pre>
-                </div>
-                <div class="modal-card">
-                    <h4>💡 טיפ למקצוענים</h4>
-                    <p>קלוז'ר הוא התחליף של JavaScript לתכנות מונחה עצמים קלאסי עם <code>private</code> attributes.</p>
-                </div>
-            </div>
-        `
-    },
-    factories: {
-        title: "🏭 Factory Functions",
-        content: `
-            <div class="modal-grid">
-                <div class="modal-card">
-                    <h4>📝 מה זה בכלל?</h4>
-                    <p>פונקציה שפשוט בונה ומחזירה אובייקט. ללא שימוש במחלקה (Class) וללא שימוש במילה <code>new</code>.</p>
-                </div>
-                <div class="modal-card">
-                    <h4>💻 דוגמת קוד (Syntax)</h4>
-                    <pre>
-function createUser(name, age) {
-    return {
-        name: name,
-        age: age,
-        greet: () => console.log('Hi ' + name)
-    };
-}
-const user1 = createUser('Natan', 25);</pre>
-                </div>
-                <div class="modal-card">
-                    <h4>❓ חידון מהיר</h4>
-                    <p><strong>למה לא Class?</strong> כי ב-Factory אין בעיות עם המילה <code>this</code> שמצביעה בטעות לאובייקט אחר!</p>
-                </div>
-            </div>
-        `
-    },
-    modules: {
-        title: "📦 ES6 Modules",
-        content: `
-            <div class="modal-grid">
-                <div class="modal-card">
-                    <h4>📝 מה זה בכלל?</h4>
-                    <p>פיצול קוד לקבצים נפרדים. ב-Node השתמשנו ב-<code>require</code> (CommonJS), היום ב-JS מודרני משתמשים ב-<code>import/export</code>.</p>
-                </div>
-                <div class="modal-card">
-                    <h4>💻 דוגמת קוד (Syntax)</h4>
-                    <pre>
-// Exporting (file1.js)
-export const apiURL = 'https://...';
-export function fetchData() { ... }
-
-// Importing (file2.js)
-import { apiURL, fetchData } from './file1.js';</pre>
-                </div>
-                <div class="modal-card">
-                    <h4>⚠️ מקרה קצה (Edge Case)</h4>
-                    <p>כדי שזה יעבוד בדפדפן או ב-Node, חובה להגדיר <code>"type": "module"</code> בקובץ ה-package.json שלך!</p>
-                </div>
-            </div>
-        `
-    },
-    bank: {
-        title: "Bank Account Simulator 🏦 (IDE Mode)",
-        content: `
-            <div class="ide-container">
-                <div class="ide-top">
-                    <!-- File Explorer Sidebar -->
-                    <div class="ide-sidebar">
-                        <div class="ide-sidebar-header">BANK_ACCOUNT... 📄 📁 🔄 ⚙</div>
-                        <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
-                        <div id="folder-git" style="display:none;"></div>
-                        
-                        <div class="ide-folder" onclick="toggleFolder('folder-factorys', this)">▾ Factorys</div>
-                        <div id="folder-factorys">
-                            <div class="ide-file indented" onclick="switchIdeFile('Account_Factory.js')"><span style="color:#f7df1e">JS</span> Account_Factory.js</div>
-                            <div class="ide-file indented" onclick="switchIdeFile('Customer_Factory.js')"><span style="color:#f7df1e">JS</span> Customer_Factory.js</div>
-                        </div>
-                        
-                        <div class="ide-folder" onclick="toggleFolder('folder-modules', this)">▾ node_modules</div>
-                        <div id="folder-modules">
-                            <div class="ide-folder indented" onclick="toggleFolder('folder-readline', this)">▸ readline-sync</div>
-                            <div id="folder-readline" style="display:none;"></div>
-                            <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
-                        </div>
-                        
-                        <div class="ide-file active" onclick="switchIdeFile('BankManager.js')"><span style="color:#f7df1e">JS</span> BankManager.js</div>
-                        <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
-                        <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
-                        <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
-                        <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
-                    </div>
-                    
-                    <!-- Code Editor View with Story -->
-                    <div class="ide-editor" id="ideEditorContent">
-                        <!-- Content dynamically injected here -->
-                    </div>
-                </div>
-                
-                <!-- Interactive Terminal -->
-                <div class="ide-terminal">
-                    <div class="term-header">
-                        <span>bash - BankManager</span>
-                    </div>
-                    <div class="term-output" id="terminalOutput">
-                        <p>> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות.</p>
-                    </div>
-                    <div class="term-input-wrapper">
-                        <span class="term-prompt">❯</span>
-                        <input type="text" class="term-input" id="terminalInput" autocomplete="off" spellcheck="false" placeholder="Type command... (e.g. 'deposit')">
-                    </div>
-                </div>
-            </div>
-        `
-    }
+// Initial switch to default file
+window.onload = () => {
+    switchIdeFile('BankManager.js');
 };
-
-function openModal(topic) {
-    const data = modalData[topic];
-    if(!data) return;
-
-    document.getElementById('modalBody').innerHTML = `
-        <div class="modal-header" style="${topic === 'bank' ? 'margin-bottom: 10px;' : ''}">
-            <h2>${data.title}</h2>
-        </div>
-        ${data.content}
-    `;
-    
-    document.getElementById('fullPageModal').classList.add('open');
-
-    // Attach Bank Simulator logic if bank modal is opened
-    if(topic === 'bank') {
-        initBankSimulator();
-    }
-}
-
-function closeModal() {
-    document.getElementById('fullPageModal').classList.remove('open');
-}
-
-// --- Bank Simulator IDE Logic ---
-
-const ideFiles = {
-    'Account_Factory.js': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">export function</span> <span class="function">createAccount</span>() {</span><span class="line-story">המפעל הבסיסי ביותר! מייצר לנו אובייקט עם יתרה התחלתית של 0.</span></div>
-<div class="code-line"><span class="line-num">2</span><span class="line-code">    <span class="keyword">let</span> <span class="variable">balance</span> = 0;</span><span class="line-story">משתנה פרטי בתוך ה-Closure, כך שאף אחד לא יכול לערוך אותו ישירות!</span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code">    <span class="keyword">return</span> {</span></div>
-<div class="code-line"><span class="line-num">4</span><span class="line-code">        <span class="function">getBalance</span>: () => balance,</span></div>
-<div class="code-line"><span class="line-num">5</span><span class="line-code">        <span class="function">deposit</span>: (amount) => {</span></div>
-<div class="code-line"><span class="line-num">6</span><span class="line-code">            balance += amount;</span><span class="line-story">כאן מתבצעת הלוגיקה של ההפקדה, והיא מעדכנת את המשתנה המוגן שלנו.</span></div>
-<div class="code-line"><span class="line-num">7</span><span class="line-code">            <span class="keyword">return</span> balance;</span></div>
-<div class="code-line"><span class="line-num">8</span><span class="line-code">        }</span></div>
-<div class="code-line"><span class="line-num">9</span><span class="line-code">    };</span></div>
-<div class="code-line"><span class="line-num">10</span><span class="line-code">}</span></div>
-    `,
-    'BankManager.js': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./Factorys/Customer_Factory.js'</span>;</span><span class="line-story">כאן אנחנו מייבאים את פונקציית המפעל שלנו. במקום לכתוב הכל בקובץ אחד ענק ומבולגן, אנחנו עובדים חכם עם Modules!</span></div>
-<div class="code-line"><span class="line-num">2</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code"><span class="keyword">let</span> <span class="variable">customers</span> = [];</span><span class="line-story">זהו ה"מסד נתונים" הזמני שלנו. זה מערך פשוט שבו נשמור את כל הלקוחות. הוא לא נגיש מבחוץ ישירות, רק דרך הפונקציות שאנחנו מייצאים.</span></div>
-<div class="code-line"><span class="line-num">4</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">5</span><span class="line-code"><span class="keyword">export function</span> <span class="function">addCustomer</span>(id, fullName) {</span><span class="line-story">הנה הפונקציה שאחראית להוסיף לקוח חדש. המילה 'export' אומרת: "מי שיטען את הקובץ הזה, יוכל להשתמש בפונקציה הזו!".</span></div>
-<div class="code-line"><span class="line-num">6</span><span class="line-code">    <span class="keyword">const</span> newCustomer = <span class="function">createCustomer</span>(id, fullName);</span><span class="line-story">אנחנו קוראים ל-Factory שהבאנו מקודם, נותנים לו תעודת זהות ושם, ומקבלים חזרה אובייקט לקוח מוכן עם חשבון בנק מצורף.</span></div>
-<div class="code-line"><span class="line-num">7</span><span class="line-code">    customers.<span class="function">push</span>(newCustomer);</span><span class="line-story">ודוחפים אותו למערך שלנו!</span></div>
-<div class="code-line"><span class="line-num">8</span><span class="line-code">}</span></div>
-<div class="code-line"><span class="line-num">9</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">10</span><span class="line-code"><span class="keyword">export function</span> <span class="function">getCustomers</span>() {</span><span class="line-story">פונקציה פשוטה שמחזירה את המערך כדי שנוכל להדפיס אותו בטרמינל שלנו בהמשך.</span></div>
-<div class="code-line"><span class="line-num">11</span><span class="line-code">    <span class="keyword">return</span> customers;</span></div>
-<div class="code-line"><span class="line-num">12</span><span class="line-code">}</span></div>
-    `,
-    'Customer_Factory.js': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">import</span> { createAccount } <span class="keyword">from</span> <span class="string">'./Account_Factory.js'</span>;</span><span class="line-story">כמו לגו! הלקוח צריך חשבון, אז אנחנו מביאים את המפעל שמייצר חשבונות מתוך אותה תיקייה (Factorys).</span></div>
-<div class="code-line"><span class="line-num">2</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code"><span class="keyword">export function</span> <span class="function">createCustomer</span>(id, fullName) {</span><span class="line-story">זו הפונקציה שאחראית לייצר את אובייקט הלקוח. תשים לב שאין פה שימוש במחלקה (Class), הכל פשוט וברור!</span></div>
-<div class="code-line"><span class="line-num">4</span><span class="line-code">    <span class="keyword">return</span> {</span><span class="line-story">אנחנו מחזירים אובייקט JS טהור.</span></div>
-<div class="code-line"><span class="line-num">5</span><span class="line-code">        id: id,</span></div>
-<div class="code-line"><span class="line-num">6</span><span class="line-code">        fullName: fullName,</span></div>
-<div class="code-line"><span class="line-num">7</span><span class="line-code">        account: <span class="function">createAccount</span>()</span><span class="line-story">וכאן הקסם! בתוך הלקוח אנחנו יוצרים אובייקט נוסף של 'חשבון', עם יתרה ופעולות של הפקדה.</span></div>
-<div class="code-line"><span class="line-num">8</span><span class="line-code">    };</span></div>
-<div class="code-line"><span class="line-num">9</span><span class="line-code">}</span></div>
-    `,
-    'main.js': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="comment">// קובץ ההרצה הראשי (Entry Point)</span></span></div>
-<div class="code-line"><span class="line-num">2</span><span class="line-code"><span class="keyword">import</span> * <span class="keyword">as</span> BankManager <span class="keyword">from</span> <span class="string">'./BankManager.js'</span>;</span><span class="line-story">כאן אנחנו מייבאים את כל מה שהבנק מציע תחת משתנה אחד שקוראים לו BankManager.</span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code"><span class="keyword">import</span> { isPositive } <span class="keyword">from</span> <span class="string">'./utils.js'</span>;</span><span class="line-story">מייבא פונקציית עזר מקובץ ה-utils לבדיקת תקינות.</span></div>
-<div class="code-line"><span class="line-num">4</span><span class="line-code"><span class="keyword">import</span> rl <span class="keyword">from</span> <span class="string">'readline-sync'</span>;</span><span class="line-story">החבילה החיצונית מתיקיית node_modules! בטרמינל שלנו כאן אנחנו לא באמת צריכים אותה, אבל זו הלוגיקה שלך.</span></div>
-<div class="code-line"><span class="line-num">5</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">6</span><span class="line-code">BankManager.<span class="function">addCustomer</span>(<span class="string">'123'</span>, <span class="string">'ישראל ישראלי'</span>);</span><span class="line-story">בדיוק כמו בפייתון, אנחנו משתמשים בפונקציות כדי לאתחל את המערכת עם נתוני דמה לבדיקה.</span></div>
-<div class="code-line"><span class="line-num">7</span><span class="line-code">BankManager.<span class="function">addCustomer</span>(<span class="string">'456'</span>, <span class="string">'משה כהן'</span>);</span></div>
-<div class="code-line"><span class="line-num">8</span><span class="line-code"></span></div>
-<div class="code-line"><span class="line-num">9</span><span class="line-code"><span class="comment">// הטרמינל מאזין לפקודות שאתה מקליד כאן...</span></span><span class="line-story">במציאות זה נעשה על ידי 'readline-sync', אבל פה סימלצנו את זה על המסך! תנסה לכתוב בטרמינל למטה :)</span></div>
-    `,
-    'package.json': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code">{</span><span class="line-story">זה ה"תעודת זהות" של הפרויקט. מכיל את כל ההגדרות, הגרסאות, והחבילות המותקנות.</span></div>
-<div class="code-line"><span class="line-num">2</span><span class="line-code">  <span class="string">"name"</span>: <span class="string">"bank_account_manager"</span>,</span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code">  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span></div>
-<div class="code-line"><span class="line-num">4</span><span class="line-code">  <span class="string">"type"</span>: <span class="string">"module"</span>,</span><span class="line-story">הגדרה קריטית! זה מה שמאפשר לנו להשתמש ב-import/export במקום require הישן.</span></div>
-<div class="code-line"><span class="line-num">5</span><span class="line-code">  <span class="string">"main"</span>: <span class="string">"main.js"</span>,</span></div>
-<div class="code-line"><span class="line-num">6</span><span class="line-code">  <span class="string">"dependencies"</span>: {</span></div>
-<div class="code-line"><span class="line-num">7</span><span class="line-code">    <span class="string">"readline-sync"</span>: <span class="string">"^1.4.10"</span></span><span class="line-story">הספרייה שהתקנת כדי לקבל קלט מהמשתמש דרך הטרמינל.</span></div>
-<div class="code-line"><span class="line-num">8</span><span class="line-code">  }</span></div>
-<div class="code-line"><span class="line-num">9</span><span class="line-code">}</span></div>
-    `,
-    'package-lock.json': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code">{</span><span class="line-story">זה קובץ אוטומטי ש-NPM מייצר. אסור לגעת בו! הוא נועל את כל תתי-הגרסאות של החבילות כדי שחברי הצוות שלך יתקינו בדיוק אותו דבר.</span></div>
-<div class="code-line"><span class="line-num">2</span><span class="line-code">  <span class="string">"name"</span>: <span class="string">"bank_account_manager"</span>,</span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code">  <span class="string">"lockfileVersion"</span>: 2,</span></div>
-<div class="code-line"><span class="line-num">4</span><span class="line-code">  ...</span></div>
-<div class="code-line"><span class="line-num">5</span><span class="line-code">}</span></div>
-    `,
-    'utils.js': `
-<div class="code-line"><span class="line-num">1</span><span class="line-code"><span class="keyword">export function</span> <span class="function">isPositive</span>(num) {</span><span class="line-story">קובץ utils ("כלים") משמש בדרך כלל לפונקציות עזר קטנות שחוזרות על עצמן בהרבה מקומות בפרויקט.</span></div>
-<div class="code-line"><span class="line-num">2</span><span class="line-code">    <span class="keyword">return</span> num > 0;</span></div>
-<div class="code-line"><span class="line-num">3</span><span class="line-code">}</span></div>
-    `
-};
-
-function toggleFolder(folderId, element) {
-    const folder = document.getElementById(folderId);
-    if (!folder) return;
-    
-    if (folder.style.display === 'none') {
-        folder.style.display = 'block';
-        element.innerHTML = element.innerHTML.replace('▸', '▾');
-    } else {
-        folder.style.display = 'none';
-        element.innerHTML = element.innerHTML.replace('▾', '▸');
-    }
-}
-
-function switchIdeFile(fileName) {
-    // Update active tab
-    document.querySelectorAll('.ide-file').forEach(f => {
-        if(f.innerText.includes(fileName)) {
-            f.classList.add('active');
-        } else {
-            f.classList.remove('active');
-        }
-    });
-    
-    // Update content
-    const content = ideFiles[fileName] || 'File not found.';
-    document.getElementById('ideEditorContent').innerHTML = content;
-}
-
-function initBankSimulator() {
-    switchIdeFile('BankManager.js'); // Initial file load
-
-    // Bank Logic Setup
-    const BankManager = (function() {
-        let customers = [];
-        function createAccount() {
-            let balance = 0;
-            return {
-                getBalance: () => balance,
-                deposit: (amount) => {
-                    balance += amount;
-                    return balance;
-                }
-            };
-        }
-        function createCustomer(id, fullName) {
-            return { id, fullName, account: createAccount() };
-        }
-        return {
-            addCustomer: (id, name) => { customers.push(createCustomer(id, name)); },
-            getCustomers: () => customers,
-            deposit: (id, amount) => {
-                const c = customers.find(c => c.id === id);
-                if(c) return c.account.deposit(amount);
-                throw new Error("Customer not found. (ת" + "ז לא קיימת)");
-            },
-            getStats: () => {
-                const total = customers.reduce((sum, c) => sum + c.account.getBalance(), 0);
-                return { count: customers.length, total };
-            }
-        };
-    })();
-
-    // Init some data
-    BankManager.addCustomer('123', 'ישראל ישראלי');
-    BankManager.addCustomer('456', 'משה כהן');
-    BankManager.deposit('123', 5000);
-
-    const termOut = document.getElementById('terminalOutput');
-    const termInput = document.getElementById('terminalInput');
-
-    function print(msg, type = '') {
-        const p = document.createElement('p');
-        p.innerText = '> ' + msg;
-        if(type === 'error') p.classList.add('term-error');
-        if(type === 'success') p.classList.add('term-success');
-        termOut.appendChild(p);
-        termOut.scrollTop = termOut.scrollHeight;
-    }
-
-    const availableCommands = ['help', 'show_all', 'stats', 'deposit', 'add_customer', 'clear'];
-
-    termInput.addEventListener('keydown', function(e) {
-        if (e.key === 'Tab') {
-            e.preventDefault(); // Prevent focus shift
-            const val = termInput.value.trim();
-            const match = availableCommands.find(cmd => cmd.startsWith(val));
-            if (match) termInput.value = match + ' ';
-            return;
-        }
-
-        if (e.key === 'Enter') {
-            const rawCmd = termInput.value.trim();
-            if (!rawCmd) return;
-            
-            print(rawCmd); // Echo command
-            termInput.value = '';
-            
-            const args = rawCmd.split(' ');
-            const cmd = args[0].toLowerCase();
-
-            try {
-                if (cmd === 'help') {
-                    print('--- פקודות זמינות ---', 'success');
-                    print('show_all : הצג את כל הלקוחות');
-                    print('stats : הצג סטטיסטיקות מנהל');
-                    print('deposit [id] [amount] : הפקדת כסף');
-                    print('add_customer [id] [name] : הוספת לקוח (ללא רווחים בשם)');
-                    print('clear : ניקוי מסך');
-                } 
-                else if (cmd === 'clear') {
-                    termOut.innerHTML = '';
-                }
-                else if (cmd === 'show_all') {
-                    const custs = BankManager.getCustomers();
-                    print(`--- רשימת לקוחות (${custs.length}) ---`, 'success');
-                    custs.forEach(c => {
-                        print(`[${c.id}] ${c.fullName} - יתרה: ₪${c.account.getBalance()}`);
-                    });
-                }
-                else if (cmd === 'stats') {
-                    const stats = BankManager.getStats();
-                    print(`סה"כ לקוחות: ${stats.count} | סה"כ כסף בבנק: ₪${stats.total}`, 'success');
-                }
-                else if (cmd === 'deposit') {
-                    if(args.length < 3) throw new Error("Usage: deposit [id] [amount]");
-                    const id = args[1];
-                    const amount = Number(args[2]);
-                    if(isNaN(amount) || amount <= 0) throw new Error("Amount must be a positive number.");
-                    
-                    const newBal = BankManager.deposit(id, amount);
-                    print(`הופקדו ₪${amount} בהצלחה. יתרה חדשה: ₪${newBal}`, 'success');
-                }
-                else if (cmd === 'add_customer') {
-                    if(args.length < 3) throw new Error("Usage: add_customer [id] [name_without_spaces]");
-                    BankManager.addCustomer(args[1], args[2]);
-                    print(`לקוח ${args[2]} נוצר בהצלחה עם ת"ז ${args[1]}!`, 'success');
-                }
-                else {
-                    print(`פקודה לא חוקית: ${cmd}. הקלד 'help'.`, 'error');
-                }
-            } catch (err) {
-                print(err.message, 'error');
-            }
-        }
-    });
-}
-
-// Sidebar Navigation UI Update
-function openSubject(targetId) {
-    document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-    event.target.classList.add('active');
-    if(targetId !== 'overview' && targetId !== 'cleancode') {
-        openModal(targetId);
-    }
-}
