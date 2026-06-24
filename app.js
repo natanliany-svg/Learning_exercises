@@ -111,6 +111,10 @@ function openModal(topic) {
 
     document.getElementById('fullPageModal').classList.add('open');
     document.body.style.overflow = 'hidden';
+    
+    if (topic === 'bank') {
+        setTimeout(() => switchIdeFile('BankManager.js'), 50);
+    }
 }
 
 function closeModal() {
@@ -252,7 +256,10 @@ function switchIdeFile(filename) {
         html += `<div class="code-line"><div class="line-num">${index + 1}</div><div class="line-code">${line}</div>${storyHtml}</div>`;
     });
 
-    document.getElementById('ideEditorContent').innerHTML = html;
+    const editorContent = document.getElementById('ideEditorContent');
+    if (editorContent) {
+        editorContent.innerHTML = html;
+    }
 }
 
 function toggleFolder(folderId, element) {
@@ -319,7 +326,4 @@ function closeFreezer() {
     document.getElementById('freezerModal').classList.remove('open');
 }
 
-// Initial switch to default file
-window.onload = () => {
-    switchIdeFile('BankManager.js');
-};
+// Initial setup (removed window.onload to prevent null errors)
