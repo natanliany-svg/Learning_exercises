@@ -2,161 +2,111 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת למידה - JavaScript</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JS Master - Interactive Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="dashboard">
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar">
+
+    <!-- Steigen On The Go (Dynamic Island) -->
+    <div id="dynamicIsland" class="dynamic-island" onclick="toggleSteigenMode()">
+        <span class="island-icon">🏝️</span>
+        <span class="island-text">שטייגען בדרכים</span>
+    </div>
+
+    <div class="dashboard" id="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
             <div class="logo">
                 <h2>💻 JS Master</h2>
+                <p>הדור הבא של הלמידה</p>
             </div>
+            
             <nav class="menu">
-                <button class="nav-item active" data-target="home">🏠 דף הבית</button>
-                <button class="nav-item" data-target="overview">🚁 מבט על</button>
-                <button class="nav-item" data-target="bank">🏦 Bank Account Manager</button>
-                <button class="nav-item" data-target="closures">🔒 Closures & Factories</button>
-                <button class="nav-item" data-target="modules">📦 Modules (ES6 vs Node)</button>
-                <button class="nav-item" data-target="cleancode">🧹 Clean Code</button>
+                <button class="nav-item active" onclick="openSubject('overview')">🚁 מבט על</button>
+                <button class="nav-item" onclick="openSubject('bank')">🏦 Bank Account Manager</button>
+                <button class="nav-item" onclick="openSubject('closures')">🔒 Closures & Factories</button>
+                <button class="nav-item" onclick="openSubject('modules')">📦 Modules (ES6)</button>
+                <button class="nav-item" onclick="openSubject('cleancode')">🧹 Clean Code</button>
             </nav>
+
+            <!-- Python Freezer -->
+            <div class="freezer-section">
+                <button class="freezer-btn" onclick="openFreezer()">
+                    <span class="freezer-icon">🧊</span>
+                    <span class="freezer-text">המקפיא (Python & SQL)</span>
+                </button>
+            </div>
         </aside>
 
-        <!-- Main Content Area -->
-        <main class="content">
-            <header>
-                <h1>ברוך הבא לסביבת הפיתוח שלך</h1>
-                <p>כאן תוכל למצוא את כל המטלות, ההסברים ואפילו להריץ קוד!</p>
+        <!-- Main Content -->
+        <main class="content" id="mainContent">
+            
+            <header class="top-header">
+                <h1>מרכז הלמידה: <span>JavaScript</span></h1>
+                <p>ברוך הבא למערכת האינטראקטיבית. לחץ על נושא כדי לצלול לעומק!</p>
             </header>
 
-            <!-- Home Section -->
-            <section id="home" class="page-section active">
-                <div class="cards-grid">
-                    <div class="card glass-effect" onclick="document.querySelector('[data-target=\'bank\']').click()">
-                        <h3>🏦 פרויקט בנק</h3>
-                        <p>הקלק למעבר להרצת מסוף הבנק בסביבת הווב.</p>
-                    </div>
-                    <div class="card glass-effect" onclick="document.querySelector('[data-target=\'closures\']').click()">
-                        <h3>🔒 Closures</h3>
-                        <p>הקלק למעבר להסברים מעשיים ודוגמאות חיות.</p>
-                    </div>
-                    <div class="card glass-effect" onclick="document.querySelector('[data-target=\'overview\']').click()">
-                        <h3>🚁 מבט על</h3>
-                        <p>סיכום קצר וקולע של המושגים החדשים.</p>
-                    </div>
+            <!-- Welcome / Overview Bubbles -->
+            <section class="bubbles-grid active" id="overview-grid">
+                <div class="topic-bubble glass-card" onclick="openModal('closures')">
+                    <div class="bubble-icon">🔒</div>
+                    <h3>Closures</h3>
+                    <p>פונקציות עם "זיכרון" וגישה למשתנים פרטיים.</p>
                 </div>
-            </section>
-
-            <!-- Overview Section -->
-            <section id="overview" class="page-section">
-                <h2>מבט על: מושגי ליבה ב-JS 🚁</h2>
-                <div class="cards-grid">
-                    <div class="card glass-effect">
-                        <h3>מה זה Closure?</h3>
-                        <p>פונקציה שיש לה "זיכרון". היא זוכרת את המשתנים מסביבת היצירה שלה גם אחרי שאותה סביבה סיימה לרוץ. זהו הכלי המרכזי ב-JS להסתרת מידע (Private State).</p>
-                    </div>
-                    <div class="card glass-effect">
-                        <h3>Factory Function</h3>
-                        <p>פונקציה שפשוט בונה ומחזירה אובייקט חדש בכל קריאה אליה. בניגוד ל-Classes, היא לא דורשת שימוש במילה <code>new</code> או <code>this</code>, מה שמקטין באגים.</p>
-                    </div>
-                    <div class="card glass-effect">
-                        <h3>Modules (ES6)</h3>
-                        <p>דרך לחלק את הקוד למספר קבצים. בעזרת <code>export</code> מוציאים פונקציות החוצה, ובעזרת <code>import</code> מכניסים אותן לקובץ אחר (בדומה ל-import בפייתון).</p>
-                    </div>
+                <div class="topic-bubble glass-card" onclick="openModal('factories')">
+                    <div class="bubble-icon">🏭</div>
+                    <h3>Factories</h3>
+                    <p>יצירת אובייקטים ללא Classes וללא `new`.</p>
                 </div>
-            </section>
-
-            <!-- Bank Project Section -->
-            <section id="bank" class="page-section">
-                <h2>מערכת ניהול חשבונות בנק 🏦</h2>
-                <p>פרויקט הבנק שפותח בתיקיית <code>C:\Bank_Account_Manager</code> עבר סימולציה לרשת! (הלוגיקה שוחזרה ב-JS של האתר)</p>
-                <div class="terminal-container">
-                    <div class="terminal-header">
-                        <span class="btn red"></span>
-                        <span class="btn yellow"></span>
-                        <span class="btn green"></span>
-                        <span class="title">bash - BankManager</span>
-                    </div>
-                    <div class="terminal-body" id="terminalOutput">
-                        <p>> המערכת מאותחלת...</p>
-                        <p>> הקלד 'help' לקבלת רשימת פקודות או השתמש בכפתורים למטה.</p>
-                    </div>
-                    <div class="terminal-controls">
-                        <button id="btnShowAll">הצג את כל הלקוחות</button>
-                        <button id="btnStats">הצג סטטיסטיקות</button>
-                        <button id="btnDeposit">הפקדה לדוגמה</button>
-                    </div>
+                <div class="topic-bubble glass-card" onclick="openModal('modules')">
+                    <div class="bubble-icon">📦</div>
+                    <h3>Modules</h3>
+                    <p>חלוקת הקוד למספר קבצים (import/export).</p>
                 </div>
-            </section>
-
-            <!-- Closures Section -->
-            <section id="closures" class="page-section">
-                <h2>Closures & Factories 🔒</h2>
-                <div class="content-box glass-effect">
-                    <h3>מה זה Closure?</h3>
-                    <p>קלוז'ר (Closure) קורה כשפונקציה פנימית "זוכרת" את הסביבה שבה היא נוצרה (Scope), גם אחרי שהפונקציה העוטפת סיימה לרוץ.</p>
-                    <pre><code>function createCounter() {
-    let count = 0; // State is protected!
-    return function() {
-        count++;
-        return count;
-    }
-}
-const myCounter = createCounter();
-console.log(myCounter()); // 1</code></pre>
-                    <button class="interactive-btn" id="runCounterBtn">הרץ Counter בעצמך!</button>
-                    <span id="counterResult" class="result-badge">0</span>
-                </div>
-            </section>
-
-            <!-- Modules Section -->
-            <section id="modules" class="page-section">
-                <h2>Modules (ES6 vs CommonJS) 📦</h2>
-                <div class="content-box glass-effect">
-                    <div class="split-view">
-                        <div class="col">
-                            <h3>CommonJS (Node.js ישן)</h3>
-                            <pre><code>// ייצוא
-module.exports = { myFunction };
-
-// ייבוא
-const { myFunction } = require('./file');</code></pre>
-                        </div>
-                        <div class="col">
-                            <h3>ES6 Modules (מודרני)</h3>
-                            <pre><code>// ייצוא
-export function myFunction() {}
-
-// ייבוא
-import { myFunction } from './file.js';</code></pre>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Clean Code Section -->
-            <section id="cleancode" class="page-section">
-                <h2>Clean Code & Debugging 🧹</h2>
-                <div class="cards-grid">
-                    <div class="card">
-                        <h3>שמות משמעותיים</h3>
-                        <p>השתמש בשמות כמו <code>customerBalance</code> במקום <code>x</code>.</p>
-                    </div>
-                    <div class="card">
-                        <h3>פונקציות קצרות</h3>
-                        <p>כל פונקציה צריכה לעשות דבר אחד בלבד (Single Responsibility).</p>
-                    </div>
-                    <div class="card">
-                        <h3>Debugging</h3>
-                        <p>במקום לנחש, השתמש ב-<code>debugger;</code> וב-DevTools של כרום לעצירת הקוד.</p>
-                    </div>
+                <div class="topic-bubble glass-card highlight-bubble" onclick="openModal('bank')">
+                    <div class="bubble-icon">🏦</div>
+                    <h3>פרויקט בנק</h3>
+                    <p>סימולטור אינטראקטיבי מלא.</p>
                 </div>
             </section>
 
         </main>
     </div>
+
+    <!-- The Full-Page Modal System -->
+    <div id="fullPageModal" class="full-page-modal">
+        <div class="modal-overlay" onclick="closeModal()"></div>
+        <div class="modal-content glass-card">
+            <button class="close-btn" onclick="closeModal()">✖</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- The Python Freezer Modal -->
+    <div id="freezerModal" class="full-page-modal">
+        <div class="modal-overlay" onclick="closeFreezer()"></div>
+        <div class="modal-content freezer-content glass-card">
+            <button class="close-btn" onclick="closeFreezer()">✖</button>
+            <h2>🧊 המקפיא: ארכיון Python ו-SQL</h2>
+            <p>כאן שמורים כל חומרי הלמידה הישנים שלך למקרה שתצטרך לשלוף אותם.</p>
+            <div class="freezer-links">
+                <a href="mobile_cards.html" class="freezer-link">📱 כרטיסיות Python (Mobile)</a>
+                <a href="syntax_warehouse.html" class="freezer-link">🧱 מחסן תחביר (Syntax)</a>
+                <a href="kb_flashcards.html" class="freezer-link">🃏 כרטיסיות נשק (Dictionary)</a>
+                <a href="kb_fastapi.html" class="freezer-link">🚀 מבוא ל-FastAPI</a>
+                <a href="kb_sql.html" class="freezer-link">🗄️ מסדי נתונים (SQL)</a>
+                <a href="kb_oop.html" class="freezer-link">🧬 תכנות מונחה עצמים (OOP)</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Footer -->
+    <footer class="floating-footer">
+        נוצר ע''י 'נתן ליאני' באמצעות סיעתא דשמייא גדולה 🙌
+    </footer>
+
     <script src="app.js"></script>
 </body>
 </html>
