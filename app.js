@@ -25,7 +25,9 @@ function scrollToSection(id) {
     };
     
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    event.target.classList.add('active');
+    if (event && event.target) {
+        event.target.classList.add('active');
+    }
     
     const targetId = sectionMap[id] || id;
     const targetElement = document.getElementById(targetId);
@@ -87,7 +89,6 @@ const bankIdeData = {
 };
 
 // --- Merge Content ---
-// contentPart1, contentPart2, contentPart3 are loaded from external files in index.html
 const modalData = {
     ...contentPart1,
     ...contentPart2,
@@ -109,12 +110,12 @@ function openModal(topic) {
     `;
 
     document.getElementById('fullPageModal').classList.add('open');
-    document.body.style.overflow = 'hidden'; // Prevent background scroll
+    document.body.style.overflow = 'hidden';
 }
 
 function closeModal() {
     document.getElementById('fullPageModal').classList.remove('open');
-    document.body.style.overflow = 'auto'; // Restore scroll
+    document.body.style.overflow = 'auto';
 }
 
 // --- IDE Logic ---
@@ -197,7 +198,7 @@ console.log(<span class="string">"Balance:"</span>, c1.account.getBalance());`,
   <span class="string">"packages"</span>: { ... }
 }`,
     'utils.js': `<span class="keyword">export const</span> isPositive = (num) => num > <span class="number">0</span>;
-<span class="keyword">export const</span> formatCurrency = (amount) => \`\$\${amount.toFixed(2)}\`;`
+<span class="keyword">export const</span> formatCurrency = (amount) => \`$\${amount.toFixed(2)}\`;`
 };
 
 const storyMap = {
@@ -243,12 +244,12 @@ function switchIdeFile(filename) {
     const content = fileContents[filename] || '<span class="comment">// קובץ ריק</span>';
     const stories = storyMap[filename] || [];
     
-    const lines = content.split('\\n');
+    const lines = content.split('\n');
     let html = '';
     
     lines.forEach((line, index) => {
-        const storyHtml = stories[index] ? \`<div class="line-story">\${stories[index]}</div>\` : '';
-        html += \`<div class="code-line"><div class="line-num">\${index + 1}</div><div class="line-code">\${line}</div>\${storyHtml}</div>\`;
+        const storyHtml = stories[index] ? `<div class="line-story">${stories[index]}</div>` : '';
+        html += `<div class="code-line"><div class="line-num">${index + 1}</div><div class="line-code">${line}</div>${storyHtml}</div>`;
     });
 
     document.getElementById('ideEditorContent').innerHTML = html;
@@ -273,37 +274,37 @@ function handleTerminal(event) {
         event.target.value = '';
         
         const output = document.getElementById('terminalOutput');
-        output.innerHTML += \`<p><span class="term-prompt">natan@ubuntu:~/bank$</span> \${input}</p>\`;
+        output.innerHTML += `<p><span class="term-prompt">natan@ubuntu:~/bank$</span> ${input}</p>`;
         
         const args = input.split(' ');
         const cmd = args[0].toLowerCase();
         
         if (cmd === 'help') {
-            output.innerHTML += \`<p>פקודות: add_customer [id] [name], deposit [id] [amount], show_all, clear</p>\`;
+            output.innerHTML += `<p>פקודות: add_customer [id] [name], deposit [id] [amount], show_all, clear</p>`;
         } else if (cmd === 'clear') {
             output.innerHTML = '';
         } else if (cmd === 'add_customer') {
             if (args.length < 3) {
-                output.innerHTML += \`<p class="term-error">Error: Missing arguments.</p>\`;
+                output.innerHTML += `<p class="term-error">Error: Missing arguments.</p>`;
             } else {
                 customers.push({ id: args[1], name: args[2], balance: 0 });
-                output.innerHTML += \`<p class="term-success">Customer \${args[2]} added successfully.</p>\`;
+                output.innerHTML += `<p class="term-success">Customer ${args[2]} added successfully.</p>`;
             }
         } else if (cmd === 'deposit') {
             const c = customers.find(x => x.id === args[1]);
             if (!c) {
-                output.innerHTML += \`<p class="term-error">Error: Customer not found.</p>\`;
+                output.innerHTML += `<p class="term-error">Error: Customer not found.</p>`;
             } else {
                 c.balance += Number(args[2] || 0);
-                output.innerHTML += \`<p class="term-success">Deposited \${args[2]} to \${c.name}. New balance: \${c.balance}</p>\`;
+                output.innerHTML += `<p class="term-success">Deposited ${args[2]} to ${c.name}. New balance: ${c.balance}</p>`;
             }
         } else if (cmd === 'show_all') {
-            output.innerHTML += \`<p>Total customers: \${customers.length}</p>\`;
+            output.innerHTML += `<p>Total customers: ${customers.length}</p>`;
             customers.forEach(c => {
-                output.innerHTML += \`<p>- [\${c.id}] \${c.name}: $\${c.balance}</p>\`;
+                output.innerHTML += `<p>- [${c.id}] ${c.name}: $${c.balance}</p>`;
             });
         } else if (cmd !== '') {
-            output.innerHTML += \`<p class="term-error">bash: \${cmd}: command not found</p>\`;
+            output.innerHTML += `<p class="term-error">bash: ${cmd}: command not found</p>`;
         }
         
         output.scrollTop = output.scrollHeight;

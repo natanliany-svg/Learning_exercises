@@ -452,4 +452,4 @@ const contentPart2 = {
     }
 };
 
-export default contentPart2;
+
