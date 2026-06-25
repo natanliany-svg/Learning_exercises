@@ -1,216 +1,26 @@
-// --- Steigen On The Go Mode ---
-let isSteigenMode = false;
-function toggleSteigenMode() {
-    isSteigenMode = !isSteigenMode;
-    if (isSteigenMode) {
-        document.body.classList.add('steigen-mode');
-        document.querySelector('.island-text').innerText = 'מצב רגיל';
-    } else {
-        document.body.classList.add('removing-steigen');
-        setTimeout(() => {
-            document.body.classList.remove('steigen-mode', 'removing-steigen');
-            document.querySelector('.island-text').innerText = 'שטייגען בדרכים';
-        }, 500);
-    }
+import fs from 'fs';
+
+let content = fs.readFileSync('app.js', 'utf8');
+
+const startMarker = 'const fileContents = {';
+const startIndex = content.indexOf(startMarker);
+
+const endMarker = 'function switchIdeFile(filename) {';
+const endIndex = content.indexOf(endMarker);
+
+if (startIndex === -1 || endIndex === -1) {
+    console.error("Could not find markers!");
+    process.exit(1);
 }
 
-function scrollToSection(id) {
-    const sectionMap = {
-        'basics': 'section-basics', 'loops': 'section-basics', 'functions': 'section-basics',
-        'closures': 'section-advanced', 'factories': 'section-advanced', 'modules': 'section-advanced', 'destructuring': 'section-advanced',
-        'dom': 'section-web', 'async': 'section-web', 'fetch': 'section-web',
-        'arrayMethods': 'section-methods', 'stringMethods': 'section-methods', 'objectMethods': 'section-methods',
-        'syntaxWarehouse': 'section-tools', 'pythonVsJs': 'section-tools', 'ironRules': 'section-tools', 'keyboard': 'section-tools', 'libraries': 'section-tools',
-        'bank': 'section-projects'
-    };
-    
-    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.nav-item').forEach(el => {
-        const onClickAttr = el.getAttribute('onclick');
-        if (onClickAttr && onClickAttr.includes(`'${id}'`)) {
-            el.classList.add('active');
-        }
-    });
-    
-    const targetId = sectionMap[id] || id;
-    const targetElement = document.getElementById(targetId);
-    if(targetElement) {
-        window.scrollTo({
-            top: targetElement.offsetTop - 80,
-            behavior: 'smooth'
-        });
-    }
-}
-
-// --- Bank IDE Data ---
-const bankExplanationHtml = `
-<h1>📖 מדריך הפרויקט: סימולטור ניהול בנק</h1>
-<p>ברוך הבא לפרויקט ניהול הבנק! במסמך זה נסביר צעד-אחר-צעד את המבנה, ההיגיון, והקוד מאחורי הקלעים, בדיוק לפי סדר הפעולות הנדרש.</p>
-
-<hr style="border-color:#333; margin: 20px 0;">
-
-<h2>📂 למה חילקנו את הפרויקט ל-4 קבצים?</h2>
-<p>כתיבת קוד בקובץ אחד ענק היא מתכון לאסון. כשמחלקים את הקוד (מודולריות), קל יותר למצוא באגים, לבדוק פונקציות בנפרד, ולהבין את זרימת המידע (Story).</p>
-<ul>
-    <li><strong><code>utils.js</code> (ארגז הכלים)</strong>: מכיל פונקציות עזר שלא קשורות לבנק עצמו, אלא משמשות ככלי עבודה (כמו עיצוב מטבע והצגת תפריט למשתמש).</li>
-    <li><strong><code>bankFactory.js</code> (פס הייצור)</strong>: פה אנחנו רק <em>מגדירים</em> מה זה לקוח ומה זה חשבון. אין פה נתונים חיים, רק התבניות!</li>
-    <li><strong><code>bankManager.js</code> (המנהל)</strong>: הלב הפועם. כאן נמצא מסד הנתונים שלנו (רשימת הלקוחות), ורק הוא רשאי לחפש, להוסיף או להוציא סטטיסטיקות על כולם.</li>
-    <li><strong><code>main.js</code> (המסוף הראשי)</strong>: הקובץ היחיד שהמשתמש באמת פוגש. הוא קורא לתפריט ומפעיל את כל הקבצים האחרים לפי הבחירה.</li>
-</ul>
-
-<hr style="border-color:#333; margin: 20px 0;">
-
-<h2>🧩 תיאור המטלות והפונקציות - לאן כל דבר שייך?</h2>
-
-<h3>1. מנהל הבנק (bankManager.js)</h3>
-<ul>
-    <li><strong>יצירת רשימה של אובייקטים עם נתוני לקוחות:</strong> מתבצע במערך <code>customers: []</code>. זהו מסד הנתונים שלנו ששומר את כל האובייקטים.</li>
-    <li><strong>פונקציית הצגת הלקוחות (2):</strong> מתבצעת על ידי המתודה <code>getAllCustomers()</code> שפשוט שולפת את כל המערך.</li>
-    <li><strong>פונקציית החיפוש (5):</strong> מתבצעת על ידי המתודה <code>findCustomer()</code>. היא עוברת על המערך עם הפונקציה המובנית <code>find()</code> ומחפשת התאמה לפי <code>id</code> או <code>name</code>.</li>
-    <li><strong>פונקציית סגירת החשבון (6):</strong> מתבצעת ב-<code>closeCustomerAccount()</code>. המנהל קודם מחפש את הלקוח, ואם מצא, קורא לפעולת הסגירה שלו.</li>
-    <li><strong>פונקציית הצגת הסטטיסטיקות (7):</strong> מתבצעת ב-<code>getStats()</code>. המנהל עובר בלולאה על כולם, סוכם את היתרות של חשבונות פעילים בלבד, וסופר כמה יש.</li>
-</ul>
-
-<h3>2. המפעל (bankFactory.js)</h3>
-<ul>
-    <li><strong>יצירת מבנה של לקוח סטנדרטי:</strong> הפונקציה <code>createCustomer()</code> מקבלת (name, id, accountType, initialBalance) ומחזירה אובייקט לקוח.</li>
-    <li><strong>פונקציית הייצור של חשבון:</strong> הפונקציה הסודית <code>createAccount()</code>. היא שומרת את היתרה (balance) בתוך <em>Closure</em> כדי שאף אחד לא יוכל לשנות אותה מבחוץ בלי לעבור בפונקציות ההפקדה.</li>
-    <li><strong>פונקציית הפקדה (3) ומשיכה (4):</strong> מתבצעות ב-<code>deposit()</code> וב-<code>withdraw()</code>. שתיהן בודקות קודם כל את סוג החשבון והאם הוא בכלל פעיל (<code>isActive</code>). במידה והוא סגור, הפעולה נדחית מיד (Return).</li>
-</ul>
-
-<h3>3. ממשק המשתמש (main.js)</h3>
-<ul>
-    <li><strong>כיצד יוצגו הנתונים הנדרשים:</strong> קובץ ה-main מריץ לולאת <code>while(true)</code> אינסופית. כל סיבוב הוא קורא ל-<code>menu()</code> שיציג את האפשרויות, וממתין לתשובה.</li>
-    <li><strong>הבדיקות הנדרשות לכל פונקציה:</strong> בכל פעם שהמשתמש בוחר פעולה (כמו הפקדה), הקובץ קורא למנהל. אם המנהל מוצא את הלקוח, מבקשים קלט נוסף (כמו סכום) ורק אז מבצעים.</li>
-</ul>
-
-<hr style="border-color:#333; margin: 20px 0;">
-
-<h2>🔒 רגע, מה זה בעצם Closure ולמה צריך את זה פה?</h2>
-<p>
-<strong>Closure (סגירה)</strong> הוא מנגנון מיוחד ב-JavaScript שמאפשר לפונקציה "לזכור" את המשתנים שהיו בסביבה שלה כשהיא נוצרה, גם אחרי שהסביבה הזו סיימה לרוץ!
-</p>
-<p>
-<strong>איך זה עובד אצלנו?</strong><br>
-בקובץ <code>bankFactory.js</code>, בפונקציה <code>createAccount</code>, הגדרנו משתנה <code>let balance</code>. המשתנה הזה <strong>לא</strong> הוחזר (returned) כמאפיין של האובייקט, אלא רק הפונקציות <code>deposit</code> ו-<code>withdraw</code> קיבלו "גישה אישית" אליו.<br>
-<br>
-<strong>למה דווקא כאן? (אבטחת מידע)</strong><br>
-אם היתרה הייתה מאפיין רגיל בלקוח, פצקר פשוט היה יכול לכתוב: <br><code>customer.account.balance = 10000000;</code><br> ולקבל מיליונים בלי לעבור בפונקציית הפקדה.<br>
-הודות ל-Closure, המשתנה נשאר <strong>פרטי ומוסתר</strong>. הדרך היחידה לגעת בכסף היא דרך הפונקציות הרשמיות שייצרנו, אשר מבצעות בדיקות תקינות (האם החשבון פעיל? האם יש מספיק יתרה למשיכה?)!
-</p>
-
-<hr style="border-color:#333; margin: 20px 0;">
-
-<h2>🚀 סדר הדברים: מאיפה מתחילים בבניית פרויקט כזה?</h2>
-<ol>
-    <li><strong>הגדרת הכלים (utils):</strong> קודם כל בונים את מה שלא תלוי בכלום (התפריט שמודפס למסך).</li>
-    <li><strong>הגדרת התבניות (Factory):</strong> בונים מודל מדויק של חשבון ולקוח. מחליטים אילו משתנים יהיו גלויים ואילו יוחבאו ב-Closure.</li>
-    <li><strong>בניית המנהל (Manager):</strong> יוצרים את המוח שמרכז את הלקוחות, ובו כותבים את הפונקציות שמנהלות את המערך.</li>
-    <li><strong>חיבור הכל (Main):</strong> כותבים לולאה שמפעילה את התפריט, ו"מחברת את הצינורות" בין מה שהמשתמש הקליד לבין פונקציות המנהל.</li>
-</ol>
-`;
-
-const bankIdeData = {
-    title: "Bank Account Simulator 🏦 (IDE Mode)",
-    content: `
-        <div class="ide-container" style="position:relative;">
-
-        <button onclick="document.getElementById('explanationOverlay').style.display='flex'" style="position:absolute; top:20px; left:20px; background:#3b82f6; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold; font-family:Heebo,sans-serif; z-index:10; box-shadow:0 4px 6px rgba(0,0,0,0.3); transition:0.2s;">
-            📘 הסבר הפרויקט
-        </button>
-    
-
-        <div id="explanationOverlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.95); z-index:20; flex-direction:column; align-items:center; justify-content:center; padding:40px;">
-            <div style="background:#1e293b; width:100%; max-width:900px; height:90%; border-radius:12px; position:relative; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,0.5); border:1px solid #334155;">
-                <button onclick="document.getElementById('explanationOverlay').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; color:#cbd5e1; font-size:24px; cursor:pointer; z-index:30;">✕</button>
-                <div style="padding:40px; overflow-y:auto; color:#f8fafc; font-family:Heebo,sans-serif; line-height:1.8; direction:rtl;">
-                    ${bankExplanationHtml}
-                </div>
-            </div>
-        </div>
-    
-            <div class="ide-top">
-                <div class="ide-sidebar">
-                    <div class="ide-sidebar-header">BANK_ACCOUNT... 📄 📁 🔄 ⚙</div>
-                    <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
-                    <div id="folder-git" style="display:none;"></div>
-                    
-                    <div class="ide-folder" onclick="toggleFolder('folder-modules', this)">▾ node_modules</div>
-                    <div id="folder-modules">
-                        <div class="ide-folder indented" onclick="toggleFolder('folder-readline', this)">▸ readline-sync</div>
-                        <div id="folder-readline" style="display:none;"></div>
-                        <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
-                    </div>
-                    
-                                                            <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('bankFactory.js')"><span style="color:#f7df1e">JS</span> bankFactory.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('bankManager.js')"><span style="color:#f7df1e">JS</span> bankManager.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
-                    <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
-                </div>
-                
-                <div class="ide-editor" id="ideEditorContent">
-                    <!-- Dynamic content -->
-                </div>
-            </div>
-            <div class="ide-terminal">
-                <div class="term-header"><span>bash - bankFactory</span></div>
-                <div class="term-output" id="terminalOutput">
-                    <p>> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות.</p>
-                </div>
-                <div class="term-input-wrapper">
-                    <span class="term-prompt">natan@ubuntu:~/bank$</span>
-                    <input type="text" class="term-input" id="terminalInput" autocomplete="off" spellcheck="false" onkeypress="handleTerminal(event)">
-                </div>
-            </div>
-        </div>
-    `
-};
-
-// --- Merge Content ---
-const modalData = {
-    ...contentPart1,
-    ...contentPart2,
-    ...contentPart3,
-    bank: bankIdeData
-};
-
-// --- Modal Logic ---
-function openModal(topic) {
-    const data = modalData[topic];
-    if (!data) return;
-
-    const modalBody = document.getElementById('modalBody');
-    modalBody.innerHTML = `
-        <div class="modal-header">
-            <h2>${data.title}</h2>
-        </div>
-        ${data.content}
-    `;
-
-    document.getElementById('fullPageModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-    
-    if (topic === 'bank') {
-        setTimeout(() => switchIdeFile('utils.js'), 50);
-    }
-}
-
-function closeModal() {
-    document.getElementById('fullPageModal').classList.remove('open');
-    document.body.style.overflow = 'auto';
-}
-
-// --- IDE Logic ---
-const fileContents = {
-    'utils.js': `<span class="comment">// 1. שלב ראשון: קובץ כלי עזר ותפריט (Utilities)</span>
+const newBlock = `const fileContents = {
+    'utils.js': \`<span class="comment">// 1. שלב ראשון: קובץ כלי עזר ותפריט (Utilities)</span>
 <span class="keyword">import</span> rl <span class="keyword">from</span> <span class="string">'readline-sync'</span>;
 
-<span class="keyword">export const</span> formatCurrency = (amount) => \`$\${amount.toFixed(2)}\`;
+<span class="keyword">export const</span> formatCurrency = (amount) => \\\`$\\\${amount.toFixed(2)}\\\`;
 
 <span class="keyword">export function</span> menu() {
-    console.log(\`
+    console.log(\\\`
 =====================תפריט מערכת ניהול החשבון=====================
 1. הוספת לקוח חדש   (קלט נדרש : שם, סוג חשבון, יתרה התחלתית)    
 2. הצגת רשימת כלל לקוחות הבנק                                  
@@ -220,11 +30,11 @@ const fileContents = {
 6. סגירת חשבון  (קלט נדרש : מזהה ייחודי)                         
 7. הצגת סטטיסטיקות                                              
 8. יציאה                                                           
-===================================================================\`);
-    <span class="keyword">return</span> rl.questionInt(<span class="string">'     =================Choose (1-8)!=================\n'</span>);
-}`,
+===================================================================\\\`);
+    <span class="keyword">return</span> rl.questionInt(<span class="string">'     =================Choose (1-8)!=================\\n'</span>);
+}\`,
 
-    'bankFactory.js': `<span class="comment">// 2. שלב שני: יצירת המבנה הבסיסי (Factory)</span>
+    'bankFactory.js': \`<span class="comment">// 2. שלב שני: יצירת המבנה הבסיסי (Factory)</span>
 <span class="keyword">export function</span> createAccount(type, initialBalance) {
     <span class="keyword">let</span> balance = initialBalance;
     <span class="keyword">let</span> isActive = <span class="keyword">true</span>;
@@ -261,9 +71,9 @@ const fileContents = {
         id,
         account: createAccount(accountType, initialBalance)
     };
-}`,
+}\`,
 
-    'bankManager.js': `<span class="comment">// 3. שלב שלישי: מנהל הבנק - מנהל את כל הלקוחות</span>
+    'bankManager.js': \`<span class="comment">// 3. שלב שלישי: מנהל הבנק - מנהל את כל הלקוחות</span>
 <span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./bankFactory.js'</span>;
 
 <span class="keyword">export const</span> bankManager = {
@@ -306,9 +116,9 @@ const fileContents = {
         }
         <span class="keyword">return</span> { total, activeCount };
     }
-};`,
+};\`,
 
-    'main.js': `<span class="comment">// 4. שלב רביעי ואחרון: המנוע שמחבר הכל</span>
+    'main.js': \`<span class="comment">// 4. שלב רביעי ואחרון: המנוע שמחבר הכל</span>
 <span class="keyword">import</span> { bankManager } <span class="keyword">from</span> <span class="string">'./bankManager.js'</span>;
 <span class="keyword">import</span> { menu, formatCurrency } <span class="keyword">from</span> <span class="string">'./utils.js'</span>;
 <span class="keyword">import</span> rl <span class="keyword">from</span> <span class="string">'readline-sync'</span>;
@@ -323,7 +133,7 @@ const fileContents = {
         <span class="keyword">const</span> type = rl.question(<span class="string">"סוג חשבון: "</span>);
         <span class="keyword">const</span> bal = rl.questionFloat(<span class="string">"יתרה התחלתית: "</span>);
         <span class="keyword">const</span> defaultId = bankManager.getNextId();
-        <span class="keyword">const</span> typedId = rl.question(\`מזהה לקוח (ברירת מחדל: \${defaultId}): \`);
+        <span class="keyword">const</span> typedId = rl.question(\\\`מזהה לקוח (ברירת מחדל: \\\${defaultId}): \\\`);
         <span class="keyword">const</span> id = typedId.trim() === <span class="string">""</span> ? defaultId.toString() : typedId.trim();
         <span class="keyword">const</span> idNumber = parseInt(id);
         <span class="keyword">if</span> (isNaN(idNumber) || idNumber < <span class="number">100</span>) {
@@ -332,7 +142,7 @@ const fileContents = {
             console.log(<span class="string">"שגיאה: מזהה לקוח כבר קיים במערכת!"</span>);
         } <span class="keyword">else</span> {
             bankManager.addCustomer(name, id, type, bal);
-            console.log(\`לקוח נוצר בהצלחה! מזהה: \${id}\`);
+            console.log(\\\`לקוח נוצר בהצלחה! מזהה: \\\${id}\\\`);
         }
     }
     <span class="keyword">else if</span> (choice === <span class="number">2</span>) {
@@ -359,21 +169,21 @@ const fileContents = {
     }
     <span class="keyword">else if</span> (choice === <span class="number">7</span>) {
         <span class="keyword">const</span> stats = bankManager.getStats();
-        console.log(\`כסף בבנק: \${formatCurrency(stats.total)}, חשבונות פעילים: \${stats.activeCount}\`);
+        console.log(\\\`כסף בבנק: \\\${formatCurrency(stats.total)}, חשבונות פעילים: \\\${stats.activeCount}\\\`);
     }
 }
 
 <span class="keyword">while</span> (<span class="keyword">true</span>) {
     <span class="keyword">const</span> choice = menu();
     handle_menu(choice);
-}`,
-    'package.json': `{
+}\`,
+    'package.json': \`{
   <span class="string">"type"</span>: <span class="string">"module"</span>,
   <span class="string">"dependencies"</span>: {
     <span class="string">"readline-sync"</span>: <span class="string">"^1.4.10"</span>
   }
-}`,
-    'package-lock.json': `{}`
+}\`,
+    'package-lock.json': \`{}\`
 };
 
 const storyMap = {
@@ -512,107 +322,34 @@ const storyMap = {
     ]
 };
 
+\n`;
 
-function switchIdeFile(filename) {
-    document.querySelectorAll('.ide-file').forEach(el => {
-        el.classList.remove('active');
-        if (el.innerText.includes(filename)) {
-            el.classList.add('active');
-        }
-    });
+content = content.substring(0, startIndex) + newBlock + content.substring(endIndex);
 
-    const content = fileContents[filename] || '<span class="comment">// קובץ ריק</span>';
-    const stories = storyMap[filename] || [];
-    
-    const lines = content.split('\n');
-    let html = '';
-    
-    lines.forEach((line, index) => {
-        const storyHtml = stories[index] ? `<div class="line-story">${stories[index]}</div>` : '';
-        html += `<div class="code-line"><div class="line-num">${index + 1}</div><div class="line-code">${line}</div>${storyHtml}</div>`;
-    });
+// Update terminal simulator add_customer command in app.js as well
+const regexAddCustomer = /\} else if \(cmd === 'add_customer'\) \{\r?\n\s*if \(args\.length < 3\) \{\r?\n\s*output\.innerHTML \+= `<p class="term-error">Error: Missing arguments\.<\/p>`;\r?\n\s*\} else \{\r?\n\s*customers\.push\(\{ id: args\[1\], name: args\[2\], balance: 0 \}\);\r?\n\s*output\.innerHTML \+= `<p class="term-success">Customer \$\{args\[2\]\} added successfully\.<\/p>`;\r?\n\s*\}/;
 
-    const editorContent = document.getElementById('ideEditorContent');
-    if (editorContent) {
-        editorContent.innerHTML = html;
-    }
-}
-
-function toggleFolder(folderId, element) {
-    const folder = document.getElementById(folderId);
-    if (folder.style.display === 'none') {
-        folder.style.display = 'block';
-        element.innerText = element.innerText.replace('▸', '▾');
-    } else {
-        folder.style.display = 'none';
-        element.innerText = element.innerText.replace('▾', '▸');
-    }
-}
-
-// --- Terminal Simulator ---
-let customers = [];
-function handleTerminal(event) {
-    if (event.key === 'Enter') {
-        const input = event.target.value.trim();
-        event.target.value = '';
-        
-        const output = document.getElementById('terminalOutput');
-        output.innerHTML += `<p><span class="term-prompt">natan@ubuntu:~/bank$</span> ${input}</p>`;
-        
-        const args = input.split(' ');
-        const cmd = args[0].toLowerCase();
-        
-        if (cmd === 'help') {
-            output.innerHTML += `<p>פקודות: add_customer [id] [name], deposit [id] [amount], show_all, clear</p>`;
-        } else if (cmd === 'clear') {
-            output.innerHTML = '';
-        } else if (cmd === 'add_customer') {
+const newAddCustomer = `} else if (cmd === 'add_customer') {
             if (args.length < 3) {
-                output.innerHTML += `<p class="term-error">Error: Missing arguments.</p>`;
+                output.innerHTML += \`<p class="term-error">Error: Missing arguments.</p>\`;
             } else {
                 const idVal = parseInt(args[1]);
                 if (isNaN(idVal) || idVal < 100) {
-                    output.innerHTML += `<p class="term-error">Error: ID must be a number greater than or equal to 100.</p>`;
+                    output.innerHTML += \`<p class="term-error">Error: ID must be a number greater than or equal to 100.</p>\`;
                 } else if (customers.some(c => c.id === args[1])) {
-                    output.innerHTML += `<p class="term-error">Error: ID already exists.</p>`;
+                    output.innerHTML += \`<p class="term-error">Error: ID already exists.</p>\`;
                 } else {
                     customers.push({ id: args[1], name: args[2], balance: 0 });
-                    output.innerHTML += `<p class="term-success">Customer ${args[2]} added successfully.</p>`;
+                    output.innerHTML += \`<p class="term-success">Customer \${args[2]} added successfully.</p>\`;
                 }
-            }
-        } else if (cmd === 'deposit') {
-            const c = customers.find(x => x.id === args[1]);
-            if (!c) {
-                output.innerHTML += `<p class="term-error">Error: Customer not found.</p>`;
-            } else {
-                c.balance += Number(args[2] || 0);
-                output.innerHTML += `<p class="term-success">Deposited ${args[2]} to ${c.name}. New balance: ${c.balance}</p>`;
-            }
-        } else if (cmd === 'show_all') {
-            output.innerHTML += `<p>Total customers: ${customers.length}</p>`;
-            customers.forEach(c => {
-                output.innerHTML += `<p>- [${c.id}] ${c.name}: $${c.balance}</p>`;
-            });
-        } else if (cmd !== '') {
-            output.innerHTML += `<p class="term-error">bash: ${cmd}: command not found</p>`;
-        }
-        
-        output.scrollTop = output.scrollHeight;
-    }
+            }`;
+
+if (regexAddCustomer.test(content)) {
+    content = content.replace(regexAddCustomer, newAddCustomer);
+    console.log('Successfully updated terminal simulator add_customer logic.');
+} else {
+    console.warn('Warning: Could not find terminal simulator add_customer block in app.js!');
 }
 
-// --- Freezer Logic ---
-function openFreezer() {
-    document.getElementById('freezerModal').classList.add('open');
-}
-function closeFreezer() {
-    document.getElementById('freezerModal').classList.remove('open');
-}
-
-// Initial setup (removed window.onload to prevent null errors)
-
-// --- Sidebar Toggle ---
-function toggleSidebar() {
-    document.querySelector('.sidebar').classList.toggle('collapsed');
-    document.querySelector('.content').classList.toggle('expanded');
-}
+fs.writeFileSync('app.js', content, 'utf8');
+console.log('Successfully updated app.js with valid UTF8');
