@@ -60,8 +60,10 @@ const bankIdeData = {
                         <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
                     </div>
                     
-                    <div class="ide-file active" onclick="switchIdeFile('bankFactory.js')"><span style="color:#f7df1e">JS</span> bankFactory.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('bankFactory.js')"><span style="color:#f7df1e">JS</span> bankFactory.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('bankManager.js')"><span style="color:#f7df1e">JS</span> bankManager.js</div>
+                    <div class="ide-file active" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
                     <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
                     <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
                 </div>
@@ -109,7 +111,7 @@ function openModal(topic) {
     document.body.style.overflow = 'hidden';
     
     if (topic === 'bank') {
-        setTimeout(() => switchIdeFile('bankFactory.js'), 50);
+        setTimeout(() => switchIdeFile('main.js'), 50);
     }
 }
 
@@ -120,20 +122,28 @@ function closeModal() {
 
 // --- IDE Logic ---
 const fileContents = {
-    'bankFactory.js': `<span class="comment">// פונקציית Factory ליצירת חשבון</span>
+    'utils.js': `<span class="comment">// 1. שלב ראשון: קובץ כלי עזר (Utilities)</span>
+<span class="keyword">export const</span> formatCurrency = (amount) => \`$\${amount.toFixed(2)}\`;
+<span class="keyword">export const</span> isPositive = (num) => num > <span class="number">0</span>;`,
+
+    'bankFactory.js': `<span class="comment">// 2. שלב שני: יצירת המבנה הבסיסי (Factory)</span>
+<span class="keyword">import</span> { isPositive } <span class="keyword">from</span> <span class="string">'./utils.js'</span>;
+
 <span class="keyword">export function</span> createAccount() {
     <span class="keyword">let</span> balance = <span class="number">0</span>;
 
     <span class="keyword">return</span> {
         deposit(amount) {
-            balance += amount;
+            <span class="keyword">if</span> (isPositive(amount)) {
+                balance += amount;
+            }
             <span class="keyword">return</span> balance;
         },
         withdraw(amount) {
-            <span class="keyword">if</span> (amount <= balance) {
+            <span class="keyword">if</span> (isPositive(amount) && amount <= balance) {
                 balance -= amount;
             } <span class="keyword">else</span> {
-                console.log(<span class="string">"אין מספיק יתרה בחשבון!"</span>);
+                console.log(<span class="string">"שגיאה: אין מספיק יתרה או סכום שלילי!"</span>);
             }
             <span class="keyword">return</span> balance;
         },
@@ -143,7 +153,6 @@ const fileContents = {
     };
 }
 
-<span class="comment">// פונקציית Factory ליצירת לקוח</span>
 <span class="keyword">export function</span> createCustomer(name, id) {
     <span class="keyword">return</span> {
         name,
@@ -151,149 +160,153 @@ const fileContents = {
         account: createAccount()
     };
 }`,
-    'main.js': `<span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./bankFactory.js'</span>;
-<span class="keyword">import</span> readlineSync <span class="keyword">from</span> <span class="string">'readline-sync'</span>;
 
-<span class="keyword">const</span> customers = [];
+    'bankManager.js': `<span class="comment">// 3. שלב שלישי: מנהל הבנק - מנהל את כל הלקוחות</span>
+<span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./bankFactory.js'</span>;
+
+<span class="keyword">export const</span> bankManager = {
+    customers: [],
+    
+    addCustomer(name, id) {
+        <span class="keyword">const</span> newCustomer = createCustomer(name, id);
+        <span class="keyword">this</span>.customers.push(newCustomer);
+        <span class="keyword">return</span> newCustomer;
+    },
+    
+    findCustomer(id) {
+        <span class="keyword">return this</span>.customers.find(c => c.id === id);
+    }
+};`,
+
+    'main.js': `<span class="comment">// 4. שלב רביעי ואחרון: ממשק המשתמש הראשי</span>
+<span class="keyword">import</span> { bankManager } <span class="keyword">from</span> <span class="string">'./bankManager.js'</span>;
+<span class="keyword">import</span> { formatCurrency } <span class="keyword">from</span> <span class="string">'./utils.js'</span>;
+<span class="keyword">import</span> readlineSync <span class="keyword">from</span> <span class="string">'readline-sync'</span>;
 
 <span class="keyword">while</span> (<span class="keyword">true</span>) {
     console.log(<span class="string">"\\n--- מערכת בנק ---"</span>);
     console.log(<span class="string">"1. הוסף לקוח"</span>);
     console.log(<span class="string">"2. הפקדת כסף"</span>);
-    console.log(<span class="string">"3. משיכת כסף"</span>);
-    console.log(<span class="string">"4. יציאה"</span>);
+    console.log(<span class="string">"3. יציאה"</span>);
     
-    <span class="keyword">const</span> choice = readlineSync.question(<span class="string">"בחר אפשרות: "</span>);
+    <span class="keyword">const</span> choice = readlineSync.question(<span class="string">"בחר: "</span>);
     
-    <span class="keyword">if</span> (choice === <span class="string">'4'</span>) {
-        console.log(<span class="string">"להתראות!"</span>);
-        <span class="keyword">break</span>;
-    }
+    <span class="keyword">if</span> (choice === <span class="string">'3'</span>) <span class="keyword">break</span>;
     
     <span class="keyword">if</span> (choice === <span class="string">'1'</span>) {
-        <span class="keyword">const</span> name = readlineSync.question(<span class="string">"הכנס שם: "</span>);
-        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"הכנס ת.ז: "</span>);
-        <span class="keyword">const</span> newCustomer = createCustomer(name, id);
-        customers.push(newCustomer);
-        console.log(<span class="string">"הלקוח נוצר בהצלחה!"</span>);
-    }
-    <span class="keyword">else if</span> (choice === <span class="string">'2'</span>) {
-        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"הכנס ת.ז: "</span>);
-        <span class="keyword">const</span> customer = customers.find(c => c.id === id);
+        <span class="keyword">const</span> name = readlineSync.question(<span class="string">"שם: "</span>);
+        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"ת.ז: "</span>);
+        bankManager.addCustomer(name, id);
+        console.log(<span class="string">"לקוח נוצר!"</span>);
+    } <span class="keyword">else if</span> (choice === <span class="string">'2'</span>) {
+        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"ת.ז: "</span>);
+        <span class="keyword">const</span> customer = bankManager.findCustomer(id);
         <span class="keyword">if</span> (customer) {
-            <span class="keyword">const</span> amount = Number(readlineSync.question(<span class="string">"סכום להפקדה: "</span>));
+            <span class="keyword">const</span> amount = Number(readlineSync.question(<span class="string">"סכום: "</span>));
             customer.account.deposit(amount);
-            console.log(<span class="string">"הופקד בהצלחה! יתרה נוכחית: "</span> + customer.account.getBalance());
+            console.log(<span class="string">"יתרה: "</span> + formatCurrency(customer.account.getBalance()));
         } <span class="keyword">else</span> {
-            console.log(<span class="string">"לקוח לא נמצא."</span>);
-        }
-    }
-    <span class="keyword">else if</span> (choice === <span class="string">'3'</span>) {
-        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"הכנס ת.ז: "</span>);
-        <span class="keyword">const</span> customer = customers.find(c => c.id === id);
-        <span class="keyword">if</span> (customer) {
-            <span class="keyword">const</span> amount = Number(readlineSync.question(<span class="string">"סכום למשיכה: "</span>));
-            customer.account.withdraw(amount);
-            console.log(<span class="string">"יתרה נוכחית: "</span> + customer.account.getBalance());
-        } <span class="keyword">else</span> {
-            console.log(<span class="string">"לקוח לא נמצא."</span>);
+            console.log(<span class="string">"לא נמצא."</span>);
         }
     }
 }`,
     'package.json': `{
-  <span class="string">"name"</span>: <span class="string">"bank-simulator"</span>,
-  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,
   <span class="string">"type"</span>: <span class="string">"module"</span>,
   <span class="string">"dependencies"</span>: {
     <span class="string">"readline-sync"</span>: <span class="string">"^1.4.10"</span>
   }
 }`,
-    'package-lock.json': `<span class="comment">// קובץ אוטומטי המכיל את גרסאות העץ המדויקות של התלויות.</span>
-<span class="comment">// אין לערוך קובץ זה ידנית!</span>
-{
-  <span class="string">"name"</span>: <span class="string">"bank-simulator"</span>,
-  <span class="string">"lockfileVersion"</span>: <span class="number">3</span>,
-  <span class="string">"requires"</span>: <span class="keyword">true</span>,
-  <span class="string">"packages"</span>: { ... }
-}`
+    'package-lock.json': `{}`
 };
 
 const storyMap = {
+    'utils.js': [
+        "הסיפור שלנו מתחיל מהבסיס הקטן ביותר. לפני שבונים בנק, צריך 'כלי עבודה' (Utils). למה התחלנו פה? כי אלו פונקציות קטנות ועצמאיות שלא תלויות בכלום, ונוכל להשתמש בהן בכל מקום בפרויקט.",
+        "פונקציה ראשונה: מקבלת מספר ומוסיפה לו סימן של דולר ונקודה עשרונית. 'export' אומר: 'אני מרשה לקבצים אחרים להשתמש בזה'.",
+        "פונקציה שניה: בודקת האם מספר הוא גדול מאפס. זה יעזור לנו למנוע הפקדות של סכום שלילי."
+    ],
     'bankFactory.js': [
-        "מגדירים את פונקציית הייצור הראשונה: יצירת חשבון",
+        "אחרי שיש לנו כלים, אנחנו צריכים 'מפעל' (Factory). למה קובץ נפרד? כי פה אנחנו מגדירים 'איך נראה חשבון' ו'איך נראה לקוח', מבלי לערבב את זה עם ניהול של אלפי לקוחות. הפרדת תפקידים!",
+        "כאן אנחנו מייבאים את פונקציית העזר שלנו (isPositive) מתוך קובץ ה-utils.js. הקשר מתחיל להירקם.",
         "",
-        "משתנה פרטי (Private Variable) השומר את היתרה. אי אפשר לגשת אליו מבחוץ!",
+        "מתחילים: יצירת 'מפעל' לחשבונות בנק.",
+        "המשתנה 'balance' הוא לב הסיפור שלנו. הוא מוגדר בתוך הפונקציה (Closure) ולכן אף אחד בעולם לא יכול לגשת אליו ישירות ולשנות אותו. ככה שומרים על אבטחה בבנק!",
         "",
-        "הפונקציה מחזירה אובייקט עם מתודות שמסוגלות לשנות את היתרה (Closure)",
-        "מתודת הפקדה פשוטה",
-        "מוסיפה כסף ליתרה",
+        "אנחנו מחזירים 'אובייקט'. האובייקט הזה הוא בעצם החשבון עצמו, ויש לו 'כפתורים' (מתודות) שבעזרתם אפשר לתקשר איתו.",
+        "כפתור ראשון: הפקדה. מקבל סכום.",
+        "אנחנו משתמשים בפונקציית העזר isPositive. אם הסכום חיובי, ורק אם הוא חיובי...",
+        "אנחנו מוסיפים את הסכום ליתרה הסודית שלנו.",
         "",
+        "ומחזירים את היתרה המעודכנת.",
         "",
-        "מתודת משיכה פשוטה",
-        "תנאי פשוט שמוודא שלא נמשוך יותר ממה שיש",
-        "אם יש מספיק - מורידים מהיתרה",
+        "כפתור שני: משיכה. מקבל סכום.",
+        "תנאי כפול! גם מוודאים שהסכום חיובי, וגם שהסכום המבוקש קטן או שווה ליתרה הנוכחית (אי אפשר למשוך יותר ממה שיש!).",
+        "אם הכל תקין, מחסרים מהיתרה.",
+        "אחרת (אם התנאי לא התקיים)...",
+        "מדפיסים הודעת שגיאה ברורה. פשוט, נקי, ובלי לזרוק שגיאות שקורסות (Errors).",
         "",
-        "אחרת מדפיסים שגיאה (פשוט וברור)",
+        "מחזירים את היתרה (בין אם משכנו ובין אם לא).",
         "",
-        "",
-        "",
-        "מתודה להחזרת היתרה הנוכחית. זו הדרך היחידה לראות כמה כסף יש!",
-        "",
-        "",
-        "",
-        "",
-        "פונקציית ייצור שניה: יצירת לקוח",
-        "מקבלת שם ותעודת זהות",
-        "מחזירה אובייקט שמכיל את פרטי הלקוח",
+        "כפתור שלישי: בדיקת יתרה. הדרך היחידה 'להציץ' לתוך היתרה הסודית שלנו מבלי לשנות אותה.",
+        "פשוט מחזיר את המספר.",
         "",
         "",
-        "וכאן הקסם: היא מפעילה את יצירת החשבון ומצמידה אותו ללקוח באופן אוטומטי!",
+        "",
+        "עכשיו כשיש חשבון, אנחנו צריכים 'מפעל' שני - יצירת לקוח. פונקציה שמקבלת שם ותעודת זהות.",
+        "מחזירה אובייקט שמייצג לקוח אמיתי:",
+        "השם שלו...",
+        "תעודת הזהות שלו...",
+        "וכאן הקסם הגדול: ברגע שלקוח נוצר, אנחנו מפעילים אוטומטית את createAccount(), וככה הלקוח מקבל מיד חשבון בנק פרטי משלו, מחובר אליו ישירות!",
+        ""
+    ],
+    'bankManager.js': [
+        "השלב השלישי: יש לנו מפעל, אבל אנחנו צריכים 'מנהל'. מנהל הבנק הוא זה שיחזיק את כל הלקוחות במקום אחד. למה קובץ נפרד? כי ה-Factory רק מייצר, וה-Manager רק מנהל. סדר וארגון מופתי.",
+        "כדי שהמנהל יוכל להוסיף לקוחות, הוא חייב לייבא את פונקציית הייצור (createCustomer) מהקובץ הקודם שבנינו.",
+        "",
+        "אנחנו מייצאים אובייקט אחד יחיד שנקרא bankManager. הוא המוח של המערכת.",
+        "בתוכו יש 'מערך' (רשימה) שנקרא customers. כרגע הוא ריק, אבל פה יישמרו כל הלקוחות.",
+        "",
+        "פעולה ראשונה של המנהל: הוספת לקוח חדש. מקבלת שם ותעודת זהות.",
+        "המנהל לוקח את השם והת.ז, מוסר אותם ל-Factory (שייבאנו קודם), ומקבל חזרה אובייקט לקוח מוכן עם חשבון בנק!",
+        "המנהל שומר את הלקוח החדש בתוך הרשימה שלו (push).",
+        "ומחזיר לנו את הלקוח (למקרה שנרצה להשתמש בו מיד).",
+        "",
+        "",
+        "פעולה שניה: מציאת לקוח קיים לפי תעודת זהות. חובה כדי שנוכל להפקיד לו כסף אחר כך.",
+        "אנחנו עוברים על רשימת הלקוחות שלנו (find), ומחפשים לקוח שה-id שלו שווה בדיוק ל-id שחיפשנו. מחזירים אותו אם מצאנו.",
         ""
     ],
     'main.js': [
-        "מייבאים את פונקציית יצירת הלקוח מתוך קובץ הפקטורי",
-        "מייבאים את ספריית קבלת הקלט מהמשתמש",
+        "השלב הרביעי והאחרון: חלון הראווה שלנו (Main). פה המשתמש מפעיל את הכל. למה קובץ נפרד? כי פה אין 'לוגיקה בנקאית', יש רק ממשק - תפריטים והדפסות.",
+        "אנחנו מייבאים את המנהל שבנינו בשלב הקודם.",
+        "מייבאים את כלי העזר formatCurrency מהקובץ הראשון הראשון שבנינו (utils), כדי להדפיס כסף יפה.",
+        "ומייבאים את readline-sync - ספריה חיצונית שתאפשר לנו לשאול את המשתמש שאלות.",
         "",
-        "מערך גלובלי לאחסון כל הלקוחות שלנו",
+        "מתחילים בלולאת 'while (true)' אינסופית. היא תרוץ לנצח עד שהמשתמש יבחר לצאת.",
+        "מדפיסים כותרת...",
+        "אפשרות 1 בתפריט...",
+        "אפשרות 2...",
+        "אפשרות ליציאה...",
         "",
-        "לולאה אינסופית שמריצה את התפריט שוב ושוב",
-        "הדפסת תפריט אפשרויות פשוט",
+        "משתמשים ב-question מתוך readline-sync כדי לעצור את התוכנית, להציג שאלה למשתמש, ולחכות שיקליד תשובה. התשובה נשמרת ב-choice.",
         "",
+        "בודקים: אם המשתמש בחר '3' - אנחנו 'שוברים' (break) את הלולאה האינסופית, והתוכנית מסתיימת.",
         "",
+        "אם המשתמש בחר '1' (הוספת לקוח)...",
+        "שואלים אותו מה השם (קלט 1)...",
+        "שואלים אותו מה התעודת זהות (קלט 2)...",
+        "קוראים למנהל שלנו (bankManager) ומבקשים ממנו להוסיף את הלקוח עם הפרטים שקלטנו. הכל קורה מאחורי הקלעים בקבצים האחרים!",
+        "ומדפיסים הודעת הצלחה שמחה.",
+        "אחרת, אם בחר '2' (הפקדה)...",
+        "שואלים מה תעודת הזהות של הלקוח שרוצה להפקיד...",
+        "מבקשים מהמנהל לחפש את הלקוח הספציפי הזה. הוא יחזיר אובייקט לקוח (או שום דבר אם לא מצא).",
+        "אם מצאנו לקוח כזה...",
+        "שואלים כמה כסף להפקיד, ועושים 'Number' כדי להמיר את הטקסט למספר אמיתי.",
+        "ניגשים לחשבון של הלקוח שמצאנו (customer.account), ומפעילים את כפתור ההפקדה שלו (deposit) עם הסכום.",
+        "מדפיסים הודעת הצלחה. שימו לב ליופי: אנחנו משתמשים ב-formatCurrency (מה-utils!) על היתרה החדשה, כדי להדפיס '$50.00' במקום סתם '50'.",
+        "אבל, אם לא מצאנו את הלקוח קודם לכן...",
+        "אנחנו פשוט מדפיסים שגיאה מובנת. הלולאה תתחיל מהתחלה מיד אחר כך.",
         "",
-        "",
-        "",
-        "קבלת בחירת המשתמש באמצעות שאלה פשוטה",
-        "",
-        "תנאי יציאה מהלולאה במקרה של בחירה במספר 4",
-        "",
-        "",
-        "",
-        "",
-        "אם נבחר 1 - קולטים פרטים",
-        "",
-        "",
-        "יוצרים לקוח בעזרת הפקטורי, יחד עם החשבון שלו",
-        "שומרים את הלקוח החדש במערך שלנו",
-        "",
-        "",
-        "אם נבחר 2 - משיכת/הפקדת כסף",
-        "קולטים תעודת זהות ומחפשים במערך",
-        "שימוש בפונקציית החץ find כדי למצוא את הלקוח",
-        "אם מצאנו את הלקוח במערך...",
-        "קולטים את הסכום וממירים אותו למספר",
-        "מפעילים את הפקדת הכסף על החשבון הפרטי של הלקוח!",
-        "",
-        "",
-        "טיפול במקרה של לקוח לא קיים",
-        "",
-        "",
-        "אם נבחר 3 - משיכת כסף (אותה לוגיקה כמו ההפקדה)",
-        "",
-        "",
-        "",
-        "",
-        "מפעילים משיכה. החשבון עצמו כבר יבדוק אם יש מספיק יתרה",
         ""
     ]
 };
