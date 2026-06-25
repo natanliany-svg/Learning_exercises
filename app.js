@@ -53,12 +53,6 @@ const bankIdeData = {
                     <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
                     <div id="folder-git" style="display:none;"></div>
                     
-                    <div class="ide-folder" onclick="toggleFolder('folder-factorys', this)">▾ Factorys</div>
-                    <div id="folder-factorys">
-                        <div class="ide-file indented" onclick="switchIdeFile('Account_Factory.js')"><span style="color:#f7df1e">JS</span> Account_Factory.js</div>
-                        <div class="ide-file indented" onclick="switchIdeFile('Customer_Factory.js')"><span style="color:#f7df1e">JS</span> Customer_Factory.js</div>
-                    </div>
-                    
                     <div class="ide-folder" onclick="toggleFolder('folder-modules', this)">▾ node_modules</div>
                     <div id="folder-modules">
                         <div class="ide-folder indented" onclick="toggleFolder('folder-readline', this)">▸ readline-sync</div>
@@ -66,11 +60,10 @@ const bankIdeData = {
                         <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
                     </div>
                     
-                    <div class="ide-file active" onclick="switchIdeFile('BankManager.js')"><span style="color:#f7df1e">JS</span> BankManager.js</div>
+                    <div class="ide-file active" onclick="switchIdeFile('bankFactory.js')"><span style="color:#f7df1e">JS</span> bankFactory.js</div>
                     <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
                     <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
                     <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
-                    <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
                 </div>
                 
                 <div class="ide-editor" id="ideEditorContent">
@@ -78,7 +71,7 @@ const bankIdeData = {
                 </div>
             </div>
             <div class="ide-terminal">
-                <div class="term-header"><span>bash - BankManager</span></div>
+                <div class="term-header"><span>bash - bankFactory</span></div>
                 <div class="term-output" id="terminalOutput">
                     <p>> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות.</p>
                 </div>
@@ -116,7 +109,7 @@ function openModal(topic) {
     document.body.style.overflow = 'hidden';
     
     if (topic === 'bank') {
-        setTimeout(() => switchIdeFile('BankManager.js'), 50);
+        setTimeout(() => switchIdeFile('bankFactory.js'), 50);
     }
 }
 
@@ -127,66 +120,85 @@ function closeModal() {
 
 // --- IDE Logic ---
 const fileContents = {
-    'BankManager.js': `<span class="keyword">import</span> { Account } <span class="keyword">from</span> <span class="string">'./Factorys/Account_Factory.js'</span>;
-<span class="keyword">import</span> { Customer } <span class="keyword">from</span> <span class="string">'./Factorys/Customer_Factory.js'</span>;
-
-<span class="keyword">export const</span> BankManager = {
-    customers: [],
-    
-    addCustomer(id, name) {
-        <span class="keyword">const</span> newCustomer = Customer(id, name);
-        <span class="keyword">this</span>.customers.push(newCustomer);
-        <span class="keyword">return</span> newCustomer;
-    },
-
-    getCustomer(id) {
-        <span class="keyword">return this</span>.customers.find(c => c.id === id);
-    }
-};`,
-    'main.js': `<span class="keyword">import</span> { BankManager } <span class="keyword">from</span> <span class="string">'./BankManager.js'</span>;
-
-<span class="comment">// 1. יצירת לקוחות</span>
-<span class="keyword">const</span> c1 = BankManager.addCustomer(<span class="number">1</span>, <span class="string">"Natan"</span>);
-
-<span class="comment">// 2. הפקדת כספים באמצעות מתודות</span>
-c1.account.deposit(<span class="number">5000</span>);
-c1.account.withdraw(<span class="number">200</span>);
-
-<span class="comment">// 3. בדיקת יתרה</span>
-console.log(<span class="string">"Balance:"</span>, c1.account.getBalance());`,
-    'Account_Factory.js': `<span class="comment">// Factory Function with Closure</span>
-<span class="keyword">export function</span> Account(initialBalance = <span class="number">0</span>) {
-    <span class="comment">// Private state</span>
-    <span class="keyword">let</span> balance = initialBalance;
+    'bankFactory.js': `<span class="comment">// פונקציית Factory ליצירת חשבון</span>
+<span class="keyword">export function</span> createAccount() {
+    <span class="keyword">let</span> balance = <span class="number">0</span>;
 
     <span class="keyword">return</span> {
         deposit(amount) {
-            <span class="keyword">if</span> (amount > <span class="number">0</span>) {
-                balance += amount;
-                <span class="keyword">return true</span>;
-            }
-            <span class="keyword">return false</span>;
+            balance += amount;
+            <span class="keyword">return</span> balance;
         },
         withdraw(amount) {
-            <span class="keyword">if</span> (amount > <span class="number">0</span> && balance >= amount) {
+            <span class="keyword">if</span> (amount <= balance) {
                 balance -= amount;
-                <span class="keyword">return true</span>;
+            } <span class="keyword">else</span> {
+                console.log(<span class="string">"אין מספיק יתרה בחשבון!"</span>);
             }
-            <span class="keyword">return false</span>;
+            <span class="keyword">return</span> balance;
         },
         getBalance() {
             <span class="keyword">return</span> balance;
         }
     };
-}`,
-    'Customer_Factory.js': `<span class="keyword">import</span> { Account } <span class="keyword">from</span> <span class="string">'./Account_Factory.js'</span>;
+}
 
-<span class="keyword">export function</span> Customer(id, name) {
+<span class="comment">// פונקציית Factory ליצירת לקוח</span>
+<span class="keyword">export function</span> createCustomer(name, id) {
     <span class="keyword">return</span> {
-        id,
         name,
-        account: Account(<span class="number">0</span>)
+        id,
+        account: createAccount()
     };
+}`,
+    'main.js': `<span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./bankFactory.js'</span>;
+<span class="keyword">import</span> readlineSync <span class="keyword">from</span> <span class="string">'readline-sync'</span>;
+
+<span class="keyword">const</span> customers = [];
+
+<span class="keyword">while</span> (<span class="keyword">true</span>) {
+    console.log(<span class="string">"\\n--- מערכת בנק ---"</span>);
+    console.log(<span class="string">"1. הוסף לקוח"</span>);
+    console.log(<span class="string">"2. הפקדת כסף"</span>);
+    console.log(<span class="string">"3. משיכת כסף"</span>);
+    console.log(<span class="string">"4. יציאה"</span>);
+    
+    <span class="keyword">const</span> choice = readlineSync.question(<span class="string">"בחר אפשרות: "</span>);
+    
+    <span class="keyword">if</span> (choice === <span class="string">'4'</span>) {
+        console.log(<span class="string">"להתראות!"</span>);
+        <span class="keyword">break</span>;
+    }
+    
+    <span class="keyword">if</span> (choice === <span class="string">'1'</span>) {
+        <span class="keyword">const</span> name = readlineSync.question(<span class="string">"הכנס שם: "</span>);
+        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"הכנס ת.ז: "</span>);
+        <span class="keyword">const</span> newCustomer = createCustomer(name, id);
+        customers.push(newCustomer);
+        console.log(<span class="string">"הלקוח נוצר בהצלחה!"</span>);
+    }
+    <span class="keyword">else if</span> (choice === <span class="string">'2'</span>) {
+        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"הכנס ת.ז: "</span>);
+        <span class="keyword">const</span> customer = customers.find(c => c.id === id);
+        <span class="keyword">if</span> (customer) {
+            <span class="keyword">const</span> amount = Number(readlineSync.question(<span class="string">"סכום להפקדה: "</span>));
+            customer.account.deposit(amount);
+            console.log(<span class="string">"הופקד בהצלחה! יתרה נוכחית: "</span> + customer.account.getBalance());
+        } <span class="keyword">else</span> {
+            console.log(<span class="string">"לקוח לא נמצא."</span>);
+        }
+    }
+    <span class="keyword">else if</span> (choice === <span class="string">'3'</span>) {
+        <span class="keyword">const</span> id = readlineSync.question(<span class="string">"הכנס ת.ז: "</span>);
+        <span class="keyword">const</span> customer = customers.find(c => c.id === id);
+        <span class="keyword">if</span> (customer) {
+            <span class="keyword">const</span> amount = Number(readlineSync.question(<span class="string">"סכום למשיכה: "</span>));
+            customer.account.withdraw(amount);
+            console.log(<span class="string">"יתרה נוכחית: "</span> + customer.account.getBalance());
+        } <span class="keyword">else</span> {
+            console.log(<span class="string">"לקוח לא נמצא."</span>);
+        }
+    }
 }`,
     'package.json': `{
   <span class="string">"name"</span>: <span class="string">"bank-simulator"</span>,
@@ -203,40 +215,86 @@ console.log(<span class="string">"Balance:"</span>, c1.account.getBalance());`,
   <span class="string">"lockfileVersion"</span>: <span class="number">3</span>,
   <span class="string">"requires"</span>: <span class="keyword">true</span>,
   <span class="string">"packages"</span>: { ... }
-}`,
-    'utils.js': `<span class="keyword">export const</span> isPositive = (num) => num > <span class="number">0</span>;
-<span class="keyword">export const</span> formatCurrency = (amount) => \`$\${amount.toFixed(2)}\`;`
+}`
 };
 
 const storyMap = {
-    'BankManager.js': [
-        "מייבאים את תבניות הלקוח והחשבון",
+    'bankFactory.js': [
+        "מגדירים את פונקציית הייצור הראשונה: יצירת חשבון",
         "",
-        "המנהל (אובייקט גלובלי) שמחזיק את כל הלקוחות",
+        "משתנה פרטי (Private Variable) השומר את היתרה. אי אפשר לגשת אליו מבחוץ!",
         "",
-        "",
-        "פונקציה ליצירת לקוח חדש",
-        "שימוש ב-Factory ליצירת האובייקט",
-        "שמירת הלקוח במערך",
-        "החזרת הלקוח שנוצר",
+        "הפונקציה מחזירה אובייקט עם מתודות שמסוגלות לשנות את היתרה (Closure)",
+        "מתודת הפקדה פשוטה",
+        "מוסיפה כסף ליתרה",
         "",
         "",
-        "פונקציית חיפוש לקוח",
-        "שימוש במתודת מערך find עם פונקציית חץ",
+        "מתודת משיכה פשוטה",
+        "תנאי פשוט שמוודא שלא נמשוך יותר ממה שיש",
+        "אם יש מספיק - מורידים מהיתרה",
+        "",
+        "אחרת מדפיסים שגיאה (פשוט וברור)",
+        "",
+        "",
+        "",
+        "מתודה להחזרת היתרה הנוכחית. זו הדרך היחידה לראות כמה כסף יש!",
+        "",
+        "",
+        "",
+        "",
+        "פונקציית ייצור שניה: יצירת לקוח",
+        "מקבלת שם ותעודת זהות",
+        "מחזירה אובייקט שמכיל את פרטי הלקוח",
+        "",
+        "",
+        "וכאן הקסם: היא מפעילה את יצירת החשבון ומצמידה אותו ללקוח באופן אוטומטי!",
         ""
     ],
     'main.js': [
-        "מייבאים את אובייקט הניהול המרכזי",
+        "מייבאים את פונקציית יצירת הלקוח מתוך קובץ הפקטורי",
+        "מייבאים את ספריית קבלת הקלט מהמשתמש",
+        "",
+        "מערך גלובלי לאחסון כל הלקוחות שלנו",
+        "",
+        "לולאה אינסופית שמריצה את התפריט שוב ושוב",
+        "הדפסת תפריט אפשרויות פשוט",
         "",
         "",
-        "יוצרים לקוח מספר 1",
         "",
         "",
-        "הפקדת 5000",
-        "משיכת 200",
+        "",
+        "קבלת בחירת המשתמש באמצעות שאלה פשוטה",
+        "",
+        "תנאי יציאה מהלולאה במקרה של בחירה במספר 4",
         "",
         "",
-        "הדפסת היתרה הסופית - אין גישה ישירה ל-balance!"
+        "",
+        "",
+        "אם נבחר 1 - קולטים פרטים",
+        "",
+        "",
+        "יוצרים לקוח בעזרת הפקטורי, יחד עם החשבון שלו",
+        "שומרים את הלקוח החדש במערך שלנו",
+        "",
+        "",
+        "אם נבחר 2 - משיכת/הפקדת כסף",
+        "קולטים תעודת זהות ומחפשים במערך",
+        "שימוש בפונקציית החץ find כדי למצוא את הלקוח",
+        "אם מצאנו את הלקוח במערך...",
+        "קולטים את הסכום וממירים אותו למספר",
+        "מפעילים את הפקדת הכסף על החשבון הפרטי של הלקוח!",
+        "",
+        "",
+        "טיפול במקרה של לקוח לא קיים",
+        "",
+        "",
+        "אם נבחר 3 - משיכת כסף (אותה לוגיקה כמו ההפקדה)",
+        "",
+        "",
+        "",
+        "",
+        "מפעילים משיכה. החשבון עצמו כבר יבדוק אם יש מספיק יתרה",
+        ""
     ]
 };
 
