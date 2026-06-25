@@ -43,87 +43,7 @@ function scrollToSection(id) {
 }
 
 // --- Bank IDE Data ---
-const bankIdeData = {
-    title: "Bank Account Simulator 🏦 (IDE Mode)",
-    content: `
-        <div class="ide-container">
-            <div class="ide-top">
-                <div class="ide-sidebar">
-                    <div class="ide-sidebar-header">BANK_ACCOUNT... 📄 📁 🔄 ⚙</div>
-                    <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
-                    <div id="folder-git" style="display:none;"></div>
-                    
-                    <div class="ide-folder" onclick="toggleFolder('folder-modules', this)">▾ node_modules</div>
-                    <div id="folder-modules">
-                        <div class="ide-folder indented" onclick="toggleFolder('folder-readline', this)">▸ readline-sync</div>
-                        <div id="folder-readline" style="display:none;"></div>
-                        <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
-                    </div>
-                    
-                                        <div class="ide-file active" onclick="switchIdeFile('README.md')"><span style="color:#60a5fa">📘</span> הסבר הפרויקט</div>
-                    <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('bankFactory.js')"><span style="color:#f7df1e">JS</span> bankFactory.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('bankManager.js')"><span style="color:#f7df1e">JS</span> bankManager.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
-                    <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
-                    <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
-                </div>
-                
-                <div class="ide-editor" id="ideEditorContent">
-                    <!-- Dynamic content -->
-                </div>
-            </div>
-            <div class="ide-terminal">
-                <div class="term-header"><span>bash - bankFactory</span></div>
-                <div class="term-output" id="terminalOutput">
-                    <p>> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות.</p>
-                </div>
-                <div class="term-input-wrapper">
-                    <span class="term-prompt">natan@ubuntu:~/bank$</span>
-                    <input type="text" class="term-input" id="terminalInput" autocomplete="off" spellcheck="false" onkeypress="handleTerminal(event)">
-                </div>
-            </div>
-        </div>
-    `
-};
-
-// --- Merge Content ---
-const modalData = {
-    ...contentPart1,
-    ...contentPart2,
-    ...contentPart3,
-    bank: bankIdeData
-};
-
-// --- Modal Logic ---
-function openModal(topic) {
-    const data = modalData[topic];
-    if (!data) return;
-
-    const modalBody = document.getElementById('modalBody');
-    modalBody.innerHTML = `
-        <div class="modal-header">
-            <h2>${data.title}</h2>
-        </div>
-        ${data.content}
-    `;
-
-    document.getElementById('fullPageModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-    
-    if (topic === 'bank') {
-        setTimeout(() => switchIdeFile('README.md'), 50);
-    }
-}
-
-function closeModal() {
-    document.getElementById('fullPageModal').classList.remove('open');
-    document.body.style.overflow = 'auto';
-}
-
-// --- IDE Logic ---
-const fileContents = {
-    'README.md': `
+const bankExplanationHtml = `
 <h1>📖 מדריך הפרויקט: סימולטור ניהול בנק</h1>
 <p>ברוך הבא לפרויקט ניהול הבנק! במסמך זה נסביר צעד-אחר-צעד את המבנה, ההיגיון, והקוד מאחורי הקלעים, בדיוק לפי סדר הפעולות הנדרש.</p>
 
@@ -188,8 +108,103 @@ const fileContents = {
     <li><strong>בניית המנהל (Manager):</strong> יוצרים את המוח שמרכז את הלקוחות, ובו כותבים את הפונקציות שמנהלות את המערך.</li>
     <li><strong>חיבור הכל (Main):</strong> כותבים לולאה שמפעילה את התפריט, ו"מחברת את הצינורות" בין מה שהמשתמש הקליד לבין פונקציות המנהל.</li>
 </ol>
-`,
-    'utils.js': `<span class="comment">// 1. שלב ראשון: קובץ כלי עזר ותפריט (Utilities)</span>
+`;
+
+const bankIdeData = {
+    title: "Bank Account Simulator 🏦 (IDE Mode)",
+    content: `
+        <div class="ide-container" style="position:relative;">
+
+        <button onclick="document.getElementById('explanationOverlay').style.display='flex'" style="position:absolute; top:20px; left:20px; background:#3b82f6; color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold; font-family:Heebo,sans-serif; z-index:10; box-shadow:0 4px 6px rgba(0,0,0,0.3); transition:0.2s;">
+            📘 הסבר הפרויקט
+        </button>
+    
+
+        <div id="explanationOverlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.95); z-index:20; flex-direction:column; align-items:center; justify-content:center; padding:40px;">
+            <div style="background:#1e293b; width:100%; max-width:900px; height:90%; border-radius:12px; position:relative; display:flex; flex-direction:column; box-shadow:0 10px 25px rgba(0,0,0,0.5); border:1px solid #334155;">
+                <button onclick="document.getElementById('explanationOverlay').style.display='none'" style="position:absolute; top:15px; right:15px; background:none; border:none; color:#cbd5e1; font-size:24px; cursor:pointer; z-index:30;">✕</button>
+                <div style="padding:40px; overflow-y:auto; color:#f8fafc; font-family:Heebo,sans-serif; line-height:1.8; direction:rtl;">
+                    ${bankExplanationHtml}
+                </div>
+            </div>
+        </div>
+    
+            <div class="ide-top">
+                <div class="ide-sidebar">
+                    <div class="ide-sidebar-header">BANK_ACCOUNT... 📄 📁 🔄 ⚙</div>
+                    <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
+                    <div id="folder-git" style="display:none;"></div>
+                    
+                    <div class="ide-folder" onclick="toggleFolder('folder-modules', this)">▾ node_modules</div>
+                    <div id="folder-modules">
+                        <div class="ide-folder indented" onclick="toggleFolder('folder-readline', this)">▸ readline-sync</div>
+                        <div id="folder-readline" style="display:none;"></div>
+                        <div class="ide-file indented"><span style="color:#34d399">{}</span> .package-lock.json</div>
+                    </div>
+                    
+                                                            <div class="ide-file" onclick="switchIdeFile('utils.js')"><span style="color:#f7df1e">JS</span> utils.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('bankFactory.js')"><span style="color:#f7df1e">JS</span> bankFactory.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('bankManager.js')"><span style="color:#f7df1e">JS</span> bankManager.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('main.js')"><span style="color:#f7df1e">JS</span> main.js</div>
+                    <div class="ide-file" onclick="switchIdeFile('package-lock.json')"><span style="color:#34d399">{}</span> package-lock.json</div>
+                    <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
+                </div>
+                
+                <div class="ide-editor" id="ideEditorContent">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+            <div class="ide-terminal">
+                <div class="term-header"><span>bash - bankFactory</span></div>
+                <div class="term-output" id="terminalOutput">
+                    <p>> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות.</p>
+                </div>
+                <div class="term-input-wrapper">
+                    <span class="term-prompt">natan@ubuntu:~/bank$</span>
+                    <input type="text" class="term-input" id="terminalInput" autocomplete="off" spellcheck="false" onkeypress="handleTerminal(event)">
+                </div>
+            </div>
+        </div>
+    `
+};
+
+// --- Merge Content ---
+const modalData = {
+    ...contentPart1,
+    ...contentPart2,
+    ...contentPart3,
+    bank: bankIdeData
+};
+
+// --- Modal Logic ---
+function openModal(topic) {
+    const data = modalData[topic];
+    if (!data) return;
+
+    const modalBody = document.getElementById('modalBody');
+    modalBody.innerHTML = `
+        <div class="modal-header">
+            <h2>${data.title}</h2>
+        </div>
+        ${data.content}
+    `;
+
+    document.getElementById('fullPageModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    
+    if (topic === 'bank') {
+        setTimeout(() => switchIdeFile('utils.js'), 50);
+    }
+}
+
+function closeModal() {
+    document.getElementById('fullPageModal').classList.remove('open');
+    document.body.style.overflow = 'auto';
+}
+
+// --- IDE Logic ---
+const fileContents = {
+        'utils.js': `<span class="comment">// 1. שלב ראשון: קובץ כלי עזר ותפריט (Utilities)</span>
 <span class="keyword">import</span> rl <span class="keyword">from</span> <span class="string">'readline-sync'</span>;
 
 <span class="keyword">export const</span> formatCurrency = (amount) => \`$\${amount.toFixed(2)}\`;
