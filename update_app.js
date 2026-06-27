@@ -76,39 +76,39 @@ const newBlock = `const fileContents = {
     'bankManager.js': \`<span class="comment">// 3. שלב שלישי: מנהל הבנק - מנהל את כל הלקוחות</span>
 <span class="keyword">import</span> { createCustomer } <span class="keyword">from</span> <span class="string">'./bankFactory.js'</span>;
 
+<span class="keyword">const</span> customers = [];
+
 <span class="keyword">export const</span> bankManager = {
-    customers: [],
-    
     addCustomer(name, id, type, balance) {
         <span class="keyword">const</span> customer = createCustomer(name, id, type, balance);
-        <span class="keyword">this</span>.customers.push(customer);
+        customers.push(customer);
         <span class="keyword">return</span> customer;
     },
     
     getNextId() {
-        <span class="keyword">if</span> (<span class="keyword">this</span>.customers.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">100</span>;
-        <span class="keyword">const</span> ids = <span class="keyword">this</span>.customers.map(c => parseInt(c.id)).filter(id => !isNaN(id));
+        <span class="keyword">if</span> (customers.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">100</span>;
+        <span class="keyword">const</span> ids = customers.map(c => parseInt(c.id)).filter(id => !isNaN(id));
         <span class="keyword">if</span> (ids.length === <span class="number">0</span>) <span class="keyword">return</span> <span class="number">100</span>;
         <span class="keyword">return</span> Math.max(<span class="number">100</span>, ...ids) + <span class="number">1</span>;
     },
     
     getAllCustomers() {
-        <span class="keyword">return this</span>.customers;
+        <span class="keyword">return</span> customers;
     },
     
     findCustomer(query) {
-        <span class="keyword">return this</span>.customers.find(c => c.id == query || c.name === query);
+        <span class="keyword">return</span> customers.find(c => c.id == query || c.name === query);
     },
     
     closeCustomerAccount(id) {
-        <span class="keyword">const</span> customer = <span class="keyword">this</span>.findCustomer(id);
+        <span class="keyword">const</span> customer = bankManager.findCustomer(id);
         <span class="keyword">if</span> (customer) customer.account.closeAccount();
     },
     
     getStats() {
         <span class="keyword">let</span> total = <span class="number">0</span>;
         <span class="keyword">let</span> activeCount = <span class="number">0</span>;
-        <span class="keyword">for</span> (<span class="keyword">let</span> c <span class="keyword">of this</span>.customers) {
+        <span class="keyword">for</span> (<span class="keyword">let</span> c <span class="keyword">of</span> customers) {
             <span class="keyword">if</span> (c.account.getIsActive()) {
                 total += c.account.getBalance();
                 activeCount++;
@@ -246,34 +246,47 @@ const storyMap = {
         "התחנה השלישית: המנהל. התבניות יודעות לייצר לקוח בודד, אבל אנחנו צריכים לנהל בנק שלם! כאן נשמור את הרשימה (המערך) של כולם. סדר וארגון מופתי.",
         "מייבאים את הפונקציה שמייצרת לקוח בודד.",
         "",
-        "בונים אובייקט אחד יחיד (const) שמנהל את הכל.",
-        "זהו הלב של הבנק: מערך customers שבו נאחסן כל לקוח שנייצר.",
+        "זהו הלב של הבנק: מערך customers שבו נאחסן כל לקוח שנייצר. שים לב: הוא מוגדר כמשתנה מקומי בקובץ (Module level) ללא שימוש במילים כמו this או OOP מורכב, בדיוק כמו שלמדנו!",
         "",
-        "פעולת הוספה: כשהתפריט ישלח לנו פרטים (כולל סוג ויתרה)...",
+        "בונים ומייצאים אובייקט אחד יחיד שמנהל את הכל (Singleton pattern).",
+        "פעולת הוספה: כשהתפריט ישלח לנו פרטים...",
         "המנהל יקרא ל-Factory (שייבאנו קודם), ימסור לו את הנתונים, ויקבל חזרה לקוח טרי.",
-        "המנהל דוחף (push) את הלקוח למערך.",
+        "המנהל דוחף (push) את הלקוח למערך המקומי.",
         "ומחזיר אותו.",
+        "",
+        "",
+        "פונקציית עזר לחישוב מזהה עוקב אוטומטי ללקוח הבא.",
+        "אם אין לקוחות עדיין, נתחיל ממספר 100.",
+        "מחלצים את כל ה-IDs הקיימים והופכים אותם למספרים.",
+        "אם אף אחד מהם אינו מספר תקין, נחזיר 100.",
+        "מוצאים את המזהה הגבוה ביותר ומוסיפים לו 1.",
         "",
         "",
         "פעולה פשוטה שמחזירה את כל המערך, כדי שנוכל להדפיס אותו באופציה 2 בתפריט.",
         "",
         "",
+        "",
         "חיפוש חכם! המשתמש הקליד מזהה או שם? אנחנו משתמשים ב-find כדי לעבור על כל הלקוחות. ה-'||' אומר: 'אם המזהה שווה למה שחיפשו, או שהשם שווה למה שחיפשו'.",
         "",
         "",
+        "",
         "סגירת חשבון (אופציה 6):",
-        "המנהל משתמש בפונקציית החיפוש שלו עצמו (this.findCustomer) כדי למצוא את הלקוח.",
+        "המנהל משתמש בפונקציית החיפוש (bankManager.findCustomer) כדי למצוא את הלקוח.",
         "אם הלקוח אכן קיים, המנהל פונה לחשבון שלו (account) ומפעיל את פעולת closeAccount(). החשבון לא נמחק, רק ננעל!",
         "",
         "",
         "סטטיסטיקות (אופציה 7): אנחנו צריכים לחשב סכום כולל וכמות חשבונות פעילים.",
         "מכינים משתנה לסכום (total) ומונה לחשבונות פעילים (activeCount).",
-        "לולאת for..of עוברת על כל הלקוחות בבנק (this.customers).",
+        "",
+        "לולאת for..of עוברת על כל הלקוחות בבנק (מערך customers המקומי).",
         "לפני שמוסיפים כסף, בודקים אם החשבון בכלל פעיל! (getIsActive).",
         "אם הוא פעיל, מוסיפים את היתרה שלו לסכום הכולל, ומגדילים את מונה החשבונות ב-1.",
         "",
         "",
-        "מחזירים אובייקט שמכיל את שני הנתונים כדי שנוכל להדפיס אותם בחלון הראשי."
+        "",
+        "",
+        "מחזירים אובייקט שמכיל את שני הנתונים כדי שנוכל להדפיס אותם בחלון הראשי.",
+        ""
     ],
     'main.js': [
         "והנה התחנה האחרונה! חלון הראווה. פה הכל מתחבר. למה התחלנו דווקא בסוף? כי בדרך כלל מתכננים קודם את הכלים (Utils), את הבסיס (Factory), את הניהול (Manager), ורק בסוף את הממשק.",
@@ -347,6 +360,8 @@ const newAddCustomer = `} else if (cmd === 'add_customer') {
 if (regexAddCustomer.test(content)) {
     content = content.replace(regexAddCustomer, newAddCustomer);
     console.log('Successfully updated terminal simulator add_customer logic.');
+} else if (content.includes('idVal < 100')) {
+    console.log('Terminal simulator add_customer logic is already updated.');
 } else {
     console.warn('Warning: Could not find terminal simulator add_customer block in app.js!');
 }
