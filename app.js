@@ -325,8 +325,18 @@ const fileContents = {
         <span class="keyword">const</span> defaultId = bankManager.getNextId();
         <span class="keyword">const</span> typedId = rl.question(\`מזהה לקוח (ברירת מחדל: \${defaultId}): \`);
         <span class="keyword">const</span> id = typedId.trim() === <span class="string">""</span> ? defaultId.toString() : typedId.trim();
-        <span class="keyword">const</span> idNumber = parseInt(id);
-        <span class="keyword">if</span> (isNaN(idNumber) || idNumber < <span class="number">100</span>) {
+        
+        <span class="comment">// בדיקה פשוטה שכל התווים במזהה הם ספרות בלבד</span>
+        <span class="keyword">let</span> isOnlyDigits = <span class="keyword">true</span>;
+        <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i < id.length; i++) {
+            <span class="keyword">const</span> char = id[i];
+            <span class="keyword">if</span> (char < <span class="string">"0"</span> || char > <span class="string">"9"</span>) {
+                isOnlyDigits = <span class="keyword">false</span>;
+            }
+        }
+        
+        <span class="keyword">const</span> idNum = Number(id);
+        <span class="keyword">if</span> (!isOnlyDigits || idNum < <span class="number">100</span>) {
             console.log(<span class="string">"שגיאה: מזהה חייב להיות מספר גדול או שווה ל-100!"</span>);
         } <span class="keyword">else if</span> (bankManager.findCustomer(id)) {
             console.log(<span class="string">"שגיאה: מזהה לקוח כבר קיים במערכת!"</span>);
@@ -489,12 +499,31 @@ const storyMap = {
         "",
         "",
         "אם בחר 1 (הוספת לקוח):",
-        "קולטים שם...",
-        "קולטים סוג חשבון...",
-        "קולטים יתרה בעזרת questionFloat (שמאפשר מספר עשרוני כמו 50.5)...",
-        "מציעים מזהה אוטומטי עולה (החל מ-100), אך מאפשרים למשתמש להזין מזהה אישי תוך בדיקה שאינו כפול ואינו קטן מ-100.",
-        "מוסרים הכל למנהל (addCustomer) שמייצר ושומר במערך.",
-        "מדפיסים הודעת הצלחה שמחה.",
+        "קולטים את שם הלקוח.",
+        "קולטים את סוג החשבון.",
+        "קולטים יתרה בעזרת questionFloat שמאפשר מספר עשרוני.",
+        "מבקשים ממנהל הבנק לקבל את המזהה הפנוי הבא בסדרה (החל מ-100).",
+        "מציגים למשתמש את מזהה ברירת המחדל ומאפשרים לו להזין מזהה משלו.",
+        "אם המשתמש רק לחץ Enter (קלט ריק), נשתמש במזהה הדיפולטיבי.",
+        "",
+        "וולידציה: נוודא שכל התווים שהוקלדו במזהה הם ספרות בלבד (ללא אותיות או סימנים).",
+        "נגדיר דגל (flag) שלוקח בחשבון שהכל ספרות כברירת מחדל.",
+        "נעבור בלולאה פשוטה על כל תו ותו במזהה.",
+        "נשלוף את התו במיקום הנוכחי.",
+        "אם התו קטן מ-'0' או גדול מ-'9', סימן שזו לא ספרה!",
+        "נעדכן את הדגל ל-false.",
+        "",
+        "",
+        "",
+        "נמיר את המזהה הסופי למספר לצורך השוואת ערך.",
+        "אם נמצאו תווים לא חוקיים, או שהמספר קטן מ-100...",
+        "נדפיס שגיאה מתאימה.",
+        "אחרת, נבדוק מול המנהל אם המזהה הזה כבר קיים ללקוח אחר.",
+        "נדפיס שגיאת כפל מזהים.",
+        "אם כל הבדיקות עברו בהצלחה:",
+        "נמסור למנהל הבנק ליצור את הלקוח החדש.",
+        "נדפיס הודעת הצלחה עם המזהה הסופי!",
+        "",
         "",
         "אם בחר 2 (הצגת כלל הלקוחות) - פשוט מדפיסים את המערך שהמנהל מחזיר.",
         "",
