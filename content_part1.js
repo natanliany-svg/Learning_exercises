@@ -1,317 +1,153 @@
 const contentPart1 = {
   basics: {
-    title: '📐 JS Basics & Variables',
+    title: '📐 יסודות ומשתנים',
     content: `
-      <div class="modal-grid">
-        <div class="modal-card">
-          <h4>משתנים: let vs const vs var</h4>
-          <p>הגדרת משתנים נעשית בשלוש דרכים עיקריות, הנבדלות בתחום ההכרה (Scope) וביכולת ההשמה מחדש.</p>
-          <pre>
-<span class="comment">// אפשרות א': const (Block Scope, לא ניתן להשמה מחדש)</span>
-<span class="keyword">const</span> <span class="variable">PI</span> = 3.14;
+      <div class="card-body">
+        <p class="lead">משתנה הוא "קופסה עם שם" שמחזיקה ערך מסוים בזיכרון. ב-JavaScript מודרנית יש שלוש דרכים להכריז על משתנים, והבחירה ביניהן היא קריטית לתקינות הקוד.</p>
+        
+        <h4>1. ההבדל בין let, const ו-var</h4>
+        <ul class="tight">
+          <li><b><code class="inl">const</code></b> (קבוע) — ערכו של המשתנה לא יכול להשתנות לאחר ההגדרה הראשונית. <b>זוהי ברירת המחדל שבה תשתמשו כמעט תמיד.</b></li>
+          <li><b><code class="inl">let</code></b> (משתנה) — משתנה שניתן לשנות לו את הערך (להציב ערך חדש) במהלך ריצת התוכנית.</li>
+          <li><b><code class="inl">var</code></b> (מיושן) — הדרך הישנה להגדרת משתנים. כיום כמעט ולא משתמשים בה מכיוון שהיא יוצרת באגים מורכבים עקב התנהגות Scope לא צפויה ו-Hoisting.</li>
+        </ul>
 
-<span class="comment">// אפשרות ב': let (Block Scope, ניתן להשמה מחדש)</span>
-<span class="keyword">let</span> <span class="variable">count</span> = 0;
-<span class="variable">count</span> = 1;
+        <pre><code><span class="t-key">const</span> name = <span class="t-str">"אהרן"</span>;   <span class="t-com">// קבוע</span>
+<span class="t-key">let</span> age = <span class="t-num">25</span>;        <span class="t-com">// משתנה</span>
+age = <span class="t-num">26</span>;              <span class="t-com">// ✓ מותר</span>
+<span class="t-com">// name = "דני";       ✗ שגיאה! const לא ניתן לשינוי</span></code></pre>
 
-<span class="comment">// אפשרות ג': var (Function Scope, Hoisted)</span>
-<span class="keyword">var</span> <span class="variable">name</span> = <span class="string">'John'</span>;
-          </pre>
-          <p>💡 <strong>טיפ:</strong> תמיד העדיפו להשתמש ב-<code>const</code>. אם הערך ישתנה, השתמשו ב-<code>let</code>. הימנעו מ-<code>var</code> במידת האפשר.</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> במערכים ואובייקטים שמוגדרים כ-<code>const</code>, ניתן לשנות את התוכן הפנימי (Mutation) אך לא לדרוס את המשתנה כולו.</p>
+        <div class="callout analogy">
+          <span class="ico">📦</span>
+          <div class="ct"><b>אנלוגיה:</b> הגדרת משתנה עם <code>const</code> זה כמו לכתוב את השם עם עט על קופסה — הוא נשאר שם לתמיד. הגדרה עם <code>let</code> זה כמו לכתוב בעיפרון — אפשר למחוק ולכתוב משהו חדש.</div>
         </div>
 
-        <div class="modal-card">
-          <h4>סוגי נתונים (Primitive Types)</h4>
-          <p>JavaScript תומכת במספר סוגי נתונים פרימיטיביים ומורכבים (Reference Types).</p>
-          <pre>
-<span class="comment">// String</span>
-<span class="keyword">const</span> <span class="variable">str</span> = <span class="string">'Hello World'</span>;
-<span class="comment">// Number</span>
-<span class="keyword">const</span> <span class="variable">num</span> = 42;
-<span class="comment">// Boolean</span>
-<span class="keyword">const</span> <span class="variable">isTrue</span> = true;
-<span class="comment">// Array (Reference Type)</span>
-<span class="keyword">const</span> <span class="variable">arr</span> = [1, 2, 3];
-<span class="comment">// Object (Reference Type)</span>
-<span class="keyword">const</span> <span class="variable">obj</span> = { <span class="variable">key</span>: <span class="string">'value'</span> };
-          </pre>
-        </div>
+        <h4>2. משתני const ומערכים/אובייקטים (מלכודת נפוצה!)</h4>
+        <p>כאשר מגדירים מערך או אובייקט באמצעות <code>const</code>, המצביע לזיכרון נעול, אך <b>התוכן הפנימי שלו עדיין ניתן לשינוי (Mutation)</b>.</p>
+        <pre><code><span class="t-key">const</span> colors = [<span class="t-str">"אדום"</span>, <span class="t-str">"ירוק"</span>];
+colors.<span class="t-fn">push</span>(<span class="t-str">"כחול"</span>); <span class="t-com">// ✓ מותר בהחלט! שינינו את התוכן של המערך</span>
+<span class="t-com">// colors = ["צהוב"]; ✗ שגיאה! אסור להציב מערך חדש לגמרי בתוך const</span></code></pre>
 
-        <div class="modal-card">
-          <h4>אופרטור typeof ו-Type Coercion</h4>
-          <p>ניתן לבדוק סוגי נתונים באמצעות <code>typeof</code>, אך צריך להיזהר מהמרות אוטומטיות (Coercion) ש-JS מבצעת מאחורי הקלעים.</p>
-          <pre>
-<span class="function">console.log</span>(<span class="keyword">typeof</span> <span class="string">'text'</span>); <span class="comment">// "string"</span>
-<span class="function">console.log</span>(<span class="keyword">typeof</span> 42); <span class="comment">// "number"</span>
-<span class="function">console.log</span>(<span class="keyword">typeof</span> null); <span class="comment">// "object" (באג היסטורי!)</span>
-
-<span class="comment">// Type Coercion</span>
-<span class="keyword">const</span> <span class="variable">result</span> = <span class="string">'5'</span> + 3; <span class="comment">// "53"</span>
-<span class="keyword">const</span> <span class="variable">sub</span> = <span class="string">'5'</span> - 3; <span class="comment">// 2</span>
-          </pre>
-          <p>💡 <strong>טיפ:</strong> השתמשו תמיד ב-<code>===</code> במקום ב-<code>==</code> כדי למנוע המרות סוגים בלתי רצויות בעת השוואה.</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> הפעולה <code>typeof NaN</code> מחזירה <code>"number"</code>, למרות שמשמעותה היא "Not a Number".</p>
-        </div>
-
-        <div class="modal-card">
-          <h4>Template Literals</h4>
-          <p>מחרוזות תבנית (Template strings) מאפשרות שילוב משתנים בקלות וריבוי שורות ללא צורך בשרשור באמצעות פלוס.</p>
-          <pre>
-<span class="keyword">const</span> <span class="variable">name</span> = <span class="string">'Alice'</span>;
-<span class="keyword">const</span> <span class="variable">greeting</span> = <span class="string">\`Hello \${<span class="variable">name</span>}, welcome!\`</span>;
-          </pre>
+        <div class="callout exam">
+          <span class="ico">📌</span>
+          <div class="ct"><b>למבחן:</b> שים לב שמשתני <code>let</code> ו-<code>const</code> הם בעלי <b>Block Scope</b> (קיימים רק בתוך הבלוק <code>{}</code> שבו הם הוגדרו, כמו לולאה או תנאי). לעומתם, <code>var</code> הוא בעל <b>Function Scope</b> ועובר <b>Hoisting</b> (הצהרתו עולה אוטומטית לראש הסביבה), מה שמקל על יצירת באגים. תמיד התחילו עם <code>const</code>, ועברו ל-<code>let</code> רק אם אתם יודעים שתצטרכו לשנות את המשתנה בהמשך.</div>
         </div>
       </div>
     `
   },
   loops: {
-    title: '🔄 לולאות ותנאים (Loops & Conditionals)',
+    title: '🔄 תנאים ולולאות',
     content: `
-      <div class="modal-grid">
-        <div class="modal-card">
-          <h4>תנאים (Conditionals)</h4>
-          <p>שימוש במבני תנאי לבקרת זרימת התוכנית (if/else, Ternary operator ו-switch/case).</p>
-          <pre>
-<span class="comment">// אפשרות א': if / else if / else</span>
-<span class="keyword">if</span> (<span class="variable">score</span> &gt; 90) {
-  <span class="function">console.log</span>(<span class="string">'A'</span>);
-} <span class="keyword">else if</span> (<span class="variable">score</span> &gt; 80) {
-  <span class="function">console.log</span>(<span class="string">'B'</span>);
-} <span class="keyword">else</span> {
-  <span class="function">console.log</span>(<span class="string">'C'</span>);
-}
+      <div class="card-body">
+        <p class="lead">בקרת זרימה (Control Flow) מאפשרת לנו לקבל החלטות בקוד (באמצעות תנאים) ולחזור על פעולות מספר פעמים (באמצעות לולאות).</p>
+        
+        <h4>1. אופרטורים לוגיים: && (וגם) ו- || (או)</h4>
+        <ul class="tight">
+          <li><b><code class="inl">&&</code> (AND)</b> — מחזיר אמת רק אם <b>שני</b> הצדדים נכונים.</li>
+          <li><b><code class="inl">||</code> (OR)</b> — מחזיר אמת אם <b>לפחות אחד</b> מהצדדים נכון.</li>
+          <li><b><code class="inl">!</code> (NOT)</b> — הופך את הערך הבוליאני: <code class="inl">!true</code> הופך ל-<code>false</code>.</li>
+        </ul>
 
-<span class="comment">// אפשרות ב': Ternary Operator (תנאי מקוצר בשורה אחת)</span>
-<span class="keyword">const</span> <span class="variable">status</span> = <span class="variable">age</span> &gt;= 18 ? <span class="string">'Adult'</span> : <span class="string">'Minor'</span>;
+        <h4>2. טריק הקצר הלוגי (Short-Circuit Evaluation)</h4>
+        <p>JavaScript מעריכה ביטויים משמאל לימין ומפסיקה לבדוק ברגע שהתוצאה הסופית ברורה. היא מחזירה את <b>הערך עצמו</b> ולא רק true/false:</p>
+        <pre><code><span class="t-com">// במקרה של ||: יחזיר את הערך האמיתי (truthy) הראשון שהוא פוגש</span>
+<span class="t-key">const</span> username = inputName || <span class="t-str">"אורח"</span>; <span class="t-com">// אם inputName ריק, נקבל "אורח"</span>
 
-<span class="comment">// אפשרות ג': Switch / Case</span>
-<span class="keyword">switch</span> (<span class="variable">color</span>) {
-  <span class="keyword">case</span> <span class="string">'red'</span>:
-    <span class="function">stop</span>();
-    <span class="keyword">break</span>;
-  <span class="keyword">default</span>:
-    <span class="function">go</span>();
-}
-          </pre>
-          <p>💡 <strong>טיפ:</strong> תנאי טרינרי מצוין להשמות קצרות ופשוטות. המנעו מקינון של תנאים טרינריים למען הקריאות.</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> שכחת <code>break</code> במבנה switch תוביל ל-"fall-through", והקוד ימשיך לבצע גם את התנאים הבאים שאינם תואמים.</p>
+<span class="t-com">// במקרה של &&: אם הצד השמאלי שקרי, הוא עוצר ומחזיר אותו מיד</span>
+<span class="t-key">const</span> show = isLoggedIn && <span class="t-fn">renderDashboard</span>(); <span class="t-com">// הטאבלט ירוץ רק אם isLoggedIn הוא true</span></code></pre>
+
+        <h4>3. האופרטור השלישוני (Ternary Operator)</h4>
+        <p>תחביר מקוצר ונוח להחזרת ערך מתנאי <code>if/else</code> בשורה אחת בלבד: <code>תנאי ? ערך-אם-נכון : ערך-אם-שקרי</code>.</p>
+        <pre><code><span class="t-com">// הדרך הארוכה:</span>
+<span class="t-key">let</span> status;
+<span class="t-ctl">if</span> (score >= <span class="t-num">60</span>) status = <span class="t-str">"עבר"</span>;
+<span class="t-ctl">else</span> status = <span class="t-str">"נכשל"</span>;
+
+<span class="t-com">// האופרטור השלישוני:</span>
+<span class="t-key">const</span> status = score >= <span class="t-num">60</span> ? <span class="t-str">"עבר"</span> : <span class="t-str">"נכשל"</span>;</code></pre>
+        <div class="callout analogy">
+          <span class="ico">🔀</span>
+          <div class="ct"><b>איך קוראים את זה:</b> "האם הציון גדול או שווה ל-60? אם כן (?) -> תחזיר 'עבר', אחרת (:) -> תחזיר 'נכשל'". סימן השאלה מייצג את השאלה, והנקודתיים מפרידות בין התשובות.</div>
         </div>
 
-        <div class="modal-card">
-          <h4>לולאות (Loops)</h4>
-          <p>JavaScript מציעה מספר סוגי לולאות בהתאם למבנה הנתונים (מערכים, אובייקטים) ואופן הפעולה הנדרש.</p>
-          <pre>
-<span class="comment">// אפשרות א': לולאת for קלאסית</span>
-<span class="keyword">for</span> (<span class="keyword">let</span> <span class="variable">i</span> = 0; <span class="variable">i</span> &lt; 5; <span class="variable">i</span>++) {
-  <span class="function">console.log</span>(<span class="variable">i</span>);
+        <h4>4. לולאות: for, for...of ו- for...in</h4>
+        <ul class="tight">
+          <li><b>לולאת <code>for</code> קלאסית</b> — רצה עם אינדקס מספרי מוגדר (i).</li>
+          <li><b>לולאת <code>for...of</code></b> — הדרך הטובה ביותר לרוץ על <b>הערכים</b> של מערך (Array) או מחרוזת.</li>
+          <li><b>לולאת <code>for...in</code></b> — רצה על <b>המפתחות (Keys)</b> של אובייקט.</li>
+        </ul>
+        <pre><code><span class="t-key">const</span> list = [<span class="t-str">"א"</span>, <span class="t-str">"ב"</span>, <span class="t-str">"ג"</span>];
+
+<span class="t-com">// מעבר על הערכים:</span>
+<span class="t-ctl">for</span> (<span class="t-key">const</span> letter <span class="t-ctl">of</span> list) {
+  console.<span class="t-fn">log</span>(letter); <span class="t-com">// הדפסה: "א", "ב", "ג"</span>
 }
 
-<span class="comment">// אפשרות ב': for...of (למעבר על איברים של מערכים ומחרוזות)</span>
-<span class="keyword">for</span> (<span class="keyword">const</span> <span class="variable">item</span> <span class="keyword">of</span> <span class="variable">array</span>) {
-  <span class="function">console.log</span>(<span class="variable">item</span>);
-}
-
-<span class="comment">// אפשרות ג': for...in (למעבר על מפתחות של אובייקטים)</span>
-<span class="keyword">for</span> (<span class="keyword">const</span> <span class="variable">key</span> <span class="keyword">in</span> <span class="variable">object</span>) {
-  <span class="function">console.log</span>(<span class="variable">key</span>, <span class="variable">object</span>[<span class="variable">key</span>]);
-}
-
-<span class="comment">// אפשרות ד': לולאת while (רצה כל עוד התנאי מתקיים)</span>
-<span class="keyword">while</span> (<span class="variable">condition</span>) {
-  <span class="comment">// קוד לביצוע</span>
-}
-
-<span class="comment">// אפשרות ה': לולאת do...while (תרוץ לפחות פעם אחת לפני בדיקת התנאי)</span>
-<span class="keyword">do</span> {
-  <span class="comment">// קוד לביצוע</span>
-} <span class="keyword">while</span> (<span class="variable">condition</span>);
-          </pre>
-          <p>💡 <strong>טיפ:</strong> עבור ריצה פשוטה על מערכים, העדיפו להשתמש ב-<code>for...of</code> או במתודות מערך (כגון <code>forEach</code> או <code>map</code>).</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> היזהרו משימוש ב-<code>for...in</code> על מערכים - לולאה זו נועדה לאובייקטים ועלולה לכלול מאפיינים שנוספו ל-Prototype.</p>
+<span class="t-com">// מעבר על האינדקסים/מפתחות:</span>
+<span class="t-ctl">for</span> (<span class="t-key">const</span> index <span class="t-ctl">in</span> list) {
+  console.<span class="t-fn">log</span>(index); <span class="t-com">// הדפסה: "0", "1", "2"</span>
+}</code></pre>
+        <div class="callout exam">
+          <span class="ico">📌</span>
+          <div class="ct"><b>למבחן:</b> זכרו ש-<code>for...of</code> נועדה למערכים (מחזירה ערכים) ו-<code>for...in</code> נועדה לאובייקטים (מחזירה מפתחות). שימוש ב-<code>for...in</code> על מערך יחזיר את האינדקסים כמחרוזות ולא כמספרים, ועלול לגרור באגים קשים.</div>
         </div>
       </div>
     `
   },
   functions: {
-    title: '🎯 פונקציות (Functions)',
+    title: '🎯 פונקציות',
     content: `
-      <div class="modal-grid">
-        <div class="modal-card">
-          <h4>הגדרת פונקציות</h4>
-          <p>קיימות מספר דרכים מרכזיות להגדרת פונקציות ב-JS, כאשר לכל אחת הבדלים בהתנהגות ה-Hoisting ובתחביר.</p>
-          <pre>
-<span class="comment">// 1. הצהרת פונקציה (Function Declaration) - Hoisted: קיימת לאורך כל הקובץ!</span>
-<span class="keyword">function</span> <span class="function">greet</span>(<span class="variable">name</span>) {
-  <span class="keyword">return</span> <span class="string">\`Hello \${<span class="variable">name</span>}\`</span>;
+      <div class="card-body">
+        <p class="lead">פונקציה היא קטע קוד עצמאי בעל שם שמבצע משימה ספציפית ומאפשר לנו למנוע כפילויות קוד.</p>
+        
+        <h4>1. שלוש הדרכים להגדרת פונקציה</h4>
+        <pre><code><span class="t-com">// 1. Declaration (הצהרה) - עוברת Hoisting (ניתן לקרוא לה עוד לפני ההגדרה שלה בקוד)</span>
+<span class="t-key">function</span> <span class="t-fn">add</span>(a, b) {
+  <span class="t-ctl">return</span> a + b;
 }
 
-<span class="comment">// 2. ביטוי פונקציה (Function Expression) - לא מתבצע לה Hoisting</span>
-<span class="keyword">const</span> <span class="function">greetExpr</span> = <span class="keyword">function</span>(<span class="variable">name</span>) {
-  <span class="keyword">return</span> <span class="string">\`Hello \${<span class="variable">name</span>}\`</span>;
+<span class="t-com">// 2. Expression (ביטוי פונקציה) - נשמרת בתוך משתנה, לא עוברת Hoisting</span>
+<span class="t-key">const</span> addExpression = <span class="t-key">function</span>(a, b) {
+  <span class="t-ctl">return</span> a + b;
 };
 
-<span class="comment">// 3. פונקציות חץ (Arrow Functions)</span>
-
-<span class="comment">// א. פונקציית חץ עם בלוק מלא (Full block, מחייבת return)</span>
-<span class="keyword">const</span> <span class="function">add</span> = (<span class="variable">a</span>, <span class="variable">b</span>) =&gt; {
-  <span class="keyword">return</span> <span class="variable">a</span> + <span class="variable">b</span>;
-};
-
-<span class="comment">// ב. פונקציית חץ בשורה אחת (Implicit return - מחזירה אוטומטית)</span>
-<span class="keyword">const</span> <span class="function">multiply</span> = (<span class="variable">a</span>, <span class="variable">b</span>) =&gt; <span class="variable">a</span> * <span class="variable">b</span>;
-
-<span class="comment">// ג. פונקציית חץ עם פרמטר יחיד (ניתן להשמיט סוגריים מסביב לפרמטר)</span>
-<span class="keyword">const</span> <span class="function">square</span> = <span class="variable">x</span> =&gt; <span class="variable">x</span> * <span class="variable">x</span>;
-          </pre>
-          <p>💡 <strong>טיפ:</strong> לפונקציות חץ אין <code>this</code> משל עצמן - הן יורשות את <code>this</code> מהסביבה העוטפת (Lexical scoping).</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> לא ניתן להשתמש בפונקציות חץ כ-Constructors (עם מילת המפתח <code>new</code>), ולא כאובייקטים לפונקציות גנרטור.</p>
+<span class="t-com">// 3. Arrow Function (פונקציית חץ) - התחביר המודרני והנפוץ ביותר</span>
+<span class="t-key">const</span> addArrow = (a, b) => a + b; <span class="t-com">// החזרה אוטומטית (Implicit Return) בשורה אחת</span></code></pre>
+        
+        <div class="callout analogy">
+          <span class="ico">🍳</span>
+          <div class="ct"><b>אנלוגיה:</b> פונקציה היא כמו מתכון להכנת מנה. <b>הפרמטרים</b> הם המצרכים שאתם מכניסים (הקלט), ו-<b>return</b> הוא המנה שיוצאת בסוף (הפלט). אפשר להריץ את אותו מתכון שוב ושוב עם מצרכים שונים.</div>
         </div>
 
-        <div class="modal-card">
-          <h4>פרמטרים: ערכי ברירת מחדל ו-Rest parameters</h4>
-          <p>גמישות בהגדרת פרמטרים וטיפול בכמות משתנה של ארגומנטים.</p>
-          <pre>
-<span class="comment">// Default Parameters (ערך ברירת מחדל במידה ולא סופק ארגומנט)</span>
-<span class="keyword">function</span> <span class="function">welcome</span>(<span class="variable">name</span> = <span class="string">'Guest'</span>) {
-  <span class="function">console.log</span>(<span class="string">\`Welcome \${<span class="variable">name</span>}\`</span>);
+        <h4>2. חוקי הברזל של פונקציות חץ (Arrow Functions)</h4>
+        <p>פונקציות חץ מקצרות את הקוד בצורה משמעותית, אך יש להן שני חוקים חשובים:</p>
+        <ul class="tight">
+          <li>אם יש שורה אחת של ביטוי וללא סוגריים מסולסלים <code>{}</code>, הפונקציה מחזירה את הערך <b>אוטומטית</b> ללא מילת המפתח <code>return</code>.</li>
+          <li>אם הוספתם סוגריים מסולסלים <code>{}</code>, ה-Implicit Return מבוטל ו<b>חובה לכתוב <code>return</code> מפורש</b>, אחרת הפונקציה תחזיר <code>undefined</code>.</li>
+        </ul>
+        <pre><code><span class="t-com">// ✓ מותר: החזרה אוטומטית</span>
+<span class="t-key">const</span> double = n => n * <span class="t-num">2</span>;
+
+<span class="t-com">// ✗ באג: אין return ולכן מחזיר undefined!</span>
+<span class="t-key">const</span> doubleBug = n => { n * <span class="t-num">2</span> }; 
+
+<span class="t-com">// ✓ מתוקן: הוספנו return מפורש</span>
+<span class="t-key">const</span> doubleFixed = n => { <span class="t-ctl">return</span> n * <span class="t-num">2</span> }; </code></pre>
+
+        <h4>3. פרמטרים מיוחדים: Rest Parameters ו-Default Parameters</h4>
+        <pre><code><span class="t-com">// ערך ברירת מחדל (Default) למקרה שלא נשלח ארגומנט</span>
+<span class="t-key">function</span> <span class="t-fn">greet</span>(name = <span class="t-str">"אורח"</span>) {
+  console.<span class="t-fn">log</span>(<span class="t-str">\`שלום \${name}\`</span>);
 }
 
-<span class="comment">// Rest Parameters (איסוף כל שאר הפרמטרים לתוך מערך)</span>
-<span class="keyword">function</span> <span class="function">sumAll</span>(...<span class="variable">numbers</span>) {
-  <span class="keyword">return</span> <span class="variable">numbers</span>.<span class="function">reduce</span>((<span class="variable">acc</span>, <span class="variable">curr</span>) =&gt; <span class="variable">acc</span> + <span class="variable">curr</span>, 0);
+<span class="t-com">// פרמטר שאוסף את כל הארגומנטים הנותרים למערך (Rest ...)</span>
+<span class="t-key">function</span> <span class="t-fn">sumAll</span>(...numbers) {
+  <span class="t-ctl">return</span> numbers.<span class="t-fn">reduce</span>((sum, n) => sum + n, <span class="t-num">0</span>);
 }
-          </pre>
-          <p>💡 <strong>טיפ:</strong> פרמטר <code>...rest</code> יכול להקל מאוד כשיש לטפל במספר לא ידוע של ארגומנטים הנשלחים לפונקציה.</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> פרמטר Rest חייב להיות האחרון בהגדרת הפונקציה. הגדרה כמו <code>function fn(...rest, arg)</code> תזרוק שגיאה.</p>
-        </div>
-      </div>
-    `
-  },
-  closures: {
-    title: '🔒 Closures (סגירות)',
-    content: `
-      <div class="modal-grid">
-        <div class="modal-card">
-          <h4>מהו Closure?</h4>
-          <p>סגירה (Closure) היא תכונה מרכזית ב-JS, המאפשרת לפונקציה פנימית לזכור ולשמור גישה למשתנים של הפונקציה העוטפת שלה (Lexical Scope), גם לאחר שהפונקציה העוטפת כבר סיימה את ריצתה.</p>
-          <pre>
-<span class="comment">// דוגמה קלאסית ל-Closure: פונקציה לייצור מונים</span>
-<span class="keyword">function</span> <span class="function">createCounter</span>() {
-  <span class="comment">// המשתנה הזה הוא "פרטי" ולא ניתן לשינוי ישיר מבחוץ</span>
-  <span class="keyword">let</span> <span class="variable">count</span> = 0;
-  
-  <span class="comment">// הפונקציה שמוחזרת שומרת על רפרנס אל count בזכות ה-Closure</span>
-  <span class="keyword">return</span> <span class="keyword">function</span>() {
-    <span class="variable">count</span>++;
-    <span class="keyword">return</span> <span class="variable">count</span>;
-  };
-}
-
-<span class="keyword">const</span> <span class="function">counter1</span> = <span class="function">createCounter</span>();
-<span class="function">console.log</span>(<span class="function">counter1</span>()); <span class="comment">// 1</span>
-<span class="function">console.log</span>(<span class="function">counter1</span>()); <span class="comment">// 2</span>
-          </pre>
-          <p>💡 <strong>טיפ:</strong> סגירות הן דרך מצוינת ליישם משתנים פרטיים ו-Data Hiding ב-JS, במיוחד לפני שהוצגו שדות פרטיים במחלקות (Private Fields).</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> מכיוון שה-Closure שומרת משתנים בזיכרון, שימוש מופרז (למשל יצירת פונקציות רבות בלולאה ששומרות רפרנסים כבדים) עלול להוביל לדליפות זיכרון (Memory Leaks) אם לא מנקים את הרפרנסים.</p>
-        </div>
-      </div>
-    `
-  },
-  factories: {
-    title: '🏭 Factory Functions',
-    content: `
-      <div class="modal-grid">
-        <div class="modal-card">
-          <h4>מהן Factory Functions?</h4>
-          <p>פונקציית מפעל היא כל פונקציה שאיננה מחלקה או פונקציית בנאי, אשר פשוט מחזירה אובייקט חדש. אין צורך להשתמש במילת המפתח <code>new</code>.</p>
-          <pre>
-<span class="comment">// דוגמה ליצירת משתמש עם Factory Function</span>
-<span class="keyword">function</span> <span class="function">createUser</span>(<span class="variable">name</span>, <span class="variable">role</span>) {
-  <span class="comment">// סטייט פרטי (בעזרת Closures)</span>
-  <span class="keyword">const</span> <span class="variable">createdAt</span> = <span class="keyword">new</span> <span class="function">Date</span>();
-  
-  <span class="keyword">return</span> {
-    <span class="variable">name</span>,
-    <span class="variable">role</span>,
-    <span class="function">getInfo</span>() {
-      <span class="comment">// ניגש ישירות לפרמטרים של הפונקציה - אין צורך ב-this!</span>
-      <span class="keyword">return</span> <span class="string">\`\${<span class="variable">name</span>} is an \${<span class="variable">role</span>}\`</span>;
-    }
-  };
-}
-
-<span class="keyword">const</span> <span class="variable">user1</span> = <span class="function">createUser</span>(<span class="string">'David'</span>, <span class="string">'Admin'</span>);
-<span class="function">console.log</span>(<span class="variable">user1</span>.<span class="function">getInfo</span>()); <span class="comment">// "David is an Admin"</span>
-          </pre>
-          <p>💡 <strong>טיפ:</strong> בעבודה עם Factory Functions אנו נמנעים מכל הבעיות הקשורות בחיבור שגוי של <code>this</code>. גישה זו גם מעודדת שימוש ב-Composition על פני Inheritance (הרכבה במקום הורשה) שהיא פעמים רבות תבנית עיצוב עדיפה.</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> אם אתם מייצרים כמות גדולה מאוד (מיליונים) של אובייקטים, Factory Functions עלולות לבזבז יותר זיכרון מ-Classes מכיוון שכל אובייקט יוצר עותק משלו לפונקציות, במקום להשתמש ב-Prototype.</p>
-        </div>
-      </div>
-    `
-  },
-  modules: {
-    title: '📦 ES6 Modules',
-    content: `
-      <div class="modal-grid">
-        <div class="modal-card">
-          <h4>ייבוא וייצוא עם ES6 Modules</h4>
-          <p>מודולים ב-ES6 מאפשרים ארגון ופיצול של קוד. כל קובץ משמש כמודול נפרד (Module Scope), ויש להצהיר במפורש מה אנחנו חושפים החוצה (Export) ומה אנחנו מכניסים פנימה (Import).</p>
-          <pre>
-<span class="comment">// קובץ math.js (ייצוא)</span>
-<span class="comment">// Named Exports (ייצוא שמי - אפשר כמה כאלו):</span>
-<span class="keyword">export</span> <span class="keyword">const</span> <span class="function">add</span> = (<span class="variable">a</span>, <span class="variable">b</span>) =&gt; <span class="variable">a</span> + <span class="variable">b</span>;
-<span class="keyword">export</span> <span class="keyword">const</span> <span class="variable">PI</span> = 3.14;
-
-<span class="comment">// Default Export (ייצוא ברירת מחדל - רק אחד לכל קובץ!):</span>
-<span class="keyword">export default function</span> <span class="function">multiply</span>(<span class="variable">a</span>, <span class="variable">b</span>) {
-  <span class="keyword">return</span> <span class="variable">a</span> * <span class="variable">b</span>;
-}
-
-<span class="comment">// קובץ app.js (ייבוא)</span>
-<span class="comment">// ייבוא ברירת מחדל (מחוץ לסוגריים) + ייבוא שמי (בתוך סוגריים):</span>
-<span class="keyword">import</span> <span class="variable">multiply</span>, { <span class="variable">add</span>, <span class="variable">PI</span> } <span class="keyword">from</span> <span class="string">'./math.js'</span>;
-
-<span class="comment">// ייבוא הכל כאובייקט אחד (Import *):</span>
-<span class="keyword">import</span> * <span class="keyword">as</span> <span class="variable">MathUtils</span> <span class="keyword">from</span> <span class="string">'./math.js'</span>;
-<span class="function">console.log</span>(<span class="variable">MathUtils</span>.<span class="function">add</span>(2, 3));
-
-<span class="comment">// Re-exports (ייצוא מחדש מקובץ אחר):</span>
-<span class="keyword">export</span> { <span class="variable">add</span> } <span class="keyword">from</span> <span class="string">'./math.js'</span>;
-          </pre>
-        </div>
-
-        <div class="modal-card">
-          <h4>השוואה: CommonJS לעומת ES Modules</h4>
-          <p>בעולם של Node.js קיימת גם תבנית הייבוא הישנה יותר (CommonJS). כיום מומלץ להשתמש ב-ES Modules, ולשם כך ב-Node.js חובה להגדיר <code>"type": "module"</code> בקובץ package.json.</p>
-          <table class="comparison-table" style="width:100%; border-collapse: collapse; text-align: right;">
-            <thead>
-              <tr style="border-bottom: 2px solid #ccc;">
-                <th style="padding: 8px;">תכונה</th>
-                <th style="padding: 8px;">ESM (ES6 Modules)</th>
-                <th style="padding: 8px;">CommonJS (Node.js ישן)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid #eee;">
-                <td style="padding: 8px;">תחביר ייצוא</td>
-                <td style="padding: 8px;"><code>export</code> / <code>export default</code></td>
-                <td style="padding: 8px;"><code>module.exports = ...</code></td>
-              </tr>
-              <tr style="border-bottom: 1px solid #eee;">
-                <td style="padding: 8px;">תחביר ייבוא</td>
-                <td style="padding: 8px;"><code>import x from 'x'</code></td>
-                <td style="padding: 8px;"><code>const x = require('x')</code></td>
-              </tr>
-              <tr>
-                <td style="padding: 8px;">אסינכרוניות</td>
-                <td style="padding: 8px;">תומך ב-Top-level await</td>
-                <td style="padding: 8px;">סינכרוני לחלוטין</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>💡 <strong>טיפ:</strong> דפדפנים מודרניים תומכים ב-ESM ישירות בשימוש ע"י התגית <code>&lt;script type="module"&gt;</code>.</p>
-          <p>⚠️ <strong>מקרה קצה:</strong> לא ניתן להשתמש בפונקציית <code>require()</code> בתוך מודול מסוג ESM, ולא ניתן להשתמש ב-<code>import</code> בצורה קלה בתוך קובץ CommonJS רגיל (אלא דרך ייבוא דינמי אסינכרוני).</p>
+<span class="t-fn">sumAll</span>(<span class="t-num">1</span>, <span class="t-num">2</span>, <span class="t-num">3</span>); <span class="t-com">// מחזיר 6</span></code></pre>
+        <div class="callout exam">
+          <span class="ico">📌</span>
+          <div class="ct"><b>למבחן:</b> לפונקציות חץ (Arrow) <b>אין אובייקט this משל עצמן</b>. הן יורשות את ה-this מהמקום שבו הן הוגדרו (Lexical scope). לכן, אל תשתמשו בפונקציות חץ כשאתם צריכים להגדיר שיטות בתוך אובייקט שמשתמשות ב-<code>this</code>.</div>
         </div>
       </div>
     `

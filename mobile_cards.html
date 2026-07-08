@@ -5,34 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>כרטיסיות למידה — Python &amp; FastAPI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>JS Master — כרטיסיות למידה לנייד</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Rubik:wght@700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0a0e17;
-            --card: #131a2b;
-            --card-hover: #1a2540;
-            --border: #1e2d4a;
-            --text: #e2e8f0;
-            --text-dim: #64748b;
-            --blue: #3b82f6;
-            --green: #22c55e;
-            --orange: #f59e0b;
-            --red: #ef4444;
-            --purple: #a855f7;
-            --cyan: #06b6d4;
-            --pink: #ec4899;
+            --bg: #11131a;
+            --card: #1a1d27;
+            --card-hover: #222634;
+            --border: #2c3140;
+            --text: #eceef5;
+            --text-dim: #a9afc2;
+            
+            --gold: #f5c518;
+            --teal: #4fd1c5;
+            --violet: #a78bfa;
+            --rose: #fb7185;
+            --green: #4ade80;
+            --blue: #38bdf8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            font-family: 'Heebo', sans-serif;
+            font-family: 'Assistant', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
             min-height: 100dvh;
             overflow-x: hidden;
+            padding-bottom: 70px;
         }
 
         /* ===== TOP NAV ===== */
@@ -40,23 +42,27 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(10, 14, 23, 0.85);
+            background: rgba(17, 19, 26, 0.85);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
             padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .top-nav h1 {
+            font-family: 'Rubik', sans-serif;
             font-size: 18px;
-            font-weight: 700;
-            text-align: center;
+            font-weight: 800;
+            color: var(--gold);
         }
 
-        .top-nav .subtitle {
-            font-size: 12px;
-            color: var(--text-dim);
-            text-align: center;
-            margin-top: 2px;
+        .top-nav .back-link {
+            font-size: 13px;
+            color: var(--teal);
+            text-decoration: none;
+            font-weight: 700;
         }
 
         /* ===== MODE TABS ===== */
@@ -65,29 +71,30 @@
             gap: 0;
             padding: 12px 16px 0;
             position: sticky;
-            top: 54px;
+            top: 52px;
             z-index: 99;
             background: var(--bg);
+            border-bottom: 1px solid var(--border);
         }
 
         .mode-tab {
             flex: 1;
-            padding: 10px 0;
+            padding: 12px 0;
             text-align: center;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-dim);
             background: transparent;
             border: none;
-            border-bottom: 2px solid transparent;
+            border-bottom: 3px solid transparent;
             cursor: pointer;
             transition: all 0.2s;
-            font-family: 'Heebo', sans-serif;
+            font-family: 'Assistant', sans-serif;
         }
 
         .mode-tab.active {
-            color: var(--blue);
-            border-bottom-color: var(--blue);
+            color: var(--gold);
+            border-bottom-color: var(--gold);
         }
 
         /* ===== CONTENT AREAS ===== */
@@ -103,34 +110,36 @@
         }
 
         .fc-progress {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
             color: var(--text-dim);
             margin-bottom: 12px;
+            font-weight: bold;
         }
 
         .fc-card {
             width: 100%;
-            max-width: 400px;
-            min-height: 240px;
+            max-width: 450px;
+            min-height: 260px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 28px 24px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             position: relative;
-            perspective: 1000px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .fc-card.flipped {
             background: var(--card-hover);
-            border-color: var(--blue);
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(245, 197, 24, 0.08);
         }
 
         .fc-label {
@@ -138,11 +147,11 @@
             top: 14px;
             right: 16px;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text-dim);
             background: rgba(255,255,255,0.05);
             padding: 2px 10px;
-            border-radius: 10px;
+            border-radius: 8px;
         }
 
         .fc-category {
@@ -151,20 +160,22 @@
             left: 16px;
             font-size: 11px;
             padding: 2px 10px;
-            border-radius: 10px;
-            font-weight: 600;
+            border-radius: 8px;
+            font-weight: 700;
         }
 
-        .fc-category.dict { background: rgba(59, 130, 246, 0.15); color: var(--blue); }
-        .fc-category.list { background: rgba(34, 197, 94, 0.15); color: var(--green); }
-        .fc-category.func { background: rgba(168, 85, 247, 0.15); color: var(--purple); }
-        .fc-category.general { background: rgba(245, 158, 11, 0.15); color: var(--orange); }
+        .fc-category.basics { background: rgba(56, 189, 248, 0.15); color: var(--blue); }
+        .fc-category.async { background: rgba(167, 139, 250, 0.15); color: var(--violet); }
+        .fc-category.methods { background: rgba(79, 209, 197, 0.15); color: var(--teal); }
+        .fc-category.servers { background: rgba(74, 222, 128, 0.15); color: var(--green); }
 
         .fc-question {
-            font-size: 20px;
+            font-family: 'Assistant', sans-serif;
+            font-size: 19px;
             font-weight: 700;
-            line-height: 1.6;
+            line-height: 1.5;
             margin-bottom: 8px;
+            color: var(--text);
         }
 
         .fc-hint {
@@ -174,6 +185,7 @@
 
         .fc-answer {
             display: none;
+            width: 100%;
         }
 
         .fc-card.flipped .fc-question,
@@ -181,35 +193,40 @@
         .fc-card.flipped .fc-answer { display: block; }
 
         .fc-answer .answer-text {
-            font-size: 16px;
-            line-height: 1.8;
-            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            color: var(--text);
+            text-align: right;
+        }
+        .fc-answer .answer-text b {
+            color: var(--gold);
         }
 
         .fc-answer code {
             direction: ltr;
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 14px;
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--green);
-            padding: 2px 8px;
+            font-size: 13.5px;
+            background: var(--border);
+            color: var(--teal);
+            padding: 2px 6px;
             border-radius: 6px;
-            border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
         .fc-answer .code-block {
             direction: ltr;
             text-align: left;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 13px;
-            background: rgba(0,0,0,0.3);
-            color: var(--green);
-            padding: 12px 16px;
+            font-size: 12.5px;
+            background: #0d0e14;
+            color: #cbd5e1;
+            padding: 12px;
             border-radius: 10px;
             margin: 10px 0;
-            line-height: 1.7;
+            line-height: 1.6;
             overflow-x: auto;
+            border: 1px solid var(--border);
         }
 
         .fc-nav {
@@ -217,7 +234,7 @@
             gap: 12px;
             margin-top: 20px;
             width: 100%;
-            max-width: 400px;
+            max-width: 450px;
         }
 
         .fc-nav button {
@@ -228,17 +245,17 @@
             background: var(--card);
             color: var(--text);
             font-size: 14px;
-            font-weight: 600;
-            font-family: 'Heebo', sans-serif;
+            font-weight: 700;
+            font-family: 'Assistant', sans-serif;
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .fc-nav button:active { transform: scale(0.96); }
-        .fc-nav button.know { border-color: rgba(34, 197, 94, 0.3); }
-        .fc-nav button.know:active { background: rgba(34, 197, 94, 0.15); }
-        .fc-nav button.dont-know { border-color: rgba(239, 68, 68, 0.3); }
-        .fc-nav button.dont-know:active { background: rgba(239, 68, 68, 0.15); }
+        .fc-nav button.know { border-color: rgba(74, 222, 128, 0.3); background: rgba(74, 222, 128, 0.05); color: var(--green); }
+        .fc-nav button.know:active { background: rgba(74, 222, 128, 0.15); }
+        .fc-nav button.dont-know { border-color: rgba(251, 113, 133, 0.3); background: rgba(251, 113, 133, 0.05); color: var(--rose); }
+        .fc-nav button.dont-know:active { background: rgba(251, 113, 133, 0.15); }
 
         .fc-shuffle {
             margin-top: 16px;
@@ -246,8 +263,9 @@
             border: none;
             color: var(--text-dim);
             font-size: 13px;
-            font-family: 'Heebo', sans-serif;
+            font-family: 'Assistant', sans-serif;
             cursor: pointer;
+            font-weight: 600;
         }
 
         /* ===== QUIZ MODE ===== */
@@ -255,15 +273,16 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 20px;
+            padding: 18px;
             margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
         .quiz-q {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 14px;
-            line-height: 1.7;
+            font-size: 15.5px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.6;
         }
 
         .quiz-q code {
@@ -271,9 +290,9 @@
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            background: rgba(6, 182, 212, 0.1);
-            color: var(--cyan);
-            padding: 1px 6px;
+            background: var(--border);
+            color: var(--teal);
+            padding: 1px 5px;
             border-radius: 4px;
         }
 
@@ -284,31 +303,32 @@
         }
 
         .quiz-opt {
-            padding: 12px 16px;
+            padding: 12px 14px;
             border-radius: 10px;
             border: 1px solid var(--border);
-            background: transparent;
+            background: var(--bg);
             color: var(--text);
-            font-size: 14px;
-            font-family: 'Heebo', sans-serif;
+            font-size: 13.5px;
+            font-family: 'JetBrains Mono', 'Assistant', monospace;
             cursor: pointer;
-            text-align: right;
+            text-align: left;
+            direction: ltr;
             transition: all 0.2s;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .quiz-opt:active { transform: scale(0.98); }
 
         .quiz-opt.correct {
             border-color: var(--green);
-            background: rgba(34, 197, 94, 0.12);
-            color: var(--green);
+            background: rgba(74, 222, 128, 0.12);
+            color: #bbf7d0;
         }
 
         .quiz-opt.wrong {
-            border-color: var(--red);
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--red);
+            border-color: var(--rose);
+            background: rgba(251, 113, 133, 0.1);
+            color: #fecdd3;
         }
 
         .quiz-opt.disabled { pointer-events: none; }
@@ -316,72 +336,83 @@
         .quiz-explain {
             display: none;
             margin-top: 12px;
-            padding: 12px 16px;
-            background: rgba(59, 130, 246, 0.06);
-            border: 1px solid rgba(59, 130, 246, 0.15);
+            padding: 12px 14px;
+            background: rgba(245, 197, 24, 0.06);
+            border: 1px solid rgba(245, 197, 24, 0.2);
             border-radius: 10px;
             font-size: 14px;
-            line-height: 1.7;
-            color: var(--blue);
+            line-height: 1.6;
+            color: var(--text-dim);
+            text-align: right;
+            direction: rtl;
+        }
+        .quiz-explain strong {
+            color: var(--gold);
         }
 
         .quiz-explain.show { display: block; }
 
         .quiz-score {
             text-align: center;
-            padding: 20px;
+            padding: 24px;
             font-size: 15px;
             color: var(--text-dim);
         }
 
         .quiz-score .score-num {
-            font-size: 48px;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--blue), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 44px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 8px;
         }
 
         /* ===== CHEATSHEET MODE ===== */
         .cheat-section {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
         }
 
         .cheat-title {
+            font-family: 'Rubik', sans-serif;
             font-size: 15px;
             font-weight: 700;
-            color: var(--blue);
-            margin-bottom: 10px;
+            color: var(--gold);
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 8px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
         }
 
         .cheat-item {
             display: flex;
-            gap: 12px;
+            flex-direction: column;
+            gap: 4px;
             padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
-            align-items: flex-start;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .cheat-item:last-child {
+            border-bottom: none;
         }
 
         .cheat-cmd {
             direction: ltr;
             font-family: 'JetBrains Mono', monospace;
             font-size: 13px;
-            color: var(--green);
-            background: rgba(34, 197, 94, 0.08);
-            padding: 4px 10px;
+            color: var(--teal);
+            align-self: flex-start;
+            background: rgba(79, 209, 197, 0.08);
+            padding: 2px 8px;
             border-radius: 6px;
-            white-space: nowrap;
-            flex-shrink: 0;
-            min-width: 100px;
-            text-align: left;
         }
 
         .cheat-desc {
             font-size: 14px;
-            color: var(--text);
+            color: var(--text-soft);
             line-height: 1.5;
         }
 
@@ -391,7 +422,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(10, 14, 23, 0.92);
+            background: rgba(17, 19, 26, 0.92);
             backdrop-filter: blur(16px);
             border-top: 1px solid var(--border);
             padding: 10px 16px;
@@ -405,40 +436,40 @@
         }
 
         .score-item .num {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 20px;
             font-weight: 700;
         }
 
         .score-item .num.green { color: var(--green); }
-        .score-item .num.red { color: var(--red); }
+        .score-item .num.red { color: var(--rose); }
         .score-item .num.blue { color: var(--blue); }
 
         .score-item .lbl {
             font-size: 11px;
             color: var(--text-dim);
+            font-weight: 600;
         }
-
-        body { padding-bottom: 70px; }
 
         /* Swipe hint animation */
         @keyframes tapHint {
             0%, 100% { opacity: 0.5; }
             50% { opacity: 1; }
         }
-        .tap-hint { animation: tapHint 2s infinite; font-size: 12px; color: var(--text-dim); margin-top: 6px; }
+        .tap-hint { animation: tapHint 2s infinite; font-size: 12px; color: var(--text-dim); margin-top: 8px; font-weight: 600; }
     </style>
 </head>
 <body>
 
 <nav class="top-nav">
-    <h1>📱 כרטיסיות למידה — Python</h1>
-    <div class="subtitle">שיעור 1: מילונים, רשימות, פונקציות</div>
+    <h1>📱 כרטיסיות למידה — JS</h1>
+    <a href="index.html" class="back-link">← חזרה למרכז</a>
 </nav>
 
 <div class="mode-tabs">
     <button class="mode-tab active" onclick="switchTab('flashcards')">🃏 כרטיסיות</button>
     <button class="mode-tab" onclick="switchTab('quiz')">❓ חידון</button>
-    <button class="mode-tab" onclick="switchTab('cheatsheet')">📋 שליפה</button>
+    <button class="mode-tab" onclick="switchTab('cheatsheet')">📋 שליפה מהירה</button>
 </div>
 
 <!-- ===== FLASHCARDS TAB ===== -->
@@ -466,8 +497,8 @@
     <div id="quizContainer"></div>
     <div class="quiz-score" id="quizScore" style="display:none">
         <div class="score-num" id="quizScoreNum"></div>
-        <div>תשובות נכונות</div>
-        <button style="margin-top:16px; padding:12px 32px; border-radius:10px; border:1px solid var(--blue); background:rgba(59,130,246,0.1); color:var(--blue); font-size:15px; font-family:'Heebo'; cursor:pointer;" onclick="resetQuiz()">🔄 התחל מחדש</button>
+        <div style="margin-bottom:12px; font-weight:bold;">תשובות נכונות</div>
+        <button style="margin-top:16px; padding:12px 32px; border-radius:10px; border:1px solid var(--gold); background:rgba(245,197,24,0.1); color:var(--gold); font-size:15px; font-family:'Assistant'; font-weight:700; cursor:pointer;" onclick="resetQuiz()">🔄 התחל מחדש</button>
     </div>
 </div>
 
@@ -475,33 +506,33 @@
 <div class="tab-content" id="tab-cheatsheet">
 
     <div class="cheat-section">
-        <div class="cheat-title">📦 מילונים (Dictionaries)</div>
-        <div class="cheat-item"><span class="cheat-cmd">d[key]</span><span class="cheat-desc">גישה ישירה — קורס אם המפתח לא קיים</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">d.get(key)</span><span class="cheat-desc">גישה בטוחה — מחזיר None אם לא קיים</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">d.get(k, def)</span><span class="cheat-desc">גישה בטוחה עם ערך ברירת מחדל</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">d[key] = val</span><span class="cheat-desc">הוספה (אם חדש) או עדכון (אם קיים)</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">del d[key]</span><span class="cheat-desc">מחיקה לגמרי מהמילון</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">d.pop(key)</span><span class="cheat-desc">מוחק ומחזיר את הערך</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">key in d</span><span class="cheat-desc">בודק אם מפתח קיים (True/False)</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">d.keys()</span><span class="cheat-desc">כל המפתחות</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">d.values()</span><span class="cheat-desc">כל הערכים</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">d.items()</span><span class="cheat-desc">זוגות מפתח+ערך (ללולאה)</span></div>
+        <div class="cheat-title">📦 יסודות ומשתנים</div>
+        <div class="cheat-item"><span class="cheat-cmd">const</span><span class="cheat-desc">הצהרת קבוע בזיכרון (ברירת המחדל)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">let</span><span class="cheat-desc">הצהרת משתנה שניתן לשינוי</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">===</span><span class="cheat-desc">השוואה קפדנית השוואת ערך וטיפוס (מומלץ תמיד)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">a || b</span><span class="cheat-desc">קצר לוגי: יחזיר את a אם הוא truthy, אחרת את b</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">a ? b : c</span><span class="cheat-desc">אופרטור שלישוני: אם a נכון יחזיר b, אחרת c</span></div>
     </div>
 
     <div class="cheat-section">
-        <div class="cheat-title">📋 רשימות (Lists)</div>
-        <div class="cheat-item"><span class="cheat-cmd">lst[0]</span><span class="cheat-desc">גישה לאיבר ראשון (אינדקס מתחיל מ-0)</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">lst.append(x)</span><span class="cheat-desc">מוסיף איבר לסוף הרשימה</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">lst.remove(x)</span><span class="cheat-desc">מוחק איבר ספציפי</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">len(lst)</span><span class="cheat-desc">אורך הרשימה (כמה איברים)</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">[x for x in lst if ...]</span><span class="cheat-desc">סינון בשורה אחת (List Comprehension)</span></div>
+        <div class="cheat-title">📊 מערכים ומתודות</div>
+        <div class="cheat-item"><span class="cheat-cmd">arr.map(item => ...)</span><span class="cheat-desc">מייצר מערך חדש מעובד באותו האורך</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">arr.filter(item => ...)</span><span class="cheat-desc">מייצר מערך חדש מסונן לפי תנאי אמת</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">arr.reduce((acc, cur) => ..., init)</span><span class="cheat-desc">מצמצם את כל המערך לערך בודד</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">arr.sort((a, b) => a - b)</span><span class="cheat-desc">מיון מספרי של מערך בסדר עולה</span></div>
     </div>
 
     <div class="cheat-section">
-        <div class="cheat-title">🔧 פונקציות</div>
-        <div class="cheat-item"><span class="cheat-cmd">def name():</span><span class="cheat-desc">הגדרת פונקציה חדשה</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">return val</span><span class="cheat-desc">החזרת ערך (בלי זה = None)</span></div>
-        <div class="cheat-item"><span class="cheat-cmd">def f(a="x"):</span><span class="cheat-desc">פרמטר עם ערך ברירת מחדל</span></div>
+        <div class="cheat-title">🖥️ שרת HTTP בסיסי (Node)</div>
+        <div class="cheat-item"><span class="cheat-cmd">http.createServer((req, res) => ...)</span><span class="cheat-desc">הקמת שרת בסיסי מאזין לבקשות</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">res.end(data)</span><span class="cheat-desc">סיום ושליחת התשובה ללקוח (חובה!)</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">req.on("data", chunk => ...)</span><span class="cheat-desc">קריאת נתונים זורמים של ה-Request Body</span></div>
+    </div>
+
+    <div class="cheat-section">
+        <div class="cheat-title">🚀 שרתי Express</div>
+        <div class="cheat-item"><span class="cheat-cmd">app.use(express.json())</span><span class="cheat-desc">פירסור אוטומטי של JSON ב-Body</span></div>
+        <div class="cheat-item"><span class="cheat-cmd">app.use((err, req, res, next) => ...)</span><span class="cheat-desc">תוכנת ביניים לטיפול מרכזי בשגיאות (4 ארגומנטים)</span></div>
     </div>
 </div>
 
@@ -515,21 +546,16 @@
 <script>
 // ===== FLASHCARD DATA =====
 const allCards = [
-    { cat: "dict", q: "איך יוצרים מילון ריק?", hint: "סוגריים מסולסלים...", a: '<div class="code-block">d = {}</div>' },
-    { cat: "dict", q: "איך ניגשים לערך בצורה ישירה?", hint: "סוגריים מרובעים", a: '<div class="code-block">weapon["model"]</div><div class="answer-text">⚠️ אם המפתח לא קיים — KeyError!</div>' },
-    { cat: "dict", q: "איך ניגשים לערך בצורה בטוחה?", hint: "פונקציה מובנית של מילון", a: '<div class="code-block">weapon.get("model")\nweapon.get("color", "N/A")</div><div class="answer-text">אם לא קיים — מחזיר None או ערך ברירת מחדל</div>' },
-    { cat: "dict", q: "איך מוסיפים או מעדכנים ערך?", hint: "אותה פקודה לשניהם", a: '<div class="code-block">d["key"] = "value"</div><div class="answer-text">אם המפתח קיים = עדכון. אם חדש = הוספה</div>' },
-    { cat: "dict", q: "מה ההבדל בין del ל-pop?", hint: "אחד מהם מחזיר ערך...", a: '<div class="code-block">del d["key"]     # מוחק ושולח לפח\nval = d.pop("key")  # מוחק ושומר</div><div class="answer-text">pop מחזיר את הערך שנמחק, del לא</div>' },
-    { cat: "dict", q: 'מה מחזיר "rifle" in weapon?', hint: "in בודק מפתחות או ערכים?", a: '<div class="answer-text"><strong>False!</strong> כי <code>in</code> בודק רק <strong>מפתחות</strong>, לא ערכים. "rifle" הוא ערך, לא מפתח.</div>' },
-    { cat: "dict", q: "איך עוברים על זוגות מפתח-ערך בלולאה?", hint: "הפקודה הכי חשובה!", a: '<div class="code-block">for key, value in d.items():\n    print(key, value)</div>' },
-    { cat: "dict", q: "מה ההבדל בין keys, values ו-items?", hint: "שלוש דרכים לעבור על מילון", a: '<div class="answer-text"><code>keys()</code> — רק מפתחות<br><code>values()</code> — רק ערכים<br><code>items()</code> — זוגות של שניהם</div>' },
-    { cat: "list", q: "איך מוסיפים איבר לסוף רשימה?", hint: "פקודה של רשימה", a: '<div class="code-block">lst.append({"id": 4})</div>' },
-    { cat: "list", q: "מה האינדקס של האיבר הראשון ברשימה?", hint: "לא 1...", a: '<div class="answer-text"><strong>0</strong> (אפס). אינדקסים בפייתון תמיד מתחילים מ-0!</div><div class="code-block">weapons[0]  # האיבר הראשון</div>' },
-    { cat: "list", q: "כתוב List Comprehension שמסנן רק נשקים חדשים", hint: "[... for ... in ... if ...]", a: '<div class="code-block">[w for w in weapons\n if w["condition"] == "new"]</div>' },
-    { cat: "list", q: "איך סופרים כמה איברים יש ברשימה?", hint: "פונקציה מובנית של פייתון", a: '<div class="code-block">len(weapons)  # מספר האיברים</div>' },
-    { cat: "func", q: "מה קורה אם שוכחים return בפונקציה?", hint: "ערך מיוחד...", a: '<div class="answer-text">הפונקציה מחזירה <strong>None</strong> (כלום). ב-FastAPI, הלקוח יקבל null!</div>' },
-    { cat: "func", q: "מה ההבדל בין parameter ל-argument?", hint: "הגדרה מול שימוש", a: '<div class="answer-text"><strong>Parameter</strong> = שם המשתנה בהגדרת הפונקציה<br><strong>Argument</strong> = הערך שמעבירים בזמן הקריאה</div><div class="code-block">def greet(name):  # name = parameter\ngreet("Natan")    # "Natan" = argument</div>' },
-    { cat: "func", q: "מה הקשר בין return לבין FastAPI?", hint: "מה הלקוח מקבל?", a: '<div class="answer-text">מה שהפונקציה מחזירה עם <code>return</code> — זה בדיוק מה ש<strong>הלקוח של ה-API</strong> מקבל כתשובה (JSON)!</div>' }
+    { cat: "basics", q: "מה ההבדל בין const ל-let?", hint: "מתי ניתן לשנות ערך?", a: '<div class="answer-text"><b>const</b> נועל את המצביע למשתנה ולא מאפשר השמה מחדש.<br><b>let</b> מאפשר השמה מחדש של ערך כלשהו במהלך הריצה.</div>' },
+    { cat: "basics", q: "האם מותר לשנות איברים של מערך שהוגדר ב-const?", hint: "חשבו על הזיכרון", a: '<div class="answer-text"><b>כן!</b> המצביע למערך בזיכרון נשאר קבוע, אך התוכן הפנימי שלו (איברים) ניתן לשינוי מלא.</div><div class="code-block">const arr = [1];\narr.push(2); // מותר ומעולה!</div>' },
+    { cat: "methods", q: "מה קורה שמפעילים sort() ללא פרמטרים על מערך מספרים?", hint: "מלכודת מילונית", a: '<div class="answer-text">האיברים מומרים ל<b>מחרוזות</b> וממוינים אלפביתית במילון, מה שגורם ל-10 לבוא לפני 2!</div><div class="code-block">[10, 2].sort(); // [10, 2]</div>' },
+    { cat: "methods", q: "כיצד נמיין מערך מספרים בצורה נכונה?", hint: "פונקציית השוואה", a: '<div class="code-block">arr.sort((a, b) => a - b)</div><div class="answer-text">החזרה של ערך שלילי שמה את a לפני b, חיובי את b לפני a, ו-0 משאיר ללא שינוי.</div>' },
+    { cat: "basics", q: "מהם שבעת ערכי ה-Falsy ב-JS?", hint: "אלו ערכים הופכים ל-false בתנאי?", a: '<div class="answer-text"><code>false</code>, <code>0</code>, <code>""</code> (מחרוזת ריקה), <code>null</code>, <code>undefined</code>, <code>NaN</code>, ו-<code>0n</code> (BigInt). כל שאר הערכים הם Truthy!</div>' },
+    { cat: "async", q: "מה ההבדל בין Microtasks ל-Macrotasks ב-Event Loop?", hint: "קדימויות תורים", a: '<div class="answer-text"><b>Microtasks</b> (כמו פתרונות של Promises) הם בעלי קדימות עליונה ומרוקנים לחלוטין ברגע שהמחסנית מתפנה, לפני שהמנוע לוקח משימה בודדת מתור ה-<b>Macrotasks</b> (כמו setTimeout).</div>' },
+    { cat: "async", q: "מה יקרה אם נשכח לכתוב await לפני res.json()?", hint: "מה מחזירה המתודה?", a: '<div class="answer-text">הפונקציה res.json() מחזירה <b>Promise</b>. ללא await, המשתנה יחזיק את אובייקט ה-Promise במקום את המידע המפוענח עצמו.</div>' },
+    { cat: "servers", q: "מהו חוק הברזל של שרת Vanilla HTTP?", hint: "מה קורה לדפדפן אם נשכח?", a: '<div class="answer-text">חובה לקרוא ל-<code>res.end()</code> (או לשלוח דרכו את המידע). ללא קריאה זו, הדפדפן ימשיך להמתין אינסופית עד לקריסה עקב פסק זמן (Timeout).</div>' },
+    { cat: "servers", q: "כיצד קוראים את ה-Body בשרת Vanilla?", hint: "נתונים זורמים", a: '<div class="answer-text">גוף הבקשה מגיע כזרם נתונים (Stream). יש להאזין לאירועי <code>data</code> כדי לאסוף את חבילות המידע (Chunks), ולאירוע <code>end</code> כדי לחברן ולתרגם מ-JSON.</div>' },
+    { cat: "servers", q: "מהם 4 הפרמטרים של Error Handling Middleware ב-Express?", hint: "סדר וחתימה קריטיים", a: '<div class="answer-text">חובה להגדיר בדיוק 4 ארגומנטים: <code>(err, req, res, next)</code>. אם יושמט אחד, Express יחשוב שמדובר ב-Middleware רגיל ולא ינתב אליו שגיאות.</div>' }
 ];
 
 let cards = [...allCards];
@@ -547,7 +573,7 @@ function showCard() {
     document.getElementById('fcLabel').textContent = 'לחץ לתשובה';
     const catEl = document.getElementById('fcCat');
     catEl.className = 'fc-category ' + card.cat;
-    catEl.textContent = card.cat === 'dict' ? 'מילון' : card.cat === 'list' ? 'רשימה' : 'פונקציה';
+    catEl.textContent = card.cat === 'basics' ? 'יסודות' : card.cat === 'async' ? 'אסינכרוני' : card.cat === 'methods' ? 'מתודות' : 'שרתים';
     updateScores();
 }
 
@@ -562,7 +588,7 @@ function nextCard(didKnow) {
     currentIdx++;
     if (currentIdx >= cards.length) {
         currentIdx = 0;
-        cards = cards.filter((_, i) => true); // keep going
+        cards = cards.filter((_, i) => true); // loop
     }
     showCard();
 }
@@ -585,14 +611,11 @@ function updateScores() {
 
 // ===== QUIZ DATA =====
 const quizData = [
-    { q: 'מה יקרה אם נכתוב <code>weapon["color"]</code> והמפתח לא קיים?', opts: ['יוחזר None', 'יוחזר 0', 'תיזרק שגיאת KeyError', 'יוחזר False'], correct: 2, explain: 'גישה ישירה עם סוגריים מרובעים זורקת KeyError אם המפתח לא קיים. לכן עדיף .get()' },
-    { q: 'מה מדפיס <code>weapon.get("color", "N/A")</code>?', opts: ['None', 'N/A', 'color', 'שגיאה'], correct: 1, explain: '"color" לא קיים במילון, אז .get() מחזיר את ערך ברירת המחדל "N/A"' },
-    { q: '<code>in</code> בודק:', opts: ['גם מפתחות וגם ערכים', 'רק ערכים', 'רק מפתחות', 'רק סוגי נתונים'], correct: 2, explain: 'in בודק רק מפתחות! כדי לבדוק ערכים צריך: value in d.values()' },
-    { q: 'מה האינדקס של האיבר הראשון ברשימה?', opts: ['1', '0', '-1', 'first'], correct: 1, explain: 'אינדקסים בפייתון תמיד מתחילים מ-0! lst[0] = האיבר הראשון.' },
-    { q: 'מה מחזירה פונקציה בלי <code>return</code>?', opts: ['0', 'False', 'None', 'שגיאה'], correct: 2, explain: 'כל פונקציה בפייתון שלא כותבים בה return מחזירה None באופן אוטומטי.' },
-    { q: 'מה ההבדל בין <code>del d["x"]</code> ל-<code>d.pop("x")</code>?', opts: ['אין הבדל', 'del מהיר יותר', 'pop מחזיר את הערך שנמחק', 'pop לא מוחק באמת'], correct: 2, explain: 'pop מוחק את המפתח ומחזיר את הערך, כדי שנוכל להשתמש בו. del פשוט מוחק.' },
-    { q: 'איזו פקודה מוסיפה איבר לסוף רשימה?', opts: ['add()', 'push()', 'append()', 'insert()'], correct: 2, explain: 'append() מוסיף לסוף. insert() מוסיף למיקום ספציפי. push() לא קיים בפייתון.' },
-    { q: 'מה עושה <code>.items()</code>?', opts: ['מחזיר רק מפתחות', 'מחזיר רק ערכים', 'מחזיר זוגות מפתח-ערך', 'מוחק את כל הפריטים'], correct: 2, explain: '.items() מחזיר זוגות (tuples) של מפתח וערך — הכי שימושי ללולאה!' },
+    { q: 'מה הפלט של <code>console.log(typeof null)</code>?', opts: ['"null"', '"undefined"', '"object"', '"boolean"'], correct: 2, explain: 'זהו באג היסטורי מוכר ב-JavaScript שמחזיר object עבור null.' },
+    { q: 'איזו מתודה מחזירה מערך חדש מסונן מבלי לשנות את המקור?', opts: ['forEach()', 'filter()', 'map()', 'splice()'], correct: 1, explain: 'filter() יוצרת מערך חדש בלבד. splice() משנה את המקור. forEach() מחזירה undefined.' },
+    { q: 'מה קורה אם פונקציית חץ מוגדרת עם <code>{}</code> ללא המילה <code>return</code>?', opts: ['תחזיר undefined', 'תחזיר את השורה הראשונה', 'תזרוק שגיאה', 'תחזיר null'], correct: 0, explain: 'סוגריים מסולסלים מבטלים את ה-Implicit Return, וחובה לכתוב return מפורש.' },
+    { q: 'כיצד תופסים שגיאות בקוד אסינכרוני מבוסס async/await?', opts: ['עם קולבק', 'בעזרת .catch() בלבד', 'בתוך בלוק try / catch', 'השרת קורס אוטומטית'], correct: 2, explain: ' try/catch הוא המבנה התקין והמודרני לטיפול בשגיאות בקוד אסינכרוני.' },
+    { q: 'מה תפקידו של <code>express.json()</code> בשרת Express?', opts: ['להקים שרת חדש', 'לפרסר אוטומטית את ה-Request Body כ-JSON', 'לשלוח תשובה ללקוח', 'לשמש כטיפול בשגיאות'], correct: 1, explain: 'הוא משמש כ-Middleware שמפרסר אוטומטית את גוף הבקשה ל-JSON ושומר אותו ב-req.body.' }
 ];
 
 let quizAnswered = 0, quizCorrect = 0;
@@ -643,7 +666,14 @@ function switchTab(name) {
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
-    event.target.classList.add('active');
+    
+    // Set active class on target button
+    const tabBtns = document.querySelectorAll('.mode-tab');
+    tabBtns.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(name)) {
+            btn.classList.add('active');
+        }
+    });
 
     // Show/hide score bar only for flashcards
     document.getElementById('scoreBar').style.display = name === 'flashcards' ? 'flex' : 'none';
