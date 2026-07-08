@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>JS Master - מערכת הלמידה האולטימטיבית</title>
+    <title>Natan Study - סביבת הלמידה של נתן</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=6">
@@ -16,8 +16,22 @@
             <div class="head-left">
                 <div class="logo">JS</div>
                 <div>
-                    <h1 class="head-title">JS Master <span class="head-sub">v2.0</span></h1>
-                    <div class="head-sub">מערכת הלמידה וההכנה למבחנים האולטימטיבית</div>
+                    <h1 class="head-title">Natan Study <span class="head-sub">v5.0</span></h1>
+                    <div class="head-sub">סביבת הלמידה וההכנה למבחנים של נתן</div>
+                </div>
+            </div>
+            <!-- Theme Switcher -->
+            <div class="theme-switcher-container">
+                <button class="theme-btn" id="themeBtn" onclick="toggleThemeMenu()" title="בחר ערכת צבעים">🎨</button>
+                <div class="theme-menu" id="themeMenu">
+                    <button class="theme-opt" onclick="changeTheme('cyberpunk')" style="background: linear-gradient(135deg, #120e2e, #a78bfa);">🔮 סייברפאנק</button>
+                    <button class="theme-opt" onclick="changeTheme('emerald')" style="background: linear-gradient(135deg, #022c22, #10b981);">🌿 אמרלד ירוק</button>
+                    <button class="theme-opt" onclick="changeTheme('ruby')" style="background: linear-gradient(135deg, #270510, #fb7185);">🍒 רובי אדום</button>
+                    <button class="theme-opt" onclick="changeTheme('amber')" style="background: linear-gradient(135deg, #2b1d0c, #fb923c);">🍊 ענבר כתום</button>
+                    <button class="theme-opt" onclick="changeTheme('ocean')" style="background: linear-gradient(135deg, #082f49, #38bdf8);">🌊 אוקיינוס כחול</button>
+                    <button class="theme-opt" onclick="changeTheme('gold')" style="background: linear-gradient(135deg, #1c1917, #f5c518);">👑 זהב יוקרתי</button>
+                    <button class="theme-opt" onclick="changeTheme('rosewood')" style="background: linear-gradient(135deg, #240a15, #f43f5e);">🌹 עץ הוורד</button>
+                    <button class="theme-opt" onclick="changeTheme('darkness')" style="background: linear-gradient(135deg, #090a0f, #334155);">🌑 שחור מוחלט</button>
                 </div>
             </div>
         </div>
@@ -36,7 +50,7 @@
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h1>🟨 JS Master</h1>
+                <h1>📚 Natan Study</h1>
                 <p>תוכן העניינים והתקדמות למידה</p>
             </div>
             
@@ -105,7 +119,7 @@
             <div class="hero">
                 <div class="eyebrow">JavaScript Masterclass</div>
                 <h1>שדרג את יכולות ה-<span class="y">JavaScript</span> שלך</h1>
-                <p>ברוכים הבאים לגרסה 2.0. למידה חווייתית מבוססת כרטיסיות נפתחות, אנלוגיות מעשיות, טיפים למבחן, סימולציות קוד וסביבות פיתוח מובנות.</p>
+                <p>ברוכים הבאים לגרסה 5.0. למידה חווייתית מבוססת כרטיסיות נפתחות, אנלוגיות מעשיות, טיפים למבחן, סימולציות קוד וסביבות פיתוח מובנות.</p>
             </div>
 
             <!-- Dynamic Topics Grid Container -->
@@ -149,7 +163,7 @@
 
     <!-- Floating Footer -->
     <footer class="floating-footer">
-        שודרג ע''י החייל 'נתן ליאני' בסיעתא דשמייא גדולה 🙌
+        נוצר ע''י החייל 'נתן ליאני' בסיעתא דשמייא גדולה 🙌
     </footer>
 
     <!-- Scripts -->
@@ -159,6 +173,7 @@
     <script src="content_async_projects.js?v=2"></script>
     <script src="content_servers.js?v=2"></script>
     <script src="content_projects_data.js?v=2"></script>
+    <script src="content_quiz_data.js?v=5"></script>
     <script src="app.js?v=8"></script>
 </body>
 </html>

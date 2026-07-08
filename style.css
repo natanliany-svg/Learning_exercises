@@ -1,4 +1,5 @@
 :root {
+    /* Default theme (Cyberpunk / Indigo purple-blue hybrid) */
     --bg: #11131a;
     --surface: #1a1d27;
     --surface-2: #222634;
@@ -22,6 +23,119 @@
     --accent-green: #4ade80;
     --accent-red: #fb7185;
     --accent-orange: #fb923c;
+    --green: #4ade80;
+}
+
+body[data-theme="cyberpunk"] {
+    --bg: #100b26;
+    --surface: #181236;
+    --surface-2: #211a4a;
+    --ink: #f3f4f6;
+    --ink-soft: #9ca3af;
+    --ink-faint: #6b7280;
+    --gold: #a78bfa;
+    --gold-dim: #8b5cf6;
+    --teal: #38bdf8;
+    --line: #342a70;
+    --code-bg: #0d0920;
+}
+
+body[data-theme="emerald"] {
+    --bg: #061a15;
+    --surface: #0a2921;
+    --surface-2: #103d32;
+    --ink: #ecfdf5;
+    --ink-soft: #a7f3d0;
+    --ink-faint: #34d399;
+    --gold: #10b981;
+    --gold-dim: #059669;
+    --teal: #34d399;
+    --line: #1e5748;
+    --code-bg: #030e0b;
+}
+
+body[data-theme="ruby"] {
+    --bg: #1c050e;
+    --surface: #2c0a18;
+    --surface-2: #3d1025;
+    --ink: #fff1f2;
+    --ink-soft: #fecdd3;
+    --ink-faint: #fda4af;
+    --gold: #fb7185;
+    --gold-dim: #f43f5e;
+    --teal: #fda4af;
+    --line: #571c38;
+    --code-bg: #120309;
+}
+
+body[data-theme="amber"] {
+    --bg: #181109;
+    --surface: #241b10;
+    --surface-2: #312517;
+    --ink: #fef3c7;
+    --ink-soft: #fde68a;
+    --ink-faint: #fbbf24;
+    --gold: #f59e0b;
+    --gold-dim: #d97706;
+    --teal: #fbbf24;
+    --line: #483824;
+    --code-bg: #0e0a05;
+}
+
+body[data-theme="ocean"] {
+    --bg: #070f1e;
+    --surface: #0d1b33;
+    --surface-2: #14284d;
+    --ink: #f0f9ff;
+    --ink-soft: #bae6fd;
+    --ink-faint: #38bdf8;
+    --gold: #0ea5e9;
+    --gold-dim: #0284c7;
+    --teal: #38bdf8;
+    --line: #213d73;
+    --code-bg: #040912;
+}
+
+body[data-theme="gold"] {
+    --bg: #0d0d0d;
+    --surface: #161616;
+    --surface-2: #1f1f1f;
+    --ink: #ffffff;
+    --ink-soft: #d1d5db;
+    --ink-faint: #9ca3af;
+    --gold: #f5c518;
+    --gold-dim: #d4a80f;
+    --teal: #f3f4f6;
+    --line: #2d2d2d;
+    --code-bg: #050505;
+}
+
+body[data-theme="rosewood"] {
+    --bg: #190a12;
+    --surface: #28111e;
+    --surface-2: #381a2b;
+    --ink: #fff1f2;
+    --ink-soft: #fecdd3;
+    --ink-faint: #fb7185;
+    --gold: #f43f5e;
+    --gold-dim: #e11d48;
+    --teal: #fb7185;
+    --line: #4f293e;
+    --code-bg: #10060b;
+}
+
+body[data-theme="darkness"] {
+    --bg: #08090d;
+    --surface: #11131a;
+    --surface-2: #1b1e2b;
+    --ink: #f8fafc;
+    --ink-soft: #cbd5e1;
+    --ink-faint: #94a3b8;
+    --gold: #cbd5e1;
+    --gold-dim: #94a3b8;
+    --teal: #e2e8f0;
+    --line: #292d3e;
+    --code-bg: #040407;
 }
 
 * {
@@ -352,8 +466,7 @@ section:last-of-type {
 .card:hover {
     border-color: rgba(245, 197, 24, 0.3);
 }
-.card > summary {
-    list-style: none;
+.card-header {
     cursor: pointer;
     padding: 15px 17px;
     display: flex;
@@ -365,31 +478,29 @@ section:last-of-type {
     user-select: none;
     transition: background 0.2s;
 }
-.card > summary::-webkit-details-marker {
-    display: none;
-}
-.card > summary:hover {
+.card-header:hover {
     background: rgba(255, 255, 255, 0.01);
 }
-.card > summary .chev {
+.card-header .chev {
     color: var(--ink-faint);
     transition: transform 0.2s;
     font-size: 13px;
+    margin-inline-start: 10px;
 }
-.card[open] > summary .chev {
+.card.open .card-header .chev {
     transform: rotate(-180deg);
 }
-.card > summary .dot {
+.card-header .dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: var(--teal);
     flex-shrink: 0;
 }
-.card.project-card > summary .dot {
+.card.project-card .card-header .dot {
     background: var(--accent-green);
 }
-.card.tool-card > summary .dot {
+.card.tool-card .card-header .dot {
     background: var(--accent-purple);
 }
 .pin-card-btn {
@@ -418,19 +529,24 @@ section:last-of-type {
     opacity: 1;
     transform: rotate(-15deg);
 }
-.card > summary .chev {
-    /* remove margin-inline-start: auto from arrow since pin-card-btn already has it and floats both of them left */
-    margin-inline-start: 10px;
-    color: var(--ink-faint);
-    transition: transform 0.2s;
-    font-size: 13px;
-}
 .card-body {
-    padding: 0 17px 18px;
-    border-top: 1px solid rgba(44, 49, 64, 0.3);
-    padding-top: 15px;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 350ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease;
+    opacity: 0;
+    border-top: 1px solid transparent;
 }
-.card-body > *:first-child {
+.card.open .card-body {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    border-top: 1px solid var(--line);
+}
+.card-body-inner {
+    min-height: 0;
+    overflow: hidden;
+    padding: 17px 17px 18px;
+}
+.card-body-inner > *:first-child {
     margin-top: 0;
 }
 p.lead {
@@ -1250,3 +1366,142 @@ td {
         display: none;
     }
 }
+
+/* --- Theme Switcher Styling --- */
+.theme-switcher-container {
+    position: relative;
+    display: inline-block;
+    margin-inline-start: auto;
+}
+.theme-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+.theme-btn:hover {
+    transform: scale(1.05);
+    background-color: var(--line);
+    border-color: var(--gold);
+}
+.theme-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px;
+    width: 170px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    z-index: 3000;
+    flex-direction: column;
+    gap: 6px;
+}
+.theme-menu.open {
+    display: flex;
+}
+.theme-opt {
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    text-align: right;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: 'Rubik', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.theme-opt:hover {
+    transform: translateX(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Interactive Quiz Dashboard --- */
+.quiz-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+.quiz-topic-card {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.quiz-topic-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--gold);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+}
+.quiz-topic-title {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: var(--ink);
+}
+.quiz-topic-desc {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+.quiz-topic-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+}
+.quiz-score-badge {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+.quiz-score-badge.completed {
+    background: rgba(74, 222, 128, 0.12);
+    color: var(--green);
+    border: 1px solid rgba(74, 222, 128, 0.2);
+}
+.quiz-score-badge.pending {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--ink-faint);
+    border: 1px solid var(--line);
+}
+.quiz-start-btn {
+    background: var(--gold);
+    color: #11131a;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+    transition: transform 0.15s, background-color 0.15s;
+}
+.quiz-start-btn:hover {
+    background: var(--gold-dim);
+    transform: scale(1.03);
+}
+

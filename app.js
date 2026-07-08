@@ -46,8 +46,6 @@ const sectionsList = [
 function scrollToSection(id) {
     const card = document.getElementById(`card-${id}`);
     if (card) {
-        card.open = true;
-        
         // Highlight active nav-item
         document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(el => {
@@ -61,13 +59,23 @@ function scrollToSection(id) {
             document.getElementById('sidebar').classList.remove('open');
         }
 
+        // Close other unpinned cards
+        document.querySelectorAll('.card').forEach(other => {
+            if (other !== card && other.classList.contains('open') && other.getAttribute('data-pinned') !== 'true') {
+                other.classList.remove('open');
+            }
+        });
+
+        card.classList.add('open');
+        
         setTimeout(() => {
             card.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
             });
-        }, 100);
+        }, 150);
     }
+    updateProgressBar();
 }
 
 function toggleSidebar() {
@@ -78,7 +86,7 @@ function toggleSidebar() {
 }
 
 function togglePinCard(topicKey, event) {
-    event.stopPropagation(); // prevent details toggle
+    event.stopPropagation(); // prevent card toggle
     event.preventDefault();
     const card = document.getElementById(`card-${topicKey}`);
     const btn = event.currentTarget;
@@ -96,8 +104,7 @@ function initScrollspy() {
         const scrollPos = window.scrollY || window.pageYOffset;
         let activeKey = '';
         
-        // Find the element currently closest to the top of the viewport
-        const elements = document.querySelectorAll('.section-header, details.card');
+        const elements = document.querySelectorAll('.section-header, .card');
         elements.forEach(el => {
             const top = el.offsetTop - 120;
             if (scrollPos >= top) {
@@ -121,10 +128,9 @@ function initScrollspy() {
     });
 }
 
-
 function updateProgressBar() {
-    const total = document.querySelectorAll('details.card').length;
-    const opened = document.querySelectorAll('details.card[open]').length;
+    const total = document.querySelectorAll('.card').length;
+    const opened = document.querySelectorAll('.card.open').length;
     const progressPercent = total > 0 ? (opened / total) * 100 : 0;
     const progressBar = document.getElementById('progressBar');
     if (progressBar) {
@@ -140,6 +146,29 @@ function onCardClick(topicKey) {
             el.classList.add('active');
         }
     });
+
+    const card = document.getElementById(`card-${topicKey}`);
+    if (card) {
+        const isOpening = !card.classList.contains('open');
+        
+        if (isOpening) {
+            // Close other unpinned cards
+            document.querySelectorAll('.card').forEach(other => {
+                if (other !== card && other.classList.contains('open') && other.getAttribute('data-pinned') !== 'true') {
+                    other.classList.remove('open');
+                }
+            });
+            
+            card.classList.add('open');
+            
+            setTimeout(() => {
+                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
+        } else {
+            card.classList.remove('open');
+        }
+    }
+    updateProgressBar();
 }
 
 function renderAllContent() {
@@ -162,37 +191,46 @@ function renderAllContent() {
         sec.topics.forEach(topicKey => {
             if (topicKey === 'quiz') {
                 html += `
-                    <details class="card" id="card-quiz" data-pinned="false">
-                        <summary onclick="onCardClick('quiz')">
+                    <div class="card" id="card-quiz" data-pinned="false">
+                        <div class="card-header">
                             <span class="dot" style="background:#4ade80;"></span>
                             <span>📝 סימולטור מבחן JS אינטראקטיבי</span>
                             <button class="pin-card-btn" onclick="togglePinCard('quiz', event)" title="נעץ כרטיסיה פתוחה">📍</button>
                             <span class="chev">▼</span>
-                        </summary>
+                        </div>
                         <div class="card-body">
-                            <div class="quiz-modal-container" style="direction: rtl; text-align: right; color: var(--ink); font-family: inherit; padding: 10px;">
-                                <p style="color: var(--ink-soft); margin-bottom: 20px; font-size: 16px; line-height: 1.6;">
-                                    לפניך 10 שאלות "מה הפלט" נפוצות מאוד במבחנים. לחץ על התשובה הנכונה לקבלת פידבק מיידי והסבר מפורט.
-                                </p>
-                                <div id="quizContainer"></div>
-                                <div class="quiz-score-card" id="quizScoreCard" style="display:none; margin-top: 30px; background: rgba(74, 222, 128, 0.08); border: 1px solid var(--green); border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(74, 222, 128, 0.1);"></div>
+                            <div class="card-body-inner">
+                                <div class="quiz-modal-container" style="direction: rtl; text-align: right; color: var(--ink); font-family: inherit; padding: 10px;">
+                                    <div id="quizContainer"></div>
+                                </div>
                             </div>
                         </div>
-                    </details>
+                    </div>
                 `;
             } else {
                 const data = modalData[topicKey];
                 if (data) {
+                    let wrappedContent = '';
+                    const rawContent = data.content.trim();
+                    if (rawContent.startsWith('<div class="card-body">')) {
+                        wrappedContent = rawContent.replace(
+                            '<div class="card-body">',
+                            '<div class="card-body"><div class="card-body-inner">'
+                        ).replace(/<\/div>$/, '</div></div>');
+                    } else {
+                        wrappedContent = `<div class="card-body"><div class="card-body-inner">${rawContent}</div></div>`;
+                    }
+                    
                     html += `
-                        <details class="card" id="card-${topicKey}" data-pinned="false">
-                            <summary onclick="onCardClick('${topicKey}')">
+                        <div class="card" id="card-${topicKey}" data-pinned="false">
+                            <div class="card-header">
                                 <span class="dot"></span>
                                 <span>${data.title}</span>
                                 <button class="pin-card-btn" onclick="togglePinCard('${topicKey}', event)" title="נעץ כרטיסיה פתוחה">📍</button>
                                 <span class="chev">▼</span>
-                            </summary>
-                            ${data.content}
-                        </details>
+                            </div>
+                            ${wrappedContent}
+                        </div>
                     `;
                 }
             }
@@ -203,28 +241,23 @@ function renderAllContent() {
     
     mainContent.innerHTML = html;
     
-    // Set up change listeners for progress tracking and accordion logic
-    document.querySelectorAll('details.card').forEach(details => {
-        details.addEventListener('toggle', (e) => {
-            if (details.open) {
-                // When this card is opened, close other cards that are not pinned
-                document.querySelectorAll('details.card').forEach(other => {
-                    if (other !== details && other.open && other.getAttribute('data-pinned') !== 'true') {
-                        other.open = false;
-                    }
-                });
-            }
-            updateProgressBar();
+    // Bind click events to headers
+    document.querySelectorAll('.card-header').forEach(header => {
+        header.addEventListener('click', (e) => {
+            if (e.target.closest('.pin-card-btn')) return;
+            const card = header.parentElement;
+            const topicKey = card.id.replace('card-', '');
+            onCardClick(topicKey);
         });
     });
     
-    // Initialize quiz questions
     initQuiz();
     updateProgressBar();
 }
 
 // Render content and initialize Scrollspy on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     renderAllContent();
     initScrollspy();
 });
@@ -1243,179 +1276,328 @@ function closeFreezer() {
 
 
 
-// --- Interactive Quiz Logic (Test Practice) ---
+// --- Interactive Theme Switcher Logic ---
+function toggleThemeMenu() {
+    const menu = document.getElementById('themeMenu');
+    if (menu) {
+        menu.classList.toggle('open');
+    }
+}
+
+function changeTheme(themeName) {
+    document.body.setAttribute('data-theme', themeName);
+    localStorage.setItem('natan_study_theme', themeName);
+    
+    const menu = document.getElementById('themeMenu');
+    if (menu) {
+        menu.classList.remove('open');
+    }
+}
+
+// Close theme menu when clicking outside
+document.addEventListener('click', (e) => {
+    const btn = document.getElementById('themeBtn');
+    const menu = document.getElementById('themeMenu');
+    if (btn && menu && !btn.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.remove('open');
+    }
+});
+
+function initTheme() {
+    const savedTheme = localStorage.getItem('natan_study_theme') || 'cyberpunk';
+    changeTheme(savedTheme);
+}
+
+
+// --- Interactive Quiz Simulator (14 Exams & 14 Questions) ---
+const examTopics = {
+    basics: { name: '📐 יסודות ומשתנים', desc: 'משתני var, let, const, Temporal Dead Zone, Hoisting, טיפוסי נתונים ו-typeof' },
+    loops: { name: '🔄 תנאים ולולאות', desc: 'תנאי if-else, switch, לולאות for/while/do-while, אופרטורים לוגיים ו-Nullish' },
+    functions: { name: '🎯 פונקציות', desc: 'הצהרה לעומת ביטוי פונקציה, פונקציות חץ, arguments, return וקונטקסט this' },
+    closures: { name: '🔒 קלוז\'רים וסקופ לקסיקלי', desc: 'Lexical Scope, closures, IIFE, שימושים מעשיים ושימור משתנים בזיכרון' },
+    factories: { name: '🏭 פונקציות מפעל ואובייקטים', desc: 'Factory Functions, Property Shorthand, Object.create, העתקה רדודה/עמוקה' },
+    modules: { name: '📦 מודולים (ES6 & CommonJS)', desc: 'require ו-module.exports לעומת import ו-export, טעינה סטטית ודינמית' },
+    destructuring: { name: '🧩 פירוק והשמה', desc: 'Destructuring של מערכים ואובייקטים, Rest, Spread וערכי ברירת מחדל' },
+    promises: { name: '🤝 פרומיסים ואסינק-אוויט', desc: 'Promise Lifecycle, then/catch, async/await, Promise.all/race/allSettled' },
+    eventLoop: { name: '🔄 מנוע ה-Event Loop', desc: 'Call Stack, Callback Queue, Microtasks Queue, nextTick וחסמי Thread' },
+    vanillaServer: { name: '🖥️ שרת HTTP בסיסי (Node)', desc: 'http.createServer, Request, Response, writeHead, statusCodes, streams ו-buffers' },
+    express: { name: '🚀 שרתי Express ופרויקט VIGIL', desc: 'Routing, middleware, req.params, req.query, req.body וטיפול בשגיאות' },
+    arrayMethods: { name: '📊 מתודות מערכים', desc: 'map, filter, reduce, find, findIndex, splice, slice ואיטרציות' },
+    stringMethods: { name: '📝 מתודות מחרוזות', desc: 'indexOf, split, slice, replace, replaceAll, trim וחיפושי תווים' },
+    objectMethods: { name: '🗂️ מתודות אובייקטים', desc: 'Object.keys/values/entries, Object.freeze/seal וסריקת מאפיינים' }
+};
+
+let currentExamTopic = '';
+let currentExamQuestions = [];
+let currentExamAnswers = [];
+let currentExamScore = 0;
+let currentQuestionIndex = 0;
+
 function getQuizHtml() {
     return `
         <div class="modal-header" style="border-bottom: 1px solid var(--line); padding-bottom: 15px; margin-bottom: 20px;">
-            <h2 style="font-family: 'Rubik', sans-serif; font-weight: 800; color: var(--gold); text-shadow: 0 0 10px rgba(245,197,24,0.15);">📝 סימולטור מבחן JS אינטראקטיבי</h2>
+            <h2 style="font-family: 'Rubik', sans-serif; font-weight: 800; color: var(--gold); text-shadow: 0 0 10px rgba(245,197,24,0.15); margin:0;">📝 סימולטור מבחני JS אינטראקטיבי</h2>
         </div>
-        <div class="quiz-modal-container" style="direction: rtl; text-align: right; color: var(--ink); font-family: inherit; padding: 10px; max-height: 75vh; overflow-y: auto;">
-            <p style="color: var(--ink-soft); margin-bottom: 20px; font-size: 16px; line-height: 1.6;">
-                לפניך 10 שאלות "מה הפלט" נפוצות מאוד במבחנים. לחץ על התשובה הנכונה לקבלת פידבק מיידי והסבר מפורט.
-            </p>
+        <div class="quiz-modal-container" style="direction: rtl; text-align: right; color: var(--ink); font-family: inherit; max-height: 78vh; overflow-y: auto;">
             <div id="quizContainer"></div>
-            <div class="quiz-score-card" id="quizScoreCard" style="display:none; margin-top: 30px; background: rgba(74, 222, 128, 0.08); border: 1px solid var(--green); border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(74, 222, 128, 0.1);"></div>
         </div>
     `;
 }
 
-let quizAnswers = [];
-let quizScore = 0;
 function initQuiz() {
-    const questions = [
-        {
-            code: 'console.log(1 + 2 + "3");',
-            q: 'מה יהיה הפלט?',
-            opts: ['"33"', '6', '"123"', '"6"'],
-            correct: 0,
-            explain: 'החישוב מתבצע משמאל לימין: 1 + 2 מחזיר 3 (חיבור מספרים), ואז 3 + "3" מחזיר "33" מכיוון שחיבור עם מחרוזת מבצע שירשור (הדבקה).'
-        },
-        {
-            code: 'const a = [1, 2];\nconst b = a;\nb.push(3);\nconsole.log(a.length);',
-            q: 'מה יהיה הפלט?',
-            opts: ['2', '3', 'undefined', 'שגיאה'],
-            correct: 1,
-            explain: 'מערכים ואובייקטים מועברים לפי התייחסות (Reference). המשתנים a ו-b מצביעים על אותו המערך בדיוק בזיכרון, לכן שינוי במערך דרך b משפיע גם על a.'
-        },
-        {
-            code: 'console.log([10, 2, 1].sort());',
-            q: 'מה יודפס למסך?',
-            opts: ['[1, 2, 10]', '[10, 2, 1]', '[1, 10, 2]', '[2, 1, 10]'],
-            correct: 2,
-            explain: 'המתודה sort() ללא ארגומנטים ממיינת את הערכים כמחרוזות (אלפביתית). התו "1" בא לפני "2", ולכן "10" ממוקם לפני "2" (כמו "אב" לפני "ג"). למיונים מספריים חובה להשתמש ב- (a,b) => a - b.'
-        },
-        {
-            code: 'const f = n => { n * 2; };\nconsole.log(f(5));',
-            q: 'מה יודפס?',
-            opts: ['10', 'undefined', '5', 'שגיאה'],
-            correct: 1,
-            explain: 'בפונקציות חץ, אם משתמשים בסוגריים מסולסלים {}, חובה לכתוב return מפורש. ללא המילה return, הפונקציה מבצעת את החישוב אך מחזירה undefined.'
-        },
-        {
-            code: 'console.log(typeof null);',
-            q: 'מה הפלט?',
-            opts: ['"null"', '"undefined"', '"object"', '"boolean"'],
-            correct: 2,
-            explain: 'זהו באג היסטורי ידוע ומפורסם בשפת JavaScript. הפעולה typeof null מחזירה "object" במקום "null", ויש להכיר טעות זו היטב למבחן.'
-        },
-        {
-            code: 'console.log(0 === false);\nconsole.log(0 == false);',
-            q: 'מה יהיו פלטי שתי השורות?',
-            opts: ['true, true', 'false, true', 'false, false', 'true, false'],
-            correct: 1,
-            explain: 'האופרטור === בודק שוויון קפדני (ערך + טיפוס) ומכיוון שמספר שונה מטיפוס בוליאני נקבל false. האופרטור == מבצע המרת טיפוסים אוטומטית (Type Coercion) וממיר את false למספר 0, ולכן נקבל true.'
-        },
-        {
-            code: 'const arr = [1, 2, 3];\nconst r = arr.forEach(n => n * 2);\nconsole.log(r);',
-            q: 'מה ערכו של המשתנה r?',
-            opts: ['[2, 4, 6]', '[1, 2, 3]', 'undefined', '6'],
-            correct: 2,
-            explain: 'המתודה forEach משמשת להרצת פעולות בלבד (תופעות לוואי) ותמיד מחזירה undefined. אם רוצים לקבל מערך חדש משודרג, יש להשתמש במתודה map().'
-        },
-        {
-            code: 'async function f() { return 5; }\nconsole.log(f());',
-            q: 'מה יודפס למסך?',
-            opts: ['5', 'Promise { <fulfilled>: 5 }', 'undefined', 'שגיאה'],
-            correct: 1,
-            explain: 'פונקציה המוגדרת עם המפתח async תמיד מחזירה אובייקט Promise (גם אם החזרנו ערך פשוט). כדי לקבל את המספר 5, יש להשתמש ב-await או בשרשור .then().'
-        },
-        {
-            code: 'if ([]) console.log("A");\nif ("0") console.log("B");\nif (0) console.log("C");',
-            q: 'אילו אותיות יודפסו?',
-            opts: ['A, B, C', 'A, B', 'B, C', 'רק C'],
-            correct: 1,
-            explain: 'ב-JavaScript מערך ריק [] ומחרוזת שאינה ריקה (כולל "0") נחשבים לערכי אמת (Truthy), ולכן תנאים אלו מתקיימים. המספר 0 הוא אחד משבעת ערכי השקר (Falsy) ולכן האות C לא תודפס.'
-        },
-        {
-            code: 'console.log("5" - 1);\nconsole.log("5" + 1);',
-            q: 'מה יהיו התוצאות?',
-            opts: ['4, 6', '"51", 6', '4, "51"', '"4", "51"'],
-            correct: 2,
-            explain: 'האופרטור חיסור (-) לא תומך במחרוזות ולכן ממיר את "5" למספר 5 ומבצע חיסור (4). אופרטור החיבור (+) משמש גם לשירשור טקסט ולכן מדביק את "5" ו-"1" יחד למחרוזת "51".'
-        }
-    ];
-
-    quizAnswers = new Array(questions.length).fill(null);
-    quizScore = 0;
-
     const quizContainer = document.getElementById('quizContainer');
     if (!quizContainer) return;
-    quizContainer.innerHTML = '';
 
-    questions.forEach((qObj, index) => {
-        const card = document.createElement('div');
-        card.className = 'quiz-card';
-        card.style.cssText = 'background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);';
+    const savedScores = JSON.parse(localStorage.getItem('natan_study_scores') || '{}');
+    
+    let html = `
+        <div style="margin-bottom: 20px; background: rgba(245, 197, 24, 0.05); border: 1px solid var(--line); border-radius: 12px; padding: 18px;">
+            <p style="font-size: 15.5px; line-height: 1.6; margin-bottom: 12px; color: var(--ink-soft);">
+                ברוכים הבאים לסימולטור המבחנים המשודרג של נתן! לפניך <strong>14 מבחנים ממוקדים</strong> המכסים את כל החומר הנדרש למבחן במדעי המחשב. לכל מבחן יש <strong>14 שאלות</strong> עם פידבק מיידי והסבר מפורט.
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button onclick="resetQuizScores()" style="background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 6px; padding: 6px 12px; font-size: 13px; font-weight: bold; cursor: pointer; transition: 0.15s;">🗑️ אפס את כל הציונים</button>
+            </div>
+        </div>
+        <div class="quiz-dashboard">
+    `;
+
+    Object.keys(examTopics).forEach(topicKey => {
+        const topic = examTopics[topicKey];
+        const highScore = savedScores[topicKey];
+        const hasTaken = highScore !== undefined;
         
-        let html = `
-            <div style="font-size: 13px; color: var(--gold); font-weight: bold; margin-bottom: 8px;">שאלה ${index + 1} מתוך ${questions.length}</div>
-            <pre style="background: #0d0e14; padding: 12px; border-radius: 8px; overflow-x: auto; color: var(--teal); font-family: 'JetBrains Mono', monospace; text-align: left; direction: ltr; margin: 10px 0; border: 1px solid var(--line);"><code style="font-size:14px; white-space:pre-wrap;">${qObj.code}</code></pre>
-            <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px; font-family: 'Rubik', sans-serif;">${qObj.q}</div>
-            <div class="quiz-options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-        `;
-
-        qObj.opts.forEach((opt, optIndex) => {
-            html += `
-                <button class="quiz-opt-btn btn-qi-${index}" data-qi="${index}" data-oi="${optIndex}" style="background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); padding: 12px; font-size: 14px; cursor: pointer; text-align: right; direction: ltr; transition: 0.15s; font-family: 'JetBrains Mono', monospace;">
-                    ${opt}
-                </button>
+        let scoreBadge = '';
+        if (hasTaken) {
+            const pct = (highScore / 14) * 100;
+            let badgeColor = '#ef4444'; // red
+            if (pct >= 80) badgeColor = '#10b981'; // green
+            else if (pct >= 50) badgeColor = '#f5c518'; // yellow
+            
+            scoreBadge = `
+                <span class="quiz-score-badge completed" style="color: ${badgeColor}; border-color: ${badgeColor}40; background: ${badgeColor}12;">
+                    הושלם: ${highScore}/14 (${pct.toFixed(0)}%)
+                </span>
             `;
-        });
+        } else {
+            scoreBadge = `<span class="quiz-score-badge pending">⏳ טרם בוצע</span>`;
+        }
 
         html += `
-            </div>
-            <div class="quiz-explain" id="explain-${index}" style="display: none; margin-top: 15px; background: rgba(245, 197, 24, 0.06); border: 1px solid rgba(245, 197, 24, 0.2); border-radius: 8px; padding: 12px; font-size: 14.5px; line-height: 1.6; color: var(--ink-soft);">
-                <strong style="color: var(--gold);">💡 הסבר:</strong> ${qObj.explain}
+            <div class="quiz-topic-card">
+                <div>
+                    <div class="quiz-topic-title">${topic.name}</div>
+                    <div class="quiz-topic-desc">${topic.desc}</div>
+                </div>
+                <div class="quiz-topic-footer">
+                    ${scoreBadge}
+                    <button class="quiz-start-btn" onclick="startExam('${topicKey}')">
+                        ${hasTaken ? 'נסה שוב 🔄' : 'התחל מבחן 🚀'}
+                    </button>
+                </div>
             </div>
         `;
-        
-        card.innerHTML = html;
-        quizContainer.appendChild(card);
     });
 
-    // Add event listeners
-    quizContainer.addEventListener('click', (e) => {
-        const btn = e.target.closest('.quiz-opt-btn');
-        if (!btn) return;
+    html += `</div>`;
+    quizContainer.innerHTML = html;
+}
 
-        const qi = parseInt(btn.dataset.qi);
-        const oi = parseInt(btn.dataset.oi);
+function startExam(topicKey) {
+    currentExamTopic = topicKey;
+    currentExamQuestions = quizDatabase[topicKey] || [];
+    currentExamAnswers = new Array(currentExamQuestions.length).fill(null);
+    currentExamScore = 0;
+    currentQuestionIndex = 0;
 
-        if (quizAnswers[qi] !== null) return; // Already answered
-        quizAnswers[qi] = oi;
+    renderQuizQuestion();
+}
 
-        const correct = questions[qi].correct;
-        const buttons = quizContainer.querySelectorAll(`.btn-qi-${qi}`);
-        
-        buttons.forEach((b) => {
-            b.style.cursor = 'not-allowed';
-            const bo = parseInt(b.dataset.oi);
-            if (bo === correct) {
-                b.style.background = 'rgba(74, 222, 128, 0.12)';
-                b.style.borderColor = 'var(--green)';
-                b.style.color = '#bbf7d0';
-                b.innerHTML += ' <span style="color: var(--green); float:left;">✓</span>';
-            } else if (bo === oi) {
-                b.style.background = 'rgba(251, 113, 133, 0.1)';
-                b.style.borderColor = 'var(--rose)';
-                b.style.color = '#fecdd3';
-                b.innerHTML += ' <span style="color: var(--rose); float:left;">✗</span>';
+function renderQuizQuestion() {
+    const quizContainer = document.getElementById('quizContainer');
+    if (!quizContainer || currentExamQuestions.length === 0) return;
+
+    const qObj = currentExamQuestions[currentQuestionIndex];
+    const topicInfo = examTopics[currentExamTopic];
+    const progressPercent = ((currentQuestionIndex + 1) / currentExamQuestions.length) * 100;
+
+    let codeBlock = '';
+    if (qObj.code) {
+        codeBlock = `
+            <pre style="background: #0d0e14; padding: 14px; border-radius: 8px; overflow-x: auto; color: var(--teal); font-family: 'JetBrains Mono', monospace; text-align: left; direction: ltr; margin: 15px 0; border: 1px solid var(--line);"><code style="font-size:14.5px; white-space:pre-wrap;">${qObj.code}</code></pre>
+        `;
+    }
+
+    let optionsHtml = '';
+    qObj.opts.forEach((opt, optIndex) => {
+        optionsHtml += `
+            <button class="quiz-opt-btn" onclick="selectQuizOption(${optIndex})" id="opt-${optIndex}" style="background: var(--surface-2); border: 1px solid var(--line); border-radius: 8px; color: var(--ink); padding: 14px; font-size: 14.5px; cursor: pointer; text-align: right; direction: ltr; transition: 0.15s; font-family: 'JetBrains Mono', monospace; font-weight: 600; width:100%; margin-bottom: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                ${opt}
+            </button>
+        `;
+    });
+
+    quizContainer.innerHTML = `
+        <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
+            <!-- Exam Header -->
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                <span style="font-size: 13.5px; color: var(--gold); font-weight: bold;">
+                    📚 נושא: ${topicInfo.name}
+                </span>
+                <span style="font-size: 13px; color: var(--ink-faint); font-weight: bold;">
+                    שאלה ${currentQuestionIndex + 1} מתוך ${currentExamQuestions.length}
+                </span>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div style="width:100%; height:6px; background:var(--line); border-radius:3px; margin-bottom: 20px; overflow:hidden;">
+                <div style="width:${progressPercent}%; height:100%; background:var(--gold); transition: width 0.3s ease;"></div>
+            </div>
+
+            <!-- Question Code & Text -->
+            <div style="font-size: 17px; font-weight: 700; margin-bottom: 15px; font-family: 'Rubik', sans-serif; line-height: 1.5;">
+                ${qObj.q}
+            </div>
+            ${codeBlock}
+
+            <!-- Options -->
+            <div class="quiz-options-container" style="margin-top: 15px;">
+                ${optionsHtml}
+            </div>
+
+            <!-- Explanation Callout -->
+            <div class="quiz-explain" id="quizExplain" style="display: none; margin-top: 18px; background: rgba(245, 197, 24, 0.05); border: 1px solid rgba(245, 197, 24, 0.2); border-radius: 8px; padding: 14px; font-size: 14.5px; line-height: 1.6; color: var(--ink-soft);">
+                <strong style="color: var(--gold);">💡 הסבר:</strong> ${qObj.explain}
+            </div>
+
+            <!-- Next Button -->
+            <div style="margin-top: 20px; text-align: left; display:flex; justify-content:space-between; align-items:center;">
+                <button onclick="initQuiz()" style="background:none; border:1px solid var(--line); border-radius:6px; color:var(--ink-soft); padding:8px 15px; font-size:13.5px; cursor:pointer; font-weight:bold; transition:0.15s;">
+                    ❌ צא מהמבחן
+                </button>
+                <button id="nextBtn" onclick="nextQuizQuestion()" style="display:none; background:var(--gold); color:#11131a; border:none; border-radius:6px; padding:8px 20px; font-size:14px; font-weight:bold; cursor:pointer; transition:0.15s;">
+                    ${currentQuestionIndex === currentExamQuestions.length - 1 ? 'סיים מבחן 🏁' : 'השאלה הבאה ➔'}
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function selectQuizOption(optIndex) {
+    if (currentExamAnswers[currentQuestionIndex] !== null) return; // Answered already
+    
+    currentExamAnswers[currentQuestionIndex] = optIndex;
+    const qObj = currentExamQuestions[currentQuestionIndex];
+    const correct = qObj.correct;
+
+    if (optIndex === correct) {
+        currentExamScore++;
+    }
+
+    // Color options
+    qObj.opts.forEach((opt, idx) => {
+        const btn = document.getElementById(`opt-${idx}`);
+        if (btn) {
+            btn.style.cursor = 'not-allowed';
+            if (idx === correct) {
+                btn.style.background = 'rgba(74, 222, 128, 0.12)';
+                btn.style.borderColor = '#10b981';
+                btn.style.color = '#bbf7d0';
+                btn.innerHTML += ' <span style="color: #10b981; float:left;">✓</span>';
+            } else if (idx === optIndex) {
+                btn.style.background = 'rgba(239, 68, 68, 0.1)';
+                btn.style.borderColor = '#ef4444';
+                btn.style.color = '#fca5a5';
+                btn.innerHTML += ' <span style="color: #ef4444; float:left;">✗</span>';
             }
-        });
-
-        document.getElementById(`explain-${qi}`).style.display = 'block';
-
-        if (oi === correct) quizScore++;
-
-        const answeredCount = quizAnswers.filter(x => x !== null).length;
-        if (answeredCount === questions.length) {
-            const cardScore = document.getElementById('quizScoreCard');
-            cardScore.style.display = 'block';
-            cardScore.innerHTML = `
-                <h3 style="color: #4ade80; margin-bottom: 8px;">🎉 סימולציית המבחן הושלמה!</h3>
-                <p style="font-size: 18px;">הציון שלך: <strong>${quizScore} מתוך ${questions.length}</strong> (${(quizScore / questions.length) * 100}%)</p>
-                <p style="color: #a78bfa; margin-top: 10px; font-size: 14px;">מעבר על ההסברים בכל שאלה יעזור לך מאוד לפתור שאלות דומות במבחן האמיתי!</p>
-            `;
         }
     });
+
+    // Reveal explanation and Next button
+    const explain = document.getElementById('quizExplain');
+    if (explain) explain.style.display = 'block';
+    
+    const nextBtn = document.getElementById('nextBtn');
+    if (nextBtn) nextBtn.style.display = 'block';
 }
+
+function nextQuizQuestion() {
+    if (currentQuestionIndex < currentExamQuestions.length - 1) {
+        currentQuestionIndex++;
+        renderQuizQuestion();
+    } else {
+        finishExam();
+    }
+}
+
+function finishExam() {
+    const quizContainer = document.getElementById('quizContainer');
+    if (!quizContainer) return;
+
+    // Save Score
+    const savedScores = JSON.parse(localStorage.getItem('natan_study_scores') || '{}');
+    const previousHigh = savedScores[currentExamTopic] || 0;
+    
+    let isNewHigh = false;
+    if (currentExamScore > previousHigh) {
+        savedScores[currentExamTopic] = currentExamScore;
+        localStorage.setItem('natan_study_scores', JSON.stringify(savedScores));
+        isNewHigh = true;
+    }
+
+    const pct = (currentExamScore / currentExamQuestions.length) * 100;
+    let feedbackColor = '#ef4444'; // red
+    let feedbackTitle = 'צריך ללמוד עוד קצת! 📚';
+    if (pct >= 80) {
+        feedbackColor = '#10b981'; // green
+        feedbackTitle = 'מצוין! שליטה פנטסטית בחומר! 🏆';
+    } else if (pct >= 50) {
+        feedbackColor = '#f5c518'; // yellow
+        feedbackTitle = 'עובר! יש מקום לשיפור. ✍️';
+    }
+
+    quizContainer.innerHTML = `
+        <div style="background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.25);">
+            <div style="font-size: 60px; margin-bottom: 15px;">🎉</div>
+            <h2 style="color: ${feedbackColor}; font-family: 'Rubik', sans-serif; font-weight: 800; margin-bottom: 10px;">
+                ${feedbackTitle}
+            </h2>
+            <p style="font-size: 16.5px; color: var(--ink-soft); margin-bottom: 20px;">
+                סיימת את המבחן בנושא <strong>${examTopics[currentExamTopic].name}</strong>
+            </p>
+            
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--line); border-radius: 10px; padding: 20px; max-width: 320px; margin: 0 auto 25px;">
+                <div style="font-size: 14px; color: var(--ink-faint); margin-bottom: 5px;">הציון שלך במבחן הנוכחי:</div>
+                <div style="font-size: 38px; font-weight: 900; color: var(--gold);">${currentExamScore} / 14</div>
+                <div style="font-size: 16px; font-weight: bold; color: var(--ink-soft); margin-top: 5px;">(${pct.toFixed(0)}%)</div>
+            </div>
+
+            ${isNewHigh ? `
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 8px; padding: 10px 15px; color: #10b981; font-weight: bold; font-size: 14px; display: inline-block; margin-bottom: 20px;">
+                    🔥 שיא חדש נשמר במערכת!
+                </div>
+            ` : `
+                <div style="font-size:13.5px; color:var(--ink-faint); margin-bottom:20px;">
+                    (הציון הגבוה ביותר השמור: ${previousHigh}/14)
+                </div>
+            `}
+
+            <div style="display:flex; justify-content:center; gap: 15px;">
+                <button onclick="startExam('${currentExamTopic}')" style="background:var(--surface-2); border:1px solid var(--line); color:var(--ink); border-radius:8px; padding:10px 20px; font-weight:bold; cursor:pointer; transition:0.15s;">
+                    🔄 נסה שוב
+                </button>
+                <button onclick="initQuiz()" style="background:var(--gold); color:#11131a; border:none; border-radius:8px; padding:10px 20px; font-weight:bold; cursor:pointer; transition:0.15s;">
+                    📋 חזור ללוח המבחנים
+                </button>
+            </div>
+        </div>
+    `;
+}
+
+function resetQuizScores() {
+    if (confirm('האם אתה בטוח שברצונך לאפס את כל היסטוריית הציונים של המבחנים?')) {
+        localStorage.removeItem('natan_study_scores');
+        initQuiz();
+    }
+}
+
