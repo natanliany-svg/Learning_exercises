@@ -152,6 +152,9 @@ function onCardClick(topicKey) {
         const isOpening = !card.classList.contains('open');
         
         if (isOpening) {
+            const cardRectBefore = card.getBoundingClientRect();
+            const initialTop = cardRectBefore.top;
+
             // Close other unpinned cards
             document.querySelectorAll('.card').forEach(other => {
                 if (other !== card && other.classList.contains('open') && other.getAttribute('data-pinned') !== 'true') {
@@ -161,7 +164,25 @@ function onCardClick(topicKey) {
             
             card.classList.add('open');
             
-            card.classList.add('open');
+            // Smoothly maintain scroll position so the card doesn't jump
+            const startTime = performance.now();
+            function lockScroll(time) {
+                const currentTop = card.getBoundingClientRect().top;
+                const diff = currentTop - initialTop;
+                
+                // Adjust scroll to keep card at same screen Y
+                if (Math.abs(diff) > 0.5) {
+                    window.scrollBy(0, diff);
+                }
+                
+                // Also smoothly update progress bar during the transition
+                updateProgressBar();
+                
+                if (time - startTime < 850) { // 850ms to cover the 800ms CSS transition safely
+                    requestAnimationFrame(lockScroll);
+                }
+            }
+            requestAnimationFrame(lockScroll);
         } else {
             card.classList.remove('open');
         }
