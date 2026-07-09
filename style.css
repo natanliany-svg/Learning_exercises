@@ -532,7 +532,7 @@ section:last-of-type {
 .card-body {
     display: grid;
     grid-template-rows: 0fr;
-    transition: grid-template-rows 350ms cubic-bezier(0.4, 0, 0.2, 1), opacity 300ms ease;
+    transition: grid-template-rows 800ms cubic-bezier(0.4, 0, 0.2, 1), opacity 700ms ease;
     opacity: 0;
     border-top: 1px solid transparent;
 }

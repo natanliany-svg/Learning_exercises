@@ -161,9 +161,7 @@ function onCardClick(topicKey) {
             
             card.classList.add('open');
             
-            setTimeout(() => {
-                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 150);
+            card.classList.add('open');
         } else {
             card.classList.remove('open');
         }
@@ -260,6 +258,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     renderAllContent();
     initScrollspy();
+    
+    // Smoothly update progress bar when document height changes (e.g. accordion open/close)
+    const resizeObserver = new ResizeObserver(() => {
+        updateProgressBar();
+    });
+    resizeObserver.observe(document.documentElement);
 });
 
 // --- Bank IDE Data ---
