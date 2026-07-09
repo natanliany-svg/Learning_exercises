@@ -1304,8 +1304,7 @@ document.addEventListener('click', (e) => {
 });
 
 function initTheme() {
-    const savedTheme = localStorage.getItem('natan_study_theme') || 'ocean';
-    changeTheme(savedTheme);
+    changeTheme('ocean');
 }
 
 
