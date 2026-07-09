@@ -101,6 +101,7 @@ function togglePinCard(topicKey, event) {
 
 function initScrollspy() {
     window.addEventListener('scroll', () => {
+        updateProgressBar();
         const scrollPos = window.scrollY || window.pageYOffset;
         let activeKey = '';
         
@@ -129,9 +130,9 @@ function initScrollspy() {
 }
 
 function updateProgressBar() {
-    const total = document.querySelectorAll('.card').length;
-    const opened = document.querySelectorAll('.card.open').length;
-    const progressPercent = total > 0 ? (opened / total) * 100 : 0;
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const progressPercent = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
     const progressBar = document.getElementById('progressBar');
     if (progressBar) {
         progressBar.style.width = `${progressPercent}%`;
@@ -280,9 +281,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderAllContent();
     initScrollspy();
     
-    // Smoothly update progress bar when document height changes (e.g. accordion open/close)
+    // Smoothly update progress bar and scrollspy when document height changes (e.g. accordion open/close)
     const resizeObserver = new ResizeObserver(() => {
-        updateProgressBar();
+        window.dispatchEvent(new Event('scroll'));
     });
     resizeObserver.observe(document.documentElement);
 });
