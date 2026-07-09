@@ -1,20 +1,20 @@
 :root {
-    /* Default theme (Cyberpunk / Indigo purple-blue hybrid) */
-    --bg: #11131a;
-    --surface: #1a1d27;
-    --surface-2: #222634;
-    --ink: #eceef5;
-    --ink-soft: #a9afc2;
-    --ink-faint: #6b7187;
+    /* Default theme (Ocean) */
+    --bg: #070f1e;
+    --surface: #0d1b33;
+    --surface-2: #14284d;
+    --ink: #f0f9ff;
+    --ink-soft: #bae6fd;
+    --ink-faint: #38bdf8;
     
-    --gold: #f5c518;
-    --gold-dim: #caa117;
-    --teal: #4fd1c5;
+    --gold: #0ea5e9;
+    --gold-dim: #0284c7;
+    --teal: #38bdf8;
     --violet: #a78bfa;
     --rose: #fb7185;
     
-    --line: #2c3140;
-    --code-bg: #151821;
+    --line: #213d73;
+    --code-bg: #040912;
     --radius: 16px;
     
     --accent-js: #f5c518;
