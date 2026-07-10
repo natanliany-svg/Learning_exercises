@@ -641,90 +641,56 @@ export function validateRating(rating) {
     return !isNaN(parsedRating) && parsedRating >= 0 && parsedRating <= 10;
 }
 `,
-      'services/file.service.js': `import fs from 'fs';
+      'services/file.service.js': `import fs from 'fs/promises'
+import readlineSync from 'readline-sync';
 
-const filePath = 'data/movies.json';
-
-// חלק א' — קולבקים
-export function readFromFileCallback(callback) {
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            if (err.code === 'ENOENT') return callback(null, []);
-            return callback(err);
-        }
-        try {
-            callback(null, JSON.parse(data));
-        } catch (e) {
-            callback(e);
-        }
-    });
+export function readFile(callbeck){
+  const data = new Promise((res, rej) => {
+    fs.readFile("./data/movies.json", "utf-8" , (err,data)=>{
+    if (err)return rej(err)
+  res(JSON.parse(data))
+  })})
+  return data
 }
 
-export function writeToFileCallback(movies, callback) {
-    fs.writeFile(filePath, JSON.stringify(movies, null, 2), 'utf8', callback);
-}
-
-// חלק ב' — פרומיסים
-export function readFromFilePromise() {
-    return new Promise((resolve, reject) => {
-        fs.readFile(filePath, 'utf8', (err, data) => {
-            if (err) {
-                if (err.code === 'ENOENT') return resolve([]);
-                return reject(err);
-            }
-            try {
-                resolve(JSON.parse(data));
-            } catch (e) {
-                reject(e);
-            }
-        });
-    });
-}
-
-export function writeToFilePromise(movies) {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(filePath, JSON.stringify(movies, null, 2), 'utf8', (err) => {
-            if (err) return reject(err);
-            resolve();
-        });
-    });
-}
-
-export function writeReportToFile(report) {
-    return new Promise((resolve, reject) => {
-        fs.writeFile('report.json', JSON.stringify(report, null, 2), 'utf8', (err) => {
-            if (err) return reject(err);
-            resolve();
-        });
-    });
+export function writeTheFile(movies){
+  return new Promise((res , rej) => {
+    fs.writeFile(\`./data/movies.json\` , JSON.stringify(movies,null,2),"utf-8" , (err) => {
+      if(err) return rej (err)
+      res('ThisTheData')
+    })
+   })
 }
 `,
-      'services/movie.service.js': `import {
-    readFromFileCallback, writeToFileCallback,
-    readFromFilePromise, writeToFilePromise, writeReportToFile
-} from './file.service.js';
+      'services/movie.service.js': `import { readFile, writeTheFile } from './file.service.js';
 
 let lastDeletedMovie = null;
 
 export function showAllMovies(callback) {
-    readFromFileCallback((err, movies) => {
-        if (err) return callback(err);
+    readFile().then(movies => {
         callback(null, movies);
+    }).catch(err => {
+        callback(err);
     });
 }
 
 export function showById(id, callback) {
-    readFromFileCallback((err, movies) => {
-        if (err) return callback(err);
-        const movie = movies.find(m => m.id === Number(id));
-        callback(null, movie);
+    readFile().then(movies => {
+        let foundMovie = null;
+        for (const m of movies) {
+            if (m.id === Number(id)) {
+                foundMovie = m;
+                break;
+            }
+        }
+        callback(null, foundMovie);
+    }).catch(err => {
+        callback(err);
     });
 }
 
 export function createNewMovie(title, genre, year, rating, callback) {
-    readFromFileCallback((err, movies) => {
-        if (err) return callback(err);
-        
+    readFile().then(movies => {
         let maxId = 0;
         for (const m of movies) {
             if (m.id > maxId) {
@@ -741,59 +707,90 @@ export function createNewMovie(title, genre, year, rating, callback) {
             rating: Number(rating)
         };
         movies.push(newMovie);
-        writeToFileCallback(movies, (err) => {
-            if (err) return callback(err);
+        
+        writeTheFile(movies).then(() => {
             callback(null, newMovie);
+        }).catch(err => {
+            callback(err);
         });
+    }).catch(err => {
+        callback(err);
     });
 }
 
 export function deleteMovie(id) {
-    return readFromFilePromise()
-        .then(movies => {
-            const movie = movies.find(m => m.id === Number(id));
-            if (!movie) return null;
-            lastDeletedMovie = movie;
-            const updated = movies.filter(m => m.id !== Number(id));
-            return writeToFilePromise(updated).then(() => movie);
-        });
+    return readFile().then(movies => {
+        let movieIndex = -1;
+        for (let i = 0; i < movies.length; i++) {
+            if (movies[i].id === Number(id)) {
+                movieIndex = i;
+                break;
+            }
+        }
+        if (movieIndex === -1) return null;
+        
+        const movie = movies[movieIndex];
+        lastDeletedMovie = movie;
+        
+        const updated = [];
+        for (const m of movies) {
+            if (m.id !== Number(id)) {
+                updated.push(m);
+            }
+        }
+        return writeTheFile(updated).then(() => movie);
+    });
 }
 
 export function updateRate(id, newRating) {
-    return readFromFilePromise()
-        .then(movies => {
-            const movie = movies.find(m => m.id === Number(id));
-            if (!movie) return null;
-            movie.rating = Number(newRating);
-            return writeToFilePromise(movies).then(() => movie);
-        });
+    return readFile().then(movies => {
+        let foundMovie = null;
+        for (const m of movies) {
+            if (m.id === Number(id)) {
+                foundMovie = m;
+                foundMovie.rating = Number(newRating);
+                break;
+            }
+        }
+        if (!foundMovie) return null;
+        return writeTheFile(movies).then(() => foundMovie);
+    });
 }
 
 export function searchByName(nameQuery) {
-    return readFromFilePromise()
-        .then(movies => {
-            const query = nameQuery.toLowerCase();
-            return movies.filter(m => m.title.toLowerCase().includes(query));
-        });
+    return readFile().then(movies => {
+        const query = nameQuery.toLowerCase();
+        const results = [];
+        for (const m of movies) {
+            if (m.title.toLowerCase().includes(query)) {
+                results.push(m);
+            }
+        }
+        return results;
+    });
 }
 
 export async function sortByGenre(genre) {
-    const movies = await readFromFilePromise();
-    return movies.filter(m => m.genre.toLowerCase() === genre.toLowerCase());
+    const movies = await readFile();
+    const results = [];
+    for (const m of movies) {
+        if (m.genre.toLowerCase() === genre.toLowerCase()) {
+            results.push(m);
+        }
+    }
+    return results;
 }
 
 export async function showStatistics() {
-    const movies = await readFromFilePromise();
+    const movies = await readFile();
     if (movies.length === 0) return { count: 0, averageRating: 0, bestMovie: null };
     const count = movies.length;
     
     let sum = 0;
+    let bestMovie = movies[0];
+    
     for (const m of movies) {
         sum += m.rating;
-    }
-    
-    let bestMovie = movies[0];
-    for (const m of movies) {
         if (m.rating > bestMovie.rating) {
             bestMovie = m;
         }
@@ -805,7 +802,7 @@ export async function showStatistics() {
 // Bonuses
 
 export async function sortMovies(sortBy) {
-    const movies = await readFromFilePromise();
+    const movies = await readFile();
     const sorted = [];
     for (const m of movies) {
         sorted.push(m);
@@ -825,18 +822,22 @@ export async function sortMovies(sortBy) {
 }
 
 export async function top3Movies() {
-    const movies = await readFromFilePromise();
+    const movies = await readFile();
     const sorted = [];
     for (const m of movies) {
         sorted.push(m);
     }
     sorted.sort((a, b) => b.rating - a.rating);
-    return sorted.slice(0, 3);
+    const top3 = [];
+    for (let i = 0; i < sorted.length && i < 3; i++) {
+        top3.push(sorted[i]);
+    }
+    return top3;
 }
 
 export async function undoDelete() {
     if (!lastDeletedMovie) return null;
-    const movies = await readFromFilePromise();
+    const movies = await readFile();
     
     let maxId = 0;
     for (const m of movies) {
@@ -845,20 +846,26 @@ export async function undoDelete() {
         }
     }
     
-    const exists = movies.find(m => m.id === lastDeletedMovie.id);
+    let exists = false;
+    for (const m of movies) {
+        if (m.id === lastDeletedMovie.id) {
+            exists = true;
+            break;
+        }
+    }
     if (exists) {
         lastDeletedMovie.id = maxId + 1;
     }
     movies.push(lastDeletedMovie);
     const restored = lastDeletedMovie;
     lastDeletedMovie = null;
-    await writeToFilePromise(movies);
+    await writeTheFile(movies);
     return restored;
 }
 
 export async function exportReport() {
     const stats = await showStatistics();
-    const movies = await readFromFilePromise();
+    const movies = await readFile();
     
     const genres = [];
     for (const m of movies) {
@@ -873,13 +880,18 @@ export async function exportReport() {
         bestMovie: stats.bestMovie ? { title: stats.bestMovie.title, rating: stats.bestMovie.rating } : null,
         availableGenres: genres
     };
-    await writeReportToFile(report);
     return report;
 }
 
 export async function searchByYearRange(start, end) {
-    const movies = await readFromFilePromise();
-    return movies.filter(m => m.year >= Number(start) && m.year <= Number(end));
+    const movies = await readFile();
+    const results = [];
+    for (const m of movies) {
+        if (m.year >= Number(start) && m.year <= Number(end)) {
+            results.push(m);
+        }
+    }
+    return results;
 }
 `,
       'app.js': `import rl from 'readline-sync';
