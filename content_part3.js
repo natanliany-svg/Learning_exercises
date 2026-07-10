@@ -387,7 +387,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
           <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
             <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Route Parameters</h4>
             <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רָאוּט פָּרָמֶטֶרְס | תרגום: פרמטרי נתיב</p>
-            <p><b>משמעות:</b> משתנים דינמיים שהם חלק מובנה מכתובת ה-URL עצמה (מוגדרים עם נקודתיים `:`).</p>
+            <p><b>משמעות:</b> משתנים דינמיים שהם חלק מובנה מכתובת ה-URL עצמה (מוגדרים עם נקודתיים &#58;).</p>
             <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const { productId } = req.params;</code></pre>
           </div>
 
