@@ -21,7 +21,7 @@ const sectionsList = [
     id: 'section-web',
     title: '🖥️ שרתים ו-Web',
     subtitle: 'הדפדפן, שרתי HTTP מבוססי Node ו-Express',
-    topics: ['dom', 'vanillaServer', 'httpParams', 'express']
+    topics: ['dom', 'vanillaServer', 'httpParams', 'express', 'expressKids']
   },
   {
     id: 'section-async-full',
