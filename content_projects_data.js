@@ -1523,24 +1523,117 @@ main();
 
 <div class="callout analogy">
   <span class="ico">🧒</span>
-  <div class="ct"><b>הסבר פשוט - למה מחלקים לקבצים?</b><br>
-  תחשוב על שרת כמו על <b>מסעדה גדולה</b>:<br>
-  - <code>index.js</code> הוא <b>מנהל המסעדה</b>. הוא מקבל את האנשים בכניסה, מדליק את האורות, ומחליט איזה מלצר מטפל באיזה אזור.<br>
-  - ה-<code>routes</code> (ניתובים) הם <b>המלצרים</b>. מלצר אחד אחראי רק על קינוחים (סרטים או מוצרים), מלצר שני אחראי רק על תשלומים (חשבונות), ומלצר שלישי אחראי על העגלה.<br>
-  - ה-<code>services</code> (שירותים) הם <b>הטבחים במטבח</b>. הם לא מדברים עם הלקוחות, אלא רק עושים את העבודה הקשה (למשל, לקרוא ולכתוב קבצים בדיסק או לגשת למחסן הנתונים).<br>
-  - קבצי ה-<code>json</code> הם <b>המחסן ומקרר חומרי הגלם</b> שבו הכל שמור פיזית.
+  <div class="ct"><b>הסבר פשוט לילד קטן - למה מחלקים לקבצים?</b><br>
+  תחשוב על שרת כמו על <b>מסעדה גדולה</b>. אם מנהל אחד יעשה הכול לבד - יקבל הזמנה, יבשל, ישרת, יקבל תשלום, ינקה - הוא יקרוס תוך שעה.<br><br>
+  לכן מחלקים עבודה:<br>
+  - <code>index.js</code> הוא <b>מנהל המסעדה הראשי</b>. הוא מקבל אנשים בכניסה, מדליק אורות, ומחליט איזה מלצר מטפל באיזה אזור.<br>
+  - <code>routes/</code> (ניתובים) הם <b>המלצרים</b>. כל מלצר אחראי רק על אזור אחד: מלצר אחד רק לשולחנות קינוח (מוצרים), שני רק לבר תשלום (חשבון), שלישי רק לעגלת קניות.<br>
+  - <code>services/</code> הם <b>הטבחים במטבח</b>. הם לא מדברים עם לקוחות. רק עושים עבודה פנימית: כותבים לקבצים, קוראים מהם, עושים חישובים.<br>
+  - <code>data/*.json</code> הם <b>המחסן/מקרר</b> - כאן שמורים כל הנתונים הפיזיים.
   </div>
 </div>
 
 <hr style="border-color:#333; margin: 20px 0;">
 
-<h2>🎯 מטרות הפרויקט והחומר שלמדנו השבוע</h2>
-<ul>
-  <li><b>שרת Express מודרני:</b> שימוש ב-ES modules (ייבוא בעזרת <code>import</code>) וחלוקה לראוטרים.</li>
-  <li><b>ניהול מסדי נתונים ב-JSON:</b> שימוש בפעולות אסינכרוניות לקריאה וכתיבה של קבצים ללא חסימת השרת.</li>
-  <li><b>ולידציה קפדנית:</b> הגבלת כמויות, בדיקת זמינות מלאי, ווידוא שלקוחות אינם חורגים מהתקציב שלהם.</li>
-  <li><b>הרשמה אוטומטית:</b> תמיכה ביצירת לקוח חדש עם יתרת פתיחה של ₪500 בעת פנייה ראשונה.</li>
-</ul>
+<h2>🔑 שיטת החשיבה: איך ניגשים לכל פרויקט חדש?</h2>
+<div class="callout" style="background: rgba(167, 139, 250, 0.1); border-left: 4px solid var(--purple);">
+  <span class="ico">🧠</span>
+  <div class="ct">
+  <b>שלב 1 - שאל "מה המשתמש יכול לעשות?"</b><br>
+  לפני שכותבים שורת קוד אחת, שבים ורושמים רשימה של פעולות. בחנות שלנו:<br>
+  ✅ לראות מוצרים / לסנן לפי מחיר ומלאי<br>
+  ✅ להוסיף מוצר לעגלה / להסיר<br>
+  ✅ לרכוש (checkout)<br>
+  ✅ לראות יתרת חשבון<br>
+  ✅ לראות היסטוריית הזמנות<br><br>
+  <b>שלב 2 - כל פעולה = route אחד!</b><br>
+  כל פעולה שרשמת בשלב 1 הופכת ל-endpoint בשרת שלך. ברגע שיש לך 4-5 פעולות ל"נושא" מסוים (מוצרים / עגלה / חשבון) - צור route file נפרד.<br><br>
+  <b>שלב 3 - מה צריך נתונים מהדיסק? → שים ב-service!</b><br>
+  כל פונקציה שנוגעת ב-<code>fs</code> (קריאה/כתיבה לקבצים) - לא שמים אותה ישירות ב-route. שמים אותה ב-<code>services/file.service.js</code>. כך ה-route נשאר "נקי" ועוסק רק בלוגיקה עסקית.
+  </div>
+</div>
+
+<hr style="border-color:#333; margin: 20px 0;">
+
+<h2>📁 ניתוח פרויקט החבר - מה הוא בנה ולמה?</h2>
+<p>חברך הכין עבורך <b>תשתית מקצועית (Scaffold)</b> - כמו שבונים בניין: הם מכינים שלד, יסודות, וקירות חיצוניים. אתה צריך לסיים את פנים הדירות.</p>
+
+<div style="background: rgba(52, 211, 153, 0.08); border-left: 4px solid var(--emerald); padding: 15px; border-radius: 8px; margin: 10px 0;">
+  <h4 style="color: var(--emerald);">📄 .env - קובץ סודות הפרויקט</h4>
+  <pre style="font-size:0.8rem; padding:8px; margin:5px 0;"><code>PORT=3000
+DATA_BASE=./data/</code></pre>
+  <p>החבר שלך החליט לא לכתוב <code>3000</code> קשה בקוד. למה? כי מחר יכול להיות שהשרת ירוץ על פורט 4000. עם <code>process.env.PORT</code> משנים רק שורה אחת ב-.env ולא מחפשים בכל הקוד!</p>
+</div>
+
+<div style="background: rgba(56, 189, 248, 0.08); border-left: 4px solid var(--sky); padding: 15px; border-radius: 8px; margin: 10px 0;">
+  <h4 style="color: var(--sky);">🔧 services/file.service.js - הטבח הראשי</h4>
+  <pre style="font-size:0.8rem; padding:8px; margin:5px 0;"><code>async function readFromJson(path) {
+    const data = await fs.readFile(path, "utf-8");
+    return JSON.parse(data);
+}
+
+async function writeToJson(path, newData) {
+    await fs.writeFile(path, JSON.stringify(newData, null, 2));
+}</code></pre>
+  <p>שים לב לגאונות: יש רק <b>שתי פונקציות</b> - קרא וכתוב. כל ה-routes ישתמשו בהן. לא חוזרים על קוד הקריאה בכל קובץ!</p>
+</div>
+
+<div style="background: rgba(245, 197, 24, 0.08); border-left: 4px solid var(--gold); padding: 15px; border-radius: 8px; margin: 10px 0;">
+  <h4 style="color: var(--gold);">🚦 routes/ - המלצרים (ריקים, ממתינים לך למלא)</h4>
+  <p>החבר שלך כתב skeleton בלבד - ייבוא, יצירת router, ייצוא. שלושת השורות האלה הן <b>הסוכריה</b> - עכשיו אתה פשוט ממלא את <code>router.get()</code>, <code>router.post()</code> בפנים.</p>
+</div>
+
+<hr style="border-color:#333; margin: 20px 0;">
+
+<h2>🏗️ שיטת הבנייה - 5 שלבים ברורים</h2>
+<ol style="line-height: 2.2;">
+  <li><b>npm init -y</b> → יוצר <code>package.json</code> בסיסי</li>
+  <li><b>npm install express</b> → מתקין Express</li>
+  <li><b>צור תיקיות:</b> <code>routes/</code>, <code>services/</code>, <code>data/</code></li>
+  <li><b>כתוב file.service.js קודם!</b> - זה הבסיס שכולם ישתמשו בו</li>
+  <li><b>בנה route אחד → בדוק → route שני → בדוק...</b> לעולם לא 5 routes ואז בדיקה אחת!</li>
+</ol>
+
+<hr style="border-color:#333; margin: 20px 0;">
+
+<h2>🎯 מבנה השרת הסופי</h2>
+<pre style="font-size: 0.85rem; padding: 15px; background: rgba(0,0,0,0.3); border-radius: 8px;"><code>store_online_server_express/
+├── .env                     ← סודות (PORT, DATABASE_PATH)
+├── package.json             ← הגדרות הפרויקט
+├── index.js                 ← מנהל המסעדה (app + listen)
+├── data/
+│   ├── products.json        ← מחסן המוצרים
+│   ├── customers.json       ← רשימת לקוחות ועגלות
+│   └── orders.json          ← היסטוריית הזמנות
+├── services/
+│   └── file.service.js      ← הטבח (קרא/כתוב לקבצים)
+└── routes/
+    ├── health.js            ← "האם השרת חי?"
+    ├── products.js          ← GET /products (עם סינון)
+    ├── cart.js              ← GET+POST+DELETE /cart
+    ├── account.js           ← GET /account/balance
+    └── orders.js            ← POST /orders/checkout + GET /orders</code></pre>
+
+<hr style="border-color:#333; margin: 20px 0;">
+
+<h2>⚡ הנתיבים הנדרשים - מה כל אחד עושה</h2>
+<div style="overflow-x: auto;">
+<table style="width:100%; border-collapse: collapse; font-size: 0.88rem;">
+<tr style="background: rgba(167,139,250,0.2);">
+  <th style="padding:8px; text-align:right; border-bottom: 1px solid #333;">Method</th>
+  <th style="padding:8px; text-align:right; border-bottom: 1px solid #333;">URL</th>
+  <th style="padding:8px; text-align:right; border-bottom: 1px solid #333;">מה עושה</th>
+</tr>
+<tr><td style="padding:8px; color:#34d399;">GET</td><td style="padding:8px;"><code>/health</code></td><td style="padding:8px;">בדיקת חיים - מחזיר "All is good"</td></tr>
+<tr><td style="padding:8px; color:#34d399;">GET</td><td style="padding:8px;"><code>/products</code></td><td style="padding:8px;">כל המוצרים (עם inStock, maxPrice, search)</td></tr>
+<tr><td style="padding:8px; color:#34d399;">GET</td><td style="padding:8px;"><code>/cart?customerId=...</code></td><td style="padding:8px;">עגלה + סכומי ביניים (יוצר לקוח חדש אם לא קיים)</td></tr>
+<tr><td style="padding:8px; color:#f7df1e;">POST</td><td style="padding:8px;"><code>/cart/items</code></td><td style="padding:8px;">הוסף מוצר לעגלה (בודק מלאי!)</td></tr>
+<tr><td style="padding:8px; color:#fb7185;">DELETE</td><td style="padding:8px;"><code>/cart/items/:productId</code></td><td style="padding:8px;">הסר מוצר מהעגלה</td></tr>
+<tr><td style="padding:8px; color:#34d399;">GET</td><td style="padding:8px;"><code>/account/balance?customerId=...</code></td><td style="padding:8px;">יתרת כסף של לקוח</td></tr>
+<tr><td style="padding:8px; color:#f7df1e;">POST</td><td style="padding:8px;"><code>/orders/checkout</code></td><td style="padding:8px;">רכישה (בודק יתרה + מלאי)</td></tr>
+<tr><td style="padding:8px; color:#34d399;">GET</td><td style="padding:8px;"><code>/orders?customerId=...</code></td><td style="padding:8px;">היסטוריית הזמנות</td></tr>
+</table>
+</div>
 `,
     files: {
       ".env": `PORT=3000
