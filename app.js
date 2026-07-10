@@ -39,7 +39,7 @@ const sectionsList = [
     id: 'section-tools',
     title: '🔧 עזרים וסימולטורים',
     subtitle: 'מחסנים, השוואות, קיצורים, ספריות וסימולציות למבחן',
-    topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz']
+    topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish']
   }
 ];
 
@@ -423,16 +423,37 @@ function getIdeHtml(projectKey) {
             <div class="ide-file" onclick="switchIdeFile('services/movie.service.js')"><span style="color:#f7df1e">JS</span> movie.service.js</div>
             <div class="ide-file" onclick="switchIdeFile('app.js')"><span style="color:#f7df1e">JS</span> app.js</div>
         `;
+    } else if (projectKey === 'storeOnlineServer') {
+        sidebarHtml = `
+            <div class="ide-sidebar-header">STORE_SERVER 🛒 📄 📁</div>
+            <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
+            <div id="folder-git" style="display:none;"></div>
+            
+            <div class="ide-file" onclick="switchIdeFile('.env')"><span style="color:#a78bfa">ENV</span> .env</div>
+            <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
+            <div class="ide-file" onclick="switchIdeFile('data/products.json')"><span style="color:#34d399">{}</span> products.json</div>
+            <div class="ide-file" onclick="switchIdeFile('data/customers.json')"><span style="color:#34d399">{}</span> customers.json</div>
+            <div class="ide-file" onclick="switchIdeFile('data/orders.json')"><span style="color:#34d399">{}</span> orders.json</div>
+            <div class="ide-file" onclick="switchIdeFile('services/file.service.js')"><span style="color:#f7df1e">JS</span> file.service.js</div>
+            <div class="ide-file" onclick="switchIdeFile('routes/products.js')"><span style="color:#f7df1e">JS</span> products.js</div>
+            <div class="ide-file" onclick="switchIdeFile('routes/cart.js')"><span style="color:#f7df1e">JS</span> cart.js</div>
+            <div class="ide-file" onclick="switchIdeFile('routes/account.js')"><span style="color:#f7df1e">JS</span> account.js</div>
+            <div class="ide-file" onclick="switchIdeFile('routes/orders.js')"><span style="color:#f7df1e">JS</span> orders.js</div>
+            <div class="ide-file" onclick="switchIdeFile('routes/health.js')"><span style="color:#f7df1e">JS</span> health.js</div>
+            <div class="ide-file" onclick="switchIdeFile('index.js')"><span style="color:#f7df1e">JS</span> index.js</div>
+        `;
     }
 
-    const prompt = projectKey === 'bank' ? 'natan@ubuntu:~/bank$' : (projectKey === 'asyncFiles' ? 'natan@ubuntu:~/async-files$' : (projectKey === 'studyPlanner' ? 'natan@ubuntu:~/study-planner$' : 'natan@ubuntu:~/movie-manager$'));
+    const prompt = projectKey === 'bank' ? 'natan@ubuntu:~/bank$' : (projectKey === 'asyncFiles' ? 'natan@ubuntu:~/async-files$' : (projectKey === 'studyPlanner' ? 'natan@ubuntu:~/study-planner$' : (projectKey === 'movieCollection' ? 'natan@ubuntu:~/movie-manager$' : 'natan@ubuntu:~/store-server$')));
     const initialTermOutput = projectKey === 'bank' 
         ? "> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות." 
         : (projectKey === 'asyncFiles' 
             ? "> פרויקט עיבוד קבצים מוכן. הקלד 'node async-files.js' להרצה או 'help' לעזרה." 
             : (projectKey === 'studyPlanner'
                 ? "> פרויקט מתכנן לימודים מוכן. הקלד 'node main.js' להרצה או 'help' לעזרה."
-                : "> פרויקט ניהול סרטים מוכן. הקלד 'node app.js' להרצה או 'help' לעזרה."));
+                : (projectKey === 'movieCollection'
+                    ? "> פרויקט ניהול סרטים מוכן. הקלד 'node app.js' להרצה או 'help' לעזרה."
+                    : "> שרת Express מוכן. הקלד 'npm start' להפעלת השרת או 'help' לעזרה.")));
 
     return `
         <div class="ide-container" style="position:relative;">
@@ -484,7 +505,7 @@ function openIDE(projectKey) {
     const sidebar = document.getElementById('sidebar');
     if (sidebar) sidebar.classList.remove('open');
     
-    const defaultFile = projectKey === 'bank' ? 'utils.js' : (projectKey === 'asyncFiles' ? 'async-files.js' : (projectKey === 'studyPlanner' ? 'main.js' : 'app.js'));
+    const defaultFile = projectKey === 'bank' ? 'utils.js' : (projectKey === 'asyncFiles' ? 'async-files.js' : (projectKey === 'studyPlanner' ? 'main.js' : (projectKey === 'movieCollection' ? 'app.js' : 'index.js')));
     setTimeout(() => switchIdeFile(defaultFile), 50);
 }
 
@@ -1048,7 +1069,7 @@ function handleTerminal(event) {
         event.target.value = '';
         
         const output = document.getElementById('terminalOutput');
-        const prompt = activeProject === 'bank' ? 'natan@ubuntu:~/bank$' : (activeProject === 'asyncFiles' ? 'natan@ubuntu:~/async-files$' : 'natan@ubuntu:~/study-planner$');
+        const prompt = activeProject === 'bank' ? 'natan@ubuntu:~/bank$' : (activeProject === 'asyncFiles' ? 'natan@ubuntu:~/async-files$' : (activeProject === 'studyPlanner' ? 'natan@ubuntu:~/study-planner$' : (activeProject === 'movieCollection' ? 'natan@ubuntu:~/movie-manager$' : 'natan@ubuntu:~/store-server$')));
         output.innerHTML += `<p><span class="term-prompt">${prompt}</span> ${input}</p>`;
         
         const args = input.split(' ');
@@ -1281,6 +1302,111 @@ function handleTerminal(event) {
                     }
                 } else {
                     output.innerHTML += `<p class="term-error">cat: ${args[1]}: No such file or directory</p>`;
+                }
+            } else if (cmd !== '') {
+                output.innerHTML += `<p class="term-error">bash: ${cmd}: command not found</p>`;
+            }
+        } else if (activeProject === 'storeOnlineServer') {
+            if (cmd === 'help') {
+                output.innerHTML += `<p>Available commands: npm start, node index.js, curl [url], cat [filename], clear</p>`;
+            } else if (cmd === 'clear') {
+                output.innerHTML = '';
+            } else if (cmd === 'npm' || cmd === 'node') {
+                if ((cmd === 'npm' && args[1] === 'start') || (cmd === 'node' && args[1] === 'index.js')) {
+                    isPlanSaved = true;
+                    output.innerHTML += `
+                        <p class="term-success">> starting store_online_server_express...</p>
+                        <p style="color: #34d399;">[Express] Server running on port 3000</p>
+                        <p style="color: #60a5fa;">[Database] Connected to JSON files base path: ./data/</p>
+                    `;
+                } else {
+                    output.innerHTML += `<p class="term-error">Error: Command not recognized. Did you mean 'npm start' or 'node index.js'?</p>`;
+                }
+            } else if (cmd === 'curl') {
+                if (!isPlanSaved) {
+                    output.innerHTML += `<p class="term-error">curl: (7) Failed to connect to localhost port 3000: Connection refused. Did you run the server first?</p>`;
+                } else {
+                    const urlStr = args[1] || '';
+                    if (urlStr.includes('/health')) {
+                        output.innerHTML += `<p>All is good</p>`;
+                    } else if (urlStr.includes('/products')) {
+                        if (urlStr.includes('inStock=true') && urlStr.includes('maxPrice=15')) {
+                            output.innerHTML += `
+                                <pre style="color: #34d399; font-family: monospace;">{
+  "success": true,
+  "data": [
+    {
+      "id": "book_003",
+      "name": "The Hitchhiker's Guide to the Galaxy - Douglas Adams",
+      "price": 14.95,
+      "stock": 12
+    },
+    {
+      "id": "book_004",
+      "name": "1984 - George Orwell",
+      "price": 11.99,
+      "stock": 50
+    },
+    {
+      "id": "book_005",
+      "name": "To Kill a Mockingbird - Harper Lee",
+      "price": 13.25,
+      "stock": 8
+    }
+  ]
+}</pre>
+                            `;
+                        } else {
+                            output.innerHTML += `
+                                <pre style="color: #34d399; font-family: monospace;">{
+  "success": true,
+  "data": [
+    { "id": "book_001", "name": "The Hobbit - J.R.R. Tolkien", "price": 19.99, "stock": 45 },
+    { "id": "book_002", "name": "Sapiens: A Brief History - Yuval Noah Harari", "price": 24.5, "stock": 30 },
+    { "id": "book_003", "name": "The Hitchhiker's Guide - Douglas Adams", "price": 14.95, "stock": 12 }
+  ]
+}</pre>
+                            `;
+                        }
+                    } else if (urlStr.includes('/cart')) {
+                        output.innerHTML += `
+                            <pre style="color: #38bdf8; font-family: monospace;">{
+  "success": true,
+  "data": {
+    "customerId": "cust_101",
+    "items": [
+      { "productId": "book_001", "name": "The Hobbit - J.R.R. Tolkien", "price": 19.99, "quantity": 1, "subtotal": 19.99 }
+    ],
+    "total": 19.99
+  }
+}</pre>
+                        `;
+                    } else {
+                        output.innerHTML += `<p>{"success": true, "message": "Welcome to Natan's Online Store API"}</p>`;
+                    }
+                }
+            } else if (cmd === 'cat') {
+                const filename = args[1];
+                if (filename === '.env') {
+                    output.innerHTML += `
+                        <pre style="color: #a78bfa; font-family: monospace;">PORT=3000
+DATA_BASE=./data/
+STARTING_BALANCE=500</pre>
+                    `;
+                } else if (filename === 'package.json') {
+                    output.innerHTML += `
+                        <pre style="color: #a78bfa; font-family: monospace;">{
+  "name": "store_online_server_express",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}</pre>
+                    `;
+                } else {
+                    output.innerHTML += `<p class="term-error">cat: ${filename}: No such file or directory. Try '.env' or 'package.json'</p>`;
                 }
             } else if (cmd !== '') {
                 output.innerHTML += `<p class="term-error">bash: ${cmd}: command not found</p>`;

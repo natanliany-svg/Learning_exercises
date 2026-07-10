@@ -320,11 +320,161 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
             <p>הספרייה הפופולרית ביותר להקמת שרתים ו-APIs בצורה קלה ומודולרית.</p>
             <div class="install-cmd">npm install express</div>
           </div>
-          <div class="lib-card">
-            <h4>dotenv</h4>
             <p>טוענת משתני סביבה מאובטחים מקובץ <code>.env</code> לתוך האפליקציה (למשל סיסמאות ומפתחות רשת).</p>
             <div class="install-cmd">npm install dotenv</div>
           </div>
+        </div>
+      </div>
+    `
+  },
+  techEnglish: {
+    title: '🔤 אנגלית טכנולוגית (Technology English)',
+    content: `
+      <div class="card-body">
+        <p class="lead">מילון מונחים אינטראקטיבי המרכז את מושגי המפתח באנגלית שבהם אנו משתמשים בשיעורי הפיתוח ב-JavaScript ובשרתים. המטרה היא להבין את המקור של כל מילה, כיצד להגות אותה וכיצד היא מתקשרת לקוד המעשי שלנו.</p>
+        
+        <div class="modal-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+          
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Express</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶקְסְפְּרֶס | תרגום: מהיר, אקספרס</p>
+            <p><b>משמעות:</b> ספריית קוד פופולרית ב-Node.js שנועדה לעזור לנו להקים שרתי אינטרנט במהירות שיא.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const app = express();</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Route / Routing</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רָאוּט / רָאוּטִינְג | תרגום: נתיב / ניתוב</p>
+            <p><b>משמעות:</b> הדרך שבה השרת מקבל בקשה לכתובת מסוימת ומנתב אותה לפונקציית הטיפול המתאימה.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>app.get("/products", handler);</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Endpoint</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶנְדְפּוֹינְט | תרגום: נקודת קצה</p>
+            <p><b>משמעות:</b> הכתובת הספציפית (URL) אליה הקליינט פונה כדי לבצע פעולה או לקבל מידע.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>GET http://localhost:3000/cart</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Middleware</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: מִידְלְוֵור | תרגום: תוכנת תיווך</p>
+            <p><b>משמעות:</b> פונקציה שרצה "באמצע הדרך" בין קבלת הבקשה לשליחת התגובה, למשל לפענוח ה-Body או בדיקת אבטחה.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>app.use(express.json());</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Request (req)</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִקְוֶועסְט | תרגום: בקשה</p>
+            <p><b>משמעות:</b> האובייקט שמייצג את כל מה שהלקוח שלח אלינו לשרת (פרמטרים, נתונים, כותרות וכו').</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const userIp = req.ip;</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Response (res)</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִסְפּוֹנְס | תרגום: תגובה / תשובה</p>
+            <p><b>משמעות:</b> האובייקט בעזרתו השרת שולח בחזרה תשובה וקודי סטטוס לקליינט.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>res.json({ success: true });</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Query Parameters</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קְוֵורִי פָּרָמֶטֶרְס | תרגום: פרמטרי שאילתה</p>
+            <p><b>משמעות:</b> משתנים שנשלחים בכתובת ה-URL אחרי סימן שאלה, משמשים לרוב לסינון נתונים.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const { maxPrice } = req.query;</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Route Parameters</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רָאוּט פָּרָמֶטֶרְס | תרגום: פרמטרי נתיב</p>
+            <p><b>משמעות:</b> משתנים דינמיים שהם חלק מובנה מכתובת ה-URL עצמה (מוגדרים עם נקודתיים `:`).</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const { productId } = req.params;</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Request Body</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִקְוֶועסְט בָּאדִי | תרגום: גוף הבקשה</p>
+            <p><b>משמעות:</b> תוכן הנתונים המלא שנשלח בבקשה (בדר"כ ב-POST/PUT) ומפורש כקובץ JSON.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const { customerId } = req.body;</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Status Codes</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סְטָטוּס קוֹדְס | תרגום: קודי סטטוס</p>
+            <p><b>משמעות:</b> קודים מספריים תקניים המייצגים את תוצאת הפנייה (200=הצלחה, 400=שגיאת לקוח, 404=לא נמצא, 500=שגיאת שרת).</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>res.status(404).json(...);</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">JSON</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: גֵ'יְיסוֹן | ראשי תיבות: JavaScript Object Notation</p>
+            <p><b>משמעות:</b> פורמט מבוסס טקסט להעברה ושמירת נתונים, שנראה בדיוק כמו אובייקט JavaScript רגיל.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>{ "id": "book_001", "price": 19.99 }</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Asynchronous</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶסִינְקְרוֹנוּס | תרגום: אסינכרוני (לא מסונכרן בזמן)</p>
+            <p><b>משמעות:</b> קוד שמתחיל לרוץ ולא חוסם את התוכנית, אלא ממשיך ברקע ומחזיר תשובה כשסיים.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>fs.readFile(path, (err, data) => {});</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Callback</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹלְבֶּק | תרגום: פונקציית חזרה (קריאה חוזרת)</p>
+            <p><b>משמעות:</b> פונקציה שנשלחת כפרמטר לפונקציה אחרת ומיועדת להרצה ברגע שאירוע מסוים מסתיים.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>res.on("finish", callback);</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Promise</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פְּרוֹמִיס | תרגום: הבטחה</p>
+            <p><b>משמעות:</b> אובייקט המבטיח להחזיר לנו תוצאה של פעולה אסינכרונית בעתיד (הצלחה או כישלון).</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>return new Promise((res, rej) => {});</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Async / Await</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶסִינְק / אָוֵוייט | תרגום: אסינכרוני / המתנה</p>
+            <p><b>משמעות:</b> הדרך המודרנית והנוחה ביותר לכתוב קוד אסינכרוני, שגורמת לו להיראות כמו קוד סינכרוני רגיל.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const data = await readFromJson();</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Environment Variables</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶנְוָויירוֹנְמֶנְט וֶורִיאֶבְּלְס | תרגום: משתני סביבה</p>
+            <p><b>משמעות:</b> משתנים ששמורים מחוץ לקוד (לרוב בקובץ <code>.env</code>) המאפשרים לשמור מפתחות ונתונים רגישים בסודיות.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const port = process.env.PORT;</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Destructuring</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: דִי-סְטְרָקְצְ'וּרִינְג | תרגום: פירוק מבנה</p>
+            <p><b>משמעות:</b> קיצור דרך תחבירי ב-JavaScript המאפשר לשלוף שדות ספציפיים מתוך אובייקט לתוך משתנים ישירות.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const { name, price } = product;</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Stateless</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סְטֵייטְלֶס | תרגום: חסר מצב (ללא זיכרון היסטורי)</p>
+            <p><b>משמעות:</b> עיקרון בפיתוח שרתים לפיו השרת לא שומר מידע מקומי עליך בין בקשות. כל בקשה היא עצמאית לחלוטין.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>// השרת מזהה אותך בכל בקשה מחדש לפי ה-customerId</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Payload</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פֵּיְילוֹד | תרגום: מטען נתונים</p>
+            <p><b>משמעות:</b> המידע המרכזי והחיוני שאנחנו מעבירים בתוך הודעה, פנייה או חבילת מידע ברשת.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>// הנתונים שנשלחים בתוך ה-Body או ה-Token</code></pre>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Repository</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רֶפּוֹזִיטוֹרִי (או רפו) | תרגום: מאגר (מחסן קוד)</p>
+            <p><b>משמעות:</b> תיקיית הפרויקט שמנוהלת ומנוטרת על ידי Git המכילה את כל היסטוריית הגרסאות של הקוד.</p>
+            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>git init // מאתחל מאגר קוד חדש</code></pre>
+          </div>
+
         </div>
       </div>
     `

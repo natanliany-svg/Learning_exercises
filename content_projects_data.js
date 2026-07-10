@@ -1514,4 +1514,698 @@ main();
       ]
     }
   }
+,
+  storeOnlineServer: {
+    title: "Store Server Express 🛒 (API Server)",
+    floatingExplanation: `
+<h1>🛒 מדריך פרויקט: שרת Express לחנות אונליין</h1>
+<p class="lead">ברוך הבא לפרויקט שרת Express המלא שלך! כאן נלמד כיצד לבנות מאפס שרת Backend מודרני, מבוזר ומאובטח המדמה חנות אונליין קטנה.</p>
+
+<div class="callout analogy">
+  <span class="ico">🧒</span>
+  <div class="ct"><b>הסבר פשוט - למה מחלקים לקבצים?</b><br>
+  תחשוב על שרת כמו על <b>מסעדה גדולה</b>:<br>
+  - <code>index.js</code> הוא <b>מנהל המסעדה</b>. הוא מקבל את האנשים בכניסה, מדליק את האורות, ומחליט איזה מלצר מטפל באיזה אזור.<br>
+  - ה-<code>routes</code> (ניתובים) הם <b>המלצרים</b>. מלצר אחד אחראי רק על קינוחים (סרטים או מוצרים), מלצר שני אחראי רק על תשלומים (חשבונות), ומלצר שלישי אחראי על העגלה.<br>
+  - ה-<code>services</code> (שירותים) הם <b>הטבחים במטבח</b>. הם לא מדברים עם הלקוחות, אלא רק עושים את העבודה הקשה (למשל, לקרוא ולכתוב קבצים בדיסק או לגשת למחסן הנתונים).<br>
+  - קבצי ה-<code>json</code> הם <b>המחסן ומקרר חומרי הגלם</b> שבו הכל שמור פיזית.
+  </div>
+</div>
+
+<hr style="border-color:#333; margin: 20px 0;">
+
+<h2>🎯 מטרות הפרויקט והחומר שלמדנו השבוע</h2>
+<ul>
+  <li><b>שרת Express מודרני:</b> שימוש ב-ES modules (ייבוא בעזרת <code>import</code>) וחלוקה לראוטרים.</li>
+  <li><b>ניהול מסדי נתונים ב-JSON:</b> שימוש בפעולות אסינכרוניות לקריאה וכתיבה של קבצים ללא חסימת השרת.</li>
+  <li><b>ולידציה קפדנית:</b> הגבלת כמויות, בדיקת זמינות מלאי, ווידוא שלקוחות אינם חורגים מהתקציב שלהם.</li>
+  <li><b>הרשמה אוטומטית:</b> תמיכה ביצירת לקוח חדש עם יתרת פתיחה של ₪500 בעת פנייה ראשונה.</li>
+</ul>
+`,
+    files: {
+      ".env": `PORT=3000
+DATA_BASE=./data/
+STARTING_BALANCE=500
+`,
+      "package.json": `{
+  "name": "store_online_server_express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file=.env --watch index.js",
+    "test": "echo \\"Error: no test specified\\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
+`,
+      "data/products.json": `[
+  {
+    "id": "book_001",
+    "name": "The Hobbit - J.R.R. Tolkien",
+    "price": 19.99,
+    "stock": 45
+  },
+  {
+    "id": "book_002",
+    "name": "Sapiens: A Brief History of Humankind - Yuval Noah Harari",
+    "price": 24.5,
+    "stock": 30
+  },
+  {
+    "id": "book_003",
+    "name": "The Hitchhiker's Guide to the Galaxy - Douglas Adams",
+    "price": 14.95,
+    "stock": 12
+  },
+  {
+    "id": "book_004",
+    "name": "1984 - George Orwell",
+    "price": 11.99,
+    "stock": 50
+  },
+  {
+    "id": "book_005",
+    "name": "To Kill a Mockingbird - Harper Lee",
+    "price": 13.25,
+    "stock": 8
+  }
+]`,
+      "data/customers.json": `[
+  {
+    "customerId": "cust_101",
+    "balance": 150.0,
+    "cart": [
+      {
+        "productId": "book_001",
+        "quantity": 1
+      },
+      {
+        "productId": "book_003",
+        "quantity": 2
+      }
+    ],
+    "createdAt": "2026-03-15T10:00:00Z"
+  },
+  {
+    "customerId": "cust_102",
+    "balance": 45.0,
+    "cart": [
+      {
+        "productId": "book_004",
+        "quantity": 1
+      }
+    ],
+    "createdAt": "2026-05-20T14:30:00Z"
+  },
+  {
+    "customerId": "cust_103",
+    "balance": 300.5,
+    "cart": [],
+    "createdAt": "2026-06-01T09:15:00Z"
+  }
+]`,
+      "data/orders.json": `[
+  {
+    "id": "order_5001",
+    "customerId": "cust_101",
+    "items": [
+      {
+        "productId": "book_002",
+        "quantity": 1,
+        "price": 24.5
+      },
+      {
+        "productId": "book_005",
+        "quantity": 1,
+        "price": 13.25
+      }
+    ],
+    "total": 37.75,
+    "createdAt": "2026-04-10T11:20:00Z"
+  },
+  {
+    "id": "order_5002",
+    "customerId": "cust_102",
+    "items": [
+      {
+        "productId": "book_001",
+        "quantity": 2,
+        "price": 19.99
+      }
+    ],
+    "total": 39.98,
+    "createdAt": "2026-05-25T16:45:00Z"
+  },
+  {
+    "id": "order_5003",
+    "customerId": "cust_103",
+    "items": [
+      {
+        "productId": "book_003",
+        "quantity": 1,
+        "price": 14.95
+      },
+      {
+        "productId": "book_004",
+        "quantity": 3,
+        "price": 11.99
+      }
+    ],
+    "total": 50.92,
+    "createdAt": "2026-07-02T13:10:00Z"
+  }
+]`,
+      "services/file.service.js": `import fs from "fs/promises";
+
+async function readFromJson(path) {
+    try {
+        const data = await fs.readFile(path, "utf-8");
+        return JSON.parse(data);
+    } catch (err) {
+        if (err.code === 'ENOENT') {
+            return [];
+        }
+        console.error("Error reading JSON:", err);
+        throw err;
+    }
+}
+
+async function writeToJson(path, newFileData) {
+    try {
+        await fs.writeFile(path, JSON.stringify(newFileData, null, 2), "utf-8");
+    } catch (err) {
+        console.error("Error writing JSON:", err);
+        throw err;
+    }
+}
+
+export default {
+    readFromJson,
+    writeToJson
+};
+`,
+      "routes/products.js": `import express from "express";
+import jsonFunc from "../services/file.service.js";
+
+const PATH = process.env.DATA_BASE || "./data/";
+const router = express.Router();
+
+router.get("/", async (req, res) => {
+    try {
+        const products = await jsonFunc.readFromJson(\`\${PATH}products.json\`);
+        let filtered = [];
+        for (const p of products) {
+            filtered.push(p);
+        }
+
+        const { inStock, maxPrice, search } = req.query;
+
+        if (inStock === 'true') {
+            const temp = [];
+            for (const p of filtered) {
+                if (p.stock > 0) {
+                    temp.push(p);
+                }
+            }
+            filtered = temp;
+        }
+
+        if (maxPrice !== undefined) {
+            const limit = Number(maxPrice);
+            const temp = [];
+            for (const p of filtered) {
+                if (p.price <= limit) {
+                    temp.push(p);
+                }
+            }
+            filtered = temp;
+        }
+
+        if (search !== undefined) {
+            const query = search.toLowerCase();
+            const temp = [];
+            for (const p of filtered) {
+                if (p.name.toLowerCase().includes(query)) {
+                    temp.push(p);
+                }
+            }
+            filtered = temp;
+        }
+
+        res.json({ success: true, data: filtered });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+export default router;`,
+      "routes/cart.js": `import express from "express";
+import jsonFunc from "../services/file.service.js";
+
+const PATH = process.env.DATA_BASE || "./data/";
+const STARTING_BALANCE = Number(process.env.STARTING_BALANCE || 500);
+const router = express.Router();
+
+async function getOrCreateCustomer(customerId, customers) {
+    let customer = null;
+    for (const c of customers) {
+        if (c.customerId === customerId) {
+            customer = c;
+            break;
+        }
+    }
+    if (!customer) {
+        customer = {
+            customerId: customerId,
+            balance: STARTING_BALANCE,
+            cart: [],
+            createdAt: new Date().toISOString()
+        };
+        customers.push(customer);
+        await jsonFunc.writeToJson(\`\${PATH}customers.json\`, customers);
+    }
+    return customer;
+}
+
+// GET /cart?customerId=...
+router.get("/", async (req, res) => {
+    try {
+        const { customerId } = req.query;
+        if (!customerId) {
+            return res.status(400).json({ success: false, message: "Missing customerId parameter" });
+        }
+
+        const customers = await jsonFunc.readFromJson(\`\${PATH}customers.json\`);
+        const customer = await getOrCreateCustomer(customerId, customers);
+        const products = await jsonFunc.readFromJson(\`\${PATH}products.json\`);
+
+        const cartItems = [];
+        let total = 0;
+        for (const item of customer.cart) {
+            let foundProd = null;
+            for (const p of products) {
+                if (p.id === item.productId) {
+                    foundProd = p;
+                    break;
+                }
+            }
+            if (foundProd) {
+                const subtotal = foundProd.price * item.quantity;
+                total += subtotal;
+                cartItems.push({
+                    productId: item.productId,
+                    name: foundProd.name,
+                    price: foundProd.price,
+                    quantity: item.quantity,
+                    subtotal: Number(subtotal.toFixed(2))
+                });
+            }
+        }
+
+        res.json({
+            success: true,
+            data: {
+                customerId: customer.customerId,
+                items: cartItems,
+                total: Number(total.toFixed(2))
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// POST /cart/items
+// Body: { customerId, productId, quantity }
+router.post("/items", async (req, res) => {
+    try {
+        const { customerId, productId, quantity } = req.body;
+        if (!customerId || !productId || quantity === undefined) {
+            return res.status(400).json({ success: false, message: "Missing required body parameters (customerId, productId, quantity)" });
+        }
+
+        if (!Number.isInteger(quantity) || quantity <= 0) {
+            return res.status(400).json({ success: false, message: "Quantity must be a positive integer" });
+        }
+
+        const products = await jsonFunc.readFromJson(\`\${PATH}products.json\`);
+        let product = null;
+        for (const p of products) {
+            if (p.id === productId) {
+                product = p;
+                break;
+            }
+        }
+        if (!product) {
+            return res.status(404).json({ success: false, message: "Product not found" });
+        }
+
+        const customers = await jsonFunc.readFromJson(\`\${PATH}customers.json\`);
+        const customer = await getOrCreateCustomer(customerId, customers);
+
+        // Find if product already in cart
+        let cartItem = null;
+        for (const item of customer.cart) {
+            if (item.productId === productId) {
+                cartItem = item;
+                break;
+            }
+        }
+
+        const currentQtyInCart = cartItem ? cartItem.quantity : 0;
+        const totalRequestedQty = currentQtyInCart + quantity;
+
+        if (totalRequestedQty > product.stock) {
+            return res.status(400).json({ success: false, message: \`Insufficient stock. Only \${product.stock} available in total.\` });
+        }
+
+        if (cartItem) {
+            cartItem.quantity = totalRequestedQty;
+        } else {
+            customer.cart.push({
+                productId: productId,
+                quantity: quantity
+            });
+        }
+
+        await jsonFunc.writeToJson(\`\${PATH}customers.json\`, customers);
+
+        res.json({ success: true, message: "Item added to cart successfully", data: customer.cart });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// DELETE /cart/items/:productId
+// Body: { customerId }
+router.delete("/items/:productId", async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const { customerId } = req.body;
+
+        if (!customerId) {
+            return res.status(400).json({ success: false, message: "Missing customerId in request body" });
+        }
+
+        const customers = await jsonFunc.readFromJson(\`\${PATH}customers.json\`);
+        const customer = await getOrCreateCustomer(customerId, customers);
+
+        let itemIndex = -1;
+        for (let i = 0; i < customer.cart.length; i++) {
+            if (customer.cart[i].productId === productId) {
+                itemIndex = i;
+                break;
+            }
+        }
+
+        if (itemIndex === -1) {
+            return res.status(404).json({ success: false, message: "Product not found in customer cart" });
+        }
+
+        customer.cart.splice(itemIndex, 1);
+        await jsonFunc.writeToJson(\`\${PATH}customers.json\`, customers);
+
+        res.json({ success: true, message: "Item removed from cart successfully", data: customer.cart });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+export default router;`,
+      "routes/account.js": `import express from "express";
+import jsonFunc from "../services/file.service.js";
+
+const PATH = process.env.DATA_BASE || "./data/";
+const STARTING_BALANCE = Number(process.env.STARTING_BALANCE || 500);
+const router = express.Router();
+
+async function getOrCreateCustomer(customerId, customers) {
+    let customer = null;
+    for (const c of customers) {
+        if (c.customerId === customerId) {
+            customer = c;
+            break;
+        }
+    }
+    if (!customer) {
+        customer = {
+            customerId: customerId,
+            balance: STARTING_BALANCE,
+            cart: [],
+            createdAt: new Date().toISOString()
+        };
+        customers.push(customer);
+        await jsonFunc.writeToJson(\`\${PATH}customers.json\`, customers);
+    }
+    return customer;
+}
+
+// GET /account/balance?customerId=...
+router.get("/balance", async (req, res) => {
+    try {
+        const { customerId } = req.query;
+        if (!customerId) {
+            return res.status(400).json({ success: false, message: "Missing customerId parameter" });
+        }
+
+        const customers = await jsonFunc.readFromJson(\`\${PATH}customers.json\`);
+        const customer = await getOrCreateCustomer(customerId, customers);
+
+        res.json({
+            success: true,
+            data: {
+                customerId: customer.customerId,
+                balance: customer.balance
+            }
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+export default router;`,
+      "routes/orders.js": `import express from "express";
+import jsonFunc from "../services/file.service.js";
+
+const PATH = process.env.DATA_BASE || "./data/";
+const STARTING_BALANCE = Number(process.env.STARTING_BALANCE || 500);
+const router = express.Router();
+
+async function getOrCreateCustomer(customerId, customers) {
+    let customer = null;
+    for (const c of customers) {
+        if (c.customerId === customerId) {
+            customer = c;
+            break;
+        }
+    }
+    if (!customer) {
+        customer = {
+            customerId: customerId,
+            balance: STARTING_BALANCE,
+            cart: [],
+            createdAt: new Date().toISOString()
+        };
+        customers.push(customer);
+        await jsonFunc.writeToJson(\`\${PATH}customers.json\`, customers);
+    }
+    return customer;
+}
+
+// POST /orders/checkout
+// Body: { customerId }
+router.post("/checkout", async (req, res) => {
+    try {
+        const { customerId } = req.body;
+        if (!customerId) {
+            return res.status(400).json({ success: false, message: "Missing customerId parameter in request body" });
+        }
+
+        const customers = await jsonFunc.readFromJson(\`\${PATH}customers.json\`);
+        const customer = await getOrCreateCustomer(customerId, customers);
+
+        if (customer.cart.length === 0) {
+            return res.status(400).json({ success: false, message: "Cannot checkout an empty cart" });
+        }
+
+        const products = await jsonFunc.readFromJson(\`\${PATH}products.json\`);
+
+        // Validate items exist and have sufficient stock, and compute total cost
+        const orderItems = [];
+        let total = 0;
+        for (const item of customer.cart) {
+            let prod = null;
+            for (const p of products) {
+                if (p.id === item.productId) {
+                    prod = p;
+                    break;
+                }
+            }
+            if (!prod) {
+                return res.status(400).json({ success: false, message: \`Product \${item.productId} in cart no longer exists\` });
+            }
+            if (prod.stock < item.quantity) {
+                return res.status(400).json({ success: false, message: \`Insufficient stock for product \${prod.name}. Available: \${prod.stock}\` });
+            }
+            const subtotal = prod.price * item.quantity;
+            total += subtotal;
+            orderItems.push({
+                productId: item.productId,
+                name: prod.name,
+                quantity: item.quantity,
+                price: prod.price
+            });
+        }
+
+        total = Number(total.toFixed(2));
+
+        if (customer.balance < total) {
+            return res.status(400).json({ success: false, message: \`Insufficient balance. Required: ₪\${total}, Available: ₪\${customer.balance}\` });
+        }
+
+        // Deduct balance and clear cart
+        customer.balance = Number((customer.balance - total).toFixed(2));
+        customer.cart = [];
+
+        // Deduct product stock
+        for (const item of orderItems) {
+            for (const p of products) {
+                if (p.id === item.productId) {
+                    p.stock -= item.quantity;
+                    break;
+                }
+            }
+        }
+
+        // Create new order
+        const orders = await jsonFunc.readFromJson(\`\${PATH}orders.json\`);
+        const newOrderId = "order_" + Date.now() + "_" + Math.floor(Math.random() * 1000);
+        const newOrder = {
+            id: newOrderId,
+            customerId: customerId,
+            items: orderItems,
+            total: total,
+            createdAt: new Date().toISOString()
+        };
+        orders.push(newOrder);
+
+        // Persist all databases
+        await jsonFunc.writeToJson(\`\${PATH}customers.json\`, customers);
+        await jsonFunc.writeToJson(\`\${PATH}products.json\`, products);
+        await jsonFunc.writeToJson(\`\${PATH}orders.json\`, orders);
+
+        res.json({
+            success: true,
+            message: "Checkout successful",
+            data: newOrder
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+// GET /orders?customerId=...
+router.get("/", async (req, res) => {
+    try {
+        const { customerId } = req.query;
+        if (!customerId) {
+            return res.status(400).json({ success: false, message: "Missing customerId parameter" });
+        }
+
+        const orders = await jsonFunc.readFromJson(\`\${PATH}orders.json\`);
+        const filteredOrders = [];
+        for (const o of orders) {
+            if (o.customerId === customerId) {
+                filteredOrders.push(o);
+            }
+        }
+
+        res.json({
+            success: true,
+            data: filteredOrders
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+});
+
+export default router;`,
+      "routes/health.js": `import express from "express";
+
+const router = express.Router()
+
+router.get("/", (req, res)=>{
+    res.end("All is good")
+})
+
+export default router;`,
+      "index.js": `import express from "express";
+import accountRouter from "./routes/account.js";
+import cartRouter from "./routes/cart.js";
+import ordersRouter from "./routes/orders.js";
+import productsRouter from "./routes/products.js";
+import healthRouter from "./routes/health.js";
+
+const PORT = process.env.PORT || 3000;
+const app = express();
+
+// Body parser
+app.use(express.json());
+
+// Handle malformed JSON body parse errors
+app.use((err, req, res, next) => {
+    if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+        return res.status(400).json({ success: false, message: "Invalid JSON format" });
+    }
+    next(err);
+});
+
+// Routes
+app.use("/account", accountRouter);
+app.use("/cart", cartRouter);
+app.use("/orders", ordersRouter);
+app.use("/products", productsRouter);
+app.use("/health", healthRouter);
+
+app.get("/", (req, res) => {
+    res.json({ success: true, message: "Welcome to Natan's Online Store API" });
+});
+
+// 404 handler for unmatched routes
+app.use((req, res) => {
+    res.status(404).json({ success: false, message: "Route not found" });
+});
+
+// 500 handler for server errors
+app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+});
+
+app.listen(PORT, () => {
+    console.log(\`server running at http://localhost:\${PORT}\`);
+});`,
+    },
+    stories: {
+      ".env": ["קובץ ההגדרות של השרת שבו שומרים נתונים משתנים כמו פורט הריצה ונתיב בסיס הנתונים.", "שימו לב: הקובץ הזה לא נכנס ל-Git מטעמי אבטחה."],
+      "package.json": ["קובץ הגדרות הפרויקט המציין את השם, הגרסה, והספריות שהתקנו (כמו Express).", "שימוש ב-\"type\": \"module\" מאפשר לנו להשתמש בייבוא מודרני באמצעות import."],
+      "data/products.json": ["מחסן המוצרים של החנות. המשתמשים לא יכולים ליצור מוצרים חדשים אלא רק לקנות קיימים.", "לכל מוצר יש מזהה (id), שם (name), מחיר (price) ומלאי (stock)."],
+      "data/customers.json": ["קובץ הלקוחות של החנות. מנהל את עגלת הקניות של כל לקוח ואת היתרה הכספית שלו."],
+      "data/orders.json": ["קובץ ההיסטוריה של הרכישות. בכל פעם שלקוח מבצע checkout מוצלח, נוספת כאן רשומת הזמנה."],
+      "services/file.service.js": ["זהו הטבח הראשי של הפרויקט - הקובץ היחיד שמכיל פקודות fs ומשוחח ישירות עם הדיסק.", "משתמשים ב-fs/promises כדי לעבוד בצורה אסינכרונית ולא לחסום את השרת בזמן פעולות דיסק."],
+      "routes/products.js": ["המלצר שאחראי על המוצרים. מאפשר לקבל את רשימת המוצרים עם סינון לפי מלאי, מחיר או שם."],
+      "routes/cart.js": ["המלצר שאחראי על עגלת הקניות. מטפל בהצגת עגלה עם סכומי ביניים, הוספת מוצרים והסרתם."],
+      "routes/account.js": ["המלצר שאחראי על יתרת החשבון של הלקוח."],
+      "routes/orders.js": ["המלצר שאחראי על הקופה (Checkout) והיסטוריית הרכישות. כאן מתבצעת הפחתת המלאי והיתרה."],
+      "routes/health.js": ["נתיב פשוט לבדיקה שהשרת עובד ומגיב."],
+      "index.js": ["מנהל המסעדה הראשי - מאתחל את שרת Express, מאזין לפורט, ומנתב את המלצרים (routers) השונים."],
+    }
+  }
 };
