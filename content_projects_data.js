@@ -641,7 +641,7 @@ export function validateRating(rating) {
     return !isNaN(parsedRating) && parsedRating >= 0 && parsedRating <= 10;
 }
 `,
-      'services/file.service.js': `import fs from 'fs/promises'
+      'services/file.service.js': `import fs from 'fs'
 import readlineSync from 'readline-sync';
 
 export function readFile(callbeck){
