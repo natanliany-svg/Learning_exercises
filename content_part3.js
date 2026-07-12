@@ -126,7 +126,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
             html_visual: `
             <div class="anim-container"><div class="anim-node">{a: 1, b: 2}</div><div class="anim-packet move-right" style="background:#00d2ff; width:50px;">פירוק</div><div class="anim-node">const a = 1</div></div>
             `,
-            text: "<b>פירוק מבנה</b><br>במקום לפנות לאובייקט כל פעם (obj.a), פירוק (Destructuring) מאפשר לנו "לשלוף" את הערך מתוך האובייקט ישירות לתוך משתנה עצמאי בקלי קלות."
+            text: "<b>פירוק מבנה</b><br>במקום לפנות לאובייקט כל פעם (obj.a), פירוק (Destructuring) מאפשר לנו 'לשלוף' את הערך מתוך האובייקט ישירות לתוך משתנה עצמאי בקלי קלות."
         }
     ],
 
