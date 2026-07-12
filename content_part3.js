@@ -1347,6 +1347,21 @@ return new Promise((resolve, reject) => {
    </div>
   `
  }, expressMiddlewaresClassroom: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container">
+               <div class="anim-node" style="border-color:#38bdf8;">בקשה נכנסת</div>
+               <div class="anim-packet move-right" style="background:#34d399; box-shadow:0 0 15px #34d399;">Request</div>
+               <div class="anim-node" style="border-color:#ff0055;">שומר 1 (Auth)</div>
+               <div class="anim-node" style="border-color:#f7df1e;">שומר 2 (Val)</div>
+               <div class="anim-node" style="border-color:#00ff88;">המסעדה (Route)</div>
+            </div>
+            `,
+            text: "<b>זרימת Middlewares</b><br>תסתכל על חבילת המידע הירוקה! היא לא מגיעה ישר למסעדה. היא עוברת קודם כל דרך השומר הראשון (למשל, בדיקת אסימון), ואז דרך השומר השני (בדיקת תקינות נתונים), ורק אם היא שורדת – היא מגיעה ליעד."
+        }
+    ],
+
   title: '👨‍💼 שומרי הסף והמנהלים (Middlewares) - מהקלאסרום!',
   content: `
    <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
@@ -1436,7 +1451,39 @@ return new Promise((resolve, reject) => {
   `
  },
  postmanGuide: {
-  title: '📭 המדריך השלם ל-Postman (כלי ההזמנות)',
+
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="flow-diagram">
+               <div class="flow-node active-node">לקוח (Postman)</div>
+               <div class="flow-arrow highlight">בקשת HTTP (GET)<br><span>➔</span></div>
+               <div class="flow-node">מסעדה (שרת)</div>
+            </div>
+            `,
+            text: "<b>שלב 1: הלקוח (אתה) מבקש</b><br>תחשוב על עצמך כאדם שרעב ורוצה להזמין פיצה. הלקוח שולח בקשה. תוכנת ה-Postman היא בעצם השליח שלנו – היא לוקחת את הבקשה שניסחנו (למשל, GET) ושולחת אותה בדיוק לכתובת של השרת (URL)."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram">
+               <div class="flow-node">לקוח (Postman)</div>
+               <div class="flow-arrow">ממתין לתשובה...<br><span>➔</span></div>
+               <div class="flow-node active-node">מסעדה (שרת)<br><small>מעבד נתונים</small></div>
+            </div>
+            `,
+            text: "<b>שלב 2: השרת מקבל ומעבד</b><br>הבקשה הגיעה למטבח של המסעדה (השרת שלנו). הקוד שלנו בשרת מקבל את הבקשה, בודק אותה (Middlewares), ומחפש את הנתונים הרלוונטיים במסד הנתונים כדי להכין את 'המנה'."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram">
+               <div class="flow-node active-node">לקוח (Postman)<br><small>מציג נתונים</small></div>
+               <div class="flow-arrow highlight">תגובת HTTP (200 OK)<br><span>←</span></div>
+               <div class="flow-node">מסעדה (שרת)</div>
+            </div>
+            `,
+            text: "<b>שלב 3: התשובה חוזרת ללקוח</b><br>השרת סיים! הוא אורז את התשובה (Response) ושולח אותה חזרה. ב-Postman נראה את החבילה הזאת מופיעה במסך התחתון – זו יכולה להיות רשימת המשתמשים שביקשנו או קוד הצלחה (200 OK)."
+        }
+    ],title: '📭 המדריך השלם ל-Postman (כלי ההזמנות)',
   content: `
    <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
     <h1 style="color: #ff6c37; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">🚀 Postman - אפליקציית המשלוחים שלנו</h1>

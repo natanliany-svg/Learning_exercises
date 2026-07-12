@@ -36,6 +36,18 @@ colors.<span class="t-fn">push</span>(<span class="t-str">"כחול"</span>); <s
     `
   },
   loops: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container" style="justify-content: center;">
+               <div class="anim-node" style="border-radius: 50%; width: 100px; height: 100px; display:flex; align-items:center; justify-content:center;">לולאה</div>
+               <div class="anim-packet move-circle" style="left:50%; top:50%; transform:translate(-50%,-50%);">i++</div>
+            </div>
+            `,
+            text: "<b>לולאה מסתובבת (Loop)</b><br>האובייקט מסתובב במעגל חי! בכל סיבוב הוא בודק את התנאי ומגדיל את המשתנה i. הכל רץ באופן אוטומטי עד שהתנאי נעצר."
+        }
+    ],
+
     title: '🔄 תנאים ולולאות',
     content: `
       <div class="card-body">
@@ -95,6 +107,20 @@ colors.<span class="t-fn">push</span>(<span class="t-str">"כחול"</span>); <s
     `
   },
   functions: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container">
+               <div class="anim-node">קלט (Input)</div>
+               <div class="anim-packet move-right">נתונים</div>
+               <div class="anim-node" style="background:#ff0055; color:white; border-color:#fff;">פונקציה (עיבוד)</div>
+               <div class="anim-node">פלט (Return)</div>
+            </div>
+            `,
+            text: "<b>פס ייצור וירטואלי (Function)</b><br>תראה את חבילת הנתונים! היא נוסעת מצד שמאל (הקלט שאנחנו מכניסים), נכנסת למכונת הפונקציה האדומה במרכז שעושה עליה פעולות (הלוגיקה), ויוצאת בצד ימין כתוצר מוגמר."
+        }
+    ],
+
     title: '🎯 פונקציות',
     content: `
       <div class="card-body">

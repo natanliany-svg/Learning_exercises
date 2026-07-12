@@ -1,5 +1,19 @@
 const asyncLearningContent = {
   eventLoop: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container" style="flex-wrap: wrap; height:220px; align-content: space-around;">
+               <div class="anim-node" style="width:100%; text-align:center;">Call Stack (תור ראשי)</div>
+               <div class="anim-packet move-right" style="top:90px; background:#00d2ff; box-shadow:0 0 15px #00d2ff;">setTimeout</div>
+               <div class="anim-node" style="width:45%; text-align:center; border-color:#00d2ff;">Web APIs (המתנה)</div>
+               <div class="anim-node" style="width:45%; text-align:center; border-color:#f7df1e;">Callback Queue</div>
+            </div>
+            `,
+            text: "<b>ה-Event Loop בפעולה!</b><br>שים לב לאנימציה: הפקודה האסינכרונית קופצת מהתור הראשי (Call Stack) אל ה-Web APIs כדי להמתין. ה-Call Stack פנוי להמשיך לרוץ! כשההמתנה תסתיים, היא תעבור לתור ההמתנה (Callback Queue)."
+        }
+    ],
+
     title: '🔄 מנוע ה-Event Loop ופעולות חוסמות',
     content: `
       <div class="card-body">

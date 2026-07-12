@@ -241,6 +241,31 @@ function renderAllContent() {
                         wrappedContent = `<div class="card-body"><div class="card-body-inner">${rawContent}</div></div>`;
                     }
                     
+
+                    let visHtml = '';
+                    if (data.visualizerSteps && data.visualizerSteps.length > 0) {
+                        visHtml += `<div class="visualizer-container" id="vis-${topicKey}" data-current="0" data-total="${data.visualizerSteps.length}">`;
+                        data.visualizerSteps.forEach((step, idx) => {
+                            visHtml += `
+                                <div class="visualizer-slide ${idx === 0 ? 'active' : ''}">
+                                    ${step.html_visual || ""}
+                                    <div class="visualizer-text">${step.text}</div>
+                                </div>
+                            `;
+                        });
+                        visHtml += `<div class="visualizer-controls">`;
+                        visHtml += `<button class="visualizer-btn btn-prev" onclick="prevVisSlide('${topicKey}')" disabled>הקודם</button>`;
+                        visHtml += `<div class="visualizer-indicator">`;
+                        data.visualizerSteps.forEach((_, idx) => {
+                            visHtml += `<div class="vis-dot ${idx === 0 ? 'active' : ''}"></div>`;
+                        });
+                        visHtml += `</div>`;
+                        visHtml += `<button class="visualizer-btn btn-next" onclick="nextVisSlide('${topicKey}')" ${data.visualizerSteps.length <= 1 ? 'disabled' : ''}>הבא</button>`;
+                        visHtml += `</div></div>`;
+                        
+                        // Inject into wrappedContent before the inner content
+                        wrappedContent = wrappedContent.replace('<div class="card-body-inner">', '<div class="card-body-inner">' + visHtml);
+                    }
                     html += `
                         <div class="card" id="card-${topicKey}" data-pinned="false">
                             <div class="card-header">
