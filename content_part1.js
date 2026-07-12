@@ -1,11 +1,23 @@
 const contentPart1 = {
   basics: {
-    visualizerSteps: [
+        visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">let X = 5</div><div class="anim-packet spin" style="background:#00d2ff;">5</div><div class="anim-node">זיכרון</div></div>
+            <div class="anim-container"><div class="anim-node" style="border-color:#38bdf8;">let box;</div><div class="anim-node" style="border-style:dashed;">קופסה ריקה</div></div>
             `,
-            text: "<b>משתנים וסוגי נתונים</b><br>משתנים הם כמו קופסאות בזיכרון. כאן אנחנו רואים את הערך 5 (הקובייה המסתובבת) נשמר בתוך קופסה בשם X בזיכרון המחשב."
+            text: "<b>שלב 1: הצהרה (Declaration)</b><br>כשאנחנו כותבים <code>let box;</code> אנחנו מבקשים מהמחשב להקצות לנו קופסה ריקה בזיכרון."
+        },
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node" style="border-color:#38bdf8;">box = 5;</div><div class="anim-packet move-right" style="background:#00d2ff;">5</div><div class="anim-node">קופסה</div></div>
+            `,
+            text: "<b>שלב 2: השמה (Assignment)</b><br>עכשיו אנחנו לוקחים את הערך 5 (הקובייה) ומכניסים אותו לתוך הקופסה שיצרנו."
+        },
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node" style="border-color:#ff0055;">const PI = 3.14;</div><div class="anim-node" style="background:#ff0055; color:white;">נעול 🔒</div></div>
+            `,
+            text: "<b>שלב 3: קבועים (const)</b><br>משתנה מסוג <code>const</code> הוא קופסה עם מנעול! ברגע שהכנסנו אליה ערך, אי אפשר לשנות אותו לעולם."
         }
     ],
 

@@ -1,11 +1,17 @@
 const serversContent = {
   vanillaServer: {
-    visualizerSteps: [
+        visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container" style="justify-content:space-around;"><div class="anim-node">לקוח</div><div class="anim-packet move-right" style="background:#38bdf8; width:40px;">בקשה</div><div class="anim-node" style="border-color:#38bdf8;">שרת Node</div></div>
+            <div class="flow-diagram"><div class="flow-node">לקוח (דפדפן)</div><div class="flow-arrow highlight">בקשה<span>←</span></div><div class="flow-node active-node">שרת Node</div></div>
             `,
-            text: "<b>שרת HTTP בסיסי</b><br>שרת בסיסי מאזין לבקשות. הלקוח שולח בקשה (Packet), והשרת מחזיר תשובה. ללא Express, אנחנו צריכים לכתוב הרבה קוד שחור כדי להבין מה הלקוח רצה."
+            text: "<b>1. קבלת הבקשה</b><br>הלקוח מקליד כתובת בדפדפן, והבקשה מגיעה לשרת שלנו שמאזין על פורט 3000."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram"><div class="flow-node">לקוח (דפדפן)</div><div class="flow-arrow">תשובה<span>→</span></div><div class="flow-node active-node" style="background:#34d399; color:#11131a;">שרת Node<br><small>מעבד...</small></div></div>
+            `,
+            text: "<b>2. עיבוד ותשובה</b><br>השרת מנתח את הבקשה (האם זה GET? POST?), מכין את התוכן (טקסט או HTML) ומחזיר אותו בחזרה לדפדפן."
         }
     ],
 

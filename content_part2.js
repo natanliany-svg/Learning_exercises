@@ -70,12 +70,24 @@ document.body.<span class="t-fn">appendChild</span>(newDiv);</code></pre>
     `
   },
   arrayMethods: {
-    visualizerSteps: [
+        visualizerSteps: [
         {
             html_visual: `
             <div class="anim-container"><div class="anim-node">[1, 2, 3]</div><div class="anim-packet move-right" style="background:#34d399;">map(*2)</div><div class="anim-node" style="border-color:#34d399;">[2, 4, 6]</div></div>
             `,
-            text: "<b>מתודות מערכים</b><br>מתודות כמו map לוקחות מערך קיים (משמאל), מעבירות כל איבר דרך פונקציה (הקובייה הירוקה), ויוצרות מערך חדש לגמרי (מימין) מבלי לשנות את המקור!"
+            text: "<b>1. פונקציית map()</b><br>פס ייצור! לוקחת מערך קיים (משמאל), מעבירה כל איבר דרך פונקציה (הקובייה הירוקה שמכפילה ב-2), ויוצרת <b>מערך חדש לגמרי</b> (מימין)."
+        },
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">[1, 5, 2]</div><div class="anim-packet move-right" style="background:#ff0055; width:50px;">filter(>3)</div><div class="anim-node" style="border-color:#ff0055;">[5]</div></div>
+            `,
+            text: "<b>2. פונקציית filter()</b><br>השומר במועדון! עוברת על המערך ובודקת תנאי. רק האיברים שעברו את התנאי (כמו 5 שגדול מ-3) נכנסים למערך החדש."
+        },
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">[1, 2, 3]</div><div class="anim-packet spin" style="background:#f7df1e;">reduce(+)</div><div class="anim-node" style="border-radius:50%; border-color:#f7df1e;">6</div></div>
+            `,
+            text: "<b>3. פונקציית reduce()</b><br>המגרסה! לוקחת מערך שלם ומצמצמת אותו לערך בודד אחד (כמו סכום כל המספרים יחד)."
         }
     ],
 
@@ -144,12 +156,24 @@ document.body.<span class="t-fn">appendChild</span>(newDiv);</code></pre>
     `
   },
   stringMethods: {
-    visualizerSteps: [
+        visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">"Hello"</div><div class="anim-packet move-right" style="background:#f7df1e; width:60px;">.toUpperCase()</div><div class="anim-node">"HELLO"</div></div>
+            <div class="anim-container"><div class="anim-node">"Hello"</div><div class="anim-packet move-right" style="background:#f7df1e; width:60px;">toUpperCase</div><div class="anim-node">"HELLO"</div></div>
             `,
-            text: "<b>מחרוזות</b><br>מחרוזות הן בלתי ניתנות לשינוי (Immutable). כשאנחנו מפעילים פונקציה כמו toUpperCase, היא לא משנה את המילה המקורית, אלא מחזירה עותק חדש לגמרי באותיות גדולות."
+            text: "<b>1. אותיות גדולות</b><br>מחרוזות לא ניתנות לשינוי. הפעולה מחזירה מחרוזת חדשה לגמרי."
+        },
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">"Wolt"</div><div class="anim-packet move-right" style="background:#00d2ff; width:40px;">split("")</div><div class="anim-node">['W','o','l','t']</div></div>
+            `,
+            text: "<b>2. גזירה (split)</b><br>כמו מספריים! חותכים את המחרוזת לפי תו מפריד והופכים אותה למערך של אותיות או מילים."
+        },
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">['A','B']</div><div class="anim-packet move-right" style="background:#ff0055; width:40px;">join("-")</div><div class="anim-node">"A-B"</div></div>
+            `,
+            text: "<b>3. הדבקה (join)</b><br>הדבק! לוקחים מערך ומחברים אותו חזרה למחרוזת אחת עם תו מפריד (למשל מקף)."
         }
     ],
 
