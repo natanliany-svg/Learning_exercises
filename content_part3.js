@@ -1023,7 +1023,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
           <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
             <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Endpoint</h4>
             <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶנְד־פּוֹיְנְט | תרגום: נקודת קצה</p>
-            <p style="margin-bottom: 15px;"><b>משמעות:</b> נתיב ספציפי בשרת שעושה פעולה מסוימת. למשל `/users/login`.</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> נתיב ספציפי בשרת שעושה פעולה מסוימת. למשל '/users/login'.</p>
             <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
               <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
                 <input type="checkbox" class="tech-word-cb" id="cb-endpoint" onchange="toggleTechWord('endpoint', this.checked)" style="transform: scale(1.3); cursor: pointer;">
