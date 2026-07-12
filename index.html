@@ -1,187 +1,187 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Natan Study - סביבת הלמידה של נתן</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=6">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Natan Study - סביבת הלמידה של נתן</title>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&family=Rubik:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="head-inner">
-            <div class="head-left">
-                <div class="logo">JS</div>
-                <div>
-                    <h1 class="head-title">Natan Study <span class="head-sub">v5.0</span></h1>
-                    <div class="head-sub">סביבת הלמידה של נתן</div>
-                </div>
-            </div>
-            <div style="flex: 1; text-align: center; font-weight: bold; font-size: 1rem; color: var(--ink-faint);">בס''ד</div>
-            <!-- Theme Switcher -->
-            <div class="theme-switcher-container">
-                <button class="theme-btn" id="themeBtn" onclick="toggleThemeMenu()" title="בחר ערכת צבעים">🎨</button>
-                <div class="theme-menu" id="themeMenu">
-                    <button class="theme-opt" onclick="changeTheme('cyberpunk')" style="background: linear-gradient(135deg, #120e2e, #a78bfa);">🔮 סייברפאנק</button>
-                    <button class="theme-opt" onclick="changeTheme('emerald')" style="background: linear-gradient(135deg, #022c22, #10b981);">🌿 אמרלד ירוק</button>
-                    <button class="theme-opt" onclick="changeTheme('ruby')" style="background: linear-gradient(135deg, #270510, #fb7185);">🍒 רובי אדום</button>
-                    <button class="theme-opt" onclick="changeTheme('amber')" style="background: linear-gradient(135deg, #2b1d0c, #fb923c);">🍊 ענבר כתום</button>
-                    <button class="theme-opt" onclick="changeTheme('ocean')" style="background: linear-gradient(135deg, #082f49, #38bdf8);">🌊 אוקיינוס כחול</button>
-                    <button class="theme-opt" onclick="changeTheme('gold')" style="background: linear-gradient(135deg, #1c1917, #f5c518);">👑 זהב יוקרתי</button>
-                    <button class="theme-opt" onclick="changeTheme('rosewood')" style="background: linear-gradient(135deg, #240a15, #f43f5e);">🌹 עץ הוורד</button>
-                    <button class="theme-opt" onclick="changeTheme('darkness')" style="background: linear-gradient(135deg, #090a0f, #334155);">🌑 שחור מוחלט</button>
-                </div>
-            </div>
+  <!-- Header -->
+  <header>
+    <div class="head-inner">
+      <div class="head-left">
+        <div class="logo">JS</div>
+        <div>
+          <h1 class="head-title">Natan Study <span class="head-sub">v5.0</span></h1>
+          <div class="head-sub">סביבת הלמידה של נתן</div>
         </div>
-        <div class="progress-track">
-            <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div style="flex: 1; text-align: center; font-weight: bold; font-size: 1rem; color: var(--ink-faint);">בס''ד</div>
+      <!-- Theme Switcher -->
+      <div class="theme-switcher-container">
+        <button class="theme-btn" id="themeBtn" onclick="toggleThemeMenu()" title="בחר ערכת צבעים">🎨</button>
+        <div class="theme-menu" id="themeMenu">
+          <button class="theme-opt" onclick="changeTheme('cyberpunk')" style="background: linear-gradient(135deg, #120e2e, #a78bfa);">🔮 סייברפאנק</button>
+          <button class="theme-opt" onclick="changeTheme('emerald')" style="background: linear-gradient(135deg, #022c22, #10b981);">🌿 אמרלד ירוק</button>
+          <button class="theme-opt" onclick="changeTheme('ruby')" style="background: linear-gradient(135deg, #270510, #fb7185);">🍒 רובי אדום</button>
+          <button class="theme-opt" onclick="changeTheme('amber')" style="background: linear-gradient(135deg, #2b1d0c, #fb923c);">🍊 ענבר כתום</button>
+          <button class="theme-opt" onclick="changeTheme('ocean')" style="background: linear-gradient(135deg, #082f49, #38bdf8);">🌊 אוקיינוס כחול</button>
+          <button class="theme-opt" onclick="changeTheme('gold')" style="background: linear-gradient(135deg, #1c1917, #f5c518);">👑 זהב יוקרתי</button>
+          <button class="theme-opt" onclick="changeTheme('rosewood')" style="background: linear-gradient(135deg, #240a15, #f43f5e);">🌹 עץ הוורד</button>
+          <button class="theme-opt" onclick="changeTheme('darkness')" style="background: linear-gradient(135deg, #090a0f, #334155);">🌑 שחור מוחלט</button>
         </div>
-    </header>
-
-    <!-- Mobile Sidebar Toggle -->
-    <button class="menu-toggle-btn" onclick="toggleSidebar()" aria-label="תפריט ניווט">
-        ☰
-    </button>
-
-    <!-- Layout Container -->
-    <div class="app-container">
-        <!-- Sidebar Navigation -->
-        <nav class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h1>📚 Natan Study</h1>
-                <p>תוכן העניינים והתקדמות למידה</p>
-            </div>
-            
-            <div class="nav-section">
-                <span class="nav-label">יסודות ומתקדם</span>
-                <div class="nav-item active" onclick="scrollToSection('basics')">📐 יסודות ומשתנים <span class="qm-num">1</span></div>
-                <div class="nav-item" onclick="scrollToSection('loops')">🔄 תנאים ולולאות <span class="qm-num">2</span></div>
-                <div class="nav-item" onclick="scrollToSection('functions')">🎯 פונקציות <span class="qm-num">3</span></div>
-                <div class="nav-item" onclick="scrollToSection('closures')">🔒 קלוז'רים (Closures) <span class="qm-num">4</span></div>
-                <div class="nav-item" onclick="scrollToSection('factories')">🏭 פונקציות מפעל <span class="qm-num">5</span></div>
-                <div class="nav-item" onclick="scrollToSection('modules')">📦 מודולים (ES6) <span class="qm-num">6</span></div>
-                <div class="nav-item" onclick="scrollToSection('destructuring')">🧩 פירוק מבנה <span class="qm-num">7</span></div>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-label">שרתים ו-Web</span>
-                <div class="nav-item" onclick="scrollToSection('dom')">🌐 ה-DOM ומניפולציה <span class="qm-num">8</span></div>
-                <div class="nav-item" onclick="scrollToSection('vanillaServer')">🖥️ שרת HTTP בסיסי <span class="qm-num">9</span></div>
-                <div class="nav-item" onclick="scrollToSection('httpParams')">🧩 פרמטרים ב-HTTP <span class="qm-num">10</span></div>
-                <div class="nav-item" onclick="scrollToSection('express')">🚀 שרתי Express <span class="qm-num">11</span></div>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-label">אסינכרוניות מקיפה</span>
-                <div class="nav-item" onclick="scrollToSection('eventLoop')">🔄 מנוע ה-Event Loop <span class="qm-num">12</span></div>
-                <div class="nav-item" onclick="scrollToSection('callbacksAsync')">📞 קולבקים ו-fs <span class="qm-num">13</span></div>
-                <div class="nav-item" onclick="scrollToSection('promisesFetch')">🤝 הבטחות ו-Fetch <span class="qm-num">14</span></div>
-                <div class="nav-item" onclick="scrollToSection('asyncAwait')">⏳ Async / Await <span class="qm-num">15</span></div>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-label">מתודות מובנות</span>
-                <div class="nav-item" onclick="scrollToSection('arrayMethods')">📊 מערכים ומתודות <span class="qm-num">16</span></div>
-                <div class="nav-item" onclick="scrollToSection('stringMethods')">📝 מחרוזות ומתודות <span class="qm-num">17</span></div>
-                <div class="nav-item" onclick="scrollToSection('objectMethods')">🗂️ אובייקטים ומתודות <span class="qm-num">18</span></div>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-label">עזרים וסימולטורים</span>
-                <div class="nav-item" onclick="scrollToSection('syntaxWarehouse')">🏪 מחסן סינטקסים <span class="qm-num">19</span></div>
-                <div class="nav-item" onclick="scrollToSection('pythonVsJs')">🐍 Python מול JS <span class="qm-num">20</span></div>
-                <div class="nav-item" onclick="scrollToSection('ironRules')">⚔️ עשרת כללי הברזל <span class="qm-num">21</span></div>
-                <div class="nav-item" onclick="scrollToSection('keyboard')">⌨️ קיצורי VS Code <span class="qm-num">22</span></div>
-                <div class="nav-item" onclick="scrollToSection('libraries')">📚 ספריות נפוצות <span class="qm-num">23</span></div>
-                <div class="nav-item special" onclick="scrollToSection('quiz')">📝 סימולטור מבחן <span class="qm-num">24</span></div>
-                                <div class="nav-item" onclick="scrollToSection('techEnglish')">🔤 אנגלית טכנולוגית <span class="qm-num">25</span></div>
-                <div class="nav-item" onclick="scrollToSection('expressKids')">👨‍🍳 שרת Express לילדים במסעדה <span class="qm-num">26</span></div>
-                <div class="nav-item" onclick="scrollToSection('expressMiddlewaresClassroom')">🕵️‍♂️ שומרי הסף והמנהלים (Middlewares) <span class="qm-num">27</span></div>
-                <div class="nav-item" onclick="scrollToSection('expressValidationsClassroom')">📝 בקרת האיכות של המטבח (Validations) <span class="qm-num">28</span></div>
-                <div class="nav-item" onclick="scrollToSection('expressErrorHandlingClassroom')">🚑 צוות ההצלה של המסעדה (Error Handling) <span class="qm-num">29</span></div>
-            </div>
-
-            <div class="nav-section">
-                <span class="nav-label">פרויקטי IDE אינטראקטיביים</span>
-                <div class="nav-item special" onclick="openIDE('bank')">🏦 Bank Account IDE</div>
-                <div class="nav-item special" onclick="openIDE('asyncFiles')">📂 Async Files IDE</div>
-                <div class="nav-item special" onclick="openIDE('studyPlanner')">📅 Study Planner IDE</div>
-                <div class="nav-item special" onclick="openIDE('movieCollection')">🎬 Movie Collection IDE</div>
-                <div class="nav-item special" onclick="openIDE('storeOnlineServer')">🛒 Store Server Express IDE</div>
-            </div>
-
-            <!-- Freezer Button -->
-            <button class="freezer-btn" onclick="openFreezer()">
-                <span>🧊</span>
-                <span>המקפיא (פייתון ו-SQL)</span>
-            </button>
-        </nav>
-
-        <!-- Main Content Area -->
-        <main class="content">
-            <!-- Intro Hero -->
-            <div class="hero">
-                <div class="eyebrow">JavaScript Masterclass</div>
-                <h1>Natan Study</h1>
-                <p style="font-size: 1.5rem; margin-top: 10px; color: var(--ink-soft);">סביבת הלמידה של נתן</p>
-                <p>ברוכים הבאים לגרסה 5.0. למידה חווייתית מבוססת כרטיסיות נפתחות, אנלוגיות מעשיות, טיפים למבחן, סימולציות קוד וסביבת פיתוח מוכנות.</p>
-            </div>
-
-            <!-- Dynamic Topics Grid Container -->
-            <div id="mainContent"></div>
-        </main>
+      </div>
     </div>
-
-    <!-- Full Page Modal for IDE Projects -->
-    <div class="full-page-modal" id="fullPageModal">
-        <div class="modal-overlay" onclick="closeModal()"></div>
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeModal()" aria-label="סגור חלונית">✕</button>
-            <div id="modalBody"></div>
-        </div>
+    <div class="progress-track">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
+  </header>
 
-    <!-- Python Freezer Modal -->
-    <div class="full-page-modal" id="freezerModal">
-        <div class="modal-overlay" onclick="closeFreezer()"></div>
-        <div class="modal-content">
-            <button class="close-btn" onclick="closeFreezer()" aria-label="סגור מקפיא">✕</button>
-            <div class="freezer-content">
-                <h2>🧊 המקפיא של פייתון, SQL ו-FastAPI</h2>
-                <p>כל החומרים מתחילת הלמידה שמורים כאן בקור לעיון במידת הצורך:</p>
-                <div class="freezer-grid">
-                    <a href="mobile_cards.html" class="freezer-item">📱 כרטיסיות למידה לנייד (JS & HTTP)</a>
-                    <a href="assignments.html" class="freezer-item">🎯 לוח מטלות ופרויקטים</a>
-                    <a href="syntax_warehouse.html" class="freezer-item">🧱 מחסן סינטקסים (Python)</a>
-                    <a href="kb_flashcards.html" class="freezer-item">🃏 Flash Cards</a>
-                    <a href="kb_fastapi.html" class="freezer-item">🚀 FastAPI Intro</a>
-                    <a href="kb_sql.html" class="freezer-item">🗄️ SQL Databases</a>
-                    <a href="kb_oop.html" class="freezer-item">🧬 OOP פייתון</a>
-                    <a href="glossary.html" class="freezer-item">📖 מילון מונחים</a>
-                    <a href="lesson_1.html" class="freezer-item">📝 שיעור 1 (פייתון)</a>
-                    <a href="syntax.html" class="freezer-item">📋 Syntax Cheatsheet</a>
-                    <a href="roadmap.html" class="freezer-item">🗺️ מפת דרכים</a>
-                </div>
-            </div>
-        </div>
+  <!-- Mobile Sidebar Toggle -->
+  <button class="menu-toggle-btn" onclick="toggleSidebar()" aria-label="תפריט ניווט">
+    ☰
+  </button>
+
+  <!-- Layout Container -->
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1>📚 Natan Study</h1>
+        <p>תוכן העניינים והתקדמות למידה</p>
+      </div>
+      
+      <div class="nav-section">
+        <span class="nav-label">יסודות ומתקדם</span>
+        <div class="nav-item active" onclick="scrollToSection('basics')">📐 יסודות ומשתנים <span class="qm-num">1</span></div>
+        <div class="nav-item" onclick="scrollToSection('loops')">🔄 תנאים ולולאות <span class="qm-num">2</span></div>
+        <div class="nav-item" onclick="scrollToSection('functions')">🎯 פונקציות <span class="qm-num">3</span></div>
+        <div class="nav-item" onclick="scrollToSection('closures')">🔒 קלוז'רים (Closures) <span class="qm-num">4</span></div>
+        <div class="nav-item" onclick="scrollToSection('factories')">🏭 פונקציות מפעל <span class="qm-num">5</span></div>
+        <div class="nav-item" onclick="scrollToSection('modules')">📦 מודולים (ES6) <span class="qm-num">6</span></div>
+        <div class="nav-item" onclick="scrollToSection('destructuring')">🧩 פירוק מבנה <span class="qm-num">7</span></div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">שרתים ו-Web</span>
+        <div class="nav-item" onclick="scrollToSection('dom')">🌐 ה-DOM ומניפולציה <span class="qm-num">8</span></div>
+        <div class="nav-item" onclick="scrollToSection('vanillaServer')">🖥️ שרת HTTP בסיסי <span class="qm-num">9</span></div>
+        <div class="nav-item" onclick="scrollToSection('httpParams')">🧩 פרמטרים ב-HTTP <span class="qm-num">10</span></div>
+        <div class="nav-item" onclick="scrollToSection('express')">🚀 שרתי Express <span class="qm-num">11</span></div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">אסינכרוניות מקיפה</span>
+        <div class="nav-item" onclick="scrollToSection('eventLoop')">🔄 מנוע ה-Event Loop <span class="qm-num">12</span></div>
+        <div class="nav-item" onclick="scrollToSection('callbacksAsync')">📞 קולבקים ו-fs <span class="qm-num">13</span></div>
+        <div class="nav-item" onclick="scrollToSection('promisesFetch')">🤝 הבטחות ו-Fetch <span class="qm-num">14</span></div>
+        <div class="nav-item" onclick="scrollToSection('asyncAwait')">⏳ Async / Await <span class="qm-num">15</span></div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">מתודות מובנות</span>
+        <div class="nav-item" onclick="scrollToSection('arrayMethods')">📊 מערכים ומתודות <span class="qm-num">16</span></div>
+        <div class="nav-item" onclick="scrollToSection('stringMethods')">📝 מחרוזות ומתודות <span class="qm-num">17</span></div>
+        <div class="nav-item" onclick="scrollToSection('objectMethods')">🗂️ אובייקטים ומתודות <span class="qm-num">18</span></div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">עזרים וסימולטורים</span>
+        <div class="nav-item" onclick="scrollToSection('syntaxWarehouse')">🏪 מחסן סינטקסים <span class="qm-num">19</span></div>
+        <div class="nav-item" onclick="scrollToSection('pythonVsJs')">🐍 Python מול JS <span class="qm-num">20</span></div>
+        <div class="nav-item" onclick="scrollToSection('ironRules')">⚔️ עשרת כללי הברזל <span class="qm-num">21</span></div>
+        <div class="nav-item" onclick="scrollToSection('keyboard')">⌨️ קיצורי VS Code <span class="qm-num">22</span></div>
+        <div class="nav-item" onclick="scrollToSection('libraries')">📚 ספריות נפוצות <span class="qm-num">23</span></div>
+        <div class="nav-item special" onclick="scrollToSection('quiz')">📝 סימולטור מבחן <span class="qm-num">24</span></div>
+                <div class="nav-item" onclick="scrollToSection('techEnglish')">🔤 אנגלית טכנולוגית <span class="qm-num">25</span></div>
+        <div class="nav-item" onclick="scrollToSection('expressKids')">👨‍🍳 שרת Express - אנלוגיית המסעדה המלאה <span class="qm-num">26</span></div>
+        <div class="nav-item" onclick="scrollToSection('expressMiddlewaresClassroom')">🕵️‍♂️ שומרי הסף והמנהלים (Middlewares) <span class="qm-num">27</span></div>
+        <div class="nav-item" onclick="scrollToSection('expressValidationsClassroom')">📝 בקרת האיכות של המטבח (Validations) <span class="qm-num">28</span></div>
+        <div class="nav-item" onclick="scrollToSection('expressErrorHandlingClassroom')">🚑 צוות ההצלה של המסעדה (Error Handling) <span class="qm-num">29</span></div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">פרויקטי IDE אינטראקטיביים</span>
+        <div class="nav-item special" onclick="openIDE('bank')">🏦 Bank Account IDE</div>
+        <div class="nav-item special" onclick="openIDE('asyncFiles')">📂 Async Files IDE</div>
+        <div class="nav-item special" onclick="openIDE('studyPlanner')">📅 Study Planner IDE</div>
+        <div class="nav-item special" onclick="openIDE('movieCollection')">🎬 Movie Collection IDE</div>
+        <div class="nav-item special" onclick="openIDE('storeOnlineServer')">🛒 Store Server Express IDE</div>
+      </div>
+
+      <!-- Freezer Button -->
+      <button class="freezer-btn" onclick="openFreezer()">
+        <span>🧊</span>
+        <span>המקפיא (פייתון ו-SQL)</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content">
+      <!-- Intro Hero -->
+      <div class="hero">
+        <div class="eyebrow">JavaScript Masterclass</div>
+        <h1>Natan Study</h1>
+        <p style="font-size: 1.5rem; margin-top: 10px; color: var(--ink-soft);">סביבת הלמידה של נתן</p>
+        <p>ברוכים הבאים לגרסה 5.0. למידה חווייתית מבוססת כרטיסיות נפתחות, אנלוגיות מעשיות, טיפים למבחן, סימולציות קוד וסביבת פיתוח מוכנות.</p>
+      </div>
+
+      <!-- Dynamic Topics Grid Container -->
+      <div id="mainContent"></div>
+    </main>
+  </div>
+
+  <!-- Full Page Modal for IDE Projects -->
+  <div class="full-page-modal" id="fullPageModal">
+    <div class="modal-overlay" onclick="closeModal()"></div>
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()" aria-label="סגור חלונית">✕</button>
+      <div id="modalBody"></div>
     </div>
+  </div>
 
-    <!-- Floating Footer -->
-    <footer class="floating-footer">
-        נוצר ע''י החייל 'נתן ליאני' בסיעתא דשמייא גדולה 🙌
-    </footer>
+  <!-- Python Freezer Modal -->
+  <div class="full-page-modal" id="freezerModal">
+    <div class="modal-overlay" onclick="closeFreezer()"></div>
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeFreezer()" aria-label="סגור מקפיא">✕</button>
+      <div class="freezer-content">
+        <h2>🧊 המקפיא של פייתון, SQL ו-FastAPI</h2>
+        <p>כל החומרים מתחילת הלמידה שמורים כאן בקור לעיון במידת הצורך:</p>
+        <div class="freezer-grid">
+          <a href="mobile_cards.html" class="freezer-item">📱 כרטיסיות למידה לנייד (JS & HTTP)</a>
+          <a href="assignments.html" class="freezer-item">🎯 לוח מטלות ופרויקטים</a>
+          <a href="syntax_warehouse.html" class="freezer-item">🧱 מחסן סינטקסים (Python)</a>
+          <a href="kb_flashcards.html" class="freezer-item">🃏 Flash Cards</a>
+          <a href="kb_fastapi.html" class="freezer-item">🚀 FastAPI Intro</a>
+          <a href="kb_sql.html" class="freezer-item">🗄️ SQL Databases</a>
+          <a href="kb_oop.html" class="freezer-item">🧬 OOP פייתון</a>
+          <a href="glossary.html" class="freezer-item">📖 מילון מונחים</a>
+          <a href="lesson_1.html" class="freezer-item">📝 שיעור 1 (פייתון)</a>
+          <a href="syntax.html" class="freezer-item">📋 Syntax Cheatsheet</a>
+          <a href="roadmap.html" class="freezer-item">🗺️ מפת דרכים</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Scripts -->
-    <script src="content_part1.js?v=2"></script>
-    <script src="content_part2.js?v=2"></script>
-    <script src="content_part3.js?v=3"></script>
-    <script src="content_async_projects.js?v=2"></script>
-    <script src="content_servers.js?v=2"></script>
-    <script src="content_projects_data.js?v=2"></script>
-    <script src="content_quiz_data.js?v=5"></script>
-    <script src="app.js?v=9"></script>
+  <!-- Floating Footer -->
+  <footer class="floating-footer">
+    נוצר ע''י החייל 'נתן ליאני' בסיעתא דשמייא גדולה 🙌
+  </footer>
+
+  <!-- Scripts -->
+  <script src="content_part1.js?v=2"></script>
+  <script src="content_part2.js?v=2"></script>
+  <script src="content_part3.js?v=3"></script>
+  <script src="content_async_projects.js?v=2"></script>
+  <script src="content_servers.js?v=2"></script>
+  <script src="content_projects_data.js?v=2"></script>
+  <script src="content_quiz_data.js?v=5"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>
