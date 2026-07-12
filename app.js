@@ -253,15 +253,18 @@ function renderAllContent() {
                                 </div>
                             `;
                         });
-                        visHtml += `<div class="visualizer-controls">`;
-                        visHtml += `<button class="visualizer-btn btn-prev" onclick="prevVisSlide('${topicKey}')" disabled>הקודם</button>`;
-                        visHtml += `<div class="visualizer-indicator">`;
-                        data.visualizerSteps.forEach((_, idx) => {
-                            visHtml += `<div class="vis-dot ${idx === 0 ? 'active' : ''}"></div>`;
-                        });
+                        if (data.visualizerSteps.length > 1) {
+                            visHtml += `<div class="visualizer-controls">`;
+                            visHtml += `<button class="visualizer-btn btn-prev" onclick="prevVisSlide('${topicKey}')" disabled>הקודם</button>`;
+                            visHtml += `<div class="visualizer-indicator">`;
+                            data.visualizerSteps.forEach((_, idx) => {
+                                visHtml += `<div class="vis-dot ${idx === 0 ? 'active' : ''}"></div>`;
+                            });
+                            visHtml += `</div>`;
+                            visHtml += `<button class="visualizer-btn btn-next" onclick="nextVisSlide('${topicKey}')">הבא</button>`;
+                            visHtml += `</div>`;
+                        }
                         visHtml += `</div>`;
-                        visHtml += `<button class="visualizer-btn btn-next" onclick="nextVisSlide('${topicKey}')" ${data.visualizerSteps.length <= 1 ? 'disabled' : ''}>הבא</button>`;
-                        visHtml += `</div></div>`;
                         
                         // Inject into wrappedContent before the inner content
                         wrappedContent = wrappedContent.replace('<div class="card-body-inner">', '<div class="card-body-inner">' + visHtml);
