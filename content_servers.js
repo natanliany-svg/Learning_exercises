@@ -73,6 +73,11 @@ server.<span class="t-fn">listen</span>(PORT, () => {
             <br>• <b>500 (Internal Server Error)</b>: שגיאה בקוד של השרת עצמו.
           </div>
         </div>
+
+        <div style="background-color: #f3e5f5; padding: 15px; border-radius: 8px; border-right: 5px solid #9c27b0; margin-bottom: 20px;">
+          <h3 style="color: #9c27b0; margin-top: 0;">📭 איך בודקים שרת בסיסי ב-Postman?</h3>
+          <p style="font-size: 1.1rem; margin-bottom: 0;">אחרי שהרצת את השרת עם <code>node app.js</code>, פתח את Postman. בחר בשיטת <strong>GET</strong> (כי אנחנו רק מבקשים מידע), ובשורת ה-URL למעלה הקלד את הכתובת המקומית: <code>http://localhost:3000</code>. כשתלחץ Send, תוכל לראות למטה את התשובה "Hello from my server" שהשרת החזיר לנו!</p>
+        </div>
       </div>
     `
   },
@@ -200,6 +205,11 @@ app.post(<span class="t-str">"/api/data"</span>, (req, res) => {
   
   res.<span class="t-fn">json</span>({ auth, userAgent });
 });</code></pre>
+
+        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 8px; border-right: 5px solid #2196f3; margin-bottom: 20px;">
+          <h3 style="color: #2196f3; margin-top: 0;">📭 איך שולחים פרמטרים ב-Postman?</h3>
+          <p style="font-size: 1.1rem; margin-bottom: 0;">נורא פשוט! יש לך שתי אפשרויות: או לכתוב ישירות בשורת ה-URL ב-Postman את הכתובת <code>http://localhost:3000/profile?name=david&age=30</code>. <strong>או</strong> (וזה היתרון של התוכנה) ללחוץ על לשונית <strong>Params</strong> ולהכניס לטבלה בשורה אחת: Key: <code>name</code>, Value: <code>david</code>, ובשורה שנייה Key: <code>age</code>, Value: <code>30</code>. פוסטמן כבר ייצר את הכתובת המלאה לבד!</p>
+        </div>
       </div>
     `
   },
