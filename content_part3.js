@@ -1422,6 +1422,18 @@ return new Promise((resolve, reject) => {
   `
  },
  expressErrorHandlingClassroom: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container" style="flex-direction: column; justify-content: space-between; height: 180px;">
+               <div class="anim-packet move-circle" style="position: relative; left: 50%; transform: translateX(-50%); background: #ff0055; width: 50px; height: 30px; box-shadow: 0 0 20px #ff0055; z-index: 5;">שגיאה! 🔥</div>
+               <div class="anim-node" style="width: 100%; border-color: #f7df1e; border-top-style: dashed; padding-top: 20px; text-align: center; margin-top: auto;">רשת ביטחון (Error Handler)</div>
+            </div>
+            `,
+            text: "<b>טיפול בשגיאות (Error Handling)</b><br>כשהקוד קורס, אנחנו לא רוצים שהאפליקציה תיפול ותכבה! במקום זה, אנחנו פורסים 'רשת ביטחון' (Error Middleware) שתופסת את הבעיה (הקובייה האדומה), מדווחת עליה בעדינות ללקוח, וממשיכה לעבוד כרגיל."
+        }
+    ],
+
   title: '🚑 טיפול בשגיאות (Error Handling) - מהקלאסרום!',
   content: `
    <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
