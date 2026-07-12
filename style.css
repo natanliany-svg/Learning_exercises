@@ -1683,26 +1683,204 @@ td {
 }
 .move-circle {
     animation: travelCircle 4s linear infinite;
+
+/* --- Visualizer Carousel --- */
+.visualizer-container {
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.visualizer-slide {
+    display: none;
+    flex-direction: column;
+    animation: fadeIn 0.4s ease-in-out;
+}
+.visualizer-slide.active {
+    display: flex;
+}
+.visualizer-image {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--line);
+}
+.visualizer-text {
+    padding: 15px;
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.5;
+    text-align: right;
+}
+.visualizer-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+}
+.visualizer-btn {
+    background: var(--primary);
+    color: var(--bg);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+.visualizer-btn:hover {
+    opacity: 0.8;
+}
+.visualizer-btn:disabled {
+    background: var(--line);
+    color: var(--ink-faint);
+    cursor: not-allowed;
+}
+.visualizer-indicator {
+    display: flex;
+    gap: 5px;
+}
+.vis-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line);
+    transition: 0.2s;
+}
+.vis-dot.active {
+    background: var(--primary);
+}
+
+/* --- Flowchart Visuals --- */
+.flow-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 30px 10px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    min-height: 200px;
+    direction: ltr; /* Keeping left-to-right for technical flow even if text is Hebrew */
+}
+.flow-node {
+    background: var(--surface-2);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    padding: 15px 20px;
+    color: var(--primary);
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+    min-width: 120px;
+    direction: rtl;
+}
+.flow-node.active-node {
+    background: var(--primary);
+    color: var(--bg);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+.flow-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    direction: rtl;
+}
+.flow-arrow span {
+    font-size: 24px;
+    color: var(--primary);
+    margin-top: 5px;
+}
+.flow-arrow.highlight span {
+    color: #ff0055;
+    text-shadow: 0 0 10px #ff0055;
+    animation: pulseArrow 1s infinite alternate;
+}
+@keyframes pulseArrow {
+    from { transform: translateX(0); }
+    to { transform: translateX(5px); }
+}
+
+
+/* --- Live Moving Animations --- */
+.anim-container {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+.anim-node {
+    background: var(--surface-2);
+    border: 2px solid var(--primary);
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: var(--primary);
+    font-weight: bold;
+    z-index: 2;
+}
+.anim-packet {
+    position: absolute;
+    width: 30px;
+    height: 20px;
+    background: #ff0055;
+    border-radius: 4px;
+    box-shadow: 0 0 15px #ff0055;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Animations */
+.move-right {
+    animation: travelRight 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.move-left {
+    animation: travelLeft 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+.move-circle {
+    animation: travelCircle 4s linear infinite;
 }
 .spin {
     animation: spinRotate 3s linear infinite;
 }
 
 @keyframes travelRight {
-    0% { left: 10%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { left: 80%; opacity: 0; }
-}
-@keyframes travelLeft {
     0% { right: 10%; opacity: 0; }
     10% { opacity: 1; }
     90% { opacity: 1; }
     100% { right: 80%; opacity: 0; }
 }
+@keyframes travelLeft {
+    0% { left: 10%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 80%; opacity: 0; }
+}
 @keyframes travelCircle {
-    0% { transform: rotate(0deg) translateX(50px) rotate(0deg); }
-    100% { transform: rotate(360deg) translateX(50px) rotate(-360deg); }
+    0% { transform: translate(-50%, -50%) rotate(0deg) translateX(50px) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg) translateX(50px) rotate(-360deg); }
 }
 @keyframes spinRotate {
     100% { transform: rotate(360deg); }
