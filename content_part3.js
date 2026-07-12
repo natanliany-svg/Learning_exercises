@@ -631,7 +631,7 @@ return new Promise((resolve, reject) => {
 
       </div>
     `
-    , expressMiddlewareKids: {
+  }, expressMiddlewareKids: {
     title: "Express Middleware 🛡️ (השומרים בכניסה למסעדה)",
     content: `
       <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
