@@ -1346,87 +1346,92 @@ return new Promise((resolve, reject) => {
 
       </div>
     `
-  }, expressMiddlewareKids: {
-    title: "Express Middleware 🛡️ (השומרים בכניסה למסעדה)",
+  }, expressMiddlewaresClassroom: {
+    title: '👨‍💼 שומרי הסף והמנהלים (Middlewares) - מהקלאסרום!',
     content: `
       <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
-        <h1 style="color: #2c3e50; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">👮‍♂️ Middleware - שומרי הסף של המסעדה</h1>
-        <p style="font-size: 1.3rem;">זוכרים שהשרת שלנו הוא כמו <strong>מסעדה</strong>? <br>
-        הלקוח (Postman/הדפדפן) שולח בקשה ל<strong>מלצר</strong> (ה-Route), והמלצר מוסר את הבקשה ל<strong>טבח</strong> (ה-Service).</p>
+        <h1 style="color: #2c3e50; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">🕵️‍♂️ שומרי הסף של המסעדה (Middlewares)</h1>
+        <p style="font-size: 1.3rem;">במסעדה שלנו יש לקוחות (בקשות) שמגיעים לשולחן (הראוט). אבל רגע! מי מברך אותם בכניסה? מי בודק שהם לא מביאים אוכל מבחוץ? כאן נכנסים ה-<strong>Middlewares</strong> - המתווכים ושומרי הסף!</p>
         
-        <p style="font-size: 1.3rem; color: #d35400;"><strong>אבל רגע... מה קורה אם מישהו נכנס למסעדה בלי נעליים? או בלי להזמין מקום מראש?</strong></p>
-        
-        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
-          <h2 style="color: #e67e22; margin-top: 0;">🛑 המארח והשומרים - Middleware</h2>
-          <p style="font-size: 1.2rem;">כאן נכנסים לתמונה ה-<strong>Middlewares</strong> ("פונקציות תווך"). הם עומדים <strong>בין</strong> הדלת של המסעדה לבין המלצרים.<br>
-          כל לקוח שנכנס חייב קודם כל לעבור דרכם!</p>
-          <ul style="font-size: 1.2rem; list-style-type: none; padding-right: 0;">
-            <li style="margin-bottom: 10px;">👔 <strong>שומר הלבוש:</strong> בודק אם יש ללקוח "Token" מתאים (בדיקת הרשאות / Auth).</li>
-            <li style="margin-bottom: 10px;">📝 <strong>המתרגם (express.json):</strong> רובוט קטן בכניסה שלוקח את הפתק של הלקוח (שכתוב בסינית) ומתרגם אותו לשפה שהמלצרים מבינים (JavaScript Object).</li>
-            <li style="margin-bottom: 10px;">⏱️ <strong>השעון:</strong> שומר שרושם ביומן (Logger) בדיוק באיזו שעה כל לקוח נכנס למסעדה.</li>
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #3498db; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #3498db; margin-top: 0;">🌐 שומרי סף גלובליים (Global Middleware)</h2>
+          <p style="font-size: 1.2rem;">אלו המארחים שעומדים ממש בדלת הראשית ופוגשים <strong>כל לקוח</strong> שנכנס. (תרגילים 1, 16, 24, 25 מהקלאסרום):</p>
+          <ul style="font-size: 1.2rem;">
+            <li><strong>שעון נוכחות (תרגיל 1):</strong> המארח מדביק לכל לקוח מדבקה עם שעת הכניסה המדויקת שלו (מוסיף <code>req.requestTime</code>).</li>
+            <li><strong>מונה כניסות (תרגיל 16):</strong> המארח מחזיק קליקר וסופר "לקוח 1", "לקוח 2" - ככה אנחנו יודעים כמה בקשות השרת קיבל היום.</li>
+            <li><strong>יומן אירועים / Logger (תרגיל 24, 25):</strong> מישהו שרושם בפנקס "בשעה 12:00 לקוח נכנס וביקש המבורגר". הוא רושם את ה-Method (כמו GET או POST) ואת ה-URL. ככה יש לנו תיעוד של כל מה שקרה!</li>
           </ul>
         </div>
 
-        <h2 style="color: #2980b9;">איך עובד שומר בכניסה? המפתח הסודי: <code>next()</code></h2>
-        <p style="font-size: 1.2rem;">פונקציית Middleware מקבלת 3 דברים: <code>req, res, next</code>.</p>
-        <ul style="font-size: 1.2rem;">
-          <li><strong>req:</strong> הלקוח שנכנס (הבקשה).</li>
-          <li><strong>res:</strong> האפשרות לזרוק את הלקוח החוצה ולהגיד לו "אין כניסה!".</li>
-          <li><strong>next():</strong> הפקודה הקדושה! אם השומר אישר את הלקוח, הוא חייב לצעוק <strong>"הבא בתור! (next)"</strong>. אם הוא לא יקרא ל-<code>next()</code>, הלקוח ייתקע בכניסה לנצח!</li>
-        </ul>
-
-        <div style="background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 10px; font-family: monospace; font-size: 1.1rem; direction: ltr; text-align: left;">
-<pre style="margin: 0;">
-// שומר שמדפיס את שעת הכניסה של הלקוח למסעדה
-app.use((req, res, next) => {
-    console.log("לקוח חדש נכנס ב- " + new Date());
-    next(); // חשוב מאוד! אחרת הלקוח ייתקע פה לנצח
-});
-</pre>
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #e67e22; margin-top: 0;">🛑 שומרי סף קשוחים (Security Middlewares)</h2>
+          <p style="font-size: 1.2rem;">אלו המאבטחים שמוודאים שרק מי שמותר לו - ייכנס פנימה. (תרגילים 6, 11, 21, 26 מהקלאסרום):</p>
+          <ul style="font-size: 1.2rem;">
+            <li><strong>הגנת מנהל (תרגיל 6):</strong> מישהו מנסה להיכנס למטבח? המאבטח בודק אם יש לו תג של אדמין (<code>admin=true</code>). אין לו? עף החוצה עם שגיאה 403 (Forbidden)!</li>
+            <li><strong>אימות מפתח VIP (תרגיל 26):</strong> רוצה להיכנס לחדר ה-VIP? אתה חייב להראות למאבטח כרטיס סודי (<code>x-auth-token: secret123</code>). הכרטיס מזויף? קבל שגיאה 401 (Unauthorized)!</li>
+            <li><strong>חסימת בריונים (תרגיל 11):</strong> הגיע לקוח שעשה לנו צרות אתמול? המאבטח זוכר את הפנים שלו (את כתובת ה-IP שלו) וחוסם אותו מיד בכניסה.</li>
+          </ul>
         </div>
-
       </div>
     `
   },
-  expressErrorHandlingKids: {
-    title: "Express Error Handling 🚨 (מנהל המשמרת)",
+  expressValidationsClassroom: {
+    title: '🔍 בדיקות ותקינות נתונים (Validations) - מהקלאסרום!',
     content: `
       <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
-        <h1 style="color: #c0392b; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">🚨 מנהל המשמרת - טיפול בשגיאות</h1>
-        <p style="font-size: 1.3rem;">במסעדה רגילה, מה קורה אם <strong>הטבח שורף את האוכל</strong> או אם <strong>המלצר מפיל צלחת ושובר אותה</strong>? <br>האם סוגרים את כל המסעדה ומעיפים את כל הלקוחות הביתה?</p>
-        <p style="font-size: 1.3rem;"><strong>ממש לא!</strong> המלצר רץ ל<strong>מנהל המשמרת</strong> (Error Handling Middleware), והמנהל הולך ללקוח ומתנצל בנימוס, בזמן ששאר המסעדה ממשיכה לעבוד כרגיל!</p>
+        <h1 style="color: #9b59b6; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">📝 בקרת האיכות של המטבח (Validations)</h1>
+        <p style="font-size: 1.3rem;">לפני שהשף מתחיל לבשל, מנהל המשמרת בודק את הפתק (הבקשה). האם הכתב קריא? האם הלקוח שכח לבחור תוספת? בדיקות אלו נקראות <strong>ולידציה (Validation)</strong>!</p>
         
-        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #e74c3c; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
-          <h2 style="color: #e74c3c; margin-top: 0;">💣 כשהקוד קורס (Crash)</h2>
-          <p style="font-size: 1.2rem;">בלי מנהל משמרת, שגיאה אחת קטנה בקוד (למשל, לנסות לקרוא מקובץ שלא קיים) תגרום לשרת שלך לקרוס ולכבות את עצמו (Crash). אף לקוח לא יוכל להתחבר לאתר שלך!</p>
-          <p style="font-size: 1.2rem;">במקום שזה יקרה, אנו עוטפים את המסוכנים שלנו (כמו קריאה ממסד נתונים) ב-<code>try...catch</code>.</p>
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #2ecc71; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #2ecc71; margin-top: 0;">📦 בדיקות תוכן המעטפה (Body & JSON)</h2>
+          <p style="font-size: 1.2rem;">הלקוח שלח מעטפה סגורה (Body), אנחנו חייבים לבדוק אותה! (תרגילים 3, 13, 20 מהקלאסרום):</p>
+          <ul style="font-size: 1.2rem;">
+            <li><strong>מעטפה ריקה (תרגיל 3):</strong> הלקוח שלח פתק ריק (<code>req.body</code> ריק). המלצר מחזיר לו סטטוס 400: "הפתק ריק אישי, תכתוב משהו!".</li>
+            <li><strong>השפה הנכונה (תרגיל 13):</strong> המסעדה מדברת רק בשפת JSON (<code>content-type: application/json</code>). אם מישהו שולח בצרפתית, מחזירים שגיאה 415 (Unsupported Media Type).</li>
+            <li><strong>מגבלת גודל (תרגיל 20):</strong> מישהו כתב פתק ארוך כמו ספר? יש לנו מגבלת מילים (למשל 200 תווים). חרגת? שגיאה 413 (Payload too large).</li>
+          </ul>
         </div>
 
-        <h2 style="color: #2980b9;">איך קוראים למנהל? המפתח הסודי: <code>next(error)</code></h2>
-        <p style="font-size: 1.2rem;">כשהמלצר (Route) תופס שגיאה ב-<code>catch</code>, הוא צועק "מנהל!!" על ידי כך שהוא שולח את השגיאה בתוך ה-next: <br><code>next(error)</code>.</p>
-        <p style="font-size: 1.2rem;">וזה מקפיץ מיד את השומר המיוחד שלנו - פונקציית Middleware בעלת 4 פרמטרים: <code>(err, req, res, next)</code>.</p>
-
-        <div style="background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 10px; font-family: monospace; font-size: 1.1rem; direction: ltr; text-align: left;">
-<pre style="margin: 0;">
-// המלצר מנסה לעשות משהו מסוכן
-app.get('/risky-order', (req, res, next) => {
-    try {
-        // מנסה למצוא משהו שלא קיים! תיווצר שגיאה
-        let x = missingVariable; 
-    } catch (error) {
-        // המלצר קורא למנהל!
-        next(error);
-    }
-});
-
-// מנהל המשמרת (Error Middleware) חייב להיות בסוף הקובץ!
-app.use((err, req, res, next) => {
-    console.error("המנהל מתנצל:", err.message);
-    res.status(500).json({ msg: "קרתה תקלה במטבח, אנחנו מצטערים!" });
-});
-</pre>
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #f1c40f; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #f39c12; margin-top: 0;">🔎 בדיקות פרטניות של נתונים</h2>
+          <p style="font-size: 1.2rem;">כדי שההרשמה וההתחברות יעבדו, הנתונים חייבים להיות מדויקים! (תרגילים 5, 12, 14, 17, 30 מהקלאסרום):</p>
+          <ul style="font-size: 1.2rem;">
+            <li><strong>מילוי חובה (תרגיל 12):</strong> מנסה להתחבר (Login) בלי אימייל וסיסמה? זה כמו להזמין פיצה בלי פיצה! (שגיאה 400).</li>
+            <li><strong>תקינות אימייל (תרגיל 30):</strong> בודקים שהאימייל באמת מכיל את התו קרוכית "@". בלי זה, זה סתם מילה ולא אימייל!</li>
+            <li><strong>חוקי סיסמה ואורך מזהה (תרגילים 5, 17):</strong> סיסמה חייבת להיות לפחות 8 תווים, והמזהה (ID) חייב להיות בדיוק 5 תווים! אחרת אי אפשר לקבל אותם.</li>
+            <li><strong>זה מספר או אות? (תרגילים 14, 27):</strong> כשהשף מבקש "גיל" הוא חייב שזה יהיה מספר גדול מ-0. כשמבקשים לחשב שני מספרים (num1, num2) הם חייבים להיות באמת מספרים. (שגיאה 400 אם שולחים אותיות במקום מספרים).</li>
+            <li><strong>מילים אסורות (תרגיל 19):</strong> מישהו ניסה לרשום את המילה "spam" בתגובה שלו? נזרוק לו שגיאה 400: תוכן אסור!</li>
+          </ul>
+        </div>
+      </div>
+    `
+  },
+  expressErrorHandlingClassroom: {
+    title: '🚑 טיפול בשגיאות (Error Handling) - מהקלאסרום!',
+    content: `
+      <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
+        <h1 style="color: #e74c3c; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">🚨 צוות ההצלה של המסעדה (Error Handling)</h1>
+        <p style="font-size: 1.3rem;">לפעמים דברים משתבשים. לקוח מבקש משהו שלא קיים, או שהשף מפיל בטעות סיר מרק. אם לא נטפל בזה, כל המסעדה תישרף (השרת יקרוס)! כאן נכנס צוות ההצלה. (תרגילים 8, 9, 22, 23, 28 מהקלאסרום)</p>
+        
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #34495e; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #34495e; margin-top: 0;">❓ שגיאת 404 (Route Not Found)</h2>
+          <p style="font-size: 1.2rem;">תרגיל 28 מהקלאסרום עוסק בלקוח שהולך לאיבוד.</p>
+          <p style="font-size: 1.2rem;">מה קורה כשלקוח נכנס למסעדה ומבקש לשבת ב"שולחן המרחף על ענן" (כתובת נתיב שלא המצאנו מעולם)? במקום שהמלצר יעמוד מבולבל, בסוף המסעדה (בסוף הקובץ שלנו) עומד <strong>מתווך 404</strong> מיוחד. הוא אומר באדיבות: <code>{ "error": "Route not found" }</code> - הלקוח מבין שהשולחן לא קיים והשרת ממשיך לעבוד כרגיל!</p>
         </div>
 
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #c0392b; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #c0392b; margin-top: 0;">🛠️ מנהל המשברים המרכזי (Global Error Handler)</h2>
+          <p style="font-size: 1.2rem;">תרגיל 9 ותרגיל 29 דורשים מאיתנו להגדיר פונקציית טיפול שגיאות מיוחדת!</p>
+          <p style="font-size: 1.2rem;">איך מזהים את הפראמדיק? יש לו תמיד <strong>4 כלי עבודה</strong> (4 פרמטרים): <code>(err, req, res, next)</code>. הוא תמיד ממוקם <strong>בסוף הקובץ</strong>. אם השף המציא שגיאה יזומה בכוונה (<code>throw new Error("משהו השתבש")</code> - תרגיל 8), או התרסקה לו עוגה, הפראמדיק מיד תופס אותה ומגיש ללקוח התנצלות מסודרת ב-JSON כדי שהלקוח לא יראה הודעת קריסה מפחידה.</p>
+        </div>
+
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #d35400; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #d35400; margin-top: 0;">📞 קריאה לפראמדיק: next(error) ושגיאות מותאמות</h2>
+          <ul style="font-size: 1.2rem;">
+            <li><strong>הקריאה בקשר (תרגיל 23):</strong> אם מלצר בודק לקוח (למשל הגיל שלו קטן מ-18) ומגלה בעיה, הוא לא יכול סתם לזרוק אותה. הוא משתמש בקשר לקרוא לפראמדיק: הוא רושם <code>next(new Error("Too young"))</code> וזה מדלג ישר למנהל המשברים המרכזי!</li>
+            <li><strong>שגיאות ולידציה (תרגיל 22):</strong> הפראמדיק כל כך חכם שהוא יכול להסתכל על השגיאה ולראות - אם סוג השגיאה הוא "validation" (כלומר, הלקוח מילא טופס לא טוב), הוא לא מחזיר 500 (שגיאת שרת פנימית), אלא 422 (שגיאת נתונים), כי הבעיה היא אצל הלקוח ולא במטבח!</li>
+          </ul>
+        </div>
       </div>
     `
   }
