@@ -260,6 +260,7 @@ function renderAllContent() {
     });
     
     mainContent.innerHTML = html;
+    setTimeout(initTechEnglishCheckboxes, 100);
     
     // Bind click events to headers
     document.querySelectorAll('.card-header').forEach(header => {
@@ -1768,3 +1769,21 @@ function resetQuizScores() {
     }
 }
 
+
+// --- Tech Dictionary Checkbox System ---
+let knownTechWords = JSON.parse(localStorage.getItem('knownTechWords')) || {};
+
+window.toggleTechWord = function(wordId, isChecked) {
+    knownTechWords[wordId] = isChecked;
+    localStorage.setItem('knownTechWords', JSON.stringify(knownTechWords));
+}
+
+window.initTechEnglishCheckboxes = function() {
+    const checkboxes = document.querySelectorAll('.tech-word-cb');
+    checkboxes.forEach(cb => {
+        const wordId = cb.id.replace('cb-', '');
+        if (knownTechWords[wordId]) {
+            cb.checked = true;
+        }
+    });
+}

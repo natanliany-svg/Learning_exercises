@@ -328,228 +328,943 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
     `
   },
   techEnglish: {
-    title: '🔤 אנגלית טכנולוגית המלא (Technology English - Extended)',
+    title: '🔤 אנגלית טכנולוגית המלא (Technology English - 50+ Terms)',
     content: `
       <div class="card-body">
         <p class="lead" style="font-size: 1.1rem; line-height: 1.8;">
-        מילון המונחים המורחב! כאן תמצאו הסברים כמו לילדים (ופחות כמו לרובוטים 🤖) עבור כל המילים באנגלית שאנחנו שומעים בשיעורים, בהרצאות הזום, ורואים בקוד שלנו. הוספנו תעתיק הגייה לכל מילה כדי שיהיה קל לקרוא אותה.
+        מילון המונחים המורחב! כאן תמצאו הסברים כמו לילדים (ופחות כמו לרובוטים 🤖) עבור כל המילים באנגלית שאנחנו שומעים בשיעורים, בהרצאות הזום, ורואים בקוד שלנו. <br>
+        <strong>💡 חדש:</strong> תוכלו לסמן "V" על כל מושג שהבנתם כדי לעקוב אחר ההתקדמות שלכם! (הסימונים יישמרו גם מחר).
         </p>
-        
-        <h3 style="margin-top: 20px; border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--gold);">🛠️ מושגי יסוד (Basics)</h3>
+
+        <h3 style="margin-top: 30px; border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--gold);">מושגי יסוד (Basics)</h3>
         <div class="modal-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
-          
-          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Variable</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: וֶארִיאָבֶּל | תרגום: משתנה</p>
-            <p><b>משמעות:</b> קופסה בזיכרון של המחשב שאנחנו שמים בה מידע. כמו קופסת נעליים שכתבנו עליה "גיל" ושמנו בפנים את המספר 20.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>let age = 20;</code></pre>
-          </div>
 
           <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Function</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פָנְקְשֶׁן | תרגום: פונקציה / פעולה</p>
-            <p><b>משמעות:</b> מכונה קטנה שמבצעת משימה ספציפית. אתה מכניס לה משהו (למשל, שני מספרים), היא עושה פעולה (למשל, מחברת אותם), ומוציאה תוצאה.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>function add(a, b) { return a+b; }</code></pre>
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Variable</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: וֶארִיאַבֶּל | תרגום: משתנה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> קופסה בזיכרון של המחשב שאנחנו שמים בה מידע. כמו קופסת נעליים שכתבנו עליה 'גיל' ושמנו בפנים את המספר 20.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-variable" onchange="toggleTechWord('variable', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
           <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
             <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">String</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סְטְרִינְג | תרגום: מחרוזת טקסט</p>
-            <p><b>משמעות:</b> טקסט פשוט (אותיות, מילים, משפטים) שחייב להיות עטוף במרכאות. נקרא ככה כי זה "חוט" שזור של אותיות.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>let name = "Natan";</code></pre>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סטרינג | תרגום: מחרוזת / טקסט</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> טקסט רגיל. נקרא ככה כי זה 'מחרוזת של אותיות'. תמיד יופיע בתוך מירכאות כמו 'שלום'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-string" onchange="toggleTechWord('string', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Integer</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אִינְטֶגֶ'ר | תרגום: מספר שלם</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מספר שאין בו נקודה עשרונית, למשל 5, 10, 42.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-integer" onchange="toggleTechWord('integer', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Float</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פְלוֹאוּט | תרגום: מספר עשרוני</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מספר עם נקודה עשרונית ('צף' על פני הנקודה), למשל 3.14.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-float" onchange="toggleTechWord('float', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Boolean</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: בּוּלִיאַן | תרגום: בוליאני (אמת/שקר)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> סוג נתון שיכול להיות רק אחד משני דברים: אמת (true) או שקר (false). כמו מתג של אור.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-boolean" onchange="toggleTechWord('boolean', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
           <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
             <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Array</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אָרֶיי | תרגום: מערך / רשימה</p>
-            <p><b>משמעות:</b> רשימה מסודרת של נתונים, כמו רשימת קניות. מתחיל תמיד מסוגריים מרובעים. הפריט הראשון הוא במקום האפס (0).</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>let colors = ["Red", "Green", "Blue"];</code></pre>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֲרֵיי | תרגום: מערך / רשימה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> רשימה מסודרת של פריטים. כמו מגירת גרביים שכל זוג גרביים מסודר לפי מספר.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-array" onchange="toggleTechWord('array', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
           <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
             <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Object</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אוֹבְּגֶ'קְט | תרגום: אובייקט</p>
-            <p><b>משמעות:</b> דרך לשמור נתונים מורכבים כמו "תעודת זהות". יש בו צמדים של מפתח וערך (למשל: גובה = 1.80, שם = "נתן").</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>let car = { make: "Mazda", year: 2020 };</code></pre>
-          </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Parse</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פָּארְס | תרגום: פיענוח / ניתוח תחבירי</p>
-            <p><b>משמעות:</b> לקחת טקסט רגיל (כמו JSON) ולהמיר אותו למשהו שהמחשב מבין ויכול לעבוד איתו (כמו אובייקט JS).</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>JSON.parse(text)</code></pre>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אוֹבְּגֶ'קְט | תרגום: אובייקט</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מבנה נתונים שמתאר 'דבר' שלם בעזרת תכונות (מפתחות וערכים). כמו תיק אישי של בן אדם שיש בו שם, גיל, וכתובת.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-object" onchange="toggleTechWord('object', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
           <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Stringify</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סְטְרִינְגִיפָיי | תרגום: המרה למחרוזת</p>
-            <p><b>משמעות:</b> ההפך מ-Parse. לקחת אובייקט מורכב ולהפוך אותו לטקסט פשוט כדי שאפשר יהיה לשמור אותו בקובץ או לשלוח ברשת.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>JSON.stringify(myObj)</code></pre>
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Property</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פְּרוֹפֶּרְטִי | תרגום: מאפיין / תכונה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> משתנה שנמצא בתוך אובייקט. למשל באובייקט אוטו, התכונה יכולה להיות 'צבע'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-property" onchange="toggleTechWord('property', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Method</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: מֶתּוֹד | תרגום: מתודה / פעולה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פונקציה שנמצאת בתוך אובייקט. למשל באובייקט אוטו, המתודה יכולה להיות 'לסוע()'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-method" onchange="toggleTechWord('method', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Loop</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: לוּפּ | תרגום: לולאה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פעולה שחוזרת על עצמה כמה פעמים שאנחנו מבקשים, או עד שתנאי מסוים מתקיים.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-loop" onchange="toggleTechWord('loop', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Iteration</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אִיטֶרֵייְשֶׁן | תרגום: איטרציה / סבב</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פעם אחת מתוך כל הפעמים שהלולאה רצה. 'הלולאה עשתה 5 איטרציות'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-iteration" onchange="toggleTechWord('iteration', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Condition</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹנְדִישֶׁן | תרגום: תנאי</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> משפט לוגי שאומר למחשב: 'רק אם X נכון, תעשה Y'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-condition" onchange="toggleTechWord('condition', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Syntax</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סִינְטַקְס | תרגום: תחביר</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הדקדוק של שפת התכנות. הכללים איך בדיוק צריך לכתוב את הקוד (איפה שמים נקודה-פסיק, סוגריים וכו').</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-syntax" onchange="toggleTechWord('syntax', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Const</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹנְסְט | תרגום: קבוע</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הצהרה על משתנה שאי אפשר לשנות את הערך שלו אחרי שהגדרנו אותו. כמו חוזה חתום.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-const" onchange="toggleTechWord('const', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Let</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: לֶט | תרגום: משתנה שניתן לשינוי</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הצהרה על משתנה שאנחנו יכולים לעדכן בהמשך.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-let" onchange="toggleTechWord('let', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Var</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: וַאר | תרגום: משתנה (ישן)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הדרך הישנה (לפני ES6) להגדיר משתנים. אנחנו משתדלים לא להשתמש בה יותר כי היא עושה בלאגן עם ה-Scope.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-var" onchange="toggleTechWord('var', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Null</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: נַאל | תרגום: כלום / ריק מכוון</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> ערך שאומר 'אין פה כלום, וזה בכוונה'. אנחנו הכנסנו את הכלום הזה לשם.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-null" onchange="toggleTechWord('null', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Undefined</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אַנְדִיפַיינְד | תרגום: לא מוגדר</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> ערך שאומר 'המחשב לא יודע מה זה'. משתנה שנוצר אבל מעולם לא הכניסו לתוכו שום ערך.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-undefined" onchange="toggleTechWord('undefined', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
         </div>
-
-        <h3 style="border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--sky);">🌐 שרתי Express ותקשורת (Servers & APIs)</h3>
+        <h3 style="margin-top: 30px; border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--gold);">פונקציות, היקף ומתקדם (Functions & Scope)</h3>
         <div class="modal-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
-          
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Express</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶקְסְפְּרֶס | תרגום: אקספרס (מהיר)</p>
-            <p><b>משמעות:</b> ספריית קוד (framework) פופולרית ב-Node.js שנועדה לעזור לנו להקים שרתי אינטרנט בקלות. כמו לקבל חלקי לגו מוכנים במקום לייצר מפלסטיק.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const app = express();</code></pre>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Function</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פַאנְקְשֶׁן | תרגום: פונקציה / פעולה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> חתיכת קוד שעושה פעולה מסוימת ויש לה שם. אפשר לקרוא לה מתי שרוצים במקום לכתוב את הקוד מחדש.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-function" onchange="toggleTechWord('function', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Route / Routing</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רָאוּט / רָאוּטִינְג | תרגום: נתיב / ניתוב</p>
-            <p><b>משמעות:</b> ה"שלט הכוונה" של השרת שלנו. אם לקוח מבקש את הכתובת <code>/products</code>, הראוט הוא זה שאומר לשרת: "אוקיי, תפעיל את הפונקציה הזו שמחזירה מוצרים".</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>app.get("/products", handler);</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Parameter</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פָּרָמֶטֶר | תרגום: פרמטר (בתוך הפונקציה)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> המשתנה (המקום השמור) שאנחנו מגדירים בתוך הסוגריים כשאנחנו בונים את הפונקציה. כמו שלט שאומר 'כאן ייכנס שם'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-parameter" onchange="toggleTechWord('parameter', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Endpoint</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶנְדְפּוֹינְט | תרגום: נקודת קצה</p>
-            <p><b>משמעות:</b> הכתובת הספציפית והמלאה שהלקוח פונה אליה. למשל, הדלפק במסעדה שמקבל הזמנות צ'יפס הוא endpoint אחד, והדלפק של שתייה הוא endpoint אחר.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>GET http://localhost:3000/cart</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Argument</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אַרְגְיוּמֶנְט | תרגום: ארגומנט / ערך נשלח</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הערך האמיתי שאנחנו שולחים לפונקציה כשאנחנו מפעילים אותה. (למשל: נתן, גיל 20).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-argument" onchange="toggleTechWord('argument', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Middleware</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: מִידְלְוֵור | תרגום: תוכנת תיווך</p>
-            <p><b>משמעות:</b> ה"מאבטח" או ה"מתורגמן" שעומד בכניסה לשרת (באמצע). כל בקשה חייבת לעבור דרכו לפני שהיא מגיעה לנתיב (route) שלה. משמש למשל כדי לפרש קבצי JSON.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>app.use(express.json());</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Return</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִיטֶרְן | תרגום: החזרה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הפקודה שזורקת את התשובה מתוך הפונקציה בחזרה למי שקרא לה.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-return" onchange="toggleTechWord('return', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Request (req)</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִקְוֶועסְט | תרגום: בקשה</p>
-            <p><b>משמעות:</b> החבילה שקיבלנו מהלקוח (דפדפן או Postman). האובייקט הזה מכיל את כל המידע: איזה מידע הוא מחפש, כתובת ה-IP שלו, ואילו נתונים הוא שלח לנו.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const userData = req.body;</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Arrow Function</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶרוֹ פַאנְקְשֶׁן | תרגום: פונקציית חץ</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> דרך קצרה ומודרנית (ES6) לכתוב פונקציה. בלי המילה function, רק חץ מגניב =&#62; .</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-arrow_function" onchange="toggleTechWord('arrow_function', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Response (res)</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִסְפּוֹנְס | תרגום: תגובה / תשובה</p>
-            <p><b>משמעות:</b> החבילה שאנחנו כשרת שולחים בחזרה ללקוח. בעזרת res אנחנו אומרים לו "הנה המידע שביקשת" או "סליחה, יש שגיאה".</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>res.json({ success: true });</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Callback</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹלְבֶּק | תרגום: קריאה חוזרת (קולבק)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פונקציה שאנחנו שולחים לתוך פונקציה אחרת, ואומרים לה: 'תפעילי את זה כשאת מסיימת!'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-callback" onchange="toggleTechWord('callback', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Status Codes</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סְטָטוּס קוֹדְס | תרגום: קודי מצב</p>
-            <p><b>משמעות:</b> השפה הסודית (מספרים) שבה שרת מדבר עם הדפדפן. 200 = הכל טוב, 400 = הלקוח שלח משהו דפוק, 404 = הדף לא נמצא, 500 = השרת שלנו קרס או התפוצץ.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>res.status(404).json(...);</code></pre>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Scope</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סְקוֹפּ | תרגום: היקף / טווח הכרה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> ה'שטח' שבו משתנה מוכר. משתנה שנכתב בתוך פונקציה (Scope מקומי) לא מוכר בחוץ.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-scope" onchange="toggleTechWord('scope', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--sky); background: rgba(56, 189, 248, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--sky); font-size: 1.25rem; margin-bottom: 2px;">Payload</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פֵּיְילוֹד | תרגום: מטען (כמו במשאית)</p>
-            <p><b>משמעות:</b> ה"בשר" של הבקשה. המידע האמיתי שאנחנו מעבירים (למשל, פרטי הלקוח הנרשם) ולא המידע הטכני מסביב.</p>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Global</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: גְלוֹבַּל | תרגום: גלובלי</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> משתנה שכתוב מחוץ לכל הפונקציות. כולם יכולים לראות אותו ולשנות אותו (כמו שלט חוצות).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-global" onchange="toggleTechWord('global', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Local</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: לוֹקַל | תרגום: מקומי</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> משתנה שחי רק בתוך הפונקציה או הסוגריים המסולסלים שלו (כמו יומן אישי).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-local" onchange="toggleTechWord('local', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Closure</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קְלוֹזֶ'ר | תרגום: סגירה / קלוז'ר</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> קסם ב-JS שבו פונקציה פנימית 'זוכרת' את המשתנים של הפונקציה שעטפה אותה, גם אחרי שהחיצונית סיימה לעבוד.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-closure" onchange="toggleTechWord('closure', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Hoisting</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: הוֹיְסְטִינְג | תרגום: הנפה (משיכה למעלה)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הנטייה של JS לקחת פונקציות ומשתנים (var) ולהרים אותם לראש הקובץ לפני שהקוד רץ.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-hoisting" onchange="toggleTechWord('hoisting', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Destructuring</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: דִיסְטְרַקְצְ'רִינְג | תרגום: פירוק</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> חילוץ משתנים מתוך אובייקט או מערך בשורה אחת. למשל const {name} = obj.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-destructuring" onchange="toggleTechWord('destructuring', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
         </div>
-
-        <h3 style="border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--emerald);">🔄 פרמטרים ומשתנים בבקשות (Parameters)</h3>
+        <h3 style="margin-top: 30px; border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--gold);">אסינכרוניות ואיוונט לופ (Async & Event Loop)</h3>
         <div class="modal-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
-          
-          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Query Parameters</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קְוֵורִי פָּרָמֶטֶרְס | תרגום: פרמטרי שאילתה</p>
-            <p><b>משמעות:</b> משתנים שמצורפים בסוף ה-URL עם סימן שאלה <code>?</code> ומופרדים ב-<code>&</code>. משמשים בדרך כלל ל<b>סינון או חיפוש</b> של רשימות (למשל, "תביא לי מוצרים שזולים מ-15").</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>// URL: /products?maxPrice=15
-const { maxPrice } = req.query;</code></pre>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Synchronous</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סִינְכְּרוֹנִיס | תרגום: סינכרוני / אחד אחרי השני</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הדרך הרגילה שבה קוד רץ - שורה אחרי שורה. אם שורה נתקעת, כל התוכנה נתקעת!</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-synchronous" onchange="toggleTechWord('synchronous', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Route Parameters</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רָאוּט פָּרָמֶטֶרְס | תרגום: פרמטרי נתיב</p>
-            <p><b>משמעות:</b> משתנה שהוא ממש חלק מהכתובת עצמה, מזוהה בעזרת נקודתיים <code>&#58;</code> בקוד. משמש לרוב להצביע על פריט <b>ספציפי אחד</b> (למשל "מחק את מוצר 5").</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>// URL: /products/5 (where 5 is :id)
-const { id } = req.params;</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Asynchronous</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֵסִינְכְּרוֹנִיס | תרגום: א-סינכרוני / עבודה ברקע</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> קוד שמבצע משימות ברקע (כמו לחכות לטיימר או לאינטרנט) ולא עוצר את שאר התוכנה.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-asynchronous" onchange="toggleTechWord('asynchronous', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Request Body</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִקְוֶועסְט בָּאדִי | תרגום: גוף הבקשה</p>
-            <p><b>משמעות:</b> כל המידע המלא, הפנימי והארוך שנשלח. בדרך כלל משמש ליצירה או עדכון של נתונים (כי לא נוח להעביר סיסמאות או כמות מידע עצומה בשורת הכתובת URL).</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const data = req.body;</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Event Loop</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אִיוֶונְט לוּפּ | תרגום: לולאת האירועים</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מנוע הקסם של JS שרץ כל הזמן, בודק אם המחסנית (Call Stack) ריקה, ואם כן - דוחף לשם קולבקים שסיימו לחכות.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-event_loop" onchange="toggleTechWord('event_loop', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--emerald); background: rgba(52, 211, 153, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--emerald); font-size: 1.25rem; margin-bottom: 2px;">Destructuring</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: דִי-סְטְרָקְצְ'וּרִינְג | תרגום: פירוק (שליפה החוצה)</p>
-            <p><b>משמעות:</b> קסם ב-JS שמאפשר לנו "לתלוש" תכונות מסוימות מתוך אובייקט היישר אל תוך משתנים משלהם, בשורה אחת במקום לכתוב <code>req.body.name</code> שוב ושוב.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const { name, age } = req.body;</code></pre>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Call Stack</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹל סְטַאק | תרגום: מחסנית הקריאות</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> השולחן העבודה של JS. כל פונקציה שרצה נערמת שם, וכשהיא מסיימת היא יורדת משם.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-call_stack" onchange="toggleTechWord('call_stack', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Callback Queue</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹלְבֶּק קְיוּ | תרגום: תור הקולבקים</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> חדר ההמתנה! כל משימה שסיימה לחכות ברקע (כמו טיימר שנגמר) נכנסת לתור הזה ומחכה שה-Call Stack יתפנה.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-callback_queue" onchange="toggleTechWord('callback_queue', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Promise</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פְּרוֹמִיס | תרגום: הבטחה (פרומיס)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> אובייקט חכם שאומר 'אני אביא לך את הנתונים בעתיד'. יכול להצליח (Resolve) או להיכשל (Reject).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-promise" onchange="toggleTechWord('promise', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Resolve</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִיזוֹלְבּ | תרגום: הבטחה קוימה (הצלחה)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> המצב שבו ה-Promise סיים בהצלחה והביא לנו את מה שביקשנו.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-resolve" onchange="toggleTechWord('resolve', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Reject</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִיגֶ'קְט | תרגום: הבטחה נכשלה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> המצב שבו ה-Promise נתקל בשגיאה (למשל, אין אינטרנט).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-reject" onchange="toggleTechWord('reject', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Async</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֵסִינְק | תרגום: פונקציה אסינכרונית</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מילה ששמים לפני פונקציה כדי להפוך אותה לאסינכרונית. פונקציה כזו תמיד מחזירה Promise.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-async" onchange="toggleTechWord('async', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Await</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אָוֶויְיט | תרגום: המתן</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מילה שאפשר לכתוב רק בתוך Async. היא אומרת: 'תעצור פה ותחכה עד שה-Promise יסיים, ורק אז תמשיך'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-await" onchange="toggleTechWord('await', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Fetch</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פֶצ' | תרגום: תביא / בקשת רשת</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פונקציה מובנית שמשתמשים בה כדי לבקש מידע משרת אחר דרך האינטרנט (תמיד מחזירה Promise).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-fetch" onchange="toggleTechWord('fetch', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Then</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: דֶ'ן | תרגום: ואז (בהצלחה)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> החלק ב-Promise שמופעל ברגע שהוא מצליח (Resolve).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-then" onchange="toggleTechWord('then', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Catch</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קֶאטְצ' | תרגום: תפוס שגיאה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> החלק ב-Promise שמופעל כשיש כישלון (Reject).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-catch" onchange="toggleTechWord('catch', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Timeout</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: טַיְימְאוּט | תרגום: השהייה (טיימר)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> כמו setTimeout - פעולה שקורית פעם אחת אחרי זמן מסוים.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-timeout" onchange="toggleTechWord('timeout', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Interval</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אִינְטֶרְבַל | תרגום: חזרה קבועה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> כמו setInterval - פעולה שקורית שוב ושוב כל כמה שניות.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-interval" onchange="toggleTechWord('interval', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
         </div>
-
-        <h3 style="border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--purple);">⏳ אסינכרוניות והבטחות (Async / Await)</h3>
+        <h3 style="margin-top: 30px; border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--gold);">שרתים ו-Web (HTTP & APIs)</h3>
         <div class="modal-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
-          
-          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Asynchronous</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶסִינְקְרוֹנוּס | תרגום: א-סינכרוני / לא במקביל</p>
-            <p><b>משמעות:</b> עבודה "ברקע". כשאתה מבקש מהשרת לקרוא קובץ ענק, השרת לא יעצור הכל ויחכה! הוא ישלח בקשה לקרוא את הקובץ ובינתיים יטפל בלקוחות אחרים. כשהקובץ יקרא במלואו, השרת יחזור לטפל בו.</p>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Server</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סֶרְבֶר | תרגום: שרת</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מחשב שרץ כל הזמן ומחכה שאנשים יבקשו ממנו מידע. 'המסעדה'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-server" onchange="toggleTechWord('server', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Callback</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹלְבֶּק | תרגום: קריאה חוזרת</p>
-            <p><b>משמעות:</b> פונקציה שאנחנו אומרים למחשב: "קח את הפונקציה הזו, אבל אל תפעיל אותה עכשיו! תפעיל אותה רק כשתסיים את המשימה שביקשתי ממך" (כמו: תתקשר אליי רק כשהפיצה מוכנה).</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>fs.readFile("file", (err, data) => {...});</code></pre>
-          </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Callback Hell</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹלְבֶּק הֶל | תרגום: הגיהנום של הקולבקים</p>
-            <p><b>משמעות:</b> מצב מזעזע שבו שמים קולבק בתוך קולבק בתוך קולבק (כי משימה תלויה בשנייה), והקוד נראה כמו פירמידה עקומה שאי אפשר לקרוא. בגלל זה המציאו את ה-Promises!</p>
-          </div>
-
-          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Promise</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פְּרוֹמִיס | תרגום: הבטחה</p>
-            <p><b>משמעות:</b> דרך מודרנית ונקייה יותר להתמודד עם אסינכרוניות. השרת נותן לך פתק ואומר "אני מבטיח שיהיה כאן ערך בעתיד (הצלחה או שגיאה), שמור בינתיים את הפתק הזה".</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>return new Promise((res, rej) => {});</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Client</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קְלַיֶנְט | תרגום: לקוח / צד לקוח</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הדפדפן או האפליקציה בטלפון שמבקשת מידע מהשרת. 'הסועד במסעדה'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-client" onchange="toggleTechWord('client', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
 
-          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Async / Await</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶסִינְק / אָוֵוייט | תרגום: המתן להבטחה</p>
-            <p><b>משמעות:</b> הקסם של JS! מאפשר לנו לכתוב קוד אסינכרוני שקוראים אותו ממש כמו קוד רגיל וסינכרוני. פשוט אומרים "תמתין (await) שההבטחה (promise) תתקיים ואז תמשיך לשורה הבאה".</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const data = await readFromJson();</code></pre>
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Request</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִיקְוֶוסְט (req) | תרגום: בקשה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> ההודעה שהלקוח שולח לשרת. כוללת את מה שהוא רוצה (Body, URL, Headers).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-request" onchange="toggleTechWord('request', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--purple); background: rgba(167, 139, 250, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--purple); font-size: 1.25rem; margin-bottom: 2px;">Throw Error</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: תְרוֹאוּ אֶרוֹר | תרגום: "זריקת" שגיאה</p>
-            <p><b>משמעות:</b> כאשר התוכנה נתקלת במצב שלא ציפתה לו (למשל הלקוח מנסה לקנות מוצר בלי כסף) - אנחנו "זורקים" שגיאה וקוטעים את המשך הפעולה כדי לא לגרום לנזק נתונים.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>throw new Error("No money!");</code></pre>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Response</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רִיסְפּוֹנְס (res) | תרגום: תשובה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> התשובה שהשרת מחזיר ללקוח. (בדרך כלל JSON או HTML).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-response" onchange="toggleTechWord('response', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Header</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: הֶדֶר | תרגום: כותרת הבקשה/תשובה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מידע טכני נסתר שמצורף למעטפה (כמו 'התוכן פה הוא מטיפוס JSON' או 'איזה דפדפן אני').</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-header" onchange="toggleTechWord('header', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Method (HTTP)</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: מֶתּוֹד | תרגום: שיטת הפעולה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הפועל שאומר לשרת מה לעשות: לקבל, למחוק, לשנות... (GET, POST וכו').</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-method_(http)" onchange="toggleTechWord('method_(http)', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">GET</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: גֶט | תרגום: הבא מידע</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> בקשה מהשרת לקבל נתונים בלי לשנות כלום במאגר (כמו להסתכל על תפריט).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-get" onchange="toggleTechWord('get', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">POST</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פּוֹסְט | תרגום: צור חדש</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> בקשה מהשרת ליצור משהו חדש (כמו להוסיף משתמש או לבצע הזמנה). מגיע עם Body.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-post" onchange="toggleTechWord('post', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">PUT</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פּוּט | תרגום: עדכן / דרוס</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> בקשה מהשרת לעדכן מידע קיים לחלוטין. (לדרוס פריט).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-put" onchange="toggleTechWord('put', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">DELETE</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: דִילִיט | תרגום: מחק</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> בקשה מהשרת למחוק משהו.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-delete" onchange="toggleTechWord('delete', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">URL</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: יוּ אָר אֶל | תרגום: כתובת רשת</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הכתובת המלאה שאליה אנחנו פונים (כמו הכתובת של המסעדה).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-url" onchange="toggleTechWord('url', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Endpoint</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶנְד־פּוֹיְנְט | תרגום: נקודת קצה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> נתיב ספציפי בשרת שעושה פעולה מסוימת. למשל `/users/login`.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-endpoint" onchange="toggleTechWord('endpoint', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Port</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פּוֹרְט | תרגום: שער / פורט</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מספר 'הדלת' בשרת שממנה אנחנו נכנסים (למשל, שרת רץ בדרך כלל על דלת/פורט 3000).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-port" onchange="toggleTechWord('port', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">JSON</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: גֶ'יְיסוֹן | תרגום: שפת נתונים - ג'ייסון</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פורמט הנתונים המקובל ביותר באינטרנט. נראה ממש כמו אובייקט JS רק שכל המפתחות בתוך מירכאות כפולות.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-json" onchange="toggleTechWord('json', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">DOM</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: דוֹם | תרגום: מבנה הדף</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> המבנה של ה-HTML כפי שהדפדפן ו-JS רואים אותו. (עץ של אלמנטים).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-dom" onchange="toggleTechWord('dom', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Node.js</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: נוֹד.גֶ'יְי.אֶס | תרגום: סביבת ההרצה נוד</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> התוכנה שמאפשרת לנו להריץ JS על המחשב או השרת שלנו, ולא רק בתוך הדפדפן.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-node.js" onchange="toggleTechWord('node.js', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">NPM</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶן פִּי אֶם | תרגום: מנהל החבילות</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> החנות החינמית של קוד! מקום שממנו אנחנו מורידים ספריות קוד של אנשים אחרים למחשב שלנו.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-npm" onchange="toggleTechWord('npm', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Package</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פֶּקֶג' | תרגום: חבילת קוד</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> ספריית קוד שמישהו כתב ואנחנו מורידים. (למשל axios, express).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-package" onchange="toggleTechWord('package', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
         </div>
-        
-        <h3 style="border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--rosewood);">🔥 פריסה וכלים (Tools & Deployment)</h3>
+        <h3 style="margin-top: 30px; border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--gold);">אקספרס וצד שרת (Express & Backend)</h3>
         <div class="modal-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
-          
-          <div class="lib-card" style="border-left: 4px solid var(--rosewood); background: rgba(244, 63, 94, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--rosewood); font-size: 1.25rem; margin-bottom: 2px;">Deployment</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: דִיפְּלוֹיְימֶנְט | תרגום: פריסה (העלאה לאוויר)</p>
-            <p><b>משמעות:</b> השלב המרגש שבו אנחנו לוקחים את השרת שפעל לנו על המחשב המקומי (Localhost), ושמים אותו על שרת אמיתי באינטרנט כדי שכל העולם יוכל להשתמש בו (למשל דרך Render או Heroku).</p>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Express</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶקְסְפְּרֶס | תרגום: ספריית אקספרס</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הספרייה הפופולרית ביותר ב-Node.js להקמת שרת. קלה ופשוטה כמו לגו.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-express" onchange="toggleTechWord('express', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--rosewood); background: rgba(244, 63, 94, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--rosewood); font-size: 1.25rem; margin-bottom: 2px;">Repository (Repo)</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רֶפּוֹזִיטוֹרִי / רֶפּוֹ | תרגום: מאגר (מחסן קוד)</p>
-            <p><b>משמעות:</b> תיקיית הפרויקט שלך שמנוהלת ומגובה על ידי Git. לכל פרויקט יש מאגר שמכיל את כל קבצי הקוד וההיסטוריה של השינויים.</p>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Route</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רַאוּט | תרגום: נתיב (המלצר)</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מסלול שמוגדר בשרת שאומר: 'אם לקוח מבקש את הכתובת הזו, תעשה את הפעולה הזו'.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-route" onchange="toggleTechWord('route', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
-          
-          <div class="lib-card" style="border-left: 4px solid var(--rosewood); background: rgba(244, 63, 94, 0.05); padding: 15px; border-radius: 8px;">
-            <h4 style="color: var(--rosewood); font-size: 1.25rem; margin-bottom: 2px;">Environment Variables</h4>
-            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶנְוָויירוֹנְמֶנְט וֶורִיאֶבְּלְס | תרגום: משתני סביבה</p>
-            <p><b>משמעות:</b> משתנים סודיים (לרוב נשמרים בקובץ <code>.env</code>) שלא דוחפים לגיטהאב. משתמשים בזה לשמור סיסמאות למסד נתונים או הגדרות שמשתנות בין המחשב שלי לבין השרת שבאוויר.</p>
-            <pre style="margin-top: 8px; font-size: 0.75rem; padding: 4px;"><code>const port = process.env.PORT;</code></pre>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Router</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רַאוּטֶר | תרגום: ראוטר / נתב</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> כלי באקספרס שמאפשר לנו לפצל את הראוטים לקבצים שונים כדי שהקוד יהיה מסודר (אחראי משמרת למלצרים).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-router" onchange="toggleTechWord('router', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Middleware</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: מִידֶל־ווֶר | תרגום: שומר הסף / תווך</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פונקציה שיושבת *באמצע* (בין הלקוח למלצר). היא יכולה לבדוק, לשנות, או לחסום בקשות לפני שהן מגיעות ליעד.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-middleware" onchange="toggleTechWord('middleware', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Params</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פָּרָאמְז (req.params) | תרגום: פרמטרים בנתיב</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> משתנים שמועברים ממש בתוך כתובת ה-URL עצמה (למשל מספר זהות בתוך /users/1).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-params" onchange="toggleTechWord('params', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Query</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קְווֶרִי (req.query) | תרגום: שורת החיפוש בנתיב</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> פרמטרים אופציונליים לחיפוש וסינון שנכתבים אחרי סימן שאלה.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-query" onchange="toggleTechWord('query', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Body</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: בּוֹדִי (req.body) | תרגום: גוף הבקשה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> התוכן (המעטפה הסגורה) שהלקוח שולח לשרת בבקשות POST או PUT.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-body" onchange="toggleTechWord('body', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Next</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: נֶקְסְט | תרגום: הבא בתור!</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הפקודה שכל Middleware חייב להפעיל כדי להעביר את הבקשה לשומר/למלצר הבא. בלעדיה הלקוח נתקע.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-next" onchange="toggleTechWord('next', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Error Handling</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶרוֹר הֶנְדְלִינְג | תרגום: טיפול בשגיאות</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> Middleware מיוחד בסוף הקובץ עם 4 פרמטרים שתופס שגיאות רעות כדי שהשרת לא יקרוס ויכבה.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-error_handling" onchange="toggleTechWord('error_handling', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Status Code</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: סְטָטוּס קוֹד | תרגום: קוד תשובה</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> מספר קצר שהשרת מחזיר. 200 = הכל טוב, 400 = הלקוח שגה, 404 = לא נמצא, 500 = השרת נפל.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-status_code" onchange="toggleTechWord('status_code', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">API</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֵיְי פִּי אַיי | תרגום: ממשק התממשקות</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> הדרך (התפריט) שבאמצעותה הלקוח והשרת מדברים ביניהם ומחליפים נתונים.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-api" onchange="toggleTechWord('api', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">REST</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: רֶסְט | תרגום: תקן API</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> צורת בנייה מוסכמת ל-API. (למשל, שמשתמשים ב-GET להביא נתונים וב-POST ליצור חדש).</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-rest" onchange="toggleTechWord('rest', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
+          </div>
+
+          <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+            <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">CRUD</h4>
+            <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קְרַאד | תרגום: 4 פעולות הבסיס</p>
+            <p style="margin-bottom: 15px;"><b>משמעות:</b> ראשי תיבות של Create, Read, Update, Delete. הפעולות הבסיסיות בכל מערכת נתונים.</p>
+            <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+              <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+                <input type="checkbox" class="tech-word-cb" id="cb-crud" onchange="toggleTechWord('crud', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+                סימנתי ב- V (הבנתי!)
+              </label>
+            </div>
           </div>
         </div>
-
       </div>
-    `
+`
   }
   , expressKids: {
     title: '👶 שרת Express - הסבר מההתחלה בשפה פשוטה',
