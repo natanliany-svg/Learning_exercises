@@ -1684,6 +1684,7 @@ td {
 }
 .move-circle {
     animation: travelCircle 4s linear infinite;
+}
 
 /* --- Visualizer Carousel --- */
 .visualizer-container {
