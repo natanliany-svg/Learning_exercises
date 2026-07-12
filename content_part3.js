@@ -631,5 +631,88 @@ return new Promise((resolve, reject) => {
 
       </div>
     `
+    , expressMiddlewareKids: {
+    title: "Express Middleware 🛡️ (השומרים בכניסה למסעדה)",
+    content: `
+      <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
+        <h1 style="color: #2c3e50; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">👮‍♂️ Middleware - שומרי הסף של המסעדה</h1>
+        <p style="font-size: 1.3rem;">זוכרים שהשרת שלנו הוא כמו <strong>מסעדה</strong>? <br>
+        הלקוח (Postman/הדפדפן) שולח בקשה ל<strong>מלצר</strong> (ה-Route), והמלצר מוסר את הבקשה ל<strong>טבח</strong> (ה-Service).</p>
+        
+        <p style="font-size: 1.3rem; color: #d35400;"><strong>אבל רגע... מה קורה אם מישהו נכנס למסעדה בלי נעליים? או בלי להזמין מקום מראש?</strong></p>
+        
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #e67e22; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #e67e22; margin-top: 0;">🛑 המארח והשומרים - Middleware</h2>
+          <p style="font-size: 1.2rem;">כאן נכנסים לתמונה ה-<strong>Middlewares</strong> ("פונקציות תווך"). הם עומדים <strong>בין</strong> הדלת של המסעדה לבין המלצרים.<br>
+          כל לקוח שנכנס חייב קודם כל לעבור דרכם!</p>
+          <ul style="font-size: 1.2rem; list-style-type: none; padding-right: 0;">
+            <li style="margin-bottom: 10px;">👔 <strong>שומר הלבוש:</strong> בודק אם יש ללקוח "Token" מתאים (בדיקת הרשאות / Auth).</li>
+            <li style="margin-bottom: 10px;">📝 <strong>המתרגם (express.json):</strong> רובוט קטן בכניסה שלוקח את הפתק של הלקוח (שכתוב בסינית) ומתרגם אותו לשפה שהמלצרים מבינים (JavaScript Object).</li>
+            <li style="margin-bottom: 10px;">⏱️ <strong>השעון:</strong> שומר שרושם ביומן (Logger) בדיוק באיזו שעה כל לקוח נכנס למסעדה.</li>
+          </ul>
+        </div>
+
+        <h2 style="color: #2980b9;">איך עובד שומר בכניסה? המפתח הסודי: <code>next()</code></h2>
+        <p style="font-size: 1.2rem;">פונקציית Middleware מקבלת 3 דברים: <code>req, res, next</code>.</p>
+        <ul style="font-size: 1.2rem;">
+          <li><strong>req:</strong> הלקוח שנכנס (הבקשה).</li>
+          <li><strong>res:</strong> האפשרות לזרוק את הלקוח החוצה ולהגיד לו "אין כניסה!".</li>
+          <li><strong>next():</strong> הפקודה הקדושה! אם השומר אישר את הלקוח, הוא חייב לצעוק <strong>"הבא בתור! (next)"</strong>. אם הוא לא יקרא ל-<code>next()</code>, הלקוח ייתקע בכניסה לנצח!</li>
+        </ul>
+
+        <div style="background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 10px; font-family: monospace; font-size: 1.1rem; direction: ltr; text-align: left;">
+<pre style="margin: 0;">
+// שומר שמדפיס את שעת הכניסה של הלקוח למסעדה
+app.use((req, res, next) => {
+    console.log("לקוח חדש נכנס ב- " + new Date());
+    next(); // חשוב מאוד! אחרת הלקוח ייתקע פה לנצח
+});
+</pre>
+        </div>
+
+      </div>
+    `
+  },
+  expressErrorHandlingKids: {
+    title: "Express Error Handling 🚨 (מנהל המשמרת)",
+    content: `
+      <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
+        <h1 style="color: #c0392b; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">🚨 מנהל המשמרת - טיפול בשגיאות</h1>
+        <p style="font-size: 1.3rem;">במסעדה רגילה, מה קורה אם <strong>הטבח שורף את האוכל</strong> או אם <strong>המלצר מפיל צלחת ושובר אותה</strong>? <br>האם סוגרים את כל המסעדה ומעיפים את כל הלקוחות הביתה?</p>
+        <p style="font-size: 1.3rem;"><strong>ממש לא!</strong> המלצר רץ ל<strong>מנהל המשמרת</strong> (Error Handling Middleware), והמנהל הולך ללקוח ומתנצל בנימוס, בזמן ששאר המסעדה ממשיכה לעבוד כרגיל!</p>
+        
+        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #e74c3c; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
+          <h2 style="color: #e74c3c; margin-top: 0;">💣 כשהקוד קורס (Crash)</h2>
+          <p style="font-size: 1.2rem;">בלי מנהל משמרת, שגיאה אחת קטנה בקוד (למשל, לנסות לקרוא מקובץ שלא קיים) תגרום לשרת שלך לקרוס ולכבות את עצמו (Crash). אף לקוח לא יוכל להתחבר לאתר שלך!</p>
+          <p style="font-size: 1.2rem;">במקום שזה יקרה, אנו עוטפים את המסוכנים שלנו (כמו קריאה ממסד נתונים) ב-<code>try...catch</code>.</p>
+        </div>
+
+        <h2 style="color: #2980b9;">איך קוראים למנהל? המפתח הסודי: <code>next(error)</code></h2>
+        <p style="font-size: 1.2rem;">כשהמלצר (Route) תופס שגיאה ב-<code>catch</code>, הוא צועק "מנהל!!" על ידי כך שהוא שולח את השגיאה בתוך ה-next: <br><code>next(error)</code>.</p>
+        <p style="font-size: 1.2rem;">וזה מקפיץ מיד את השומר המיוחד שלנו - פונקציית Middleware בעלת 4 פרמטרים: <code>(err, req, res, next)</code>.</p>
+
+        <div style="background: #2d3436; color: #dfe6e9; padding: 20px; border-radius: 10px; font-family: monospace; font-size: 1.1rem; direction: ltr; text-align: left;">
+<pre style="margin: 0;">
+// המלצר מנסה לעשות משהו מסוכן
+app.get('/risky-order', (req, res, next) => {
+    try {
+        // מנסה למצוא משהו שלא קיים! תיווצר שגיאה
+        let x = missingVariable; 
+    } catch (error) {
+        // המלצר קורא למנהל!
+        next(error);
+    }
+});
+
+// מנהל המשמרת (Error Middleware) חייב להיות בסוף הקובץ!
+app.use((err, req, res, next) => {
+    console.error("המנהל מתנצל:", err.message);
+    res.status(500).json({ msg: "קרתה תקלה במטבח, אנחנו מצטערים!" });
+});
+</pre>
+        </div>
+
+      </div>
+    `
   }
 };

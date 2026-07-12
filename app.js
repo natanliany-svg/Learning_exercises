@@ -21,7 +21,7 @@ const sectionsList = [
     id: 'section-web',
     title: '🖥️ שרתים ו-Web',
     subtitle: 'הדפדפן, שרתי HTTP מבוססי Node ו-Express',
-    topics: ['dom', 'vanillaServer', 'httpParams', 'express', 'expressKids']
+    topics: ['dom', 'vanillaServer', 'httpParams', 'express', 'expressKids', 'expressMiddlewareKids', 'expressErrorHandlingKids']
   },
   {
     id: 'section-async-full',
@@ -442,9 +442,23 @@ function getIdeHtml(projectKey) {
             <div class="ide-file" onclick="switchIdeFile('routes/health.js')"><span style="color:#f7df1e">JS</span> health.js</div>
             <div class="ide-file" onclick="switchIdeFile('index.js')"><span style="color:#f7df1e">JS</span> index.js</div>
         `;
+    } else if (projectKey === 'restaurantOrdersApi') {
+        sidebarHtml = `
+            <div class="ide-sidebar-header">RESTAURANT_API 🍔 📄 📁</div>
+            <div class="ide-folder" onclick="toggleFolder('folder-git', this)">▸ .git</div>
+            <div id="folder-git" style="display:none;"></div>
+            
+            <div class="ide-file" onclick="switchIdeFile('package.json')"><span style="color:#34d399">{}</span> package.json</div>
+            <div class="ide-file" onclick="switchIdeFile('data/orders.json')"><span style="color:#34d399">{}</span> orders.json</div>
+            <div class="ide-file" onclick="switchIdeFile('middlewares/auth.middleware.js')"><span style="color:#f7df1e">JS</span> auth.middleware.js</div>
+            <div class="ide-file" onclick="switchIdeFile('middlewares/error.middleware.js')"><span style="color:#f7df1e">JS</span> error.middleware.js</div>
+            <div class="ide-file" onclick="switchIdeFile('services/orders.service.js')"><span style="color:#f7df1e">JS</span> orders.service.js</div>
+            <div class="ide-file" onclick="switchIdeFile('routes/orders.route.js')"><span style="color:#f7df1e">JS</span> orders.route.js</div>
+            <div class="ide-file" onclick="switchIdeFile('index.js')"><span style="color:#f7df1e">JS</span> index.js</div>
+        `;
     }
 
-    const prompt = projectKey === 'bank' ? 'natan@ubuntu:~/bank$' : (projectKey === 'asyncFiles' ? 'natan@ubuntu:~/async-files$' : (projectKey === 'studyPlanner' ? 'natan@ubuntu:~/study-planner$' : (projectKey === 'movieCollection' ? 'natan@ubuntu:~/movie-manager$' : 'natan@ubuntu:~/store-server$')));
+    const prompt = projectKey === 'bank' ? 'natan@ubuntu:~/bank$' : (projectKey === 'asyncFiles' ? 'natan@ubuntu:~/async-files$' : (projectKey === 'studyPlanner' ? 'natan@ubuntu:~/study-planner$' : (projectKey === 'movieCollection' ? 'natan@ubuntu:~/movie-manager$' : (projectKey === 'restaurantOrdersApi' ? 'natan@ubuntu:~/restaurant-api$' : 'natan@ubuntu:~/store-server$'))));
     const initialTermOutput = projectKey === 'bank' 
         ? "> המערכת מאותחלת. הקלד 'help' כדי לראות פקודות אפשריות." 
         : (projectKey === 'asyncFiles' 
@@ -453,7 +467,9 @@ function getIdeHtml(projectKey) {
                 ? "> פרויקט מתכנן לימודים מוכן. הקלד 'node main.js' להרצה או 'help' לעזרה."
                 : (projectKey === 'movieCollection'
                     ? "> פרויקט ניהול סרטים מוכן. הקלד 'node app.js' להרצה או 'help' לעזרה."
-                    : "> שרת Express מוכן. הקלד 'npm start' להפעלת השרת או 'help' לעזרה.")));
+                    : (projectKey === 'restaurantOrdersApi'
+                        ? "> מסעדת API מוכנה. הקלד 'npm start' להפעלת השרת או 'help' לעזרה."
+                        : "> שרת Express מוכן. הקלד 'npm start' להפעלת השרת או 'help' לעזרה."))));
 
     return `
         <div class="ide-container" style="position:relative;">
