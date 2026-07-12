@@ -1,5 +1,14 @@
 const serversContent = {
   vanillaServer: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container" style="justify-content:space-around;"><div class="anim-node">לקוח</div><div class="anim-packet move-right" style="background:#38bdf8; width:40px;">בקשה</div><div class="anim-node" style="border-color:#38bdf8;">שרת Node</div></div>
+            `,
+            text: "<b>שרת HTTP בסיסי</b><br>שרת בסיסי מאזין לבקשות. הלקוח שולח בקשה (Packet), והשרת מחזיר תשובה. ללא Express, אנחנו צריכים לכתוב הרבה קוד שחור כדי להבין מה הלקוח רצה."
+        }
+    ],
+
     title: '🌐 שרת HTTP בסיסי (Vanilla HTTP Server)',
     content: `
       <div class="card-body">
@@ -82,6 +91,15 @@ server.<span class="t-fn">listen</span>(PORT, () => {
     `
   },
   httpParams: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">/users?id=5</div><div class="anim-packet move-right" style="background:#ff0055;">id=5</div><div class="anim-node">req.query.id</div></div>
+            `,
+            text: "<b>פרמטרים בבקשות</b><br>כשאנחנו רוצים לחפש משהו ספציפי (כמו משתמש מספר 5), אנחנו מעבירים את המידע דרך ה-URL (Query Params). השרת שולף את המידע הזה מהבקשה."
+        }
+    ],
+
     title: '🧩 פרמטרים בבקשות HTTP',
     content: `
       <div class="card-body">

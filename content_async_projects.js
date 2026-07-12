@@ -5,7 +5,7 @@ const asyncLearningContent = {
             html_visual: `
             <div class="anim-container" style="flex-wrap: wrap; height:220px; align-content: space-around;">
                <div class="anim-node" style="width:100%; text-align:center;">Call Stack (תור ראשי)</div>
-               <div class="anim-packet move-right" style="top:90px; background:#00d2ff; box-shadow:0 0 15px #00d2ff;">setTimeout</div>
+               <div class="anim-packet move-right" style="color: #11131a; top:90px; background:#00d2ff; box-shadow:0 0 15px #00d2ff;">setTimeout</div>
                <div class="anim-node" style="width:45%; text-align:center; border-color:#00d2ff;">Web APIs (המתנה)</div>
                <div class="anim-node" style="width:45%; text-align:center; border-color:#f7df1e;">Callback Queue</div>
             </div>
@@ -63,7 +63,7 @@ console.<span class="t-fn">log</span>(<span class="t-str">'4'</span>); <span cla
             html_visual: `
             <div class="anim-container" style="justify-content: center; gap:40px;">
                <div class="anim-node">פעולה 1</div>
-               <div class="anim-packet spin" style="position:relative; width:40px; height:40px; background:#ff0055; border-radius:50%;">CB</div>
+               <div class="anim-packet spin" style="color: #11131a; position:relative; width:40px; height:40px; background:#ff0055; border-radius:50%;">CB</div>
                <div class="anim-node">פעולה 2</div>
             </div>
             `,
@@ -179,7 +179,7 @@ Promise.<span class="t-fn">all</span>([
                <div class="anim-node" style="width:100%; border-color:#f7df1e;">קוד רץ (Sync)</div>
                <div style="display:flex; width:100%; justify-content:space-between; align-items:center;">
                    <div class="anim-node" style="background:#ff0055; color:white; border-color:#fff;">await! (עצור)</div>
-                   <div class="anim-packet spin" style="position:relative; background:#00ff88; box-shadow:0 0 15px #00ff88; width:30px; height:30px; border-radius:50%;">⏱️</div>
+                   <div class="anim-packet spin" style="color: #11131a; position:relative; background:#00ff88; box-shadow:0 0 15px #00ff88; width:30px; height:30px; border-radius:50%;">⏱️</div>
                    <div class="anim-node" style="border-color:#00d2ff;">הקוד ממשיך</div>
                </div>
             </div>

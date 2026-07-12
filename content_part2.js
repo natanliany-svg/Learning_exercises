@@ -9,7 +9,7 @@ const contentPart2 = {
                    <div class="anim-node" style="width:45%; text-align:center;">&lt;head&gt;</div>
                    <div class="anim-node" style="width:45%; text-align:center; border-color:#00ff88;">&lt;body&gt;</div>
                </div>
-               <div class="anim-packet move-right" style="position:relative; width:80%; height:30px; border-radius:8px; margin:0 auto; background:#38bdf8;">div (צומת חדש)</div>
+               <div class="anim-packet move-right" style="color: #11131a; position:relative; width:80%; height:30px; border-radius:8px; margin:0 auto; background:#38bdf8;">div (צומת חדש)</div>
             </div>
             `,
             text: "<b>מניפולציית DOM</b><br>ה-DOM הוא עץ של צמתים. באנימציה, ה-JS יצר צומת חדש (הכחול המהבהב) ודחף אותו לתוך ה-body! כך אנחנו משנים את האתר בזמן אמת."
@@ -70,6 +70,15 @@ document.body.<span class="t-fn">appendChild</span>(newDiv);</code></pre>
     `
   },
   arrayMethods: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">[1, 2, 3]</div><div class="anim-packet move-right" style="background:#34d399;">map(*2)</div><div class="anim-node" style="border-color:#34d399;">[2, 4, 6]</div></div>
+            `,
+            text: "<b>מתודות מערכים</b><br>מתודות כמו map לוקחות מערך קיים (משמאל), מעבירות כל איבר דרך פונקציה (הקובייה הירוקה), ויוצרות מערך חדש לגמרי (מימין) מבלי לשנות את המקור!"
+        }
+    ],
+
     title: '📊 מערכים ומתודות מובנות',
     content: `
       <div class="card-body">
@@ -135,6 +144,15 @@ document.body.<span class="t-fn">appendChild</span>(newDiv);</code></pre>
     `
   },
   stringMethods: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">"Hello"</div><div class="anim-packet move-right" style="background:#f7df1e; width:60px;">.toUpperCase()</div><div class="anim-node">"HELLO"</div></div>
+            `,
+            text: "<b>מחרוזות</b><br>מחרוזות הן בלתי ניתנות לשינוי (Immutable). כשאנחנו מפעילים פונקציה כמו toUpperCase, היא לא משנה את המילה המקורית, אלא מחזירה עותק חדש לגמרי באותיות גדולות."
+        }
+    ],
+
     title: '📝 מחרוזות (String Methods)',
     content: `
       <div class="card-body">
@@ -172,6 +190,15 @@ str.<span class="t-fn">replace</span>(<span class="t-str">"World"</span>, <span 
     `
   },
   objectMethods: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">{name: "Dani"}</div><div class="anim-packet spin" style="background:#ff0055; width:40px;">Object.keys()</div><div class="anim-node">["name"]</div></div>
+            `,
+            text: "<b>אובייקטים</b><br>אובייקטים מאחסנים מידע בזוגות של מפתח-ערך. פונקציות כמו Object.keys חולצות רק את המפתחות ומחזירות אותם כמערך מסודר."
+        }
+    ],
+
     title: '🗂️ אובייקטים ומתודות מובנות',
     content: `
       <div class="card-body">

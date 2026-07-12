@@ -121,6 +121,15 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
   `
  },
  destructuring: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">{a: 1, b: 2}</div><div class="anim-packet move-right" style="background:#00d2ff; width:50px;">פירוק</div><div class="anim-node">const a = 1</div></div>
+            `,
+            text: "<b>פירוק מבנה</b><br>במקום לפנות לאובייקט כל פעם (obj.a), פירוק (Destructuring) מאפשר לנו "לשלוף" את הערך מתוך האובייקט ישירות לתוך משתנה עצמאי בקלי קלות."
+        }
+    ],
+
   title: '🧩 פירוק מבנה (Destructuring & Spread)',
   content: `
    <div class="card-body">
@@ -1267,6 +1276,15 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
 `
  }
  , expressKids: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">ילד רעב</div><div class="anim-packet move-right" style="background:#ff9800;">הזמנה לפסטה</div><div class="anim-node">טבח (Express)</div></div>
+            `,
+            text: "<b>שרתי Express - המחשה לילדים</b><br>Express עובדת כמו מסעדה! המלצר לוקח את ההזמנה שלך (הבקשה), מביא אותה למטבח (הראוטר/הנתיב), והטבח מכין את המנה ומחזיר לך (התשובה)."
+        }
+    ],
+
   title: '👶 שרת Express - הסבר מההתחלה בשפה פשוטה',
   content: `
    <div class="card-body">
@@ -1352,7 +1370,7 @@ return new Promise((resolve, reject) => {
             html_visual: `
             <div class="anim-container">
                <div class="anim-node" style="border-color:#38bdf8;">בקשה נכנסת</div>
-               <div class="anim-packet move-right" style="background:#34d399; box-shadow:0 0 15px #34d399;">Request</div>
+               <div class="anim-packet move-right" style="color: #11131a; background:#34d399; box-shadow:0 0 15px #34d399;">Request</div>
                <div class="anim-node" style="border-color:#ff0055;">שומר 1 (Auth)</div>
                <div class="anim-node" style="border-color:#f7df1e;">שומר 2 (Val)</div>
                <div class="anim-node" style="border-color:#00ff88;">המסעדה (Route)</div>
@@ -1391,6 +1409,15 @@ return new Promise((resolve, reject) => {
   `
  },
  expressValidationsClassroom: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-packet move-right" style="background:#ff0055;">{age: -5}</div><div class="anim-node" style="border-color:#f7df1e;">שומר (Joi)</div><div class="anim-node" style="border-color:#ff0055;">400 Bad Request</div></div>
+            `,
+            text: "<b>ולידציות ואימות נתונים</b><br>אי אפשר לסמוך על הלקוח! לפני שהנתונים נכנסים לשרת שלנו, ספריות כמו Joi (השומר בצהוב) בודקות אם הנתונים חוקיים. אם לא - הן זורקות שגיאה ומעיפות את הבקשה."
+        }
+    ],
+
   title: '🔍 בדיקות ותקינות נתונים (Validations) - מהקלאסרום!',
   content: `
    <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
@@ -1426,7 +1453,7 @@ return new Promise((resolve, reject) => {
         {
             html_visual: `
             <div class="anim-container" style="flex-direction: column; justify-content: space-between; height: 180px;">
-               <div class="anim-packet move-circle" style="position: relative; left: 50%; transform: translateX(-50%); background: #ff0055; width: 50px; height: 30px; box-shadow: 0 0 20px #ff0055; z-index: 5;">שגיאה! 🔥</div>
+               <div class="anim-packet move-circle" style="color: #11131a; position: relative; left: 50%; transform: translateX(-50%); background: #ff0055; width: 50px; height: 30px; box-shadow: 0 0 20px #ff0055; z-index: 5;">שגיאה! 🔥</div>
                <div class="anim-node" style="width: 100%; border-color: #f7df1e; border-top-style: dashed; padding-top: 20px; text-align: center; margin-top: auto;">רשת ביטחון (Error Handler)</div>
             </div>
             `,

@@ -1,5 +1,14 @@
 const contentPart1 = {
   basics: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container"><div class="anim-node">let X = 5</div><div class="anim-packet spin" style="background:#00d2ff;">5</div><div class="anim-node">זיכרון</div></div>
+            `,
+            text: "<b>משתנים וסוגי נתונים</b><br>משתנים הם כמו קופסאות בזיכרון. כאן אנחנו רואים את הערך 5 (הקובייה המסתובבת) נשמר בתוך קופסה בשם X בזיכרון המחשב."
+        }
+    ],
+
     title: '📐 יסודות ומשתנים',
     content: `
       <div class="card-body">
