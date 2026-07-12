@@ -1661,7 +1661,6 @@ td {
     z-index: 2;
 }
 .anim-packet {
-    position: absolute;
     width: 30px;
     height: 20px;
     background: #ff0055;
@@ -1839,7 +1838,6 @@ td {
     z-index: 2;
 }
 .anim-packet {
-    position: absolute;
     width: 30px;
     height: 20px;
     background: #ff0055;
@@ -1869,16 +1867,16 @@ td {
 }
 
 @keyframes travelRight {
-    0% { right: 10%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { right: 80%; opacity: 0; }
+    0% { transform: translateX(80px); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateX(-80px); opacity: 0; }
 }
 @keyframes travelLeft {
-    0% { left: 10%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { left: 80%; opacity: 0; }
+    0% { transform: translateX(-80px); opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { transform: translateX(80px); opacity: 0; }
 }
 @keyframes travelCircle {
     0% { transform: translate(-50%, -50%) rotate(0deg) translateX(50px) rotate(0deg); }
