@@ -1434,49 +1434,5 @@ return new Promise((resolve, reject) => {
     </div>
    </div>
   `
- },
-  postmanGuide: {
-    title: '📭 המדריך השלם ל-Postman (כלי ההזמנות)',
-    content: `
-      <div style="direction: rtl; text-align: right; padding: 20px; font-family: 'Rubik', sans-serif; line-height: 1.8; color: #333; background-color: #f9f9f9; border-radius: 10px;">
-        <h1 style="color: #ff6c37; text-align: center; font-size: 2.5rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.1);">🚀 Postman - אפליקציית המשלוחים שלנו</h1>
-        <p style="font-size: 1.3rem;">אם השרת שלנו הוא המסעדה, איך לקוח יזמין אוכל אם עדיין אין למסעדה אתר אינטרנט (Frontend) או אפליקציה? הלקוח ישתמש בטלפון או באפליקציית משלוחים כמו Wolt! תוכנת <strong>Postman</strong> היא בדיוק זה. היא מאפשרת לנו (המפתחים) "להתחזות" ללקוח, להכין הזמנה מושלמת, ולשלוח אותה למטבח (השרת) כדי לראות אם הוא מתמודד איתה נכון.</p>
-        
-        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #ff6c37; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
-          <h2 style="color: #ff6c37; margin-top: 0;">🛠️ איך עובדים עם Postman? (אזורי המסך)</h2>
-          <p style="font-size: 1.2rem;">המסך ב-Postman מחולק בדיוק כמו דף הזמנה:</p>
-          <ul style="font-size: 1.2rem;">
-            <li><strong>1. סוג הבקשה (Method):</strong> כאן בוחרים <code>GET</code> (כדי לקבל את התפריט), <code>POST</code> (כדי לשלוח הזמנה חדשה), או <code>DELETE</code> (כדי לבטל הזמנה).</li>
-            <li><strong>2. כתובת המסעדה (URL):</strong> לאן אנחנו מתקשרים? למשל, <code>http://localhost:3000/api/users</code>.</li>
-            <li><strong>3. מעטפת ההזמנה (Body):</strong> אם בחרנו <code>POST</code>, אנחנו צריכים לכתוב מה אנחנו רוצים! נכנסים ללשונית <code>Body</code> ➔ מסמנים <code>raw</code> ➔ בוחרים ב-<code>JSON</code> מהתפריט הכחול. שם כותבים את הבקשה.</li>
-            <li><strong>4. סודות ומפתחות (Headers):</strong> לפעמים צריך להזדהות (למשל כרטיס VIP). נכנסים ללשונית <code>Headers</code> ומוסיפים Key (למשל <code>x-auth-token</code>) ו-Value (למשל <code>12345</code>).</li>
-          </ul>
-        </div>
-
-        <div style="background-color: #fff; padding: 20px; border-radius: 10px; border-right: 6px solid #3498db; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px;">
-          <h2 style="color: #3498db; margin-top: 0;">💡 טיפים זהב ל-Postman</h2>
-          <ul style="font-size: 1.2rem;">
-            <li><strong>לשמור עבודות (Collections):</strong> ב-Postman אפשר לאסוף את כל הבקשות ל"תיקיה" (Collection). ככה מחר תוכל ללחוץ על בקשת "Login" בלי לכתוב שוב את האימייל והסיסמה!</li>
-            <li><strong>משתנים (Variables):</strong> אפשר לשמור את הכתובת <code>http://localhost:3000</code> בתוך משתנה שנקרא <code>{{url}}</code> וככה הכל מסודר יותר.</li>
-            <li><strong>תצוגת התוצאה (Response):</strong> למטה במסך, תראה את מה שהשרת מחזיר. שים לב לסטטוס! ירוק (200 OK) אומר שההזמנה הצליחה, אדום (400 Bad Request / 404 Not Found) אומר שהייתה שגיאה במטבח או בבקשה.</li>
-          </ul>
-        </div>
-
-        <div style="background-color: #fce4ec; padding: 15px; border-radius: 8px; border-right: 5px solid #e91e63; margin-bottom: 20px;">
-          <h3 style="color: #e91e63; margin-top: 0;">📭 איך בודקים מתווכים ב-Postman?</h3>
-          <p style="font-size: 1.1rem; margin-bottom: 0;">כדי לעבור מאבטח (Security Middleware), עלינו לשלוח את הכרטיס המזהה. ב-Postman נעבור ללשונית <strong>Headers</strong>, בעמודה Key נרשום <code>x-auth-token</code> (או מה שהמאבטח מבקש), ובעמודה Value נרשום את הסוד (למשל <code>secret123</code>). רק אז נלחץ Send!</p>
-        </div>
-
-        <div style="background-color: #e8f5e9; padding: 15px; border-radius: 8px; border-right: 5px solid #4caf50; margin-bottom: 20px;">
-          <h3 style="color: #4caf50; margin-top: 0;">📭 איך בודקים תקינות נתונים ב-Postman?</h3>
-          <p style="font-size: 1.1rem; margin-bottom: 0;">כדי לשלוח פתק למנהל המשמרת: ב-Postman נבחר בשיטת <strong>POST</strong>, ניכנס ללשונית <strong>Body</strong>, נסמן <strong>raw</strong> ואז נבחר <strong>JSON</strong> מהתפריט הכחול. שם נקליד את הפתק שלנו: <code>{ "email": "test@test.com", "age": 20 }</code>. נסה לשלוח אובייקט ריק <code>{}</code> כדי לראות איך השרת מחזיר שגיאת 400!</p>
-        </div>
-
-        <div style="background-color: #fff3e0; padding: 15px; border-radius: 8px; border-right: 5px solid #ff9800; margin-bottom: 20px;">
-          <h3 style="color: #ff9800; margin-top: 0;">📭 איך בודקים שגיאות ב-Postman?</h3>
-          <p style="font-size: 1.1rem; margin-bottom: 0;">פשוט מאוד! נסה לרשום בשורת ה-URL למעלה ב-Postman כתובת שלא קיימת, למשל <code>http://localhost:3000/api/ghosts</code>. כשתלחץ Send, תסתכל למטה על התשובה: הסטטוס יהפוך לאדום <strong>404 Not Found</strong>, ובגוף התשובה תראה את ה-JSON שצוות ההצלה הכין עבורך (<code>{"error": "Route not found"}</code>).</p>
-        </div>
-      </div>
-    `
-  }
+ }
 };
