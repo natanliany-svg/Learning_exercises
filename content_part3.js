@@ -1,6 +1,38 @@
 const contentPart3 = {
  closures: {
-  title: '🔒 קלוז\'רים (Closures)',
+  visualizerSteps: [
+        {
+            html_visual: `
+            <div class="stack-visual">
+                <div class="stack-item chain-appear delay-2" style="opacity:1;">Inner Function Memory</div>
+                <div class="stack-item chain-appear delay-1" style="opacity:0.8; background:var(--primary);">Outer Function Memory</div>
+                <div class="stack-item chain-appear" style="opacity:0.5; background:var(--ink);">Global Memory</div>
+            </div>
+            `,
+            text: "<b>שלב 1: שרשרת הסביבות (Scope Chain)</b><br>כמו בובות בבושקה! פונקציה פנימית תמיד נמצאת בתוך פונקציה חיצונית. כשהיא מחפשת משתנה, היא בודקת קודם אצלה, ואז יוצאת החוצה שכבה אחרי שכבה."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced" style="border-color:#ff0055;">Outer() סיימה<br><span style="font-size:10px;text-decoration:line-through;">נמחקה</span></div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced active bounce-in">Inner() חיה<br>ועדיין זוכרת!</div>
+            </div>
+            `,
+            text: "<b>שלב 2: לכידת קלוז'ר</b><br>הקסם מתרחש פה: גם אחרי שהפונקציה החיצונית סיימה לרוץ ונעלמה מהזיכרון, הפונקציה הפנימית 'נועלת' (Closure) אצלה את המשתנים שהיא צריכה מתוכה!"
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced">createCounter()</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">count=0</span></div>
+                <div class="flow-node-enhanced active ripple-out">counter() → 1<br>counter() → 2</div>
+            </div>
+            `,
+            text: "<b>שלב 3: שימוש פרקטי - מונה (Counter)</b><br>בעזרת קלוז'ר אנחנו יכולים ליצור 'משתנים פרטיים'. הפונקציה שומרת זיכרון פנימי משלה שאף אחד מבחוץ לא יכול לגעת בו ישירות."
+        }
+    ],
+    title: '🔒 קלוז\'רים (Closures)',
   content: `
    <div class="card-body">
     <p class="lead">קלוז'ר (Closure או סגירה) הוא אחד המושגים העוצמתיים ביותר ב-JavaScript. הוא מאפשר לפונקציה פנימית לזכור ולהמשיך לגשת למשתנים של הפונקציה החיצונית שעטפה אותה — גם לאחר שהפונקציה החיצונית כבר סיימה לרוץ ונעלמה מהזיכרון.</p>
@@ -52,7 +84,42 @@ console.<span class="t-fn">log</span>(myAcc.<span class="t-fn">getBalance</span>
   `
  },
  factories: {
-  title: '🏭 פונקציות מפעל (Factory Functions)',
+  visualizerSteps: [
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced">name: "דני"</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced active highlight-flash" style="border-color:#ffd700;">🏭 המפעל</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced bounce-in">{ name:"דני", role:"user" }</div>
+            </div>
+            `,
+            text: "<b>שלב 1: תבנית המפעל</b><br>במקום ליצור אובייקטים מאפס כל פעם, אנחנו בונים פונקציה שמקבלת חומרי גלם (פרמטרים) ומייצרת אובייקט שלם ומוכן."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced active">🏭 המפעל</div>
+                <div style="display:flex; flex-direction:column; gap:5px;" class="delay-2">
+                    <div class="flow-arrow-enhanced" style="flex-direction:row;"><span class="arrow-icon">→</span><div class="flow-node-enhanced slide-in-right">User 1</div></div>
+                    <div class="flow-arrow-enhanced" style="flex-direction:row;"><span class="arrow-icon">→</span><div class="flow-node-enhanced slide-in-right delay-1">User 2</div></div>
+                </div>
+            </div>
+            `,
+            text: "<b>שלב 2: שעתוק אובייקטים</b><br>המפעל יכול לייצר אינסוף אובייקטים בלתי תלויים, שלכל אחד מהם יש עותק משלו של הנתונים והפונקציות."
+        },
+        {
+            html_visual: `
+            <div class="memory-grid fade-slide-up">
+                <div class="memory-cell locked"><div class="cell-label">Private Var</div><div class="cell-value">🔒 מוסתר</div></div>
+                <div class="memory-cell active"><div class="cell-label">Public Method</div><div class="cell-value">✅ חשוף</div></div>
+            </div>
+            `,
+            text: "<b>שלב 3: כימוס (Encapsulation)</b><br>שילוב מנצח: מפעל + קלוז'ר. אנחנו יכולים להגדיר משתנים שיישארו פרטיים בתוך המפעל (אף אחד לא יכול לשנות אותם מבחוץ), ולחשוף רק את הפונקציות שאנחנו מרשים."
+        }
+    ],
+    title: '🏭 פונקציות מפעל (Factory Functions)',
   content: `
    <div class="card-body">
     <p class="lead">פונקציית מפעל היא פונקציה פשוטה שמחזירה אובייקט חדש. בניגוד למחלקות (Classes) או פונקציות בנאי (Constructor Functions), אין צורך להשתמש במילת המפתח <code>new</code> או להתעסק עם הבלבול של <code>this</code>.</p>
@@ -87,7 +154,42 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
   `
  },
  modules: {
-  title: '📦 מודולים (ES6 Modules)',
+  visualizerSteps: [
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced">math.js</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">export</span></div>
+                <div class="flow-node-enhanced active">add(), sub()</div>
+            </div>
+            `,
+            text: "<b>שלב 1: ייצוא (Export)</b><br>במקום לכתוב את כל הקוד בקובץ אחד ענק ומבולגן, אנחנו מפצלים אותו. קובץ שרוצה לשתף כלים כותב <code>export</code> לפני הפונקציה."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced slide-in-right">
+                <div class="flow-node-enhanced active">add(), sub()</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">import</span></div>
+                <div class="flow-node-enhanced">app.js</div>
+            </div>
+            `,
+            text: "<b>שלב 2: ייבוא (Import)</b><br>הקובץ הראשי שואב אליו רק את הכלים הספציפיים שהוא צריך, מה שהופך את הקוד לקל משקל, מאורגן, ומונע התנגשויות שמות."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced">app.js<br>(האפליקציה)</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">←</span></div>
+                <div style="display:flex; flex-direction:column; gap:5px;">
+                    <div class="flow-node-enhanced" style="border-color:#38bdf8;">UI.js (ממשק)</div>
+                    <div class="flow-node-enhanced" style="border-color:#ff0055;">API.js (שרת)</div>
+                </div>
+            </div>
+            `,
+            text: "<b>שלב 3: עץ התלויות (Dependency Tree)</b><br>כך נראית אפליקציה מודרנית: קובץ ראשי אחד שמנצח על תזמורת של קבצים קטנים ועצמאיים שכל אחד מהם מומחה בתחומו."
+        }
+    ],
+    title: '📦 מודולים (ES6 Modules)',
   content: `
    <div class="card-body">
     <p class="lead">מודולים (Modules) מאפשרים לנו לפצל את הקוד שלנו למספר קבצים נפרדים, כאשר כל קובץ מנהל את הסביבה שלו, ומצהיר במפורש מה הוא מייצא החוצה ומה הוא מייבא מקבצים אחרים.</p>

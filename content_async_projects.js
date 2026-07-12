@@ -188,6 +188,28 @@ Promise.<span class="t-fn">all</span>([
         }
     ],
 
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced active" style="border-color:#00cc88;">const data =</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label" style="color:#ff0055;">await</span></div>
+                <div class="flow-node-enhanced typewriter delay-1">fetch('api/data')</div>
+            </div>
+            `,
+            text: "<b>שלב 1: אשליה של סנכרון</b><br>המילה <code>await</code> אומרת ל-JavaScript: 'עצור פה! אל תמשיך לשורה הבאה עד שההבטחה מסתיימת ותכניס את התוצאה שלה למשתנה data'."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced active">try {<br> await fetch() <br>}</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↘</span><span class="arrow-label error">שגיאה!</span></div>
+                <div class="flow-node-enhanced error bounce-in delay-1">catch (err) {<br> log(err) <br>}</div>
+            </div>
+            `,
+            text: "<b>שלב 2: תפיסת שגיאות נקייה</b><br>במקום להשתמש ב-<code>.catch()</code>, אנחנו עוטפים את הקוד בבלוק <code>try/catch</code> טבעי, שמאפשר לתפוס גם שגיאות של Promises וגם שגיאות רגילות באותו מקום."
+        }
+    ],
     title: '⏳ כתיבה מודרנית עם Async / Await',
     content: `
       <div class="card-body">

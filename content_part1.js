@@ -1,6 +1,6 @@
 const contentPart1 = {
   basics: {
-        visualizerSteps: [
+    visualizerSteps: [
         {
             html_visual: `
             <div class="anim-container"><div class="anim-node" style="border-color:#38bdf8;">let box;</div><div class="anim-node" style="border-style:dashed;">קופסה ריקה</div></div>
@@ -18,6 +18,31 @@ const contentPart1 = {
             <div class="anim-container"><div class="anim-node" style="border-color:#ff0055;">const PI = 3.14;</div><div class="anim-node" style="background:#ff0055; color:white;">נעול 🔒</div></div>
             `,
             text: "<b>שלב 3: קבועים (const)</b><br>משתנה מסוג <code>const</code> הוא קופסה עם מנעול! ברגע שהכנסנו אליה ערך, אי אפשר לשנות אותו לעולם."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced float-bob" style="border-color:#ffd700;">var name;<br><span style="font-size:10px;">(Hoisted Up)</span></div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↑</span></div>
+                <div class="flow-node-enhanced" style="border-color:#38bdf8;">let age;<br><span style="font-size:10px;">(Stays in place)</span></div>
+            </div>
+            `,
+            text: "<b>שלב 4: Hoisting (הנפה)</b><br>משתני <code>var</code> מועלים אוטומטית לראש הקוד, מה שעלול ליצור באגים. <code>let</code> ו-<code>const</code> נשארים במקומם ולכן בטוחים יותר."
+        },
+        {
+            html_visual: `
+            <div style="padding:15px; border:2px solid #555; border-radius:8px; position:relative;" class="fade-slide-up">
+                <span style="position:absolute; top:-10px; right:10px; background:var(--bg); padding:0 5px; color:#aaa; font-size:11px;">Global Scope</span>
+                <div style="padding:15px; border:2px solid #38bdf8; border-radius:8px; margin-top:10px; position:relative;">
+                    <span style="position:absolute; top:-10px; right:10px; background:var(--bg); padding:0 5px; color:#38bdf8; font-size:11px;">Function Scope</span>
+                    <div style="padding:10px; border:2px dashed #00cc88; border-radius:8px; margin-top:10px; position:relative;">
+                        <span style="position:absolute; top:-10px; right:10px; background:var(--bg); padding:0 5px; color:#00cc88; font-size:11px;">Block Scope (let/const)</span>
+                        <span class="anim-packet pulse-glow" style="position:static; display:inline-block; background:#00cc88;">x=5</span>
+                    </div>
+                </div>
+            </div>
+            `,
+            text: "<b>שלב 5: טווחי הכרה (Scopes)</b><br>משתני <code>let</code> ו-<code>const</code> כלואים בתוך הבלוק שלהם (Block Scope). מחוץ לבלוק הזה, אף אחד לא יכול לראות אותם!"
         }
     ],
 
@@ -60,12 +85,59 @@ colors.<span class="t-fn">push</span>(<span class="t-str">"כחול"</span>); <s
     visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container" style="justify-content: center;">
-               <div class="anim-node" style="border-radius: 50%; width: 100px; height: 100px; display:flex; align-items:center; justify-content:center;">לולאה</div>
-               <div class="anim-packet move-circle" style="left:50%; top:50%; transform:translate(-50%,-50%);">i++</div>
+            <div class="timeline-visual slide-in-right">
+                <div class="timeline-step">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-label">i = 0</span>
+                </div>
+                <div class="timeline-line"></div>
+                <div class="timeline-step">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-label">i = 1</span>
+                </div>
+                <div class="timeline-line"></div>
+                <div class="timeline-step">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-label">i = 2</span>
+                </div>
+                <div class="anim-packet move-right" style="position:absolute; right:10%; margin-top:-10px;">Looping</div>
             </div>
             `,
-            text: "<b>לולאה מסתובבת (Loop)</b><br>האובייקט מסתובב במעגל חי! בכל סיבוב הוא בודק את התנאי ומגדיל את המשתנה i. הכל רץ באופן אוטומטי עד שהתנאי נעצר."
+            text: "<b>שלב 1: לולאת for קלאסית</b><br>פס ייצור שעובד שלב אחר שלב. אנחנו מגדירים אינדקס התחלתי, תנאי עצירה, ומה קורה בכל קפיצה (i++)."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced">מערך<br>[1, 2, 3]</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced active ripple-out">for...of<br>שולף ערך</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced" style="border-color:#38bdf8;">מבצע פעולה</div>
+            </div>
+            `,
+            text: "<b>שלב 2: לולאת for...of</b><br>לולאה חכמה יותר למערכים. היא שולפת באופן אוטומטי את הערך הבא בכל איטרציה מבלי להסתבך עם אינדקסים."
+        },
+        {
+            html_visual: `
+            <div class="anim-container" style="justify-content: center;">
+               <div class="flow-node-enhanced error" style="width: 120px; text-align:center; z-index:5;">האם התנאי נכון?</div>
+               <div class="anim-packet move-circle" style="left:50%; top:50%; transform:translate(-50%,-50%); background:#00cc88;">רץ שוב!</div>
+            </div>
+            `,
+            text: "<b>שלב 3: לולאת while</b><br>לולאת 'שומר שער'. כל עוד התנאי מחזיר אמת, הלולאה תמשיך להסתובב. מצוינת כשאנחנו לא יודעים מראש כמה פעמים נצטרך לרוץ."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced">ריצת לולאה</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↘</span><span class="arrow-label">continue</span></div>
+                <div class="flow-node-enhanced warning" style="margin-top:20px;">מדלג לסיבוב הבא</div>
+                <div style="width:100%; height:1px;"></div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↗</span><span class="arrow-label">break</span></div>
+                <div class="flow-node-enhanced error" style="margin-top:-20px;">עוצר ויוצא לגמרי</div>
+            </div>
+            `,
+            text: "<b>שלב 4: מנגנוני מילוט (break / continue)</b><br><code>break</code> שובר את הלולאה לגמרי ויוצא ממנה. <code>continue</code> רק מדלג על הסיבוב הנוכחי וממשיך מיד לסיבוב הבא."
         }
     ],
 
@@ -131,14 +203,46 @@ colors.<span class="t-fn">push</span>(<span class="t-str">"כחול"</span>); <s
     visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container">
-               <div class="anim-node">קלט (Input)</div>
-               <div class="anim-packet move-right">נתונים</div>
-               <div class="anim-node" style="background:#ff0055; color:white; border-color:#fff;">פונקציה (עיבוד)</div>
-               <div class="anim-node">פלט (Return)</div>
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced">קלט (Input)</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced active highlight-flash" style="border-color:#ff0055;">מפעל עיבוד (Function)</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced">פלט (Return)</div>
             </div>
             `,
-            text: "<b>פס ייצור וירטואלי (Function)</b><br>תראה את חבילת הנתונים! היא נוסעת מצד שמאל (הקלט שאנחנו מכניסים), נכנסת למכונת הפונקציה האדומה במרכז שעושה עליה פעולות (הלוגיקה), ויוצאת בצד ימין כתוצר מוגמר."
+            text: "<b>שלב 1: פס ייצור וירטואלי</b><br>פונקציה מקבלת נתונים (פרמטרים), מבצעת עליהם שורת פעולות מוגדרות מראש, ופולטת החוצה תוצאה סופית באמצעות המילה <code>return</code>."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced">function(x) { return x*2; }</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↓</span><span class="arrow-label">הופך ל...</span></div>
+                <div class="flow-node-enhanced active bounce-in">(x) => x*2</div>
+            </div>
+            `,
+            text: "<b>שלב 2: פונקציות חץ (Arrow Functions)</b><br>תחביר מודרני ומקוצר! חוסך לנו את המילה function, ואפילו מוותר על ה-return המפורש אם יש רק שורה אחת (Implicit Return)."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced">פונקציה A<br>(המזמינה)</div>
+                <div class="flow-arrow-enhanced delay-1"><span class="arrow-icon">→</span><span class="arrow-label">קוראת ל...</span></div>
+                <div class="flow-node-enhanced active delay-2">פונקציה B<br>(קולבק)</div>
+                <div class="flow-arrow-enhanced delay-3"><span class="arrow-icon">←</span><span class="arrow-label">מחזירה</span></div>
+            </div>
+            `,
+            text: "<b>שלב 3: פונקציות קולבק (Callbacks)</b><br>אפשר להעביר פונקציה כארגומנט לפונקציה אחרת! פונקציה A תקרא לפונקציה B כשתסיים את העבודה."
+        },
+        {
+            html_visual: `
+            <div class="stack-visual">
+                <div class="stack-item" style="opacity:1;">Inner Function Memory</div>
+                <div class="stack-item" style="opacity:0.8; background:var(--primary);">Outer Function Memory</div>
+                <div class="stack-item" style="opacity:0.5; background:var(--ink);">Global Memory</div>
+            </div>
+            `,
+            text: "<b>שלב 4: מבט מקדים ל-Scope (הקשר)</b><br>פונקציות זוכרות באיזו סביבה הן נוצרו! פונקציה פנימית תמיד יכולה לגשת למשתנים של הפונקציה שעוטפת אותה. זו המהות של קלוז'רים (Closures)."
         }
     ],
 

@@ -238,6 +238,18 @@ app.post(<span class="t-str">"/api/data"</span>, (req, res) => {
     `
   },
   express: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced">http.createServer...</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↓</span><span class="arrow-label">שדרוג</span></div>
+                <div class="flow-node-enhanced active ripple-out" style="border-color:#38bdf8;">app.get('/', ...)</div>
+            </div>
+            `,
+            text: "<b>המעבר ל-Express</b><br>Express היא המסגרת המובילה לשרתים. היא עוטפת את מודול ה-http המובנה של Node והופכת את כתיבת הראוטים, הטיפול ב-JSON והשגיאות לפשוטים וקריאים הרבה יותר."
+        }
+    ],
     title: '🚀 שרתי Express',
     content: `
       <div class="card-body">

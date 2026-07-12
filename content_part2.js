@@ -3,16 +3,54 @@ const contentPart2 = {
     visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container" style="flex-direction: column; height: 200px; gap:10px;">
-               <div class="anim-node" style="width:100%; text-align:center;">document (שורש)</div>
-               <div style="display:flex; width:100%; justify-content:space-around;">
-                   <div class="anim-node" style="width:45%; text-align:center;">&lt;head&gt;</div>
-                   <div class="anim-node" style="width:45%; text-align:center; border-color:#00ff88;">&lt;body&gt;</div>
-               </div>
-               <div class="anim-packet move-right" style="color: #11131a; position:relative; width:80%; height:30px; border-radius:8px; margin:0 auto; background:#38bdf8;">div (צומת חדש)</div>
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced fade-slide-up" style="border-color:#38bdf8;">document</div>
+                <div class="flow-arrow-enhanced fade-slide-up delay-1"><span class="arrow-icon">↓</span></div>
+                <div class="flow-node-enhanced fade-slide-up delay-2">&lt;html&gt;</div>
+                <div class="flow-arrow-enhanced fade-slide-up delay-3"><span class="arrow-icon">↓</span></div>
+                <div style="display:flex; gap:10px; width:100%; justify-content:center;" class="fade-slide-up delay-4">
+                    <div class="flow-node-enhanced">&lt;head&gt;</div>
+                    <div class="flow-node-enhanced active">&lt;body&gt;</div>
+                </div>
             </div>
             `,
-            text: "<b>מניפולציית DOM</b><br>ה-DOM הוא עץ של צמתים. באנימציה, ה-JS יצר צומת חדש (הכחול המהבהב) ודחף אותו לתוך ה-body! כך אנחנו משנים את האתר בזמן אמת."
+            text: "<b>שלב 1: עץ ה-DOM</b><br>כשהדפדפן קורא את קובץ ה-HTML שלנו, הוא הופך אותו לעץ של אובייקטים (Nodes) שנקרא DOM. השורש של העץ הוא ה-<code>document</code>."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced typewriter" style="border-color:#ff0055;">querySelector('.btn')</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced highlight-flash">מחפש בעץ...</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced active bounce-in">&lt;button class="btn"&gt;</div>
+            </div>
+            `,
+            text: "<b>שלב 2: שליפת אלמנטים</b><br>בעזרת <code>querySelector</code> אנחנו יכולים 'לצוד' כל אלמנט בעץ בדיוק כמו ב-CSS, ואז לשמור אותו במשתנה כדי לשחק איתו."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced">createElement('div')</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced" style="border-color:#ffd700;">div.textContent = 'Hi'</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced active">appendChild(div)</div>
+            </div>
+            `,
+            text: "<b>שלב 3: הזרקת אלמנטים (Pipeline)</b><br>תהליך יצירת תוכן דינמי: 1. יוצרים תגית ריקה בזיכרון, 2. מוסיפים לה תוכן וקלאסים, 3. מזריקים אותה לתוך ה-DOM האמיתי ורק אז רואים אותה במסך."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced pulse-glow" style="border-color:#ff0055; border-radius:50%; width:80px; height:80px; display:flex; align-items:center; justify-content:center;">קליק! 🖱️</div>
+                <div class="flow-arrow-enhanced delay-1"><span class="arrow-icon">→</span><span class="arrow-label">Event Listener</span></div>
+                <div class="flow-node-enhanced active delay-2">פונקציית<br>Handler</div>
+                <div class="flow-arrow-enhanced delay-3"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced delay-4" style="border-color:#00cc88;">הדף מתעדכן</div>
+            </div>
+            `,
+            text: "<b>שלב 4: מאזינים (Event Listeners)</b><br>אנחנו שמים 'מכשירי האזנה' על אלמנטים (למשל על כפתור). כשהמשתמש לוחץ, המאזין מעיר פונקציה מיוחדת (Handler) שמעדכנת את הדף."
         }
     ],
 
@@ -70,24 +108,46 @@ document.body.<span class="t-fn">appendChild</span>(newDiv);</code></pre>
     `
   },
   arrayMethods: {
-        visualizerSteps: [
+    visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">[1, 2, 3]</div><div class="anim-packet move-right" style="background:#34d399;">map(*2)</div><div class="anim-node" style="border-color:#34d399;">[2, 4, 6]</div></div>
+            <div class="memory-grid fade-slide-up">
+                <div class="memory-cell active"><div class="cell-label">אינדקס 0</div><div class="cell-value">🍎</div></div>
+                <div class="memory-cell active"><div class="cell-label">אינדקס 1</div><div class="cell-value">🍌</div></div>
+                <div class="memory-cell active"><div class="cell-label">אינדקס 2</div><div class="cell-value">🍊</div></div>
+            </div>
             `,
-            text: "<b>1. פונקציית map()</b><br>פס ייצור! לוקחת מערך קיים (משמאל), מעבירה כל איבר דרך פונקציה (הקובייה הירוקה שמכפילה ב-2), ויוצרת <b>מערך חדש לגמרי</b> (מימין)."
+            text: "<b>שלב 1: מבנה המערך</b><br>מערך הוא רשימה מסודרת. כל תא מקבל מספר 'אינדקס' שמתחיל תמיד מ-0, דרכו אפשר לגשת למידע."
         },
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">[1, 5, 2]</div><div class="anim-packet move-right" style="background:#ff0055; width:50px;">filter(>3)</div><div class="anim-node" style="border-color:#ff0055;">[5]</div></div>
+            <div class="stack-visual">
+                <div class="stack-item" style="opacity:1;">[0] 🍎</div>
+                <div class="stack-item" style="opacity:1;">[1] 🍌</div>
+                <div class="stack-item chain-appear" style="background:#ff0055;">[2] 🍇 (push)</div>
+            </div>
             `,
-            text: "<b>2. פונקציית filter()</b><br>השומר במועדון! עוברת על המערך ובודקת תנאי. רק האיברים שעברו את התנאי (כמו 5 שגדול מ-3) נכנסים למערך החדש."
+            text: "<b>שלב 2: הוספה עם push()</b><br>מתודת <code>push()</code> תמיד מוסיפה איבר חדש ל<b>סוף</b> המערך, ומתודת <code>pop()</code> מוחקת את האיבר ה<b>אחרון</b>."
         },
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">[1, 2, 3]</div><div class="anim-packet spin" style="background:#f7df1e;">reduce(+)</div><div class="anim-node" style="border-radius:50%; border-color:#f7df1e;">6</div></div>
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced">[1, 2, 3]</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">map(x*2)</span></div>
+                <div class="flow-node-enhanced active ripple-out">[2, 4, 6]</div>
+            </div>
             `,
-            text: "<b>3. פונקציית reduce()</b><br>המגרסה! לוקחת מערך שלם ומצמצמת אותו לערך בודד אחד (כמו סכום כל המספרים יחד)."
+            text: "<b>שלב 3: שיבוט עם map()</b><br>פס ייצור! עוברת על המערך המקורי, מפעילה פונקציה על כל תא, ויוצרת <b>מערך חדש לגמרי</b> בלי לשנות את המקור."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced">
+                <div class="flow-node-enhanced">[1, 5, 2, 8]</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">filter(>4)</span></div>
+                <div class="flow-node-enhanced active bounce-in">[5, 8]</div>
+            </div>
+            `,
+            text: "<b>שלב 4: סינון עם filter()</b><br>השומר במועדון! יוצר מערך חדש ומשאיר בו רק את הערכים שהפונקציה עליהם החזירה true."
         }
     ],
 
@@ -156,24 +216,39 @@ document.body.<span class="t-fn">appendChild</span>(newDiv);</code></pre>
     `
   },
   stringMethods: {
-        visualizerSteps: [
+    visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">"Hello"</div><div class="anim-packet move-right" style="background:#f7df1e; width:60px;">toUpperCase</div><div class="anim-node">"HELLO"</div></div>
+            <div class="memory-grid fade-slide-up" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="memory-cell"><div class="cell-label">0</div><div class="cell-value">ש</div></div>
+                <div class="memory-cell"><div class="cell-label">1</div><div class="cell-value">ל</div></div>
+                <div class="memory-cell"><div class="cell-label">2</div><div class="cell-value">ו</div></div>
+                <div class="memory-cell"><div class="cell-label">3</div><div class="cell-value">ם</div></div>
+            </div>
             `,
-            text: "<b>1. אותיות גדולות</b><br>מחרוזות לא ניתנות לשינוי. הפעולה מחזירה מחרוזת חדשה לגמרי."
+            text: "<b>שלב 1: מחרוזת כמערך</b><br>גם מחרוזת היא למעשה אוסף של תווים, ואפשר לגשת לכל אות בנפרד בעזרת האינדקס שלה (למשל: <code>str[0]</code>)."
         },
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">"Wolt"</div><div class="anim-packet move-right" style="background:#00d2ff; width:40px;">split("")</div><div class="anim-node">['W','o','l','t']</div></div>
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced">"Hello World"</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">slice(0, 5)</span></div>
+                <div class="flow-node-enhanced active">"Hello"</div>
+            </div>
             `,
-            text: "<b>2. גזירה (split)</b><br>כמו מספריים! חותכים את המחרוזת לפי תו מפריד והופכים אותה למערך של אותיות או מילים."
+            text: "<b>שלב 2: חיתוך (slice)</b><br>חותך חלק מהמחרוזת ומוציא אותו. חשוב: מחרוזות הן Immutable - החיתוך מחזיר מחרוזת חדשה ולא משנה את המקורית."
         },
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">['A','B']</div><div class="anim-packet move-right" style="background:#ff0055; width:40px;">join("-")</div><div class="anim-node">"A-B"</div></div>
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced" style="border-color:#ff0055;">name = "דני"</div>
+                <div class="flow-arrow-enhanced delay-1"><span class="arrow-icon">↓</span></div>
+                <div class="flow-node-enhanced typewriter delay-2" style="width:100%;">\`שלום \${name}\`</div>
+                <div class="flow-arrow-enhanced delay-3"><span class="arrow-icon">↓</span></div>
+                <div class="flow-node-enhanced active delay-4">"שלום דני"</div>
+            </div>
             `,
-            text: "<b>3. הדבקה (join)</b><br>הדבק! לוקחים מערך ומחברים אותו חזרה למחרוזת אחת עם תו מפריד (למשל מקף)."
+            text: "<b>שלב 3: שרשור מודרני (Template Literals)</b><br>בעזרת Backticks (גרשיים הפוכים) אפשר להזריק משתנים ישירות לתוך הטקסט עם <code>\${}</code> במקום להשתמש בפלוסים."
         }
     ],
 
@@ -217,9 +292,45 @@ str.<span class="t-fn">replace</span>(<span class="t-str">"World"</span>, <span 
     visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container"><div class="anim-node">{name: "Dani"}</div><div class="anim-packet spin" style="background:#ff0055; width:40px;">Object.keys()</div><div class="anim-node">["name"]</div></div>
+            <div class="memory-grid fade-slide-up">
+                <div class="memory-cell" style="border-color:#38bdf8;"><div class="cell-label">name</div><div class="cell-value">"דני"</div></div>
+                <div class="memory-cell" style="border-color:#38bdf8;"><div class="cell-label">age</div><div class="cell-value">30</div></div>
+                <div class="memory-cell" style="border-color:#38bdf8;"><div class="cell-label">role</div><div class="cell-value">"Admin"</div></div>
+            </div>
             `,
-            text: "<b>אובייקטים</b><br>אובייקטים מאחסנים מידע בזוגות של מפתח-ערך. פונקציות כמו Object.keys חולצות רק את המפתחות ומחזירות אותם כמערך מסודר."
+            text: "<b>שלב 1: אובייקט (מילון)</b><br>אובייקטים מאחסנים מידע בזוגות. לכל ערך יש 'מפתח' (Key) שדרכו שולפים אותו, בדיוק כמו במילון. אין חשיבות לסדר."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced">user.name</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↘</span></div>
+                <div class="flow-node-enhanced active">"דני"</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">↙</span></div>
+                <div class="flow-node-enhanced">user['name']</div>
+            </div>
+            `,
+            text: "<b>שלב 2: גישה לנתונים</b><br>אפשר לגשת בעזרת נקודה (הנפוץ ביותר), או סוגריים מרובעים. חובה להשתמש במרובעים כששם המפתח שמור בתוך משתנה דינמי!"
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced" style="width:100%; border-color:#ff0055;">{ name: "דני", age: 30 }</div>
+                <div class="flow-arrow-enhanced delay-1"><span class="arrow-icon">↓</span><span class="arrow-label">Object.keys()</span></div>
+                <div class="flow-node-enhanced active delay-2">["name", "age"]</div>
+            </div>
+            `,
+            text: "<b>שלב 3: חילוץ מפתחות (Object.keys)</b><br>פונקציית העזר Object.keys חולצת רק את המפתחות של האובייקט ומחזירה אותם כמערך מסודר שאפשר לרוץ עליו."
+        },
+        {
+            html_visual: `
+            <div class="flow-diagram-enhanced slide-in-right">
+                <div class="flow-node-enhanced" style="border-color:#ffd700;">{ name: "דני", age: 30 }</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">const { name } =</span></div>
+                <div class="flow-node-enhanced active bounce-in">const name = "דני"</div>
+            </div>
+            `,
+            text: "<b>שלב 4: חילוץ נתונים (Destructuring)</b><br>במקום לכתוב שוב ושוב <code>user.name</code>, אפשר לשלוף מאפיינים החוצה ישירות למשתנים עצמאיים."
         }
     ],
 
