@@ -58,6 +58,19 @@ console.<span class="t-fn">log</span>(<span class="t-str">'4'</span>); <span cla
     `
   },
   callbacksAsync: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container" style="justify-content: center; gap:40px;">
+               <div class="anim-node">פעולה 1</div>
+               <div class="anim-packet spin" style="position:relative; width:40px; height:40px; background:#ff0055; border-radius:50%;">CB</div>
+               <div class="anim-node">פעולה 2</div>
+            </div>
+            `,
+            text: "<b>פונקציות קולבק (Callbacks)</b><br>אנחנו מעבירים פונקציה כפרמטר (העיגול האדום) לפעולה הראשונה, ומבקשים: 'כשאתה מסיים, תפעיל אותי!'. ברגע שהפעולה מסתיימת, הקולבק יזנק לפעולה."
+        }
+    ],
+
     title: '📞 קולבקים (Callbacks) ומערכת הקבצים',
     content: `
       <div class="card-body">
@@ -102,6 +115,19 @@ fs.<span class="t-fn">readFile</span>(<span class="t-str">"user.json"</span>, (e
     `
   },
   promisesFetch: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container">
+               <div class="anim-node" style="border-color:#ff0055;">שולח הבטחה (Pending)</div>
+               <div class="anim-packet move-right" style="background:#f7df1e; color:#000; box-shadow:0 0 15px #f7df1e;">Promise</div>
+               <div class="anim-node" style="border-color:#00ff88;">התקבלה! (Resolved)</div>
+            </div>
+            `,
+            text: "<b>הבטחות (Promises)</b><br>תראה את חבילת ההבטחה מחכה בדרך! בהתחלה היא במצב 'ממתין' (Pending). רק כשהיא מגיעה ליעד בהצלחה, היא נפתרת (Resolved) ומחזירה לנו את הנתונים."
+        }
+    ],
+
     title: '🤝 הבטחות (Promises) ו-Fetch API',
     content: `
       <div class="card-body">
@@ -146,6 +172,22 @@ Promise.<span class="t-fn">all</span>([
     `
   },
   asyncAwait: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container" style="flex-direction:column; justify-content:center; gap:20px;">
+               <div class="anim-node" style="width:100%; border-color:#f7df1e;">קוד רץ (Sync)</div>
+               <div style="display:flex; width:100%; justify-content:space-between; align-items:center;">
+                   <div class="anim-node" style="background:#ff0055; color:white; border-color:#fff;">await! (עצור)</div>
+                   <div class="anim-packet spin" style="position:relative; background:#00ff88; box-shadow:0 0 15px #00ff88; width:30px; height:30px; border-radius:50%;">⏱️</div>
+                   <div class="anim-node" style="border-color:#00d2ff;">הקוד ממשיך</div>
+               </div>
+            </div>
+            `,
+            text: "<b>Async / Await</b><br>הקוד רץ כרגיל, עד שהוא נתקל במילת הקסם Await! כאן הוא ממש 'שם ברקס' (עוצר את הפונקציה הספציפית הזו), ממתין לשעון שיסיים את העבודה (למשל משיכת נתונים מהרשת), ורק אז ממשיך לשורה הבאה."
+        }
+    ],
+
     title: '⏳ כתיבה מודרנית עם Async / Await',
     content: `
       <div class="card-body">

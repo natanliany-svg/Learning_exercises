@@ -1812,3 +1812,62 @@ window.initTechEnglishCheckboxes = function() {
         }
     });
 }
+
+
+// --- Visualizer Functions ---
+window.nextVisSlide = function(topicKey) {
+    const container = document.getElementById('vis-' + topicKey);
+    if (!container) return;
+    
+    let current = parseInt(container.getAttribute('data-current'));
+    const total = parseInt(container.getAttribute('data-total'));
+    
+    if (current < total - 1) {
+        current++;
+        updateVisSlide(container, current, total, topicKey);
+    }
+};
+
+window.prevVisSlide = function(topicKey) {
+    const container = document.getElementById('vis-' + topicKey);
+    if (!container) return;
+    
+    let current = parseInt(container.getAttribute('data-current'));
+    const total = parseInt(container.getAttribute('data-total'));
+    
+    if (current > 0) {
+        current--;
+        updateVisSlide(container, current, total, topicKey);
+    }
+};
+
+window.updateVisSlide = function(container, current, total, topicKey) {
+    container.setAttribute('data-current', current);
+    
+    // Update slides
+    const slides = container.querySelectorAll('.visualizer-slide');
+    slides.forEach((slide, idx) => {
+        if (idx === current) {
+            slide.classList.add('active');
+        } else {
+            slide.classList.remove('active');
+        }
+    });
+    
+    // Update dots
+    const dots = container.querySelectorAll('.vis-dot');
+    dots.forEach((dot, idx) => {
+        if (idx === current) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+    
+    // Update buttons
+    const btnPrev = container.querySelector('.btn-prev');
+    const btnNext = container.querySelector('.btn-next');
+    
+    btnPrev.disabled = (current === 0);
+    btnNext.disabled = (current === total - 1);
+};

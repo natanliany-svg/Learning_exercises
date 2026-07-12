@@ -1,5 +1,21 @@
 const contentPart2 = {
   dom: {
+    visualizerSteps: [
+        {
+            html_visual: `
+            <div class="anim-container" style="flex-direction: column; height: 200px; gap:10px;">
+               <div class="anim-node" style="width:100%; text-align:center;">document (שורש)</div>
+               <div style="display:flex; width:100%; justify-content:space-around;">
+                   <div class="anim-node" style="width:45%; text-align:center;">&lt;head&gt;</div>
+                   <div class="anim-node" style="width:45%; text-align:center; border-color:#00ff88;">&lt;body&gt;</div>
+               </div>
+               <div class="anim-packet move-right" style="position:relative; width:80%; height:30px; border-radius:8px; margin:0 auto; background:#38bdf8;">div (צומת חדש)</div>
+            </div>
+            `,
+            text: "<b>מניפולציית DOM</b><br>ה-DOM הוא עץ של צמתים. באנימציה, ה-JS יצר צומת חדש (הכחול המהבהב) ודחף אותו לתוך ה-body! כך אנחנו משנים את האתר בזמן אמת."
+        }
+    ],
+
     title: '🌐 ה-DOM ומניפולציה של אלמנטים',
     content: `
       <div class="card-body">
