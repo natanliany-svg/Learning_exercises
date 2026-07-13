@@ -58,6 +58,12 @@ const dockerBasicContent = {
         <pre><code><span class="t-com"># בניית תמונה (Image) מקובץ Dockerfile בתיקייה הנוכחית</span>
 docker build -t my-app-name <span class="t-num">.</span>
 
+<span class="t-com"># משיכת תמונה מהרשת (Docker Hub) ללא הרצה</span>
+docker pull nginx
+
+<span class="t-com"># הצגת כל התמונות (Images) הקיימות מקומית במחשב</span>
+docker images
+
 <span class="t-com"># הרצת קונטיינר מתוך התמונה שיצרנו</span>
 <span class="t-com"># -p 3000:80 -> מחבר את פורט 3000 אצלנו, לפורט 80 בתוך הקונטיינר</span>
 <span class="t-com"># -d -> מריץ ברקע (Detached mode)</span>
@@ -66,8 +72,40 @@ docker run -p <span class="t-num">3000</span>:<span class="t-num">80</span> -d m
 <span class="t-com"># הצגת כל הקונטיינרים שרצים כרגע</span>
 docker ps
 
-<span class="t-com"># עצירת קונטיינר לפי ID</span>
-docker stop &lt;container-id&gt;</code></pre>
+<span class="t-com"># הצגת כל הקונטיינרים - כולל אלו שנעצרו (חשוב למבחן!)</span>
+docker ps -a
+
+<span class="t-com"># צפייה בלוגים של קונטיינר מסוים (חשוב לדיבוג שגיאות)</span>
+docker logs &lt;container-id-or-name&gt;
+
+<span class="t-com"># עצירת קונטיינר רץ</span>
+docker stop &lt;container-id&gt;
+
+<span class="t-com"># התחלת קונטיינר שנעצר</span>
+docker start &lt;container-id&gt;
+
+<span class="t-com"># מחיקת קונטיינר (חייב להיות מופסק קודם, או שימוש ב--f למחיקה בכוח)</span>
+docker rm &lt;container-id&gt;
+
+<span class="t-com"># מחיקת תמונה (Image) מהמחשב</span>
+docker rmi &lt;image-name-or-id&gt;
+
+<span class="t-com"># בדיקת גרסה ופרטים על מערכת הדוקר</span>
+docker --version
+docker info
+
+<span class="t-com"># הרצת קונטיינר אינטראקטיבי (מאפשר גישה לטרמינל שבתוכו - Shell Management)</span>
+docker run -it ubuntu
+
+<span class="t-com"># הרצת קונטיינר עם שם מותאם אישית (--name)</span>
+docker run --name my-web-server nginx
+
+<span class="t-com"># הרצת קונטיינר עם משתני סביבה (למשל סיסמה למסד נתונים)</span>
+docker run -e MYSQL_ROOT_PASSWORD=123456 mysql
+
+<span class="t-com"># מחיקה אוטומטית של קונטיינר ברגע שהוא נעצר</span>
+docker run --rm ubuntu
+docker run --rm ubuntu
 
         <div class="callout analogy">
           <span class="ico">🏗️</span>
@@ -163,5 +201,55 @@ docker stop &lt;container-id&gt;</code></pre>
         </div>
       </div>
     `
+  },
+  dockerMySql: {
+    visualizerSteps: [
+        {
+            html_visual: \`
+            <div class="flow-diagram-enhanced scale-up">
+                <div class="flow-node-enhanced active" style="border-color:#00758F;">1. docker run mysql<br><span style="font-size:10px;">מריצים שרת DB ברקע</span></div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
+                <div class="flow-node-enhanced active" style="border-color:#F29111;">2. docker exec -it mysql<br><span style="font-size:10px;">נכנסים אליו דרך הטרמינל</span></div>
+            </div>
+            \`,
+            text: "<b>חיבור למסד נתונים:</b><br>כדי לעבוד עם MySQL דרך דוקר, קודם מריצים את השרת כקונטיינר ברקע (-d), ואז 'פורצים' פנימה למסוף שלו בעזרת הפקודה exec."
+        }
+    ],
+
+    title: '🐬 עבודה עם MySQL בטרמינל',
+    content: \`
+      <div class="card-body">
+        <p class="lead">הקלאסרום דורש שליטה מלאה בהרצת שרת MySQL מקומי והתחברות אליו דרך הטרמינל כדי להריץ פקודות SQL בסיסיות.</p>
+        
+        <h4>1. הרצת הקונטיינר של מסד הנתונים</h4>
+        <pre><code><span class="t-com"># הרצת MySQL ברקע עם שם מותאם אישית, חשיפת פורט והגדרת סיסמה</span>
+docker run -d --name mysql-db -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:8.4</code></pre>
+
+        <h4>2. התחברות אינטראקטיבית פנימה</h4>
+        <pre><code><span class="t-com"># פקודת exec מאפשרת להריץ פקודה *בתוך* קונטיינר שכבר רץ.</span>
+<span class="t-com"># כאן אנחנו נכנסים למסוף ה-MySQL שלו:</span>
+docker exec -it mysql-db mysql -u root -p</code></pre>
+
+        <h4>3. פקודות SQL בסיסיות למבחן (מתוך הטרמינל)</h4>
+        <pre><code><span class="t-key">SHOW DATABASES</span>;
+
+<span class="t-com">-- יצירת מסד נתונים חדש</span>
+<span class="t-key">CREATE DATABASE</span> school;
+<span class="t-key">USE</span> school;
+
+<span class="t-com">-- יצירת טבלה</span>
+<span class="t-key">CREATE TABLE</span> students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+<span class="t-com">-- הוספת נתון ושליפתו</span>
+<span class="t-key">INSERT INTO</span> students (name) <span class="t-key">VALUES</span> ('Moshe');
+<span class="t-key">SELECT</span> * <span class="t-key">FROM</span> students;
+
+<span class="t-com">-- יציאה חזרה לטרמינל הרגיל</span>
+exit</code></pre>
+      </div>
+    \`
   }
 };

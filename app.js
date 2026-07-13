@@ -20,13 +20,13 @@ const sectionsList = [
     id: 'section-basics',
     title: '📚 יסודות ומתקדם',
     subtitle: 'הבסיס ונושאים מתקדמים ב-JavaScript',
-    topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring']
+    topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring', 'readlineSync']
   },
   {
     id: 'section-docker',
     title: '🐳 Docker & Containers',
     subtitle: 'וירטואליזציה, רשתות וקונטיינרים ב-Docker',
-    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
+    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerMySql', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
   },
   {
     id: 'section-web',
@@ -202,6 +202,38 @@ function onCardClick(topicKey) {
     updateProgressBar();
 }
 
+function addAnimationControls() {
+    const animatedCards = document.querySelectorAll('.card');
+    animatedCards.forEach(card => {
+        const animatedElements = card.querySelectorAll('.flow-arrow, .pipeline-arrow, .pipeline-step, .flow-node, .middleware-node, .client-icon, .server-icon, .req-res-arrow, .network-pulse');
+        if (animatedElements.length > 0) {
+            const cardBody = card.querySelector('.card-body-inner');
+            if (cardBody && !cardBody.querySelector('.animation-controls')) {
+                const controls = document.createElement('div');
+                controls.className = 'animation-controls';
+                controls.innerHTML = `<button class="play-pause-btn" onclick="toggleAnimation(this, '${card.id}')">
+                    <span>⏸️ עצור אנימציה</span>
+                </button>`;
+                cardBody.insertBefore(controls, cardBody.firstChild);
+            }
+        }
+    });
+}
+
+function toggleAnimation(btn, cardId) {
+    const card = document.getElementById(cardId);
+    if (!card) return;
+    
+    if (card.classList.contains('paused-animation')) {
+        card.classList.remove('paused-animation');
+        btn.innerHTML = '<span>⏸️ עצור אנימציה</span>';
+    } else {
+        card.classList.add('paused-animation');
+        btn.innerHTML = '<span>▶️ המשך אנימציה</span>';
+    }
+}
+window.toggleAnimation = toggleAnimation;
+
 function renderAllContent() {
     const mainContent = document.getElementById('mainContent');
     if (!mainContent) return;
@@ -242,11 +274,17 @@ function renderAllContent() {
                 const data = modalData[topicKey];
                 if (data) {
                     let wrappedContent = '';
-                    const rawContent = data.content.trim();
-                    if (rawContent.startsWith('<div class="card-body">')) {
+                    let rawContent = data.content.trim();
+                    const bonusTopics = ['dockerMySql', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced'];
+                    if (bonusTopics.includes(topicKey) && rawContent.startsWith('<div class="card-body">')) {
+                        rawContent = rawContent.replace('<div class="card-body">', '<div class="card-body bonus-content">');
+                    } else if (bonusTopics.includes(topicKey)) {
+                        rawContent = `<div class="bonus-content">${rawContent}</div>`;
+                    }
+                    if (rawContent.startsWith('<div class="card-body') && rawContent.includes('">')) {
                         wrappedContent = rawContent.replace(
-                            '<div class="card-body">',
-                            '<div class="card-body"><div class="card-body-inner">'
+                            /<div class="card-body[^>]*>/,
+                            match => match + '<div class="card-body-inner">'
                         ).replace(/<\/div>$/, '</div></div>');
                     } else {
                         wrappedContent = `<div class="card-body"><div class="card-body-inner">${rawContent}</div></div>`;
@@ -300,6 +338,7 @@ function renderAllContent() {
     
     mainContent.innerHTML = html;
     setTimeout(initTechEnglishCheckboxes, 100);
+    setTimeout(addAnimationControls, 100);
     
     // Bind click events to headers
     document.querySelectorAll('.card-header').forEach(header => {

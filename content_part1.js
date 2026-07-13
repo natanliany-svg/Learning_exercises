@@ -302,5 +302,65 @@ colors.<span class="t-fn">push</span>(<span class="t-str">"כחול"</span>); <s
         </div>
       </div>
     `
+  },
+  readlineSync: {
+    title: '💬 קלט משתמש בקונסול (readline-sync)',
+    content: `
+      <div class="card-body">
+        <p class="lead">ספריית ה-<code>readline-sync</code> היא כלי חיוני בסביבת Node.js (בצד השרת/טרמינל) המאפשר לקבל קלט מהמשתמש באופן סינכרוני (עוצר את ריצת הקוד עד שהמשתמש מקליד ולוחץ אנטר). זה הופך את בניית התפריטים והלוגיקה לליניארית וקלה הרבה יותר לתחזוקה לעומת שימוש ב-callbacks מסובכים.</p>
+        
+        <h4>1. התקנה</h4>
+        <pre><code><span class="t-com"># התקנת הספריה בפרויקט דרך הטרמינל</span>
+npm install readline-sync</code></pre>
+        
+        <h4>2. קלט טקסטואלי סטנדרטי (question)</h4>
+        <p>השיטה הנפוצה ביותר לקבלת מחרוזת טקסט רגילה מהמשתמש.</p>
+        <pre><code><span class="t-key">const</span> readlineSync = <span class="t-fn">require</span>(<span class="t-str">'readline-sync'</span>);
+
+<span class="t-com">// התוכנית תעצור כאן ותמתין לקלט מהמשתמש</span>
+<span class="t-key">const</span> username = readlineSync.<span class="t-fn">question</span>(<span class="t-str">'הכנס שם משתמש חדש: '</span>);
+console.<span class="t-fn">log</span>(<span class="t-str">\`שלום \${username}!\`</span>);</code></pre>
+
+        <h4>3. קלט מוסתר מאובטח (סיסמאות)</h4>
+        <p>כדי למנוע מהטקסט המוקלד להופיע על המסך (למשל, בעת הזנת סיסמה), נשתמש בארגומנט <code>hideEchoBack: true</code>.</p>
+        <pre><code><span class="t-com">// שימוש בהסתרת קלט עבור אבטחת סיסמאות</span>
+<span class="t-key">const</span> password = readlineSync.<span class="t-fn">question</span>(<span class="t-str">'הכנס סיסמה (מוצפנת): '</span>, {
+  hideEchoBack: <span class="t-key">true</span> 
+});</code></pre>
+
+        <h4>4. קלט מספרי בטוח (questionInt)</h4>
+        <p>המתודה <code>questionInt</code> מבטיחה שהקלט יהיה מספר שלם. אם המשתמש יקליד טקסט (כמו "abc"), הספריה תציג אוטומטית שגיאה ותבקש את הקלט מחדש מבלי שהתוכנית תקרוס!</p>
+        <pre><code><span class="t-com">// וידוא אוטומטי שהקלט הוא מספר שלם בלבד</span>
+<span class="t-key">const</span> age = readlineSync.<span class="t-fn">questionInt</span>(<span class="t-str">'הכנס את גיל המשתמש: '</span>);</code></pre>
+
+        <h4>5. אישור שאלות כן/לא (keyInYN)</h4>
+        <p>מתודה זו מציגה שאלה ומחכה ללחיצה על המקש Y או N בלבד (ללא צורך בלחיצה על Enter). היא מחזירה ערך בוליאני (true / false).</p>
+        <pre><code><span class="t-com">// פונקציית keyInYN מחזירה בוליאני - אידיאלי לאישורים</span>
+<span class="t-key">const</span> isConfirmed = readlineSync.<span class="t-fn">keyInYN</span>(<span class="t-str">'האם אתה בטוח שברצונך למחוק את הקובץ?'</span>);
+
+<span class="t-ctl">if</span> (isConfirmed) {
+    console.<span class="t-fn">log</span>(<span class="t-str">'הקובץ נמחק בהצלחה.'</span>);
+} <span class="t-ctl">else</span> {
+    console.<span class="t-fn">log</span>(<span class="t-str">'הפעולה בוטלה.'</span>);
+}</code></pre>
+
+        <h4>6. יצירת תפריטים אינטראקטיביים (keyInSelect)</h4>
+        <p>מתודת הקסם של הספריה! היא מקבלת מערך של אפשרויות ומייצרת <b>אוטומטית</b> תפריט ממוספר. המשתמש מקיש את המספר הרצוי (ללא צורך באנטר), והמתודה מחזירה את ה<b>אינדקס</b> שנבחר.</p>
+        <pre><code><span class="t-key">const</span> menuOptions = [<span class="t-str">'יצירת משתמש'</span>, <span class="t-str">'הצגת נתונים'</span>, <span class="t-str">'מחיקה'</span>];
+
+<span class="t-com">// keyInSelect יוצר תפריט אינטראקטיבי אוטומטית עם אפשרות ביטול (0)</span>
+<span class="t-key">const</span> index = readlineSync.<span class="t-fn">keyInSelect</span>(menuOptions, <span class="t-str">'אנא בחר פעולה מהתפריט:'</span>);
+
+<span class="t-ctl">if</span> (index === -<span class="t-num">1</span>) {
+    console.<span class="t-fn">log</span>(<span class="t-str">'בחרת באפשרות "CANCEL". מתנתק...'</span>);
+} <span class="t-ctl">else</span> {
+    console.<span class="t-fn">log</span>(<span class="t-str">\`בחרת באפשרות: \${menuOptions[index]}\`</span>);
+}</code></pre>
+        <div class="callout exam">
+          <span class="ico">📌</span>
+          <div class="ct"><b>חשוב לזכור:</b> אם המשתמש בוחר באפשרות "CANCEL" שנוספת אוטומטית למספר 0, פונקציית <code>keyInSelect</code> מחזירה <b>-1</b>. שימו לב להשתמש בלולאות <code>while</code> או <code>switch</code> בצורה נכונה כדי לנהל תפריטים אינטראקטיביים ללא קריסות!</div>
+        </div>
+      </div>
+    `
   }
 };

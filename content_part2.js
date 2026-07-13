@@ -151,68 +151,125 @@ document.body.<span class="t-fn">appendChild</span>(newDiv);</code></pre>
         }
     ],
 
-    title: '📊 מערכים ומתודות מובנות',
+    title: '📊 מתודות מערך (Higher-Order Methods)',
     content: `
-      <div class="card-body">
-        <p class="lead">עבודה עם רשימות (מערכים) היא אחד הנושאים המרכזיים במבחן. JavaScript מציעה מתודות מובנות (High-Order Functions) המקלות על ריצה, סינון ושינוי של מערכים.</p>
-        
-        <h4>טבלת השוואה קריטית למבחן</h4>
-        <div class="tbl-scroll">
-          <table>
-            <tr><th>מתודה</th><th>מה היא עושה</th><th>מה היא מחזירה?</th><th>האם משנה את המקור?</th></tr>
-            <tr><td><code>map()</code></td><td>מפעילה פונקציה על כל איבר במערך</td><td><b>מערך חדש</b> באותו אורך</td><td>❌ לא</td></tr>
-            <tr><td><code>filter()</code></td><td>מסננת ושומרת רק איברים שעמדו בתנאי</td><td><b>מערך חדש</b> (יכול להיות ריק)</td><td>❌ לא</td></tr>
-            <tr><td><code>reduce()</code></td><td>מצמצמת את כל המערך לערך בודד (סכום, ממוצע)</td><td><b>ערך יחיד</b> (מספר, אובייקט וכו')</td><td>❌ לא</td></tr>
-            <tr><td><code>forEach()</code></td><td>רצה על המערך ומבצעת פעולה (למשל הדפסה)</td><td><code>undefined</code></td><td>❌ לא</td></tr>
-            <tr><td><code>find()</code></td><td>מחזירה את האיבר <b>הראשון</b> שעובר את התנאי</td><td><b>איבר בודד</b> (או <code>undefined</code>)</td><td>❌ לא</td></tr>
-            <tr><td><code>push() / pop()</code></td><td>הוספה או הסרה של איבר מ<b>סוף</b> המערך</td><td>משנה את המערך במקום</td><td>✔️ <b>כן</b></td></tr>
-            <tr><td><code>slice()</code></td><td>מחזירה פרוסה/חלק מהמערך</td><td><b>מערך חדש</b></td><td>❌ לא</td></tr>
-            <tr><td><code>splice()</code></td><td>מוסיפה, מוחקת או מחליפה איברים במערך</td><td>האיברים שהוסרו</td><td>✔️ <b>כן</b></td></tr>
-          </table>
-        </div>
+<div class="lesson-container" dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 900px; margin: 0 auto; padding: 20px;">
+    
+    <!-- Header Section -->
+    <header class="lesson-header" style="border-bottom: 2px solid #3498db; margin-bottom: 30px; padding-bottom: 15px;">
+        <h1 style="color: #2c3e50; font-size: 2.2em; margin-bottom: 10px;">מתודות מערך מסדר גבוה ב-JavaScript (Higher-Order Array Methods)</h1>
+        <p style="font-size: 1.1em; color: #555;">בשפת JavaScript, מערכים כוללים אוסף מובנה של פונקציות מתקדמות המכונות "מתודות מסדר גבוה" (Higher-Order Methods). מתודה מסדר גבוה מוגדרת כפונקציה אשר מקבלת פונקציה אחרת כארגומנט, או מחזירה פונקציה כתוצאה. השימוש במתודות אלו מאפשר כתיבת קוד דקלרטיבי, נקי וקל יותר לתחזוקה, ומייתר לרוב את הצורך בלולאות <code>for</code> מסורתיות תוך מניעת תופעות לוואי (Side Effects).</p>
+    </header>
 
-        <h4>1. דוגמאות שימוש במתודות הליבה</h4>
-        <pre><code><span class="t-key">const</span> nums = [<span class="t-num">1</span>, <span class="t-num">2</span>, <span class="t-num">3</span>, <span class="t-num">4</span>];
+    <!-- Map Section -->
+    <section class="method-section" style="margin-bottom: 40px;">
+        <h2 style="color: #2980b9; border-right: 4px solid #2980b9; padding-right: 10px;">1. Array.prototype.map()</h2>
+        <p>המתודה <code>map()</code> נועדה להתמיר (Transform) נתונים. היא עוברת על כל איבר במערך המקורי, מפעילה עליו פונקציית קולבאק (Callback), ומחזירה מערך <strong>חדש לגמרי</strong> באותו האורך, המכיל את התוצאות המעובדות. המערך המקורי נותר ללא שינוי (Immutability).</p>
+        <h4 style="margin-bottom: 10px; color: #34495e;">דוגמה מעשית - שליפת ערכים מתוך מערך אובייקטים:</h4>
+        <pre style="background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto;" dir="ltr"><code class="language-javascript">
+const users = [
+  { id: 101, name: 'Alice', role: 'Admin' },
+  { id: 102, name: 'Bob', role: 'User' },
+  { id: 103, name: 'Charlie', role: 'Editor' }
+];
 
-<span class="t-com">// map - הכפלת כל איבר פי 2</span>
-<span class="t-key">const</span> doubled = nums.<span class="t-fn">map</span>(n => n * <span class="t-num">2</span>); <span class="t-com">// [2, 4, 6, 8]</span>
+// יצירת מערך חדש המכיל אך ורק את שמות המשתמשים
+const userNames = users.map(user => user.name);
 
-<span class="t-com">// filter - שמירה רק על מספרים שגדולים מ-2</span>
-<span class="t-key">const</span> filtered = nums.<span class="t-fn">filter</span>(n => n > <span class="t-num">2</span>); <span class="t-com">// [3, 4]</span>
+console.log(userNames); 
+// פלט: ['Alice', 'Bob', 'Charlie']
+        </code></pre>
+    </section>
 
-<span class="t-com">// reduce - חישוב סכום האיברים (0 הוא הערך ההתחלתי)</span>
-<span class="t-key">const</span> sum = nums.<span class="t-fn">reduce</span>((total, n) => total + n, <span class="t-num">0</span>); <span class="t-com">// 10</span>
+    <!-- Filter Section -->
+    <section class="method-section" style="margin-bottom: 40px;">
+        <h2 style="color: #2980b9; border-right: 4px solid #2980b9; padding-right: 10px;">2. Array.prototype.filter()</h2>
+        <p>המתודה <code>filter()</code> משמשת לסינון נתונים קיימים. היא בוחנת כל איבר דרך פונקציית תנאי שמסופקת לה, ויוצרת מערך חדש המכיל אך ורק את האיברים עבורם פונקציית הקולבאק החזירה <code>true</code>. איברים שלא צלחו את התנאי נשמטים מהמערך התוצאתי.</p>
+        <h4 style="margin-bottom: 10px; color: #34495e;">דוגמה מעשית - סינון משתמשים בעלי הרשאות ניהול:</h4>
+        <pre style="background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto;" dir="ltr"><code class="language-javascript">
+const employees = [
+  { name: 'Sarah', department: 'IT', active: true },
+  { name: 'John', department: 'HR', active: false },
+  { name: 'Mike', department: 'IT', active: true }
+];
 
-<span class="t-com">// find - מציאת המספר הראשון ששווה ל-3</span>
-<span class="t-key">const</span> found = nums.<span class="t-fn">find</span>(n => n === <span class="t-num">3</span>); <span class="t-com">// 3</span></code></pre>
-        
-        <div class="callout analogy">
-          <span class="ico">🏭</span>
-          <div class="ct"><b>אנלוגיה:</b> 
-            <br>• <b>map</b> = פס ייצור במפעל שמשנה כל קופסה שעוברת עליו.
-            <br>• <b>filter</b> = שומר בכניסה למועדון שמכניס פנימה רק אנשים שעומדים בתנאי קוד לבוש.
-            <br>• <b>reduce</b> = מגרסת קרטון שלוקחת ערימה של ארגזים ומכווצת אותם לקוביה אחת קטנה ודחוסה.
-          </div>
-        </div>
+// סינון עובדים פעילים במחלקת ה-IT בלבד
+const activeIT = employees.filter(emp => emp.department === 'IT' && emp.active);
 
-        <h4>2. מלכודת ה-sort המספרים במבחן! (זהב)</h4>
-        <p>ברירת המחדל של <code>sort()</code> היא להמיר את האיברים ל<b>מחרוזות</b> ולמיין אותם לפי סדר אלפביתי במילון, ולא לפי ערך מספרי!</p>
-        <pre><code><span class="t-com">// ❌ באג: מיון לפי טקסט (כי "1" בא לפני "2", אז "10" בא לפני "2"!)</span>
-<span class="t-key">const</span> badSort = [<span class="t-num">10</span>, <span class="t-num">2</span>, <span class="t-num">1</span>].<span class="t-fn">sort</span>(); <span class="t-com">// פלט: [1, 10, 2]</span>
+console.log(activeIT); 
+// פלט: [{ name: 'Sarah', department: 'IT', active: true }, { name: 'Mike', department: 'IT', active: true }]
+        </code></pre>
+    </section>
 
-<span class="t-com">// ✅ פתרון: תמיד לספק פונקציית השוואה למיון מספרים!</span>
-<span class="t-key">const</span> goodSortAsc = [<span class="t-num">10</span>, <span class="t-num">2</span>, <span class="t-num">1</span>].<span class="t-fn">sort</span>((a, b) => a - b);  <span class="t-com">// [1, 2, 10] - סדר עולה</span>
-<span class="t-key">const</span> goodSortDesc = [<span class="t-num">10</span>, <span class="t-num">2</span>, <span class="t-num">1</span>].<span class="t-fn">sort</span>((a, b) => b - a); <span class="t-com">// [10, 2, 1] - סדר יורד</span></code></pre>
+    <!-- Reduce Section -->
+    <section class="method-section" style="margin-bottom: 40px;">
+        <h2 style="color: #2980b9; border-right: 4px solid #2980b9; padding-right: 10px;">3. Array.prototype.reduce()</h2>
+        <p>המתודה <code>reduce()</code> היא הכלי הגמיש והעוצמתי ביותר לעיבוד מערכים. תפקידה הוא "לצמצם" את המערך לכדי ערך בודד - אשר יכול להיות מספר, מחרוזת, אובייקט מורכב או מערך אחר. היא פועלת על ידי העברת משתנה צובר (Accumulator) בין כל איטרציה, אשר מתעדכן בהתאם ללוגיקה בפונקציית ה"רדוסר". מומלץ תמיד לספק ל-reduce ערך התחלתי מפורש כדי למנוע שגיאות הקשר.</p>
+        <h4 style="margin-bottom: 10px; color: #34495e;">דוגמה מעשית - סכימת עלויות וקיבוץ נתונים:</h4>
+        <pre style="background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto;" dir="ltr"><code class="language-javascript">
+const shoppingCart = [
+  { product: 'Laptop', price: 1200, quantity: 1 },
+  { product: 'Mouse', price: 45, quantity: 2 },
+  { product: 'Monitor', price: 300, quantity: 1 }
+];
 
-        <div class="callout exam">
-          <span class="ico">📌</span>
-          <div class="ct"><b>הבחנה חשובה למבחן:</b>
-            <br>• <b>slice (פרוסה)</b>: חותך חלק ומחזיר מערך חדש. <b>לא נוגע במקור</b>.
-            <br>• <b>splice (ניתוח)</b>: מוסיף או מוחק איברים ו<b>משנה ישירות את המערך המקורי</b>.
-            <br>• <b>forEach</b> תמיד מחזיר <code>undefined</code>. אל תנסו לשמור את הערך שלו במשתנה. אם אתם רוצים לקבל מערך מעובד בחזרה, השתמשו ב-<code>map</code>.
-          </div>
-        </div>
-      </div>
+// חישוב הסכום הכולל לתשלום בעגלת הקניות
+const totalAmount = shoppingCart.reduce((acc, currentItem) => {
+  return acc + (currentItem.price * currentItem.quantity);
+}, 0); // 0 מוגדר כערך ההתחלתי של acc
+
+console.log(totalAmount); // פלט: 1590
+        </code></pre>
+    </section>
+
+    <!-- Find Section -->
+    <section class="method-section" style="margin-bottom: 40px;">
+        <h2 style="color: #2980b9; border-right: 4px solid #2980b9; padding-right: 10px;">4. Array.prototype.find()</h2>
+        <p>המתודה <code>find()</code> משמשת לחיפוש נקודתי מהיר. היא סורקת את המערך ומחזירה את <strong>האיבר הראשון</strong> שמקיים את התנאי שהוגדר בקולבאק. בניגוד ל-filter, ברגע שנמצאת התאמה, המתודה עוצרת את הריצה (Short-circuiting) ואינה ממשיכה לבדוק את יתר האיברים. במקרה שלא נמצאה אף התאמה, התוצאה תהיה <code>undefined</code>.</p>
+        <h4 style="margin-bottom: 10px; color: #34495e;">דוגמה מעשית - איתור רשומה לפי מזהה ייחודי:</h4>
+        <pre style="background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto;" dir="ltr"><code class="language-javascript">
+const orders = [
+  { orderId: 'ORD-001', status: 'Delivered' },
+  { orderId: 'ORD-002', status: 'Processing' },
+  { orderId: 'ORD-003', status: 'Shipped' }
+];
+
+const targetOrder = orders.find(order => order.orderId === 'ORD-002');
+
+console.log(targetOrder); // פלט: { orderId: 'ORD-002', status: 'Processing' }
+        </code></pre>
+    </section>
+
+    <!-- Sort Section -->
+    <section class="method-section" style="margin-bottom: 40px;">
+        <h2 style="color: #2980b9; border-right: 4px solid #2980b9; padding-right: 10px;">5. Array.prototype.sort()</h2>
+        <p>המתודה <code>sort()</code> נועדה לסידור איברי המערך. להבדיל מהמתודות הקודמות, <code>sort()</code> מבצעת שינוי במערך המקורי עצמו (In-place Mutation). התנהגות ברירת המחדל שלה ממירה כל איבר למחרוזת וממיינת לפי ערכי קידוד UTF-16, מה שעלול לגרום לתוצאות בלתי צפויות במיון מספרים (למשל, 10 יופיע לפני 2). לכן, כשממיינים נתונים מספריים או אובייקטים, חובה להעביר למתודה <strong>פונקציית השוואה</strong> (Comparator Function).</p>
+        <h4 style="margin-bottom: 10px; color: #34495e;">דוגמה מעשית - מיון נכון של מספרים:</h4>
+        <pre style="background: #282c34; color: #abb2bf; padding: 15px; border-radius: 6px; overflow-x: auto;" dir="ltr"><code class="language-javascript">
+const scores = [73, 100, 4, 21, 9];
+
+// מיון בסדר עולה מדויק תוך שימוש בפונקציית השוואה
+scores.sort((a, b) => a - b);
+
+console.log(scores); // פלט: [4, 9, 21, 73, 100]
+
+// טיפ: כדי למיין בסדר יורד, פשוט מחליפים את הסדר ל- b - a
+        </code></pre>
+    </section>
+
+    <!-- Summary Section -->
+    <footer class="lesson-footer" style="background: #ecf0f1; border: 1px solid #bdc3c7; padding: 20px; border-radius: 8px;">
+        <h3 style="color: #2c3e50; margin-top: 0; border-bottom: 1px solid #ccc; padding-bottom: 10px;">סיכום לבחירת המתודה הנכונה</h3>
+        <ul style="padding-right: 25px; margin-bottom: 0; line-height: 1.8;">
+            <li>כאשר נדרש ליצור מבנה נתונים חדש שמבוסס נקודתית על המערך הקיים, הפעילו את <strong>map</strong>.</li>
+            <li>כאשר נדרש לקבל תת-קבוצה ספציפית של נתונים העונים לתנאי, הפעילו את <strong>filter</strong>.</li>
+            <li>כאשר נדרש להפיק חישוב בודד מתוך סך כל הנתונים, הפעילו את <strong>reduce</strong>.</li>
+            <li>כאשר נדרש לשלוף איבר אחד מסוים במהירות, הפעילו את <strong>find</strong>.</li>
+            <li>כאשר נדרש לסדר את המידע להמשך תצוגה, הפעילו את <strong>sort</strong> (בליווי פונקציית השוואה במידת הצורך).</li>
+        </ul>
+    </footer>
+    
+</div>
     `
   },
   stringMethods: {
