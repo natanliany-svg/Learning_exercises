@@ -7,7 +7,9 @@ const modalData = {
     ...contentPart2,
     ...contentPart3,
     ...asyncLearningContent,
-    ...serversContent
+    ...serversContent,
+    ...dockerBasicContent,
+    ...dockerComposeContent
 };
 
 const sectionsList = [
@@ -16,6 +18,12 @@ const sectionsList = [
     title: '📚 יסודות ומתקדם',
     subtitle: 'הבסיס ונושאים מתקדמים ב-JavaScript',
     topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring']
+  },
+  {
+    id: 'section-docker',
+    title: '🐳 Docker & Containers',
+    subtitle: 'וירטואליזציה, רשתות וקונטיינרים ב-Docker',
+    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes']
   },
   {
     id: 'section-web',
