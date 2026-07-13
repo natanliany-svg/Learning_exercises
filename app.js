@@ -9,7 +9,8 @@ const modalData = {
     ...asyncLearningContent,
     ...serversContent,
     ...dockerBasicContent,
-    ...dockerComposeContent
+    ...dockerComposeContent,
+    ...dockerAdvancedContent
 };
 
 const sectionsList = [
@@ -23,7 +24,7 @@ const sectionsList = [
     id: 'section-docker',
     title: '🐳 Docker & Containers',
     subtitle: 'וירטואליזציה, רשתות וקונטיינרים ב-Docker',
-    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes']
+    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping']
   },
   {
     id: 'section-web',
