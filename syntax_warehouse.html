@@ -3,39 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מחסן הסינטאקס 🧠</title>
+    <title>מחסן הסינטאקס 🧠 - Docker Bay</title>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        :root { --bg: #0f172a; --card-bg: #1e293b; --text-main: #f8fafc; --text-sec: #94a3b8; --accent: #8b5cf6; --success: #10b981; }
+        :root { 
+            --bg: #050a0f; 
+            --card-bg: rgba(10, 15, 20, 0.9); 
+            --text-main: #0ff; 
+            --text-sec: #94a3b8; 
+            --accent: #ff0055; 
+            --success: #a6e22e;
+            --grid: #1a252c;
+            --border-glow: 0 0 10px rgba(0, 255, 255, 0.3);
+            --pink-glow: 0 0 10px rgba(255, 0, 85, 0.4);
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Heebo', sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.8; }
-        .nav { background: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid #334155; }
-        .nav a { color: var(--accent); text-decoration: none; font-weight: 600; }
-        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
-        .content { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid #334155; border-top: 4px solid var(--accent); }
-        h1, h2, h3 { color: var(--accent); margin-top: 2.5rem; margin-bottom: 1rem; }
-        h1 { font-size: 2.5rem; margin-top: 0; }
+        body { 
+            font-family: 'Heebo', sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-sec); 
+            line-height: 1.8; 
+            background-image: 
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .nav { 
+            background: #020406; 
+            padding: 1rem 2rem; 
+            border-bottom: 2px solid var(--text-main); 
+            box-shadow: var(--border-glow);
+            text-shadow: 0 0 5px var(--text-main);
+        }
+        .nav a { color: var(--text-main); text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 2px;}
+        .container { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; position: relative;}
+        
+        .container::before {
+            content: 'SECURE WAREHOUSE // SECTOR 7';
+            position: absolute;
+            top: -25px;
+            right: 20px;
+            background: var(--bg);
+            padding: 0 10px;
+            color: var(--accent);
+            font-weight: bold;
+            letter-spacing: 3px;
+            border: 1px solid var(--accent);
+            text-shadow: var(--pink-glow);
+            box-shadow: var(--pink-glow);
+            z-index: 10;
+        }
+
+        .content { 
+            background: var(--card-bg); 
+            padding: 2.5rem; 
+            border-radius: 4px; 
+            border: 2px solid var(--text-main); 
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1), 0 0 15px rgba(0, 255, 255, 0.2);
+            position: relative;
+        }
+        h1, h2, h3 { color: var(--text-main); margin-top: 2.5rem; margin-bottom: 1rem; text-shadow: var(--border-glow); }
+        h1 { font-size: 2.5rem; margin-top: 0; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px dashed var(--text-main); padding-bottom: 10px;}
+        h2 { border-right: 4px solid var(--accent); padding-right: 15px; background: linear-gradient(90deg, transparent, rgba(255,0,85,0.1)); }
         p { margin-bottom: 1rem; }
-        code { font-family: 'JetBrains Mono', monospace; background: #0f172a; padding: 0.2rem 0.4rem; border-radius: 4px; color: var(--success); direction: ltr; display: inline-block; }
-        pre { background: #0f172a; padding: 1.5rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1.5rem; direction: ltr; text-align: left; border: 1px solid #334155; }
-        pre code { background: none; padding: 0; color: #e2e8f0; }
-        .explanation { border-right: 4px solid var(--accent); background: rgba(139, 92, 246, 0.1); padding: 1rem; margin-bottom: 2rem; border-radius: 4px; }
+        
+        /* High-tech syntax code blocks */
+        code { 
+            font-family: 'JetBrains Mono', monospace; 
+            background: #000; 
+            padding: 0.2rem 0.4rem; 
+            border-radius: 2px; 
+            color: var(--success); 
+            direction: ltr; 
+            display: inline-block; 
+            border: 1px solid #333;
+        }
+        pre { 
+            background: #020406; 
+            padding: 1.5rem; 
+            border-radius: 4px; 
+            overflow-x: auto; 
+            margin-bottom: 1.5rem; 
+            direction: ltr; 
+            text-align: left; 
+            border: 1px solid #334155;
+            border-left: 3px solid var(--text-main);
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+        pre code { background: none; padding: 0; color: #a6e22e; border: none;}
+        
+        .explanation { 
+            border-right: 3px solid var(--accent); 
+            background: rgba(255, 0, 85, 0.05); 
+            padding: 1rem; 
+            margin-bottom: 2rem; 
+            border-radius: 0; 
+            box-shadow: inset -5px 0 10px rgba(255, 0, 85, 0.05);
+        }
         .explanation p { margin-bottom: 0.5rem; }
         .explanation p:last-child { margin-bottom: 0; }
-        .highlight { color: #fcd34d; font-weight: bold; }
+        .highlight { color: #f92672; font-weight: bold; text-shadow: 0 0 2px rgba(249, 38, 114, 0.5);}
+        
+        /* Specific styling for the Docker section */
+        #markdown-content h2:contains("Docker") {
+            color: #2496ed;
+            border-right-color: #2496ed;
+            text-shadow: 0 0 10px rgba(36, 150, 237, 0.5);
+            background: linear-gradient(90deg, transparent, rgba(36, 150, 237, 0.1));
+        }
     </style>
 </head>
 <body>
-    <div class="nav"><a href="index.html">← חזרה למרכז הלמידה</a></div>
+    <div class="nav"><a href="index.html">← חזרה למסוף הראשי</a></div>
     <div class="container">
-        <div class="content" id="markdown-content">טוען את מחסן הסינטאקס...</div>
+        <div class="content" id="markdown-content">מפעיל פרוטוקולי טעינה...</div>
     </div>
     <script>
         const markdown = `
-# מחסן הסינטאקס 🧠
+# מחסן הסינטאקס 🧠 // מערכת הליבה
 
-ברוך הבא למחסן. כאן לא תמצא פתרונות מוכנים לפרויקט שלך, אלא **מילון עברי-פייתוני** לכל הסינטאקס. כל שורת קוד מוסברת במדויק.
+ברוך הבא למחסן המאובטח. כאן מאוחסנים פרוטוקולי הסינטאקס שלך. כל רכיב קוד מקוטלג ומוסבר ברמת המכונה.
 
 ---
 
@@ -116,7 +204,7 @@ def create_new_book(request_body: BookRequest):
 
 ---
 
-## 3. פריקת מילונים (\*\*) וקווים תחתונים (\_)
+## 3. פריקת מילונים (**) וקווים תחתונים (_)
 
 אחת הפעולות הכי שימושיות כשאנחנו מעבירים נתונים מהמודל של ה-API לתוך ה-Repository.
 
@@ -144,6 +232,45 @@ for _ in range(5):
 <div class="explanation">
 <p><span class="highlight">**my_book_dict</span>: פייתון לוקח את המילון ו"מפזר" אותו החוצה. זה שקול לחלוטין לכתיבה הידנית של כל משתנה בנפרד. זה חוסך המון שורות קוד כשיש מילון עצום (למשל משתמש עם 20 שדות).</p>
 <p><span class="highlight">_ (קו תחתון)</span>: מוסכמה (Convention). פייתון מחייב לכתוב משתנה בלולאת for (כמו i), אבל אם נכתוב i ולא נשתמש בו בתוך הלולאה, ה-IDE יתלונן שיש משתנה ללא שימוש. קו תחתון אומר "אני יודע שאני חייב לכתוב פה משהו, אבל אני אומר לך מראש שאני לא מתכוון להשתמש בו".</p>
+</div>
+
+---
+
+## 4. Docker (ניהול מכולות ותשתיות)
+
+פרוטוקולי הקונטיינרים. כשאנחנו צריכים לארוז אפליקציה ולדאוג שהיא תרוץ בדיוק אותו דבר על כל מכונה במחסן. הנה הפקודות הבסיסיות.
+
+\`\`\`bash
+# 1. בניית תמונה (Image) מתוך קובץ Dockerfile שנמצא בתיקייה הנוכחית
+docker build -t my_app:latest .
+
+# 2. הרצת קונטיינר (Container) מתוך התמונה שיצרנו, ברקע (-d), וחיבור פורט 8080 ל-80
+docker run -d -p 8080:80 --name running_app my_app:latest
+
+# 3. רשימת כל הקונטיינרים הפעילים כרגע
+docker ps
+
+# 4. רשימת כל הקונטיינרים (כולל כאלה שעצרו)
+docker ps -a
+
+# 5. כיבוי קונטיינר פעיל לפי השם או ה-ID שלו
+docker stop running_app
+
+# 6. מחיקת קונטיינר (חובה לעצור אותו קודם)
+docker rm running_app
+
+# 7. הרצת סביבה שלמה (כמה קונטיינרים) מתוך קובץ docker-compose.yml
+docker-compose up -d
+
+# 8. ניקוי המחסן: מוחק כל קונטיינר, תמונה או רשת שלא בשימוש
+docker system prune -a
+\`\`\`
+
+<div class="explanation" style="border-right-color: #2496ed; background: rgba(36, 150, 237, 0.05); box-shadow: inset -5px 0 10px rgba(36, 150, 237, 0.05);">
+<p><span class="highlight" style="color: #2496ed; text-shadow: 0 0 2px rgba(36, 150, 237, 0.5);">docker build -t</span>: מתייג (Tag) את התמונה בשם שאנחנו בוחרים כדי שנוכל למצוא אותה אחר כך.</p>
+<p><span class="highlight" style="color: #2496ed; text-shadow: 0 0 2px rgba(36, 150, 237, 0.5);">docker run -d -p</span>: מפעיל את הקונטיינר. ה-<code>-d</code> מסמל Detached (רץ ברקע), וה-<code>-p</code> משייך את הפורט במחשב שלנו לפורט בתוך המכולה הסגורה.</p>
+<p><span class="highlight" style="color: #2496ed; text-shadow: 0 0 2px rgba(36, 150, 237, 0.5);">docker ps</span>: מראה לנו מה בדיוק רץ עכשיו, איזה פורטים תפוסים ומתי הקונטיינר הוקם.</p>
+<p><span class="highlight" style="color: #2496ed; text-shadow: 0 0 2px rgba(36, 150, 237, 0.5);">docker-compose up -d</span>: הפקודה האולטימטיבית כשעובדים עם מסד נתונים, שרת API ועוד רכיבים במקביל, כולם מוגדרים מראש בקובץ אחד.</p>
 </div>
 
         `;
