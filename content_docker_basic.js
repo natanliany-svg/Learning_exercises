@@ -205,19 +205,19 @@ docker run --rm ubuntu
   dockerMySql: {
     visualizerSteps: [
         {
-            html_visual: \`
+            html_visual: `
             <div class="flow-diagram-enhanced scale-up">
-                <div class="flow-node-enhanced active" style="border-color:#00758F;">1. docker run mysql<br><span style="font-size:10px;">מריצים שרת DB ברקע</span></div>
-                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
-                <div class="flow-node-enhanced active" style="border-color:#F29111;">2. docker exec -it mysql<br><span style="font-size:10px;">נכנסים אליו דרך הטרמינל</span></div>
+                <div class="flow-node-enhanced active" style="border-color:#00758F;">1. docker run mysql<br><span style="font-size:10px;">הרצת מסד DB ברקע</span></div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">➡</span></div>
+                <div class="flow-node-enhanced active" style="border-color:#F29111;">2. docker exec -it mysql<br><span style="font-size:10px;">כניסה לתוך המכולה</span></div>
             </div>
-            \`,
-            text: "<b>חיבור למסד נתונים:</b><br>כדי לעבוד עם MySQL דרך דוקר, קודם מריצים את השרת כקונטיינר ברקע (-d), ואז 'פורצים' פנימה למסוף שלו בעזרת הפקודה exec."
+            `,
+            text: "<b>חיבור למסד נתונים:</b><br>כדי לעבוד עם MySQL בתוך דוקר, אנו מריצים את המסד במצב רקע (-d), ואז 'פורצים' לתוכו באמצעות פקודת exec."
         }
     ],
 
-    title: '🐬 עבודה עם MySQL בטרמינל',
-    content: \`
+    title: '🐬 עבודה עם MySQL בקונטיינר',
+    content: `
       <div class="card-body">
         <p class="lead">הקלאסרום דורש שליטה מלאה בהרצת שרת MySQL מקומי והתחברות אליו דרך הטרמינל כדי להריץ פקודות SQL בסיסיות.</p>
         
@@ -250,6 +250,6 @@ docker exec -it mysql-db mysql -u root -p</code></pre>
 <span class="t-com">-- יציאה חזרה לטרמינל הרגיל</span>
 exit</code></pre>
       </div>
-    \`
+    `
   }
 };

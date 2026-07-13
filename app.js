@@ -205,7 +205,7 @@ function onCardClick(topicKey) {
 function addAnimationControls() {
     const animatedCards = document.querySelectorAll('.card');
     animatedCards.forEach(card => {
-        const animatedElements = card.querySelectorAll('.flow-arrow, .pipeline-arrow, .pipeline-step, .flow-node, .middleware-node, .client-icon, .server-icon, .req-res-arrow, .network-pulse');
+        const animatedElements = card.querySelectorAll('.flow-arrow, .pipeline-arrow, .pipeline-step, .flow-node, .middleware-node, .client-icon, .server-icon, .req-res-arrow, .network-pulse, .flow-node-enhanced, .flow-diagram-enhanced');
         if (animatedElements.length > 0) {
             const cardBody = card.querySelector('.card-body-inner');
             if (cardBody && !cardBody.querySelector('.animation-controls')) {
