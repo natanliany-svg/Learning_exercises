@@ -1371,8 +1371,57 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
         <input type="checkbox" class="tech-word-cb" id="cb-crud" onchange="toggleTechWord('crud', this.checked)" style="transform: scale(1.3); cursor: pointer;">
         סימנתי ב- V (הבנתי!)
        </label>
+     </div>
+    </div>
+
+     <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+      <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Vanilla HTTP</h4>
+      <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: וָנִילָה HTTP | תרגום: שרת טהור ללא ספריות</p>
+      <p style="margin-bottom: 15px;"><b>משמעות:</b> בניית שרת באמצעות מודול ה-<code>http</code> המובנה בלבד, ללא Express או ספריות עזר. כמו לבנות פיצה מאפס בלי תבנית מוכנה.</p>
+      <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+       <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+        <input type="checkbox" class="tech-word-cb" id="cb-vanilla_http" onchange="toggleTechWord('vanilla_http', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+        סימנתי ב- V (הבנתי!)
+       </label>
       </div>
      </div>
+
+     <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+      <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Environment Variable (dotenv)</h4>
+      <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: אֶנְוַיְרוֹנְמֶנְט וֶרְיָאבְּל | תרגום: משתנה סביבה</p>
+      <p style="margin-bottom: 15px;"><b>משמעות:</b> מידע רגיש (סיסמאות, מפתחות) שנשמר בקובץ <code>.env</code> ונקרא דרך <code>process.env</code>. כמו כספת סודית שרק הצוות יודע את הקוד שלה.</p>
+      <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+       <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+        <input type="checkbox" class="tech-word-cb" id="cb-env_var" onchange="toggleTechWord('env_var', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+        סימנתי ב- V (הבנתי!)
+       </label>
+      </div>
+     </div>
+
+     <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+      <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">CORS</h4>
+      <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: קוֹרְז | תרגום: שיתוף משאבים בין מקורות</p>
+      <p style="margin-bottom: 15px;"><b>משמעות:</b> Cross-Origin Resource Sharing. מנגנון אבטחה שהדפדפן מפעיל כדי למנוע מאתר זר לגשת לשרת שלך. כמו שכן שדורש אישור כדי להיכנס לחצר שלך.</p>
+      <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+       <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+        <input type="checkbox" class="tech-word-cb" id="cb-cors" onchange="toggleTechWord('cors', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+        סימנתי ב- V (הבנתי!)
+       </label>
+      </div>
+     </div>
+
+     <div class="lib-card" style="border-left: 4px solid var(--gold); background: rgba(245, 197, 24, 0.05); padding: 15px; border-radius: 8px;">
+      <h4 style="color: var(--gold); font-size: 1.25rem; margin-bottom: 2px;">Payload</h4>
+      <p style="font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 8px; font-style: italic;">הגייה: פֵּיְלוֹאַד | תרגום: מטען / תוכן שימושי</p>
+      <p style="margin-bottom: 15px;"><b>משמעות:</b> המידע האמיתי שנשלח בבקשה או בתשובה — בניגוד ל-Headers שהם רק מטא-דאטה. כמו התוכן שבתוך חבילת דואר (לא המעטפה עצמה).</p>
+      <div class="tech-checkbox" style="margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
+       <label style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--emerald); font-weight: bold;">
+        <input type="checkbox" class="tech-word-cb" id="cb-payload" onchange="toggleTechWord('payload', this.checked)" style="transform: scale(1.3); cursor: pointer;">
+        סימנתי ב- V (הבנתי!)
+       </label>
+      </div>
+     </div>
+
     </div>
     <h3 style="margin-top: 30px; border-bottom: 2px solid #555; padding-bottom: 5px; color: var(--gold);">מושגי דוקר (Docker Basics)</h3>
     <div class="modal-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px;">
