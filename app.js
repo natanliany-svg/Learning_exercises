@@ -10,7 +10,8 @@ const modalData = {
     ...serversContent,
     ...dockerBasicContent,
     ...dockerComposeContent,
-    ...dockerAdvancedContent
+    ...dockerAdvancedContent,
+    ...dockerImagesDeepContent
 };
 
 const sectionsList = [
@@ -24,7 +25,7 @@ const sectionsList = [
     id: 'section-docker',
     title: '🐳 Docker & Containers',
     subtitle: 'וירטואליזציה, רשתות וקונטיינרים ב-Docker',
-    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping']
+    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage']
   },
   {
     id: 'section-web',
