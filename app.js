@@ -12,8 +12,58 @@ const modalData = {
     ...dockerComposeContent,
     ...dockerAdvancedContent,
     ...dockerImagesDeepContent,
-    ...dockerComposeAdvancedContent
+    ...dockerComposeAdvancedContent,
+    ...sqlBasicsContent,
+    ...sqlDdlContent,
+    ...sqlDmlContent,
+    ...sqlDqlContent,
+    ...sqlJoinsContent,
+    ...sqlNodeContent,
+    ...bigPictureContent
 };
+
+// Normalize modalData formats
+Object.keys(modalData).forEach(key => {
+    const data = modalData[key];
+    
+    // If content is an object, we need to stringify it properly
+    if (data.content && typeof data.content === 'object') {
+        let html = '';
+        for (let subKey in data.content) {
+            const val = data.content[subKey];
+            if (typeof val === 'string') {
+                html += val;
+            } else if (typeof val === 'object') {
+                html += '<pre>' + JSON.stringify(val, null, 2) + '</pre>';
+            }
+        }
+        data.content = html;
+    }
+    
+    if (!data.content || typeof data.content !== 'string') {
+        if (data.htmlContent) {
+            data.content = data.htmlContent;
+        } else if (data.styles && data.htmlContent) {
+            data.content = data.styles + data.htmlContent;
+        } else if (data.styles && data.description) {
+            data.content = data.styles + '<div class="content-description">' + data.description + '</div>';
+        } else {
+            // fallback
+            let html = '';
+            for (let subKey in data) {
+                if (subKey !== 'title' && subKey !== 'id' && subKey !== 'metadata' && subKey !== 'content') {
+                    const val = data[subKey];
+                    if (typeof val === 'string') {
+                        html += val;
+                    } else if (typeof val === 'object') {
+                        html += '<pre>' + JSON.stringify(val, null, 2) + '</pre>';
+                    }
+                }
+            }
+            data.content = html || '<div>No content provided.</div>';
+        }
+    }
+});
 
 const sectionsList = [
   {
@@ -30,9 +80,21 @@ const sectionsList = [
   },
   {
     id: 'section-web',
-    title: '🖥️ שרתים ו-Web',
-    subtitle: 'הדפדפן, שרתי HTTP מבוססי Node ו-Express',
-    topics: ['dom', 'vanillaServer', 'httpParams', 'express', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide']
+    title: '🌐 Web & Node.js',
+    subtitle: 'אסינכרוניות, שרתים וסביבת ריצה',
+    topics: ['asyncLearning', 'servers']
+  },
+  {
+    id: 'section-db',
+    title: '💾 Database & SQL',
+    subtitle: 'מסדי נתונים רלוציוניים, שאילתות וחיבור לשרת',
+    topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
+  },
+  {
+    id: 'section-big-picture',
+    title: '🗺️ התמונה הגדולה',
+    subtitle: 'איך כל הטכנולוגיות מתחברות יחד למערכת אחת שלמה',
+    topics: ['bigPicture']
   },
   {
     id: 'section-async-full',
@@ -173,15 +235,24 @@ function onCardClick(topicKey) {
             
             card.classList.add('open');
             
-            // Adjust scroll smoothly so the opened card is visible
-            setTimeout(() => {
-                const rect = card.getBoundingClientRect();
-                if (rect.top < 80 || rect.bottom > window.innerHeight) {
-                    const offset = window.scrollY + rect.top - 100;
-                    window.scrollTo({ top: offset, behavior: 'smooth' });
+            const startTime = performance.now();
+            const initialTop = card.getBoundingClientRect().top;
+            
+            function lockScroll(time) {
+                const currentTop = card.getBoundingClientRect().top;
+                if (Math.abs(currentTop - initialTop) > 1) {
+                    window.scrollBy(0, currentTop - initialTop);
                 }
-                updateProgressBar();
-            }, 300); 
+                
+                if (time - startTime < 850) { // 850ms to cover the 800ms CSS transition safely
+                    requestAnimationFrame(lockScroll);
+                }
+            }
+            
+            // Also smoothly update progress bar during the transition
+            updateProgressBar();
+            
+            requestAnimationFrame(lockScroll);
             
         } else {
             card.classList.remove('open');
