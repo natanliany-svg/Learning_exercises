@@ -68,50 +68,50 @@ Object.keys(modalData).forEach(key => {
 const sectionsList = [
   {
     id: 'section-basics',
-    title: '📚 יסודות ומתקדם',
-    subtitle: 'הבסיס ונושאים מתקדמים ב-JavaScript',
+    title: '🧱 יסודות השפה ולולאות',
+    subtitle: 'משתנים, לולאות, פונקציות, קלוז׳רים ומודולים ב-JavaScript',
     topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring', 'readlineSync']
   },
   {
-    id: 'section-docker',
-    title: '🐳 Docker & Containers',
-    subtitle: 'וירטואליזציה, רשתות וקונטיינרים ב-Docker',
-    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerMySql', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
+    id: 'section-methods',
+    title: '🛠️ מתודות של מערכים',
+    subtitle: 'פונקציות מובנות על מערכים, מחרוזות ואובייקטים',
+    topics: ['arrayMethods', 'stringMethods', 'objectMethods']
+  },
+  {
+    id: 'section-async-full',
+    title: '⏳ אסינכרוניות מלאה',
+    subtitle: 'הבנת ה-Event Loop, קולבקים, פרומיסים ואסינכרוניות מתקדמת',
+    topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
   },
   {
     id: 'section-web',
     title: '🌐 Web & Node.js',
-    subtitle: 'אסינכרוניות, שרתים וסביבת ריצה',
+    subtitle: 'אסינכרוניות, שרתים ומושגי רשת',
     topics: ['asyncLearning', 'servers']
   },
   {
     id: 'section-db',
-    title: '💾 Database & SQL',
+    title: '🗄️ Database & SQL',
     subtitle: 'מסדי נתונים רלוציוניים, שאילתות וחיבור לשרת',
     topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
   },
   {
+    id: 'section-docker',
+    title: '🐳 Docker & Containers',
+    subtitle: 'וירטואליזציה, יצירת קונטיינרים ב-Docker',
+    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerMySql', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
+  },
+  {
     id: 'section-big-picture',
-    title: '🗺️ התמונה הגדולה',
-    subtitle: 'איך כל הטכנולוגיות מתחברות יחד למערכת אחת שלמה',
+    title: '🧩 התמונה הגדולה',
+    subtitle: 'חיבור כל החלקים יחד לארכיטקטורת תוכנה שלמה',
     topics: ['bigPicture']
   },
   {
-    id: 'section-async-full',
-    title: '⚡ אסינכרוניות מקיפה',
-    subtitle: 'מנוע ה-Event Loop, קולבקים, הבטחות ותהליכים אסינכרוניים',
-    topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
-  },
-  {
-    id: 'section-methods',
-    title: '🛠️ מתודות מובנות',
-    subtitle: 'מניפולציות של מערכים, מחרוזות ואובייקטים',
-    topics: ['arrayMethods', 'stringMethods', 'objectMethods']
-  },
-  {
     id: 'section-tools',
-    title: '🔧 עזרים וסימולטורים',
-    subtitle: 'מחסנים, השוואות, קיצורים, ספריות וסימולציות למבחן',
+    title: '🧰 כלים, עזרים ושינון',
+    subtitle: 'מחסנים, פייתון מול JS, כללי ברזל, מקלדת, קיצורים ומבחן',
     topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish']
   }
 ];
