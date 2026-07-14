@@ -235,24 +235,19 @@ function onCardClick(topicKey) {
             
             card.classList.add('open');
             
-            const startTime = performance.now();
-            const initialTop = card.getBoundingClientRect().top;
-            
-            function lockScroll(time) {
-                const currentTop = card.getBoundingClientRect().top;
-                if (Math.abs(currentTop - initialTop) > 1) {
-                    window.scrollBy(0, currentTop - initialTop);
-                }
-                
-                if (time - startTime < 850) { // 850ms to cover the 800ms CSS transition safely
-                    requestAnimationFrame(lockScroll);
-                }
-            }
-            
             // Also smoothly update progress bar during the transition
             updateProgressBar();
             
-            requestAnimationFrame(lockScroll);
+            setTimeout(() => {
+                const headerOffset = 80;
+                const elementPosition = card.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }, 50);
             
         } else {
             card.classList.remove('open');

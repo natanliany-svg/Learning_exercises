@@ -70,7 +70,7 @@ const dockerAdvancedContent = {
     visualizerSteps: [
         {
             html_visual: `
-            <div class="flow-diagram-enhanced typewriter">
+            <div class="flow-diagram-enhanced">
                 <div class="flow-node-enhanced" style="width:100%; text-align:left; font-family:monospace; color:#00d2ff; line-height:1.4;">
                     > docker ps<br>
                     <span style="color:#888;">CONTAINER ID | IMAGE | STATUS | PORTS</span><br>
@@ -82,7 +82,7 @@ const dockerAdvancedContent = {
         },
         {
             html_visual: `
-            <div class="flow-diagram-enhanced typewriter">
+            <div class="flow-diagram-enhanced">
                 <div class="flow-node-enhanced" style="width:100%; text-align:left; font-family:monospace; color:#ff0055; line-height:1.4;">
                     > docker exec -it a1b2 sh<br>
                     <span style="color:#fff;"># </span> <span class="pulse-glow" style="display:inline-block; width:8px; height:15px; background:white;"></span>
@@ -154,7 +154,7 @@ exit</code></pre>
         },
         {
             html_visual: `
-            <div class="flow-diagram-enhanced typewriter">
+            <div class="flow-diagram-enhanced">
                 <div class="flow-node-enhanced" style="width:100%; text-align:left; font-family:monospace; line-height:1.4;">
                     > docker run -e PORT=80 -e NODE_ENV=prod<br>
                     <span style="color:#00cc88;">✓ הקונטיינר עלה בסביבת פרודקשן</span>

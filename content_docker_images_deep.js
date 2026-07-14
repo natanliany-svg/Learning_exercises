@@ -141,7 +141,7 @@ const dockerImagesDeepContent = {
         },
         {
             html_visual: `
-            <div class="flow-diagram-enhanced typewriter">
+            <div class="flow-diagram-enhanced">
                 <div class="flow-node-enhanced" style="width:100%; text-align:left; font-family:monospace; line-height:1.2; font-size:11px;">
                     <span style="color:#ff0055;">FROM node:18 AS builder</span><br>
                     COPY . .<br>

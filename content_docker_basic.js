@@ -122,7 +122,7 @@ docker run --rm ubuntu
     visualizerSteps: [
         {
             html_visual: `
-            <div class="flow-diagram-enhanced typewriter">
+            <div class="flow-diagram-enhanced">
                 <div class="flow-node-enhanced" style="width:100%; text-align:left; font-family:monospace;">
                     <span style="color:#ff0055;">FROM</span> node:18<br>
                     <span style="color:#ff0055;">WORKDIR</span> /app<br>
