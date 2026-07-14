@@ -66,54 +66,42 @@ Object.keys(modalData).forEach(key => {
 });
 
 const sectionsList = [
-  {
-    id: 'section-basics',
-    title: '🧱 יסודות השפה ולולאות',
-    subtitle: 'משתנים, לולאות, פונקציות, קלוז׳רים ומודולים ב-JavaScript',
-    topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring', 'readlineSync']
-  },
-  {
-    id: 'section-methods',
-    title: '🛠️ מתודות של מערכים',
-    subtitle: 'פונקציות מובנות על מערכים, מחרוזות ואובייקטים',
-    topics: ['arrayMethods', 'stringMethods', 'objectMethods']
-  },
-  {
-    id: 'section-async-full',
-    title: '⏳ אסינכרוניות מלאה',
-    subtitle: 'הבנת ה-Event Loop, קולבקים, פרומיסים ואסינכרוניות מתקדמת',
-    topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
-  },
-  {
-    id: 'section-web',
-    title: '🌐 Web & Node.js',
-    subtitle: 'אסינכרוניות, שרתים ומושגי רשת',
-    topics: ['asyncLearning', 'servers']
-  },
-  {
-    id: 'section-db',
-    title: '🗄️ Database & SQL',
-    subtitle: 'מסדי נתונים רלוציוניים, שאילתות וחיבור לשרת',
-    topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
-  },
-  {
-    id: 'section-docker',
-    title: '🐳 Docker & Containers',
-    subtitle: 'וירטואליזציה, יצירת קונטיינרים ב-Docker',
-    topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerMySql', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
-  },
-  {
-    id: 'section-big-picture',
-    title: '🧩 התמונה הגדולה',
-    subtitle: 'חיבור כל החלקים יחד לארכיטקטורת תוכנה שלמה',
-    topics: ['bigPicture']
-  },
-  {
-    id: 'section-tools',
-    title: '🧰 כלים, עזרים ושינון',
-    subtitle: 'מחסנים, פייתון מול JS, כללי ברזל, מקלדת, קיצורים ומבחן',
-    topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish']
-  }
+    {
+      id: 'section-basics',
+      title: '🧱 יסודות השפה ולולאות',
+      subtitle: 'משתנים, תנאים, לולאות, פונקציות, קלוז׳רים ומודולים ב-JavaScript',
+      topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring']
+    },
+    {
+      id: 'section-web',
+      title: '🌐 שרתים ו-Web',
+      subtitle: 'מניפולציית DOM, שרתי HTTP, פרמטרים ושרתי Express',
+      topics: ['dom', 'vanillaServer', 'httpParams', 'express']
+    },
+    {
+      id: 'section-docker',
+      title: '🐳 Docker & Containers',
+      subtitle: 'מבוא, קונטיינרים, ווליומים, פקודות ו-Docker Compose',
+      topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
+    },
+    {
+      id: 'section-async-full',
+      title: '⚡ תכנות אסינכרוני מתקדם',
+      subtitle: 'לולאת האירועים, Callbacks, Promises, Fetch ו-Async/Await',
+      topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
+    },
+    {
+      id: 'section-methods',
+      title: '🛠️ פונקציות מתקדמות',
+      subtitle: 'מתודות מערכים, מתודות מחרוזות, ומתודות אובייקטים',
+      topics: ['arrayMethods', 'stringMethods', 'objectMethods']
+    },
+    {
+      id: 'section-tools',
+      title: '🔧 כלים, תוספות ושרתים מתקדמים',
+      subtitle: 'חוקי ברזל, ספריות, בחנים, אנגלית טכנולוגית, Express מתקדם',
+      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide']
+    }
 ];
 
 function scrollToSection(id) {
