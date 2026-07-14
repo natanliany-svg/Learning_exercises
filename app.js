@@ -269,16 +269,7 @@ function renderAllContent() {
                     } else if (bonusTopics.includes(topicKey)) {
                         rawContent = `<div class="bonus-content">${rawContent}</div>`;
                     }
-                    if (rawContent.startsWith('<div class="card-body') && rawContent.includes('">')) {
-                        wrappedContent = rawContent.replace(
-                            /<div class="card-body[^>]*>/,
-                            match => match + '<div class="card-body-inner">'
-                        ).replace(/<\/div>$/, '</div></div>');
-                    } else {
-                        wrappedContent = `<div class="card-body"><div class="card-body-inner">${rawContent}</div></div>`;
-                    }
                     
-
                     let visHtml = '';
                     if (data.visualizerSteps && data.visualizerSteps.length > 0) {
                         visHtml += `<div class="visualizer-container" id="vis-${topicKey}" data-current="0" data-total="${data.visualizerSteps.length}">`;
@@ -302,10 +293,17 @@ function renderAllContent() {
                             visHtml += `</div>`;
                         }
                         visHtml += `</div>`;
-                        
-                        // Inject into wrappedContent before the inner content
-                        wrappedContent = wrappedContent.replace('<div class="card-body-inner">', '<div class="card-body-inner">' + visHtml);
                     }
+
+                    if (rawContent.startsWith('<div class="card-body') && rawContent.includes('">')) {
+                        wrappedContent = rawContent.replace(
+                            /<div class="card-body[^>]*>/,
+                            match => match + '<div class="card-body-inner">' + visHtml
+                        ).replace(/<\/div>$/, '</div></div>');
+                    } else {
+                        wrappedContent = `<div class="card-body"><div class="card-body-inner">${visHtml}${rawContent}</div></div>`;
+                    }
+                    
                     html += `
                         <div class="card" id="card-${topicKey}" data-pinned="false">
                             <div class="card-header">
