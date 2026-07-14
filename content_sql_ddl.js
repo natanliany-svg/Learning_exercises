@@ -85,6 +85,5 @@ ADD PublicationYear INT;</code></pre>
             </footer>
         </div>
     `
+  }
 };
-
-export default sqlDdlContent

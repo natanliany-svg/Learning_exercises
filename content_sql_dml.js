@@ -146,6 +146,5 @@ const sqlDmlContent = {
       `
     }
   ]
+  }
 };
-
-export default sqlDmlContent

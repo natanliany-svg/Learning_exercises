@@ -59,6 +59,5 @@ const sqlJoinsContent = {
             details: "שתי הטבלאות מתמזגות במלואן. כל התאמה מחוברת, ולאחר מכן כל הרשומות החסרות מכל צד מצטרפות בתוספת שדות NULL כמשלימי מקום."
         }
     ]
+  }
 };
-
-export default sqlJoinsContent

@@ -270,7 +270,7 @@ function addAnimationControls() {
             if (cardBody && !cardBody.querySelector('.animation-controls')) {
                 const controls = document.createElement('div');
                 controls.className = 'animation-controls';
-                controls.innerHTML = `<button class="play-pause-btn" onclick="toggleAnimation(this, '${card.id}')">
+                controls.innerHTML = `<button class="play-pause-btn" onclick="toggleAnimation(event, this, '${card.id}')">
                     <span>⏸️ עצור אנימציה</span>
                 </button>`;
                 cardBody.insertBefore(controls, cardBody.firstChild);
@@ -279,7 +279,8 @@ function addAnimationControls() {
     });
 }
 
-function toggleAnimation(btn, cardId) {
+function toggleAnimation(event, btn, cardId) {
+    if (event) event.stopPropagation();
     const card = document.getElementById(cardId);
     if (!card) return;
     
@@ -609,7 +610,7 @@ function getIdeHtml(projectKey) {
 
     return `
         <div class="ide-container" style="position:relative;">
-            <button onclick="document.getElementById('explanationOverlay').style.display='flex'" style="position:absolute; top:20px; left:20px; background:var(--gold); color:#11131a; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold; font-family:inherit; z-index:10; box-shadow:0 4px 15px rgba(245,197,24,0.35); transition:0.2s;">
+            <button onclick="document.getElementById('explanationOverlay').style.display='flex'" style="position:absolute; bottom:20px; right:30px; background:var(--gold); color:#11131a; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold; font-family:inherit; z-index:10; box-shadow:0 4px 15px rgba(245,197,24,0.35); transition:0.2s;">
                 📘 הסבר הפרויקט
             </button>
         

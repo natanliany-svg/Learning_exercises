@@ -81,6 +81,5 @@ const sqlNodeContent = {
             </section>
         </div>
     `
+  }
 };
-
-module.exports = sqlNodeContent

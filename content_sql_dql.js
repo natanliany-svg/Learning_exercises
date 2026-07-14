@@ -106,6 +106,5 @@ const sqlDqlContent = {
       `
     }
   ]
+  }
 };
-
-export default sqlDqlContent
