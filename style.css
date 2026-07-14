@@ -147,7 +147,6 @@ body[data-theme="darkness"] {
 }
 
 html {
-    scroll-behavior: smooth;
     scroll-padding-top: 74px;
 }
 

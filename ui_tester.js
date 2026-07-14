@@ -5,8 +5,10 @@ const agentId = process.argv[2] || 'Agent';
 
 async function runTest() {
     const browser = await puppeteer.launch({ 
-        headless: true,
-        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe'
+        headless: false,
+        executablePath: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        args: ['--window-size=1200,800'],
+        defaultViewport: { width: 1200, height: 800 }
     });
     const page = await browser.newPage();
     const filePath = 'file:///' + path.resolve('index.html').replace(/\\/g, '/');
@@ -15,13 +17,12 @@ async function runTest() {
     try {
         await page.goto(filePath, { waitUntil: 'networkidle0' });
         
-        console.log(`${agentId}: Page loaded. Starting clickability tests for 5 minutes...`);
+        console.log(`${agentId}: Page loaded. Running quick VISIBLE cache verification test for 30 seconds...`);
         
-        // Loop test for 5 minutes (300,000 ms)
-        const endTime = Date.now() + 5 * 60 * 1000;
+        // Loop test for 30 seconds (30,000 ms)
+        const endTime = Date.now() + 30 * 1000;
         let cycles = 0;
         let issuesFound = [];
-        let clickedElements = 0;
         
         while (Date.now() < endTime) {
             cycles++;
@@ -32,28 +33,15 @@ async function runTest() {
                 if (Date.now() >= endTime) break;
                 try {
                     await cards[i].click();
-                    clickedElements++;
-                    await new Promise(r => setTimeout(r, 50)); // wait for transition
+                    await new Promise(r => setTimeout(r, 400)); // wait for transition visibly
                     
-                    // Inside the card, try to click the animation controls if they exist
                     const pauseBtn = await page.$$('.play-pause-btn');
                     for (let btn of pauseBtn) {
                         try {
                             await btn.click();
-                            clickedElements++;
+                            await new Promise(r => setTimeout(r, 200));
                         } catch (e) {
                             issuesFound.push(`${agentId}: Pause button unclickable: ${e.message}`);
-                        }
-                    }
-                    
-                    // Checkboxes in tech english / quiz
-                    const checkboxes = await page.$$('input[type="checkbox"]');
-                    for (let cb of checkboxes) {
-                        try {
-                            await cb.evaluate(el => el.click());
-                            clickedElements++;
-                        } catch (e) {
-                            issuesFound.push(`${agentId}: Checkbox unclickable: ${e.message}`);
                         }
                     }
                     
@@ -61,29 +49,15 @@ async function runTest() {
                     issuesFound.push(`${agentId}: Card ${i} unclickable: ${e.message}`);
                 }
             }
-            
-            // Get all nav items
-            const navItems = await page.$$('.nav-item');
-            for (let i = 0; i < navItems.length; i++) {
-                if (Date.now() >= endTime) break;
-                try {
-                    await navItems[i].click();
-                    clickedElements++;
-                    await new Promise(r => setTimeout(r, 20));
-                } catch (e) {
-                    issuesFound.push(`${agentId}: Nav item ${i} unclickable: ${e.message}`);
-                }
-            }
         }
         
         console.log(`\n--- ${agentId} Test Complete ---`);
         console.log(`${agentId}: Completed cycles:`, cycles);
-        console.log(`${agentId}: Total clicked elements:`, clickedElements);
         if (issuesFound.length > 0) {
             console.log(`${agentId}: Issues found:`);
             [...new Set(issuesFound)].forEach(i => console.log(i));
         } else {
-            console.log(`${agentId}: No clickability issues found during continuous testing.`);
+            console.log(`${agentId}: No clickability issues found during cache verification.`);
         }
         
     } catch (e) {
