@@ -101,6 +101,12 @@ const sectionsList = [
       title: '🔧 כלים, תוספות ושרתים מתקדמים',
       subtitle: 'חוקי ברזל, ספריות, בחנים, אנגלית טכנולוגית, Express מתקדם',
       topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide']
+    },
+    {
+      id: 'section-sql',
+      title: '🗄️ מסדי נתונים - SQL',
+      subtitle: 'מושגי יסוד, DDL, DML, DQL, JOINs וחיבור ב-Node.js',
+      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
     }
 ];
 
