@@ -1526,8 +1526,6 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
       </ul>
      </div>
      </div>
-    </div>
-   </div>
 `
  }
  , expressKids: {
