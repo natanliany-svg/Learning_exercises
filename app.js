@@ -26,43 +26,90 @@ const modalData = {
 Object.keys(modalData).forEach(key => {
     const data = modalData[key];
     
-    // If content is an object, we need to stringify it properly
-    if (data.content && typeof data.content === 'object') {
-        let html = '';
-        for (let subKey in data.content) {
-            const val = data.content[subKey];
-            if (typeof val === 'string') {
-                html += val;
-            } else if (typeof val === 'object') {
-                html += '<pre>' + JSON.stringify(val, null, 2) + '</pre>';
+    // Build HTML string explicitly for complex custom objects
+    let html = '';
+    
+    if (data.styles) html += data.styles + '\n';
+    if (data.htmlContent) html += data.htmlContent + '\n';
+    if (data.description) html += '<div class="content-description">' + data.description + '</div>\n';
+    
+    // Handle analogy objects/strings
+    if (data.analogy) {
+        if (typeof data.analogy === 'string') {
+            html += '<div class="analogy-section">' + data.analogy + '</div>\n';
+        } else {
+            html += '<div class="analogy-section"><h4>' + (data.analogy.concept || 'אנלוגיה') + '</h4>';
+            if (data.analogy.entities) {
+                html += '<ul>' + data.analogy.entities.map(e => '<li>' + e + '</li>').join('') + '</ul>';
             }
+            if (data.analogy.explanation) {
+                html += '<p>' + data.analogy.explanation + '</p>';
+            }
+            html += '</div>\n';
         }
-        data.content = html;
     }
     
-    if (!data.content || typeof data.content !== 'string') {
-        if (data.htmlContent) {
-            data.content = data.htmlContent;
-        } else if (data.styles && data.htmlContent) {
-            data.content = data.styles + data.htmlContent;
-        } else if (data.styles && data.description) {
-            data.content = data.styles + '<div class="content-description">' + data.description + '</div>';
-        } else {
-            // fallback
-            let html = '';
-            for (let subKey in data) {
-                if (subKey !== 'title' && subKey !== 'id' && subKey !== 'metadata' && subKey !== 'content') {
-                    const val = data[subKey];
-                    if (typeof val === 'string') {
-                        html += val;
-                    } else if (typeof val === 'object') {
-                        html += '<pre>' + JSON.stringify(val, null, 2) + '</pre>';
-                    }
+    // Handle SQL sections array
+    if (data.sections && Array.isArray(data.sections)) {
+        data.sections.forEach(sec => {
+            html += '<div class="sql-section">';
+            if (sec.title) html += '<h3>' + sec.title + '</h3>';
+            if (sec.content) html += sec.content;
+            html += '</div>\n';
+        });
+    }
+    
+    // Handle SQL joins array
+    if (data.joins && Array.isArray(data.joins)) {
+        html += '<div class="joins-list">';
+        data.joins.forEach(j => {
+            html += '<div class="join-item"><h4>' + j.type + '</h4>';
+            html += '<p><strong>תיאור:</strong> ' + j.description + '</p>';
+            html += '<p><strong>אנלוגיה:</strong> ' + j.analogyExplanation + '</p></div>';
+        });
+        html += '</div>\n';
+    }
+
+    // Handle content object specifically for things like sql_basics coreConcepts
+    if (data.content && typeof data.content === 'object') {
+        if (data.content.introduction) html += data.content.introduction + '\n';
+        if (data.content.coreConcepts && Array.isArray(data.content.coreConcepts)) {
+            html += '<div class="core-concepts">';
+            data.content.coreConcepts.forEach(c => {
+                html += '<div class="concept-item"><h4>' + c.term + '</h4>';
+                html += '<p><strong>אנלוגיה:</strong> ' + c.analogy + '</p>';
+                html += '<p>' + c.description + '</p></div>';
+            });
+            html += '</div>\n';
+        }
+        if (data.content.relationalKeys) html += data.content.relationalKeys + '\n';
+        if (data.content.summary) html += data.content.summary + '\n';
+        
+        // Generic fallback for any other string properties inside data.content
+        for (let cKey in data.content) {
+            if (!['introduction', 'coreConcepts', 'relationalKeys', 'summary'].includes(cKey)) {
+                if (typeof data.content[cKey] === 'string') {
+                    html += data.content[cKey] + '\n';
                 }
             }
-            data.content = html || '<div>No content provided.</div>';
+        }
+    } else if (data.content && typeof data.content === 'string') {
+        html += data.content; // Append to styles/description
+    }
+    
+    // Generic fallback for any other objects that don't match known schemas to avoid JSON raw output
+    if (!html) {
+        for (let subKey in data) {
+            if (subKey !== 'title' && subKey !== 'id' && subKey !== 'metadata' && subKey !== 'content' && subKey !== 'visualizerSteps') {
+                const val = data[subKey];
+                if (typeof val === 'string') {
+                    html += val;
+                }
+            }
         }
     }
+    
+    data.content = html || '<div>No content provided.</div>';
 });
 
 const sectionsList = [
