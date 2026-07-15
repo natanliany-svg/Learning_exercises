@@ -1525,8 +1525,9 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
        <li>פותח טרמינל (bash או sh) בתוך קונטיינר חי.</li>
       </ul>
      </div>
+     </div>
     </div>
-
+   </div>
 `
  }
  , expressKids: {
