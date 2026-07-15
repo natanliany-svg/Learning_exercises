@@ -1,0 +1,1 @@
+const fs = require('fs'); const content = fs.readFileSync('content_part3.js', 'utf8'); const start = content.indexOf('techEnglish: {'); const end = content.lastIndexOf('}'); const html = content.slice(start, end); console.log('Open:', (html.match(/<div/g) || []).length, 'Close:', (html.match(/<\/div>/g) || []).length);

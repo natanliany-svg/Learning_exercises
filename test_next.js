@@ -1,0 +1,9 @@
+const fs = require('fs');
+let content = fs.readFileSync('content_part3.js', 'utf8');
+let lines = content.split('\n');
+for(let i=1745; i<lines.length; i++) {
+    if (lines[i].match(/^\s+[a-zA-Z]+:\s*\{/)) {
+        console.log('Next topic: ' + lines[i] + ' at line ' + i);
+        break;
+    }
+}
