@@ -1,13 +1,7 @@
 const sqlDdlContent = {
   sqlDdl: {
-    id: "sqlDdl_id",
-    title: `SQL DDL: ארכיטקטורת הספרייה הווירטואלית`,
-    metadata: {
-      author: "Content Writer",
-      category: "SQL"
-    },
-    content: `
-
+    title: "SQL DDL: ארכיטקטורת הספרייה הווירטואלית",
+    htmlContent: `
         <div class="ddl-container" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #1e1e2e; color: #cdd6f4; padding: 50px; border-radius: 16px; line-height: 1.9; max-width: 1000px; margin: 0 auto; box-shadow: 0 15px 40px rgba(0,0,0,0.6);" dir="rtl">
             
             <header style="text-align: center; margin-bottom: 50px;">
@@ -90,8 +84,6 @@ ADD PublicationYear INT;</code></pre>
                 </p>
             </footer>
         </div>
-    
-
     `
   }
 };

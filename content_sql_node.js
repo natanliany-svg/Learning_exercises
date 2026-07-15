@@ -1,15 +1,9 @@
 const sqlNodeContent = {
   sqlNode: {
-    id: "sqlNode_id",
-    title: `חיבור Node.js ל-MySQL`,
-    metadata: {
-      author: "Content Writer",
-      category: "SQL"
-    },
+    title: "חיבור Node.js ל-MySQL",
+    description: "מדריך מקיף על שימוש ב-mysql2, Connection Pools, שאילתות אסינכרוניות והגנה מפני הזרקות SQL.",
+    analogy: "המשאיות המחברות את הספרייה (הדאטה-בייס) לצרכנים (האפליקציה).",
     content: `
-<div class="content-description">מדריך מקיף על שימוש ב-mysql2, Connection Pools, שאילתות אסינכרוניות והגנה מפני הזרקות SQL.</div>
-<div class="analogy-section">המשאיות המחברות את הספרייה (הדאטה-בייס) לצרכנים (האפליקציה).</div>
-
         <div class="sql-node-container" dir="rtl" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(145deg, #1e1e2f, #252538); color: #e0e0e0; padding: 3rem; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.4); max-width: 900px; margin: 0 auto; line-height: 1.6;">
             <header style="text-align: center; border-bottom: 2px solid rgba(255, 255, 255, 0.1); padding-bottom: 2rem; margin-bottom: 2rem;">
                 <h1 style="color: #4facfe; font-size: 2.8rem; margin: 0; text-shadow: 0 0 15px rgba(79, 172, 254, 0.5);">Node.js פוגש את MySQL</h1>
@@ -86,7 +80,6 @@ const sqlNodeContent = {
                 </div>
             </section>
         </div>
-    
     `
   }
 };

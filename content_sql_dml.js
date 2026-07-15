@@ -1,13 +1,8 @@
 const sqlDmlContent = {
   sqlDml: {
-    id: "sqlDml_id",
-    title: `שפת תמרון נתונים - DML: אומנות הספרן`,
-    metadata: {
-      author: "Content Writer",
-      category: "SQL"
-    },
-    content: `
-
+  title: "שפת תמרון נתונים - DML: אומנות הספרן",
+  description: "ברוכים הבאים לספרייה הגדולה של בסיס הנתונים. כאן נלמד כיצד להוסיף ספרים חדשים (INSERT), לעדכן פרטים על ספרים קיימים (UPDATE) ולהסיר ספרים שאבדו (DELETE).",
+  styles: `
     <style>
       @keyframes floatIn {
         0% { opacity: 0; transform: translateY(20px); }
@@ -70,11 +65,12 @@ const sqlDmlContent = {
       .string { color: #ce9178; }
       .table-name { color: #4ec9b0; }
     </style>
-  
-<div class="content-description">ברוכים הבאים לספרייה הגדולה של בסיס הנתונים. כאן נלמד כיצד להוסיף ספרים חדשים (INSERT), לעדכן פרטים על ספרים קיימים (UPDATE) ולהסיר ספרים שאבדו (DELETE).</div>
-<div class="sql-section">
-        <h3>הוספת ספרים: הפקודה INSERT</h3>
-        
+  `,
+  sections: [
+    {
+      id: "insert",
+      title: "הוספת ספרים: הפקודה INSERT",
+      content: `
         <div class="dml-container">
           <div class="dml-header">
             <h2 class="dml-title">הוספת ספרים: הפקודה INSERT</h2>
@@ -94,11 +90,12 @@ const sqlDmlContent = {
             </p>
           </div>
         </div>
-      
-      </div>
-<div class="sql-section">
-        <h3>עדכון מידע: הפקודה UPDATE</h3>
-        
+      `
+    },
+    {
+      id: "update",
+      title: "עדכון מידע: הפקודה UPDATE",
+      content: `
         <div class="dml-container">
           <div class="dml-header">
             <h2 class="dml-title">עדכון מידע: הפקודה UPDATE</h2>
@@ -120,11 +117,12 @@ const sqlDmlContent = {
             </p>
           </div>
         </div>
-      
-      </div>
-<div class="sql-section">
-        <h3>הסרת פריטים: הפקודה DELETE</h3>
-        
+      `
+    },
+    {
+      id: "delete",
+      title: "הסרת פריטים: הפקודה DELETE",
+      content: `
         <div class="dml-container">
           <div class="dml-header">
             <h2 class="dml-title">הסרת פריטים: הפקודה DELETE</h2>
@@ -145,9 +143,8 @@ const sqlDmlContent = {
             </p>
           </div>
         </div>
-      
-      </div>
-
-    `
+      `
+    }
+  ]
   }
 };
