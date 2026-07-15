@@ -220,16 +220,29 @@ function initScrollspy() {
         let activeKey = '';
         
         const elements = document.querySelectorAll('.section-header, .card');
-        elements.forEach(el => {
-            const top = el.offsetTop - 120;
-            if (scrollPos >= top) {
-                if (el.classList.contains('section-header')) {
-                    activeKey = el.id.replace('section-', '');
-                } else if (el.classList.contains('card')) {
-                    activeKey = el.id.replace('card-', '');
-                }
+        
+        // Edge case: if we are at the very bottom of the page, activate the last element
+        const isAtBottom = (window.innerHeight + scrollPos) >= document.documentElement.scrollHeight - 10;
+        
+        if (isAtBottom && elements.length > 0) {
+            const lastEl = elements[elements.length - 1];
+            if (lastEl.classList.contains('section-header')) {
+                activeKey = lastEl.id.replace('section-', '');
+            } else if (lastEl.classList.contains('card')) {
+                activeKey = lastEl.id.replace('card-', '');
             }
-        });
+        } else {
+            elements.forEach(el => {
+                const top = el.offsetTop - 120;
+                if (scrollPos >= top) {
+                    if (el.classList.contains('section-header')) {
+                        activeKey = el.id.replace('section-', '');
+                    } else if (el.classList.contains('card')) {
+                        activeKey = el.id.replace('card-', '');
+                    }
+                }
+            });
+        }
         
         if (activeKey) {
             document.querySelectorAll('.nav-item').forEach(nav => {
