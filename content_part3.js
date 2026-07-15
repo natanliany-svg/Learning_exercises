@@ -1526,7 +1526,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
       </ul>
      </div>
     </div>
-    <!-- extra div removed -->
+
 `
  }
  , expressKids: {
@@ -2182,7 +2182,7 @@ return new Promise((resolve, reject) => {
       </ul>
      </div>
     </div>
-   <!-- extra div removed -->
+
   `
  }
 };
