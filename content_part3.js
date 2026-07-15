@@ -431,6 +431,8 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
       <p>הספרייה הפופולרית ביותר להקמת שרתים ו-APIs בצורה קלה ומודולרית.</p>
       <div class="install-cmd">npm install express</div>
      </div>
+     <div class="lib-card">
+      <h4>dotenv</h4>
       <p>טוענת משתני סביבה מאובטחים מקובץ <code>.env</code> לתוך האפליקציה (למשל סיסמאות ומפתחות רשת).</p>
       <div class="install-cmd">npm install dotenv</div>
      </div>
@@ -1524,7 +1526,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
       </ul>
      </div>
     </div>
-   </div>
+    <!-- extra div removed -->
 `
  }
  , expressKids: {
@@ -2180,7 +2182,7 @@ return new Promise((resolve, reject) => {
       </ul>
      </div>
     </div>
-   </div>
+   <!-- extra div removed -->
   `
  }
 };
