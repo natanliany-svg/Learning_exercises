@@ -1,4 +1,4 @@
-// --- Global Declarations & State ---
+﻿// --- Global Declarations & State ---
 let activeProject = 'bank';
 let isPlanSaved = false;
 
@@ -420,7 +420,7 @@ function renderAllContent() {
                         wrappedContent = rawContent.replace(
                             /<div class="card-body[^>]*>/,
                             match => match + '<div class="card-body-inner">' + visHtml
-                        ).replace(/<\/div>\s*$/, '</div></div>');
+                        ).replace(/(<\/div>)\s*$/, '</div>$1');
                     } else {
                         wrappedContent = `<div class="card-body"><div class="card-body-inner">${visHtml}${rawContent}</div></div>`;
                     }
