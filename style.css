@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     /* Default theme (Ocean) */
     --bg: #070f1e;
     --surface: #0d1b33;
@@ -226,13 +226,8 @@ header {
     font-weight: 500;
 }
 .progress-track {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: transparent;
-    z-index: 10000;
+    height: 3px;
+    background: var(--line);
 }
 .progress-bar {
     height: 100%;
@@ -875,7 +870,7 @@ td {
     gap: 7px;
 }
 .syn-body .opt-label::before {
-    content: "ג–¸";
+    content: "▸";
     color: var(--gold);
 }
 .fill {
@@ -1910,6 +1905,6 @@ td {
 
 /* Bonus Content Style - applied to card-body, must not break grid */
 .card-body.bonus-content { border-right: 4px solid #f39c12; background: rgba(243, 156, 18, 0.03); }
-.card-body.bonus-content > .card-body-inner::before { content: 'נ˜ƒ ׳‘׳•׳ ׳•׳¡ ׳”׳¢׳©׳¨׳”'; font-weight: bold; color: #f39c12; display: block; margin-bottom: 12px; font-size: 13px; }
+.card-body.bonus-content > .card-body-inner::before { content: '😃 בונוס העשרה'; font-weight: bold; color: #f39c12; display: block; margin-bottom: 12px; font-size: 13px; }
 div.bonus-content:not(.card-body) { border-right: 4px solid #f39c12; background: rgba(243, 156, 18, 0.03); padding: 15px; border-radius: 8px; margin: 15px 0; }
-div.bonus-content:not(.card-body)::before { content: 'נ˜ƒ ׳‘׳•׳ ׳•׳¡ ׳”׳¢׳©׳¨׳”'; font-weight: bold; color: #f39c12; display: block; margin-bottom: 8px; font-size: 13px; }
+div.bonus-content:not(.card-body)::before { content: '😃 בונוס העשרה'; font-weight: bold; color: #f39c12; display: block; margin-bottom: 8px; font-size: 13px; }

@@ -1487,7 +1487,6 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
         </label>
        </div>
       </div>
-     </div>
     </div>
 
     <h3 style="margin-top: 30px; border-bottom: 2px solid var(--gold); padding-bottom: 5px; color: var(--text-main);">🐳 Docker & Containers (CLI)</h3>
@@ -1525,7 +1524,9 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
        <li>פותח טרמינל (bash או sh) בתוך קונטיינר חי.</li>
       </ul>
      </div>
-     </div>
+    </div>
+
+    </div>
 `
  }
  , expressKids: {
