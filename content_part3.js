@@ -34,8 +34,7 @@ const contentPart3 = {
     ],
     title: '🔒 קלוז\'רים (Closures)',
   content: `
-   <div class="card-body">
-    <p class="lead">קלוז'ר (Closure או סגירה) הוא אחד המושגים העוצמתיים ביותר ב-JavaScript. הוא מאפשר לפונקציה פנימית לזכור ולהמשיך לגשת למשתנים של הפונקציה החיצונית שעטפה אותה — גם לאחר שהפונקציה החיצונית כבר סיימה לרוץ ונעלמה מהזיכרון.</p>
+   <p class="lead">קלוז'ר (Closure או סגירה) הוא אחד המושגים העוצמתיים ביותר ב-JavaScript. הוא מאפשר לפונקציה פנימית לזכור ולהמשיך לגשת למשתנים של הפונקציה החיצונית שעטפה אותה — גם לאחר שהפונקציה החיצונית כבר סיימה לרוץ ונעלמה מהזיכרון.</p>
     
     <h4>1. דוגמה בסיסית: מונה פרטי</h4>
     <pre><code><span class="t-key">function</span> <span class="t-fn">makeCounter</span>() {
@@ -121,8 +120,7 @@ console.<span class="t-fn">log</span>(myAcc.<span class="t-fn">getBalance</span>
     ],
     title: '🏭 פונקציות מפעל (Factory Functions)',
   content: `
-   <div class="card-body">
-    <p class="lead">פונקציית מפעל היא פונקציה פשוטה שמחזירה אובייקט חדש. בניגוד למחלקות (Classes) או פונקציות בנאי (Constructor Functions), אין צורך להשתמש במילת המפתח <code>new</code> או להתעסק עם הבלבול של <code>this</code>.</p>
+   <p class="lead">פונקציית מפעל היא פונקציה פשוטה שמחזירה אובייקט חדש. בניגוד למחלקות (Classes) או פונקציות בנאי (Constructor Functions), אין צורך להשתמש במילת המפתח <code>new</code> או להתעסק עם הבלבול של <code>this</code>.</p>
     
     <h4>1. דוגמה ליצירת משתמש עם Factory</h4>
     <pre><code><span class="t-key">function</span> <span class="t-fn">createUser</span>(name, role) {
@@ -191,8 +189,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
     ],
     title: '📦 מודולים (ES6 Modules)',
   content: `
-   <div class="card-body">
-    <p class="lead">מודולים (Modules) מאפשרים לנו לפצל את הקוד שלנו למספר קבצים נפרדים, כאשר כל קובץ מנהל את הסביבה שלו, ומצהיר במפורש מה הוא מייצא החוצה ומה הוא מייבא מקבצים אחרים.</p>
+   <p class="lead">מודולים (Modules) מאפשרים לנו לפצל את הקוד שלנו למספר קבצים נפרדים, כאשר כל קובץ מנהל את הסביבה שלו, ומצהיר במפורש מה הוא מייצא החוצה ומה הוא מייבא מקבצים אחרים.</p>
     
     <h4>1. ייצוא שמי (Named Export) לעומת ייצוא ברירת מחדל (Default Export)</h4>
     <pre><code><span class="t-com">// --- קובץ math.js ---</span>
@@ -234,8 +231,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
 
   title: '🧩 פירוק מבנה (Destructuring & Spread)',
   content: `
-   <div class="card-body">
-    <p class="lead">פירוק מבנה (Destructuring) ואופרטור הפיזור (Spread) הם קיצורי דרך תחביריים מודרניים לעבודה נוחה ונקייה עם אובייקטים ומערכים.</p>
+   <p class="lead">פירוק מבנה (Destructuring) ואופרטור הפיזור (Spread) הם קיצורי דרך תחביריים מודרניים לעבודה נוחה ונקייה עם אובייקטים ומערכים.</p>
     
     <h4>1. פירוק אובייקטים ומערכים (Destructuring)</h4>
     <pre><code><span class="t-key">const</span> user = { name: <span class="t-str">"אלון"</span>, age: <span class="t-num">22</span> };
@@ -270,8 +266,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
  syntaxWarehouse: {
   title: '🏪 מחסן הסינטקסים הגדול',
   content: `
-   <div class="card-body">
-    <p class="lead">מאגר של תבניות סינטקס מוכנות לעבודה מהירה. השתמשו בו כרפרנס פתוח בזמן כתיבת קוד.</p>
+   <p class="lead">מאגר של תבניות סינטקס מוכנות לעבודה מהירה. השתמשו בו כרפרנס פתוח בזמן כתיבת קוד.</p>
     
     <div class="legend">
      📖 <b>איך לקרוא:</b> כל חלק שנמצא בתוך <span class="fill">תיבה מקווקוות</span> הוא משתנה שאתם צריכים להחליף בערכים שלכם בהתאם לבעיה.
@@ -320,8 +315,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
  pythonVsJs: {
   title: '🐍 Python מול JavaScript 🟨',
   content: `
-   <div class="card-body">
-    <p class="lead">טבלת השוואה מהירה למתכנתים שמגיעים מרקע של Python ללימוד JavaScript המודרני.</p>
+   <p class="lead">טבלת השוואה מהירה למתכנתים שמגיעים מרקע של Python ללימוד JavaScript המודרני.</p>
     <div class="tbl-scroll">
      <table>
       <thead>
@@ -385,8 +379,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
  keyboard: {
   title: '⌨️ קיצורי VS Code למתכנתים מהירים',
   content: `
-   <div class="card-body">
-    <p class="lead">שימוש במקלדת במקום בעכבר יחסוך לכם המון זמן יקר במהלך כתיבת פרויקטים ומבחנים.</p>
+   <p class="lead">שימוש במקלדת במקום בעכבר יחסוך לכם המון זמן יקר במהלך כתיבת פרויקטים ומבחנים.</p>
     <div class="modal-grid">
      <div class="modal-card">
       <h4>קיצורי עריכה וניווט מהירים</h4>
@@ -418,8 +411,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
  libraries: {
   title: '📚 ספריות צד-שלישי נפוצות ב-Node',
   content: `
-   <div class="card-body">
-    <p class="lead">ספריות פופולריות הניתנות להתקנה באמצעות מנהל החבילות npm:</p>
+   <p class="lead">ספריות פופולריות הניתנות להתקנה באמצעות מנהל החבילות npm:</p>
     <div class="modal-grid">
      <div class="lib-card">
       <h4>readline-sync</h4>
@@ -443,8 +435,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
  techEnglish: {
   title: '🔤 אנגלית טכנולוגית המלא (Technology English - 50+ Terms)',
   content: `
-   <div class="card-body">
-    <p class="lead" style="font-size: 1.1rem; line-height: 1.8;">
+   <p class="lead" style="font-size: 1.1rem; line-height: 1.8;">
     מילון המונחים המורחב! כאן תמצאו הסברים כמו (ופחות כמו לרובוטים 🤖) עבור כל המילים באנגלית שאנחנו שומעים בשיעורים, בהרצאות הזום, ורואים בקוד שלנו. <br>
     <strong>💡 חדש:</strong> תוכלו לסמן "V" על כל מושג שהבנתם כדי לעקוב אחר ההתקדמות שלכם! (הסימונים יישמרו גם מחר).
     </p>
@@ -1525,11 +1516,8 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
       </ul>
      </div>
     </div>
-
-    </div>
 `
- }
- , expressKids: {
+ }, expressKids: {
     visualizerSteps: [
         {
             html_visual: `
@@ -1541,8 +1529,7 @@ console.<span class="t-fn">log</span>(user1.<span class="t-fn">getInfo</span>())
 
   title: '👶 שרת Express - הסבר מההתחלה בשפה פשוטה',
   content: `
-   <div class="card-body">
-    <p class="lead" style="font-size: 1.1rem; line-height: 1.8;">
+   <p class="lead" style="font-size: 1.1rem; line-height: 1.8;">
     החבר נתן לך שלד מעולה לפרויקט חנות. אבל איך בכלל ניגשים אליו? איך המחשב חושב? <br>
     בואו נפרק את הכל לגורמים, כמו שמסבירים לילד. בלי מילים מפוצצות.
     </p>

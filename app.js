@@ -19,7 +19,16 @@ const modalData = {
     ...sqlDqlContent,
     ...sqlJoinsContent,
     ...sqlNodeContent,
-    ...bigPictureContent
+    ...bigPictureContent,
+    // Add subagent content safely
+    ...(typeof contentGit !== 'undefined' ? contentGit : {}),
+    ...(typeof contentAsyncExtra !== 'undefined' ? contentAsyncExtra : {}),
+    ...(typeof contentExpressExtra !== 'undefined' ? contentExpressExtra : {}),
+    ...(typeof contentFetchExtra !== 'undefined' ? contentFetchExtra : {}),
+    ...(typeof contentCallbacksExtra !== 'undefined' ? contentCallbacksExtra : {}),
+    ...(typeof contentPromisesExtra !== 'undefined' ? contentPromisesExtra : {}),
+    ...(typeof contentObjectMethodsExtra !== 'undefined' ? contentObjectMethodsExtra : {}),
+    ...(typeof contentArrayMethodsExtra !== 'undefined' ? contentArrayMethodsExtra : {})
 };
 
 // Normalize modalData formats
@@ -73,10 +82,28 @@ const sectionsList = [
       topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring']
     },
     {
+      id: 'section-methods',
+      title: '🛠️ פונקציות מתקדמות (שיטות - Methods)',
+      subtitle: 'מתודות מערכים, מתודות מחרוזות, ומתודות אובייקטים',
+      topics: ['arrayMethods', 'arrayMethodsExtra', 'stringMethods', 'objectMethods', 'objectMethodsExtra']
+    },
+    {
+      id: 'section-async-full',
+      title: '⚡ תכנות אסינכרוני מתקדם',
+      subtitle: 'לולאת האירועים, Callbacks, Promises, Fetch ו-Async/Await',
+      topics: ['eventLoop', 'callbacksAsync', 'callbacksExtra', 'promisesFetch', 'promisesExtra', 'asyncAwait', 'asyncExtra']
+    },
+    {
       id: 'section-web',
-      title: '🌐 שרתים ו-Web',
+      title: '🌐 שרתים ו-Web (צד שרת)',
       subtitle: 'מניפולציית DOM, שרתי HTTP, פרמטרים ושרתי Express',
-      topics: ['dom', 'vanillaServer', 'httpParams', 'express']
+      topics: ['dom', 'vanillaServer', 'httpParams', 'express', 'expressExtra', 'fetchExtra']
+    },
+    {
+      id: 'section-sql',
+      title: '🗄️ מסדי נתונים - SQL',
+      subtitle: 'מושגי יסוד, DDL, DML, DQL, JOINs וחיבור ב-Node.js',
+      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
     },
     {
       id: 'section-docker',
@@ -85,28 +112,10 @@ const sectionsList = [
       topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
     },
     {
-      id: 'section-async-full',
-      title: '⚡ תכנות אסינכרוני מתקדם',
-      subtitle: 'לולאת האירועים, Callbacks, Promises, Fetch ו-Async/Await',
-      topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
-    },
-    {
-      id: 'section-methods',
-      title: '🛠️ פונקציות מתקדמות',
-      subtitle: 'מתודות מערכים, מתודות מחרוזות, ומתודות אובייקטים',
-      topics: ['arrayMethods', 'stringMethods', 'objectMethods']
-    },
-    {
       id: 'section-tools',
       title: '🔧 כלים, תוספות ושרתים מתקדמים',
       subtitle: 'חוקי ברזל, ספריות, בחנים, אנגלית טכנולוגית, Express מתקדם',
-      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide']
-    },
-    {
-      id: 'section-sql',
-      title: '🗄️ מסדי נתונים - SQL',
-      subtitle: 'מושגי יסוד, DDL, DML, DQL, JOINs וחיבור ב-Node.js',
-      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
+      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide', 'gitProject']
     }
 ];
 
