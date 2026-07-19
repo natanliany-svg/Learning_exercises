@@ -3,90 +3,49 @@ const contentObjectMethodsExtra = {
     visualizerSteps: [
         {
             html_visual: `
-            <div class="anim-container">
-                <div class="anim-node" style="border-color:#38bdf8;">"  Hello  ".trim()</div>
-                <div class="anim-packet move-right" style="background:#00d2ff;">"Hello"</div>
-            </div>
-            `,
-            text: "<b>פעולות על מחרוזות (Strings)</b><br>מחרוזות הן טקסט. בעזרת פעולות כמו <code>trim()</code> נוכל לנקות רווחים, ובעזרת <code>split()</code> נוכל לפצל מחרוזת למערך של מילים."
-        },
-        {
-            html_visual: `
             <div class="flow-diagram-enhanced scale-up">
-                <div class="flow-node-enhanced">Object</div>
-                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
-                <div class="flow-node-enhanced active ripple-out" style="border-color:#ff0055;">Object.keys()</div>
-                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
-                <div class="flow-node-enhanced" style="border-color:#38bdf8;">["name", "age"]</div>
+                <div class="flow-node-enhanced" style="border-color:#ff0055;">user</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">clone</span></div>
+                <div class="flow-node-enhanced active">newUser</div>
             </div>
             `,
-            text: "<b>שליפת מפתחות (Keys)</b><br>הפעולה <code>Object.keys(obj)</code> מחזירה לנו מערך שמכיל רק את השמות (המפתחות) של התכונות באובייקט."
-        },
-        {
-             html_visual: `
-            <div class="flow-diagram-enhanced fade-slide-up">
-                <div class="flow-node-enhanced">Object</div>
-                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
-                <div class="flow-node-enhanced active pulse-glow" style="border-color:#00cc88;">Object.values()</div>
-                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span></div>
-                <div class="flow-node-enhanced" style="border-color:#38bdf8;">["Alice", 25]</div>
-            </div>
-            `,
-            text: "<b>שליפת ערכים (Values)</b><br>הפעולה <code>Object.values(obj)</code> מחזירה מערך שמכיל רק את הערכים עצמם שנמצאים בתוך האובייקט."
+            text: "<b>שלב 1: שעתוק אובייקטים</b><br>כאשר נשווה או נעתיק אובייקטים רגילים, נעתיק רק 'מצביע' לזיכרון. כדי ליצור עותק אמיתי ועצמאי, עלינו להשתמש באופרטור הפריסה (Spread: <code>...</code>)."
         },
         {
             html_visual: `
-            <div class="stack-visual">
-                <div class="stack-item" style="opacity:1; background:var(--primary);">Object 1</div>
-                <div class="stack-item" style="opacity:1; background:#ff0055;">+ Object 2</div>
-                <div class="stack-item" style="opacity:1; background:#00cc88;">= Object.assign()</div>
+            <div class="flow-diagram-enhanced fade-slide-up">
+                <div class="flow-node-enhanced" style="border-color:#38bdf8;">?</div>
+                <div class="flow-arrow-enhanced"><span class="arrow-icon">→</span><span class="arrow-label">user?.address</span></div>
+                <div class="flow-node-enhanced active bounce-in" style="border-color:#00cc88;">undefined</div>
             </div>
             `,
-            text: "<b>מיזוג אובייקטים</b><br>בעזרת <code>Object.assign()</code> אנחנו יכולים לקחת שני אובייקטים או יותר, ולחבר אותם לאובייקט אחד גדול."
+            text: "<b>שלב 2: שרשור אופציונלי (Optional Chaining)</b><br>מונע קריסות (Errors) כשמנסים לגשת למפתח פנימי שלא קיים. שימוש ב-<code>?.</code> יחזיר פשוט <code>undefined</code> בשקט."
         }
     ],
-
-    title: '🛠️ מחרוזות ואובייקטים',
+    title: '📂 אובייקטים מתקדם וטריקים (Extra)',
     content: `
       <div class="card-body">
-        <p class="lead">ב-JavaScript, מחרוזות (טקסט) ואובייקטים (אוסף של נתונים) מגיעים עם פונקציות מוכנות מראש שעוזרות לנו לעבוד איתם בקלות.</p>
+        <p class="lead">כאן נלמד טכניקות מודרניות ובטוחות לעבודה עם אובייקטים ב-JavaScript שיחסכו לנו המון שגיאות 'Cannot read properties of undefined'.</p>
         
-        <h4>1. פונקציות חשובות למחרוזות (Strings)</h4>
-        <ul class="tight">
-          <li><b><code class="inl">trim()</code></b> — מנקה רווחים מיותרים מההתחלה ומהסוף.</li>
-          <li><b><code class="inl">toLowerCase() / toUpperCase()</code></b> — הופך את כל הטקסט לאותיות קטנות או גדולות.</li>
-          <li><b><code class="inl">includes(word)</code></b> — בודק אם מילה מסוימת קיימת בתוך הטקסט (מחזיר true או false).</li>
-          <li><b><code class="inl">split(char)</code></b> — חותך את המחרוזת לפי תו מסוים והופך אותה למערך.</li>
-          <li><b><code class="inl">replace(old, new)</code></b> — מחליף חלק מהטקסט במשהו אחר.</li>
-        </ul>
+        <h4>1. שרשור אופציונלי (Optional Chaining: <code>?.</code>)</h4>
+        <p>כאשר אנו מנסים לגשת לערך בתוך אובייקט מקונן שאינו קיים, התוכנית שלנו תקרוס. ה-<code>?.</code> בודק קודם אם השלב הקודם קיים לפני שהוא ממשיך פנימה.</p>
+        <pre><code><span class="t-key">const</span> user = { name: <span class="t-str">"דני"</span> };
 
-        <pre><code><span class="t-key">const</span> text = <span class="t-str">"  Hello World  "</span>;
-console.<span class="t-fn">log</span>(text.<span class="t-fn">trim</span>()); <span class="t-com">// "Hello World"</span>
-console.<span class="t-fn">log</span>(text.<span class="t-fn">includes</span>(<span class="t-str">"World"</span>)); <span class="t-com">// true</span></code></pre>
+<span class="t-com">// ❌ קריסה! מנסה לקרוא city מתוך address שאינו קיים</span>
+<span class="t-com">// console.log(user.address.city); </span>
 
-        <div class="callout analogy">
-          <span class="ico">✂️</span>
-          <div class="ct"><b>אנלוגיה:</b> פונקציות של מחרוזות הן כמו מספריים וצבעים בשיעור יצירה. אפשר לגזור את הטקסט, לשנות לו את הצבע (גודל אותיות), ולהדביק במקומו משהו חדש.</div>
-        </div>
+<span class="t-com">// ✅ בטוח! יחזיר undefined וימשיך לרוץ</span>
+console.<span class="t-fn">log</span>(user.address?.city);</code></pre>
 
-        <h4>2. פונקציות חשובות לאובייקטים (Objects)</h4>
-        <p>אובייקטים בנויים מזוגות של <b>מפתח (Key)</b> ו-<b>ערך (Value)</b>. הנה הפונקציות הכי שימושיות:</p>
-        <ul class="tight">
-          <li><b><code class="inl">Object.keys(obj)</code></b> — מחזיר מערך של כל ה<b>שמות</b> (המפתחות) באובייקט.</li>
-          <li><b><code class="inl">Object.values(obj)</code></b> — מחזיר מערך של כל ה<b>ערכים</b> באובייקט.</li>
-          <li><b><code class="inl">Object.entries(obj)</code></b> — מחזיר מערך של מערכים, כשבכל אחד מהם יש [מפתח, ערך]. מצוין ללולאות!</li>
-          <li><b><code class="inl">Object.assign(target, source)</code></b> — מעתיק תכונות מאובייקט אחד לאחר או ממזג אותם.</li>
-        </ul>
-        
-        <pre><code><span class="t-key">const</span> user = { name: <span class="t-str">"Alice"</span>, age: <span class="t-num">25</span> };
+        <h4>2. שעתוק (Shallow Copy) עם Spread Operator (<code>...</code>)</h4>
+        <p>באובייקטים אי אפשר לעשות <code>let a = b</code> כי הם יצביעו לאותו מקום. שימוש בשלוש נקודות "פורס" את התוכן לאובייקט חדש ועצמאי לחלוטין.</p>
+        <pre><code><span class="t-key">const</span> original = { role: <span class="t-str">"Admin"</span>, status: <span class="t-str">"Active"</span> };
 
-console.<span class="t-fn">log</span>(Object.<span class="t-fn">keys</span>(user));   <span class="t-com">// ["name", "age"]</span>
-console.<span class="t-fn">log</span>(Object.<span class="t-fn">values</span>(user)); <span class="t-com">// ["Alice", 25]</span></code></pre>
+<span class="t-com">// יצירת אובייקט חדש שמעתיק את כל התכונות של המקורי</span>
+<span class="t-key">const</span> copy = { ...original, name: <span class="t-str">"דני"</span> };
 
-        <div class="callout exam">
-          <span class="ico">📌</span>
-          <div class="ct"><b>טיפ חזק:</b> כשאתם צריכים לעבור על כל הנתונים של אובייקט (לעשות לולאה עליו), הכי נוח להשתמש ב-<code>Object.entries()</code> בתוך לולאת <code>for...of</code>!</div>
-        </div>
+copy.status = <span class="t-str">"Offline"</span>;
+console.<span class="t-fn">log</span>(original.status); <span class="t-com">// "Active" (המקורי לא הושפע!)</span></code></pre>
       </div>
     `
   }
