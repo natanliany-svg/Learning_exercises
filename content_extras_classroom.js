@@ -55,7 +55,7 @@ const contentExtrasClassroom = {
             </div>
         `
     },
-    techEnglish: {
+    techEnglishShort: {
         title: "Tech English - שפת התכנות",
         visualizerSteps: [
             { action: "readWord", text: "<b>שלב 1: קריאה -</b> פוגשים מונח מקצועי חדש באנגלית (כמו Variable)." },

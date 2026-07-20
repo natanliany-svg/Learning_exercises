@@ -1,31 +1,68 @@
 // --- Global Declarations & State ---
 let activeProject = 'bank';
 let isPlanSaved = false;
+const modalData = {};
 
-const modalData = {
-    ...contentPart1,
-    ...contentPart2,
-    ...contentPart3,
-    ...asyncLearningContent,
-    ...contentServersClassroom,
-    ...bigPictureContent,
-    ...contentBasicsClassroom,
-    ...contentConditionsClassroom,
-    ...contentEnglishClassroom,
-    ...contentExpressClassroom,
-    ...contentPostmanClassroom,
-    ...contentDomClassroom,
-    ...contentVsCodeClassroom,
-    ...contentAdvancedJsClassroom,
-    ...contentGitClassroom,
-    ...contentSqlClassroom,
-    ...contentDockerClassroom,
-    ...contentIntroJsClassroom,
-    ...contentExtrasClassroom,
-    ...contentAsyncClassroom,
-    ...contentDbClassroom,
-    ...contentTestingClassroom
-};
+function mergeContent(source) {
+    if (!source) return;
+    Object.keys(source).forEach(key => {
+        if (!modalData[key]) {
+            modalData[key] = { ...source[key] };
+        } else {
+            // Keep the classroom visualizer steps (they are better usually) or merge them
+            if (source[key].visualizerSteps && source[key].visualizerSteps.length > 0) {
+                modalData[key].visualizerSteps = source[key].visualizerSteps;
+            }
+            // Merge content html (Classroom pedagogical intro first, then the deep detailed content)
+            if (source[key].content) {
+                if (modalData[key].content && modalData[key].content !== source[key].content) {
+                    modalData[key].content = source[key].content + '\n<div class="detailed-content-section" style="margin-top: 40px; padding-top: 20px; border-top: 2px dashed var(--gold);"><h3 style="color: var(--gold); text-align: center; margin-bottom: 20px;">📚 העמקה והרחבה - חומר הליבה</h3>\n' + modalData[key].content + '</div>';
+                } else {
+                    modalData[key].content = source[key].content;
+                }
+            }
+            // If the source has a title, we usually prefer the classroom title as it's more pedagogical, but both are fine
+            if (source[key].title) modalData[key].title = source[key].title;
+        }
+    });
+}
+
+// 1. First load the original deep content
+mergeContent(typeof contentPart1 !== 'undefined' ? contentPart1 : {});
+mergeContent(typeof contentPart2 !== 'undefined' ? contentPart2 : {});
+mergeContent(typeof contentPart3 !== 'undefined' ? contentPart3 : {});
+mergeContent(typeof asyncLearningContent !== 'undefined' ? asyncLearningContent : {});
+mergeContent(typeof contentServersClassroom !== 'undefined' ? contentServersClassroom : {});
+mergeContent(typeof bigPictureContent !== 'undefined' ? bigPictureContent : {});
+
+// Extra subagent deep content
+mergeContent(typeof contentGit !== 'undefined' ? contentGit : {});
+mergeContent(typeof contentAsyncExtra !== 'undefined' ? contentAsyncExtra : {});
+mergeContent(typeof contentExpressExtra !== 'undefined' ? contentExpressExtra : {});
+mergeContent(typeof contentFetchExtra !== 'undefined' ? contentFetchExtra : {});
+mergeContent(typeof contentCallbacksExtra !== 'undefined' ? contentCallbacksExtra : {});
+mergeContent(typeof contentPromisesExtra !== 'undefined' ? contentPromisesExtra : {});
+mergeContent(typeof contentObjectMethodsExtra !== 'undefined' ? contentObjectMethodsExtra : {});
+mergeContent(typeof contentArrayMethodsExtra !== 'undefined' ? contentArrayMethodsExtra : {});
+
+// 2. Then load the new pedagogical classroom content which will prepend its summaries
+mergeContent(typeof contentBasicsClassroom !== 'undefined' ? contentBasicsClassroom : {});
+mergeContent(typeof contentConditionsClassroom !== 'undefined' ? contentConditionsClassroom : {});
+mergeContent(typeof contentEnglishClassroom !== 'undefined' ? contentEnglishClassroom : {});
+mergeContent(typeof contentExpressClassroom !== 'undefined' ? contentExpressClassroom : {});
+mergeContent(typeof contentPostmanClassroom !== 'undefined' ? contentPostmanClassroom : {});
+mergeContent(typeof contentDomClassroom !== 'undefined' ? contentDomClassroom : {});
+mergeContent(typeof contentVsCodeClassroom !== 'undefined' ? contentVsCodeClassroom : {});
+mergeContent(typeof contentAdvancedJsClassroom !== 'undefined' ? contentAdvancedJsClassroom : {});
+mergeContent(typeof contentGitClassroom !== 'undefined' ? contentGitClassroom : {});
+mergeContent(typeof contentSqlClassroom !== 'undefined' ? contentSqlClassroom : {});
+mergeContent(typeof contentDockerClassroom !== 'undefined' ? contentDockerClassroom : {});
+mergeContent(typeof contentIntroJsClassroom !== 'undefined' ? contentIntroJsClassroom : {});
+mergeContent(typeof contentExtrasClassroom !== 'undefined' ? contentExtrasClassroom : {});
+mergeContent(typeof contentAsyncClassroom !== 'undefined' ? contentAsyncClassroom : {});
+mergeContent(typeof contentDbClassroom !== 'undefined' ? contentDbClassroom : {});
+mergeContent(typeof contentTestingClassroom !== 'undefined' ? contentTestingClassroom : {});
+
 
 // Normalize modalData formats
 Object.keys(modalData).forEach(key => {
@@ -81,7 +118,7 @@ const sectionsList = [
       id: 'section-web',
       title: '🌐 שרתים ו-Web',
       subtitle: 'מניפולציית DOM, שרתי HTTP, פרמטרים ושרתי Express',
-      topics: ['dom', 'httpBasics', 'httpVanillaRouting', 'httpGetData', 'vigilArchive', 'expressBasic', 'expressBody', 'expressParamsQuery', 'expressRouter', 'dotenv', 'expressShop', 'expressMiddleware', 'expressErrorHandling', 'restaurantApi', 'ironDomeOps']
+      topics: ['dom', 'httpBasics', 'httpVanillaRouting', 'httpGetData', 'vigilArchive', 'expressBasic', 'expressBody', 'expressParamsQuery', 'expressRouter', 'dotenv', 'expressShop', 'expressMiddleware', 'expressErrorHandling', 'restaurantApi', 'ironDomeOps', 'expressExtra', 'fetchExtra']
     },
     {
       id: 'section-docker',
@@ -93,13 +130,13 @@ const sectionsList = [
       id: 'section-async-full',
       title: '⚡ תכנות אסינכרוני מתקדם',
       subtitle: 'לולאת האירועים, Callbacks, Promises, Fetch ו-Async/Await',
-      topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
+      topics: ['eventLoop', 'callbacksAsync', 'callbacksExtra', 'promisesFetch', 'promisesExtra', 'asyncAwait', 'asyncExtra']
     },
     {
       id: 'section-methods',
       title: '🛠️ פונקציות מתקדמות',
       subtitle: 'מתודות מערכים, מתודות מחרוזות, מתודות אובייקטים ושרשור פונקציות',
-      topics: ['arrayMethods', 'stringMethods', 'objectMethods', 'methodChaining']
+      topics: ['arrayMethods', 'arrayMethodsExtra', 'stringMethods', 'objectMethods', 'objectMethodsExtra', 'methodChaining']
     },
     {
       id: 'section-tools',
@@ -147,11 +184,15 @@ function scrollToSection(id) {
         card.classList.add('open');
         
         setTimeout(() => {
-            card.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
+            const headerOffset = 80;
+            const elementPosition = card.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - headerOffset;
+            
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
             });
-        }, 150);
+        }, 50);
     }
     updateProgressBar();
 }

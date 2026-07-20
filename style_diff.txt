@@ -1,0 +1,29 @@
+﻿diff --git a/style.css b/style.css
+index ad570ef..e3faf76 100644
+--- a/style.css
++++ b/style.css
+@@ -1908,3 +1908,24 @@ td {
+ .card-body.bonus-content > .card-body-inner::before { content: '≡ƒרד ╫ס╫ץ╫á╫ץ╫í ╫פ╫ó╫⌐╫¿╫פ'; font-weight: bold; color: #f39c12; display: block; margin-bottom: 12px; font-size: 13px; }
+ div.bonus-content:not(.card-body) { border-right: 4px solid #f39c12; background: rgba(243, 156, 18, 0.03); padding: 15px; border-radius: 8px; margin: 15px 0; }
+ div.bonus-content:not(.card-body)::before { content: '≡ƒרד ╫ס╫ץ╫á╫ץ╫í ╫פ╫ó╫⌐╫¿╫פ'; font-weight: bold; color: #f39c12; display: block; margin-bottom: 8px; font-size: 13px; }
++
++/* ---------- Code Tooltips ---------- */
++.code-tooltip-container { position: relative; display: inline-block; cursor: help; }
++.code-tooltip { visibility: hidden; width: 220px; background-color: var(--surface-2); color: var(--ink); text-align: center; border-radius: 8px; padding: 8px; position: absolute; z-index: 3000; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; border: 1px solid var(--gold); font-family: 'Assistant', sans-serif; font-size: 14px; direction: rtl; box-shadow: 0 4px 15px rgba(0,0,0,0.5); pointer-events: none; }
++.code-tooltip::after { content: ''; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: var(--gold) transparent transparent transparent; }
++.code-tooltip-container:hover .code-tooltip { visibility: visible; opacity: 1; pointer-events: auto; }
++
++
++/* ---------- Animated CLI ---------- */
++.animated-cli { background: #040912; border: 1px solid var(--line); border-radius: 8px; padding: 15px; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: #cbd5e1; direction: ltr; text-align: left; margin: 10px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.3); overflow: hidden; position: relative; }
++.animated-cli .cli-header { display: flex; gap: 6px; margin-bottom: 10px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
++.animated-cli .cli-header span { display: block; width: 12px; height: 12px; border-radius: 50%; }
++.animated-cli .cli-header .dot-red { background: #ff5f56; }
++.animated-cli .cli-header .dot-yel { background: #ffbd2e; }
++.animated-cli .cli-header .dot-grn { background: #27c93f; }
++.animated-cli-content { min-height: 50px; }
++.cli-line { margin: 2px 0; }
++.cli-prompt { color: #4ade80; margin-right: 8px; }
++.cli-typing { border-right: 2px solid #cbd5e1; animation: blink 1s step-end infinite; }
++@keyframes blink { 50% { border-color: transparent; } }
++

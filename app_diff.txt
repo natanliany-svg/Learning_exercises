@@ -1,0 +1,207 @@
+﻿diff --git a/app.js b/app.js
+index beac83e..617895b 100644
+--- a/app.js
++++ b/app.js
+@@ -7,28 +7,24 @@ const modalData = {
+     ...contentPart2,
+     ...contentPart3,
+     ...asyncLearningContent,
+-    ...serversContent,
+-    ...dockerBasicContent,
+-    ...dockerComposeContent,
+-    ...dockerAdvancedContent,
+-    ...dockerImagesDeepContent,
+-    ...dockerComposeAdvancedContent,
+-    ...sqlBasicsContent,
+-    ...sqlDdlContent,
+-    ...sqlDmlContent,
+-    ...sqlDqlContent,
+-    ...sqlJoinsContent,
+-    ...sqlNodeContent,
++    ...contentServersClassroom,
+     ...bigPictureContent,
+-    // Add subagent content safely
+-    ...(typeof contentGit !== 'undefined' ? contentGit : {}),
+-    ...(typeof contentAsyncExtra !== 'undefined' ? contentAsyncExtra : {}),
+-    ...(typeof contentExpressExtra !== 'undefined' ? contentExpressExtra : {}),
+-    ...(typeof contentFetchExtra !== 'undefined' ? contentFetchExtra : {}),
+-    ...(typeof contentCallbacksExtra !== 'undefined' ? contentCallbacksExtra : {}),
+-    ...(typeof contentPromisesExtra !== 'undefined' ? contentPromisesExtra : {}),
+-    ...(typeof contentObjectMethodsExtra !== 'undefined' ? contentObjectMethodsExtra : {}),
+-    ...(typeof contentArrayMethodsExtra !== 'undefined' ? contentArrayMethodsExtra : {})
++    ...contentBasicsClassroom,
++    ...contentConditionsClassroom,
++    ...contentEnglishClassroom,
++    ...contentExpressClassroom,
++    ...contentPostmanClassroom,
++    ...contentDomClassroom,
++    ...contentVsCodeClassroom,
++    ...contentAdvancedJsClassroom,
++    ...contentGitClassroom,
++    ...contentSqlClassroom,
++    ...contentDockerClassroom,
++    ...contentIntroJsClassroom,
++    ...contentExtrasClassroom,
++    ...contentAsyncClassroom,
++    ...contentDbClassroom,
++    ...contentTestingClassroom
+ };
+ 
+ // Normalize modalData formats
+@@ -79,31 +75,13 @@ const sectionsList = [
+       id: 'section-basics',
+       title: '≡ƒº▒ ╫ש╫í╫ץ╫ף╫ץ╫¬ ╫פ╫⌐╫ñ╫פ ╫ץ╫£╫ץ╫£╫נ╫ץ╫¬',
+       subtitle: '╫₧╫⌐╫¬╫á╫ש╫¥, ╫¬╫á╫נ╫ש╫¥, ╫£╫ץ╫£╫נ╫ץ╫¬, ╫ñ╫ץ╫á╫º╫ª╫ש╫ץ╫¬, ╫º╫£╫ץ╫צ╫│╫¿╫ש╫¥ ╫ץ╫₧╫ץ╫ף╫ץ╫£╫ש╫¥ ╫ס-JavaScript',
+-      topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring']
+-    },
+-    {
+-      id: 'section-methods',
+-      title: '≡ƒ¢á∩╕ן ╫ñ╫ץ╫á╫º╫ª╫ש╫ץ╫¬ ╫₧╫¬╫º╫ף╫₧╫ץ╫¬ (╫⌐╫ש╫ר╫ץ╫¬ - Methods)',
+-      subtitle: '╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫₧╫ó╫¿╫¢╫ש╫¥, ╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫₧╫ק╫¿╫ץ╫צ╫ץ╫¬, ╫ץ╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫נ╫ץ╫ס╫ש╫ש╫º╫ר╫ש╫¥',
+-      topics: ['arrayMethods', 'arrayMethodsExtra', 'stringMethods', 'objectMethods', 'objectMethodsExtra']
+-    },
+-    {
+-      id: 'section-async-full',
+-      title: 'Γתí ╫¬╫¢╫á╫ץ╫¬ ╫נ╫í╫ש╫á╫¢╫¿╫ץ╫á╫ש ╫₧╫¬╫º╫ף╫¥',
+-      subtitle: '╫£╫ץ╫£╫נ╫¬ ╫פ╫נ╫ש╫¿╫ץ╫ó╫ש╫¥, Callbacks, Promises, Fetch ╫ץ-Async/Await',
+-      topics: ['eventLoop', 'callbacksAsync', 'callbacksExtra', 'promisesFetch', 'promisesExtra', 'asyncAwait', 'asyncExtra']
++      topics: ['installations', 'basics', 'conditions', 'loops', 'arraysObjects', 'functions', 'closures', 'factories', 'debugging', 'importExportEs6', 'modulesPackageNode', 'cleanCode', 'projectBank']
+     },
+     {
+       id: 'section-web',
+-      title: '≡ƒלנ ╫⌐╫¿╫¬╫ש╫¥ ╫ץ-Web (╫ª╫ף ╫⌐╫¿╫¬)',
++      title: '≡ƒלנ ╫⌐╫¿╫¬╫ש╫¥ ╫ץ-Web',
+       subtitle: '╫₧╫á╫ש╫ñ╫ץ╫£╫ª╫ש╫ש╫¬ DOM, ╫⌐╫¿╫¬╫ש HTTP, ╫ñ╫¿╫₧╫ר╫¿╫ש╫¥ ╫ץ╫⌐╫¿╫¬╫ש Express',
+-      topics: ['dom', 'vanillaServer', 'httpParams', 'express', 'expressExtra', 'fetchExtra']
+-    },
+-    {
+-      id: 'section-sql',
+-      title: '≡ƒקה∩╕ן ╫₧╫í╫ף╫ש ╫á╫¬╫ץ╫á╫ש╫¥ - SQL',
+-      subtitle: '╫₧╫ץ╫⌐╫ע╫ש ╫ש╫í╫ץ╫ף, DDL, DML, DQL, JOINs ╫ץ╫ק╫ש╫ס╫ץ╫¿ ╫ס-Node.js',
+-      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
++      topics: ['dom', 'httpBasics', 'httpVanillaRouting', 'httpGetData', 'vigilArchive', 'expressBasic', 'expressBody', 'expressParamsQuery', 'expressRouter', 'dotenv', 'expressShop', 'expressMiddleware', 'expressErrorHandling', 'restaurantApi', 'ironDomeOps']
+     },
+     {
+       id: 'section-docker',
+@@ -111,11 +89,35 @@ const sectionsList = [
+       subtitle: '╫₧╫ס╫ץ╫נ, ╫º╫ץ╫á╫ר╫ש╫ש╫á╫¿╫ש╫¥, ╫ץ╫ץ╫£╫ש╫ץ╫₧╫ש╫¥, ╫ñ╫º╫ץ╫ף╫ץ╫¬ ╫ץ-Docker Compose',
+       topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
+     },
++    {
++      id: 'section-async-full',
++      title: 'Γתí ╫¬╫¢╫á╫ץ╫¬ ╫נ╫í╫ש╫á╫¢╫¿╫ץ╫á╫ש ╫₧╫¬╫º╫ף╫¥',
++      subtitle: '╫£╫ץ╫£╫נ╫¬ ╫פ╫נ╫ש╫¿╫ץ╫ó╫ש╫¥, Callbacks, Promises, Fetch ╫ץ-Async/Await',
++      topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
++    },
++    {
++      id: 'section-methods',
++      title: '≡ƒ¢á∩╕ן ╫ñ╫ץ╫á╫º╫ª╫ש╫ץ╫¬ ╫₧╫¬╫º╫ף╫₧╫ץ╫¬',
++      subtitle: '╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫₧╫ó╫¿╫¢╫ש╫¥, ╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫₧╫ק╫¿╫ץ╫צ╫ץ╫¬, ╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫נ╫ץ╫ס╫ש╫ש╫º╫ר╫ש╫¥ ╫ץ╫⌐╫¿╫⌐╫ץ╫¿ ╫ñ╫ץ╫á╫º╫ª╫ש╫ץ╫¬',
++      topics: ['arrayMethods', 'stringMethods', 'objectMethods', 'methodChaining']
++    },
+     {
+       id: 'section-tools',
+       title: '≡ƒפº ╫¢╫£╫ש╫¥, ╫¬╫ץ╫í╫ñ╫ץ╫¬ ╫ץ╫⌐╫¿╫¬╫ש╫¥ ╫₧╫¬╫º╫ף╫₧╫ש╫¥',
+       subtitle: '╫ק╫ץ╫º╫ש ╫ס╫¿╫צ╫£, ╫í╫ñ╫¿╫ש╫ץ╫¬, ╫ס╫ק╫á╫ש╫¥, ╫נ╫á╫ע╫£╫ש╫¬ ╫ר╫¢╫á╫ץ╫£╫ץ╫ע╫ש╫¬, Express ╫₧╫¬╫º╫ף╫¥',
+-      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide', 'gitProject']
++      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide', 'asyncTest', 'mahatPrep', 'staffMail', 'submitPractice', 'microMacro', 'realWorldQuiz']
++    },
++    {
++      id: 'section-git',
++      title: '≡ƒנש ╫á╫ש╫פ╫ץ╫£ ╫ע╫¿╫í╫נ╫ץ╫¬ - Git',
++      subtitle: '╫ש╫ª╫ש╫¿╫¬ ╫º╫£╫í╫¿╫ש╫¥, ╫ª╫ש╫£╫ץ╫₧╫ש ╫₧╫ª╫ס, ╫ץ╫⌐╫£╫ש╫ק╫פ ╫£╫ó╫á╫ƒ',
++      topics: ['gitInit', 'gitStatus', 'gitAdd', 'gitCommit', 'gitPush', 'gitPull', 'gitBranches', 'gitRemote', 'gitMerge', 'gitWorkflow', 'gitTeamProject']
++    },
++    {
++      id: 'section-sql',
++      title: '≡ƒקה∩╕ן ╫₧╫í╫ף╫ש ╫á╫¬╫ץ╫á╫ש╫¥ - SQL',
++      subtitle: '╫₧╫ץ╫⌐╫ע╫ש ╫ש╫í╫ץ╫ף, DDL, DML, DQL, JOINs ╫ץ╫ק╫ש╫ס╫ץ╫¿ ╫ס-Node.js',
++      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
+     }
+ ];
+ 
+@@ -1980,3 +1982,84 @@ window.updateVisSlide = function(container, current, total, topicKey) {
+     btnPrev.disabled = (current === 0);
+     btnNext.disabled = (current === total - 1);
+ };
++
++// Tooltip click handler for mobile
++document.addEventListener('click', function(e) {
++    const tooltipEl = e.target.closest('[data-tooltip]');
++    if (tooltipEl) {
++        // Ensure it has the tooltip element inside
++        if (!tooltipEl.querySelector('.code-tooltip')) {
++            const tip = document.createElement('span');
++            tip.className = 'code-tooltip';
++            tip.innerHTML = tooltipEl.getAttribute('data-tooltip');
++            tooltipEl.classList.add('code-tooltip-container');
++            tooltipEl.appendChild(tip);
++        }
++    }
++});
++
++
++// Animated CLI handler
++function initAnimatedCLIs() {
++    document.querySelectorAll('.animated-cli').forEach(cli => {
++        if (cli.dataset.initialized) return;
++        cli.dataset.initialized = 'true';
++        const content = cli.querySelector('.animated-cli-content');
++        if (!content) return;
++        const rawText = content.innerHTML;
++        content.innerHTML = '';
++        
++        const lines = rawText.split('<br>').filter(l => l.trim() !== '');
++        let i = 0;
++        function typeLine() {
++            if (i >= lines.length) return;
++            const line = lines[i].trim();
++            const p = document.createElement('div');
++            p.className = 'cli-line';
++            
++            if (line.startsWith('$')) {
++                p.innerHTML = '<span class=\"cli-prompt\">$</span><span class=\"cli-text cli-typing\"></span>';
++                content.appendChild(p);
++                const textSpan = p.querySelector('.cli-text');
++                const targetText = line.substring(1).trim();
++                let charIndex = 0;
++                
++                const typeChar = setInterval(() => {
++                    if (charIndex >= targetText.length) {
++                        clearInterval(typeChar);
++                        textSpan.classList.remove('cli-typing');
++                        i++;
++                        setTimeout(typeLine, 300);
++                    } else {
++                        textSpan.textContent += targetText[charIndex];
++                        charIndex++;
++                    }
++                }, 50);
++            } else {
++                p.innerHTML = line;
++                p.style.color = '#94a3b8'; // command output color
++                content.appendChild(p);
++                i++;
++                setTimeout(typeLine, 100);
++            }
++        }
++        
++        const observer = new IntersectionObserver(entries => {
++            entries.forEach(entry => {
++                if (entry.isIntersecting) {
++                    typeLine();
++                    observer.disconnect();
++                }
++            });
++        });
++        observer.observe(cli);
++    });
++}
++
++// Call it after render
++const originalRender = renderAllContent;
++renderAllContent = function() {
++    originalRender();
++    setTimeout(initAnimatedCLIs, 200);
++};
++

@@ -1,0 +1,159 @@
+﻿diff --git a/index.html b/index.html
+index 214b4ee..91a64e2 100644
+--- a/index.html
++++ b/index.html
+@@ -61,52 +61,21 @@
+       <div class="nav-section">
+         <span class="nav-label">╫ש╫í╫ץ╫ף╫ץ╫¬ ╫ץ╫₧╫¬╫º╫ף╫¥</span>
+         <div class="nav-item active" onclick="scrollToSection('basics')">≡ƒףנ ╫ש╫í╫ץ╫ף╫ץ╫¬ ╫ץ╫₧╫⌐╫¬╫á╫ש╫¥ <span class="qm-num">1</span></div>
+-        <div class="nav-item" onclick="scrollToSection('loops')">≡ƒפה ╫¬╫á╫נ╫ש╫¥ ╫ץ╫£╫ץ╫£╫נ╫ץ╫¬ <span class="qm-num">2</span></div>
+-        <div class="nav-item" onclick="scrollToSection('functions')">≡ƒמ» ╫ñ╫ץ╫á╫º╫ª╫ש╫ץ╫¬ <span class="qm-num">3</span></div>
++        <div class="nav-item" onclick="scrollToSection('conditions')">≡ƒתª ╫¬╫á╫נ╫ש╫¥ <span class="qm-num">2</span></div>
++        <div class="nav-item" onclick="scrollToSection('loops')">≡ƒפה ╫£╫ץ╫£╫נ╫ץ╫¬ <span class="qm-num">3</span></div>
++        <div class="nav-item" onclick="scrollToSection('functions')">≡ƒמ» ╫ñ╫ץ╫á╫º╫ª╫ש╫ץ╫¬ <span class="qm-num">4</span></div>
+         <div class="nav-item" onclick="scrollToSection('closures')">≡ƒפע ╫º╫£╫ץ╫צ'╫¿╫ש╫¥ (Closures) <span class="qm-num">4</span></div>
+         <div class="nav-item" onclick="scrollToSection('factories')">≡ƒן¡ ╫ñ╫ץ╫á╫º╫ª╫ש╫ץ╫¬ ╫₧╫ñ╫ó╫£ <span class="qm-num">5</span></div>
+         <div class="nav-item" onclick="scrollToSection('modules')">≡ƒףª ╫₧╫ץ╫ף╫ץ╫£╫ש╫¥ (ES6) <span class="qm-num">6</span></div>
+         <div class="nav-item" onclick="scrollToSection('destructuring')">≡ƒº⌐ ╫ñ╫ש╫¿╫ץ╫º ╫₧╫ס╫á╫פ <span class="qm-num">7</span></div>
+       </div>
+ 
+-      <div class="nav-section">
+-        <span class="nav-label">╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫₧╫ץ╫ס╫á╫ץ╫¬ (╫⌐╫ש╫ר╫ץ╫¬)</span>
+-        <div class="nav-item" onclick="scrollToSection('arrayMethods')">≡ƒףך ╫₧╫ó╫¿╫¢╫ש╫¥ ╫ץ╫₧╫¬╫ץ╫ף╫ץ╫¬ <span class="qm-num">16</span></div>
+-        <div class="nav-item" onclick="scrollToSection('arrayMethodsExtra')">≡ƒףט ╫¬╫¿╫ע╫ץ╫£ ╫₧╫ó╫¿╫¢╫ש╫¥ ╫á╫ץ╫í╫ú <span class="qm-num">16a</span></div>
+-        <div class="nav-item" onclick="scrollToSection('stringMethods')">≡ƒף¥ ╫₧╫ק╫¿╫ץ╫צ╫ץ╫¬ ╫ץ╫₧╫¬╫ץ╫ף╫ץ╫¬ <span class="qm-num">17</span></div>
+-        <div class="nav-item" onclick="scrollToSection('objectMethods')">≡ƒקג∩╕ן ╫נ╫ץ╫ס╫ש╫ש╫º╫ר╫ש╫¥ ╫ץ╫₧╫¬╫ץ╫ף╫ץ╫¬ <span class="qm-num">18</span></div>
+-        <div class="nav-item" onclick="scrollToSection('objectMethodsExtra')">≡ƒףג ╫¬╫¿╫ע╫ץ╫£ ╫נ╫ץ╫ס╫ש╫ש╫º╫ר╫ש╫¥ <span class="qm-num">18a</span></div>
+-      </div>
+-
+-      <div class="nav-section">
+-        <span class="nav-label">╫נ╫í╫ש╫á╫¢╫¿╫ץ╫á╫ש╫ץ╫¬ ╫₧╫º╫ש╫ñ╫פ</span>
+-        <div class="nav-item" onclick="scrollToSection('eventLoop')">≡ƒפה ╫₧╫á╫ץ╫ó ╫פ-Event Loop <span class="qm-num">12</span></div>
+-        <div class="nav-item" onclick="scrollToSection('callbacksAsync')">≡ƒף₧ ╫º╫ץ╫£╫ס╫º╫ש╫¥ ╫ץ-fs <span class="qm-num">13</span></div>
+-        <div class="nav-item" onclick="scrollToSection('callbacksExtra')">Γרמ∩╕ן ╫¬╫¿╫ע╫ץ╫£ ╫º╫ץ╫£╫ס╫º╫ש╫¥ <span class="qm-num">13a</span></div>
+-        <div class="nav-item" onclick="scrollToSection('promisesFetch')">≡ƒñ¥ ╫פ╫ס╫ר╫ק╫ץ╫¬ ╫ץ-Fetch <span class="qm-num">14</span></div>
+-        <div class="nav-item" onclick="scrollToSection('promisesExtra')">≡ƒñ₧ ╫¬╫¿╫ע╫ץ╫£ Promises <span class="qm-num">14a</span></div>
+-        <div class="nav-item" onclick="scrollToSection('asyncAwait')">Γן│ Async / Await <span class="qm-num">15</span></div>
+-        <div class="nav-item" onclick="scrollToSection('asyncExtra')">Γתí ╫ñ╫¿╫ץ╫ש╫º╫ר ╫נ╫í╫ש╫á╫¢╫¿╫ץ╫á╫ש <span class="qm-num">15a</span></div>
+-      </div>
+-
+       <div class="nav-section">
+         <span class="nav-label">╫⌐╫¿╫¬╫ש╫¥ ╫ץ-Web</span>
+         <div class="nav-item" onclick="scrollToSection('dom')">≡ƒלנ ╫פ-DOM ╫ץ╫₧╫á╫ש╫ñ╫ץ╫£╫ª╫ש╫פ <span class="qm-num">8</span></div>
+         <div class="nav-item" onclick="scrollToSection('vanillaServer')">≡ƒצÑ∩╕ן ╫⌐╫¿╫¬ HTTP ╫ס╫í╫ש╫í╫ש <span class="qm-num">9</span></div>
+         <div class="nav-item" onclick="scrollToSection('httpParams')">≡ƒº⌐ ╫ñ╫¿╫₧╫ר╫¿╫ש╫¥ ╫ס-HTTP <span class="qm-num">10</span></div>
+         <div class="nav-item" onclick="scrollToSection('express')">≡ƒתא ╫⌐╫¿╫¬╫ש Express <span class="qm-num">11</span></div>
+-        <div class="nav-item" onclick="scrollToSection('expressExtra')">≡ƒןמ∩╕ן ╫¬╫¿╫ע╫ץ╫£ Express <span class="qm-num">11a</span></div>
+-        <div class="nav-item" onclick="scrollToSection('fetchExtra')">≡ƒףí ╫¬╫¿╫ע╫ץ╫£ Fetch <span class="qm-num">11b</span></div>
+-      </div>
+-
+-      <div class="nav-section">
+-        <span class="nav-label">╫₧╫í╫ף╫ש ╫á╫¬╫ץ╫á╫ש╫¥ ╫ץ-SQL</span>
+-        <div class="nav-item" onclick="scrollToSection('sqlBasics')">≡ƒןק∩╕ן ╫ש╫í╫ץ╫ף╫ץ╫¬ ╫₧╫í╫ף╫ש ╫פ╫á╫¬╫ץ╫á╫ש╫¥ <span class="qm-num">31</span></div>
+-        <div class="nav-item" onclick="scrollToSection('sqlDdl')">≡ƒףנ ╫ס╫á╫ש╫ש╫¬ ╫₧╫ס╫á╫ש╫¥ (DDL) <span class="qm-num">32</span></div>
+-        <div class="nav-item" onclick="scrollToSection('sqlDml')">Γ£ם∩╕ן ╫á╫ש╫פ╫ץ╫£ ╫פ╫á╫¬╫ץ╫á╫ש╫¥ (DML) <span class="qm-num">33</span></div>
+-        <div class="nav-item" onclick="scrollToSection('sqlDql')">≡ƒפמ ╫⌐╫£╫ש╫ñ╫¬ ╫á╫¬╫ץ╫á╫ש╫¥ (DQL) <span class="qm-num">34</span></div>
+-        <div class="nav-item" onclick="scrollToSection('sqlJoins')">≡ƒפק ╫ק╫ש╫ס╫ץ╫¿ ╫ר╫ס╫£╫נ╫ץ╫¬ (JOINs) <span class="qm-num">35</span></div>
+-        <div class="nav-item" onclick="scrollToSection('sqlNode')">≡ƒפל ╫ק╫ש╫ס╫ץ╫¿ ╫£-Node.js <span class="qm-num">36</span></div>
+       </div>
+ 
+       <div class="nav-section">
+@@ -124,6 +93,21 @@
+         <div class="nav-item" onclick="scrollToSection('dockerComposeAdvanced')">≡ƒנש Compose ╫₧╫¬╫º╫ף╫¥ <span class="qm-num">D11</span></div>
+       </div>
+ 
++      <div class="nav-section">
++        <span class="nav-label">╫נ╫í╫ש╫á╫¢╫¿╫ץ╫á╫ש╫ץ╫¬ ╫₧╫º╫ש╫ñ╫פ</span>
++        <div class="nav-item" onclick="scrollToSection('eventLoop')">≡ƒפה ╫₧╫á╫ץ╫ó ╫פ-Event Loop <span class="qm-num">12</span></div>
++        <div class="nav-item" onclick="scrollToSection('callbacksAsync')">≡ƒף₧ ╫º╫ץ╫£╫ס╫º╫ש╫¥ ╫ץ-fs <span class="qm-num">13</span></div>
++        <div class="nav-item" onclick="scrollToSection('promisesFetch')">≡ƒñ¥ ╫פ╫ס╫ר╫ק╫ץ╫¬ ╫ץ-Fetch <span class="qm-num">14</span></div>
++        <div class="nav-item" onclick="scrollToSection('asyncAwait')">Γן│ Async / Await <span class="qm-num">15</span></div>
++      </div>
++
++      <div class="nav-section">
++        <span class="nav-label">╫₧╫¬╫ץ╫ף╫ץ╫¬ ╫₧╫ץ╫ס╫á╫ץ╫¬</span>
++        <div class="nav-item" onclick="scrollToSection('arrayMethods')">≡ƒףך ╫₧╫ó╫¿╫¢╫ש╫¥ ╫ץ╫₧╫¬╫ץ╫ף╫ץ╫¬ <span class="qm-num">16</span></div>
++        <div class="nav-item" onclick="scrollToSection('stringMethods')">≡ƒף¥ ╫₧╫ק╫¿╫ץ╫צ╫ץ╫¬ ╫ץ╫₧╫¬╫ץ╫ף╫ץ╫¬ <span class="qm-num">17</span></div>
++        <div class="nav-item" onclick="scrollToSection('objectMethods')">≡ƒקג∩╕ן ╫נ╫ץ╫ס╫ש╫ש╫º╫ר╫ש╫¥ ╫ץ╫₧╫¬╫ץ╫ף╫ץ╫¬ <span class="qm-num">18</span></div>
++      </div>
++
+       <div class="nav-section">
+         <span class="nav-label">╫ó╫צ╫¿╫ש╫¥ ╫ץ╫í╫ש╫₧╫ץ╫£╫ר╫ץ╫¿╫ש╫¥</span>
+         <div class="nav-item" onclick="scrollToSection('syntaxWarehouse')">≡ƒן¬ ╫₧╫ק╫í╫ƒ ╫í╫ש╫á╫ר╫º╫í╫ש╫¥ <span class="qm-num">19</span></div>
+@@ -132,13 +116,31 @@
+         <div class="nav-item" onclick="scrollToSection('keyboard')">Γל¿∩╕ן ╫º╫ש╫ª╫ץ╫¿╫ש VS Code <span class="qm-num">22</span></div>
+         <div class="nav-item" onclick="scrollToSection('libraries')">≡ƒףת ╫í╫ñ╫¿╫ש╫ץ╫¬ ╫á╫ñ╫ץ╫ª╫ץ╫¬ <span class="qm-num">23</span></div>
+         <div class="nav-item special" onclick="scrollToSection('quiz')">≡ƒף¥ ╫í╫ש╫₧╫ץ╫£╫ר╫ץ╫¿ ╫₧╫ס╫ק╫ƒ <span class="qm-num">24</span></div>
+-        <div class="nav-item" onclick="scrollToSection('techEnglish')">≡ƒפñ ╫נ╫á╫ע╫£╫ש╫¬ ╫ר╫¢╫á╫ץ╫£╫ץ╫ע╫ש╫¬ <span class="qm-num">25</span></div>
+-        <div class="nav-item" onclick="scrollToSection('expressKids')">≡ƒס¿Γאם≡ƒם│ ╫⌐╫¿╫¬ Express - ╫נ╫á╫£╫ץ╫ע╫ש╫פ <span class="qm-num">26</span></div>
+-        <div class="nav-item" onclick="scrollToSection('expressMiddlewaresClassroom')">≡ƒץ╡∩╕ןΓאםΓשג∩╕ן ╫⌐╫ץ╫₧╫¿╫ש ╫פ╫í╫ú (Middlewares) <span class="qm-num">27</span></div>
+-        <div class="nav-item" onclick="scrollToSection('expressValidationsClassroom')">≡ƒף¥ ╫ס╫º╫¿╫¬ ╫פ╫נ╫ש╫¢╫ץ╫¬ (Validations) <span class="qm-num">28</span></div>
+-        <div class="nav-item" onclick="scrollToSection('expressErrorHandlingClassroom')">≡ƒתס ╫ª╫ץ╫ץ╫¬ ╫פ╫פ╫ª╫£╫פ (Error Handling) <span class="qm-num">29</span></div>
+-        <div class="nav-item" onclick="scrollToSection('postmanGuide')">≡ƒף¡ ╫פ╫₧╫ף╫¿╫ש╫ת ╫פ╫⌐╫£╫¥ ╫£-Postman <span class="qm-num">30</span></div>
+-        <div class="nav-item" onclick="scrollToSection('gitProject')">≡ƒנש ╫ñ╫¿╫ץ╫ש╫º╫ר ╫ª╫ץ╫ץ╫¬ ╫ס-Git <span class="qm-num">31</span></div>
++                <div class="nav-item" onclick="scrollToSection('techEnglish')">≡ƒפñ ╫נ╫á╫ע╫£╫ש╫¬ ╫ר╫¢╫á╫ץ╫£╫ץ╫ע╫ש╫¬ <span class="qm-num">25</span></div>
++        <div class="nav-item" onclick="scrollToSection('expressKids')">≡ƒס¿Γאם≡ƒם│ ╫⌐╫¿╫¬ Express - ╫נ╫á╫£╫ץ╫ע╫ש╫ש╫¬ ╫פ╫₧╫í╫ó╫ף╫פ ╫פ╫₧╫£╫נ╫פ <span class="qm-num">26</span></div>
++        <div class="nav-item" onclick="scrollToSection('expressMiddlewaresClassroom')">≡ƒץ╡∩╕ןΓאםΓשג∩╕ן ╫⌐╫ץ╫₧╫¿╫ש ╫פ╫í╫ú ╫ץ╫פ╫₧╫á╫פ╫£╫ש╫¥ (Middlewares) <span class="qm-num">27</span></div>
++        <div class="nav-item" onclick="scrollToSection('expressValidationsClassroom')">≡ƒף¥ ╫ס╫º╫¿╫¬ ╫פ╫נ╫ש╫¢╫ץ╫¬ ╫⌐╫£ ╫פ╫₧╫ר╫ס╫ק (Validations) <span class="qm-num">28</span></div>
++                        <div class="nav-item" onclick="scrollToSection('expressErrorHandlingClassroom')">≡ƒתס ╫ª╫ץ╫ץ╫¬ ╫פ╫פ╫ª╫£╫פ ╫⌐╫£ ╫פ╫₧╫í╫ó╫ף╫פ (Error Handling) <span class="qm-num">29</span></div>
++                <div class="nav-item" onclick="scrollToSection('postmanGuide')">≡ƒף¡ ╫פ╫₧╫ף╫¿╫ש╫ת ╫פ╫⌐╫£╫¥ ╫£-Postman <span class="qm-num">30</span></div>
++      </div>
++
++      <div class="nav-section">
++        <span class="nav-label">╫ñ╫¿╫ץ╫ש╫º╫ר╫ש IDE ╫נ╫ש╫á╫ר╫¿╫נ╫º╫ר╫ש╫ס╫ש╫ש╫¥</span>
++        <div class="nav-item special" onclick="openIDE('bank')">≡ƒןª Bank Account IDE</div>
++        <div class="nav-item special" onclick="openIDE('asyncFiles')">≡ƒףג Async Files IDE</div>
++        <div class="nav-item special" onclick="openIDE('studyPlanner')">≡ƒףו Study Planner IDE</div>
++        <div class="nav-item special" onclick="openIDE('movieCollection')">≡ƒמ¼ Movie Collection IDE</div>
++        <div class="nav-item special" onclick="openIDE('storeOnlineServer')">≡ƒ¢ע Store Server Express IDE</div>
++      </div>
++
++      <div class="nav-section">
++        <span class="nav-label">╫₧╫í╫ף╫ש ╫á╫¬╫ץ╫á╫ש╫¥ ╫ץ-SQL</span>
++        <div class="nav-item" onclick="scrollToSection('sqlBasics')">≡ƒןק∩╕ן ╫ש╫í╫ץ╫ף╫ץ╫¬ ╫₧╫í╫ף╫ש ╫פ╫á╫¬╫ץ╫á╫ש╫¥ (SQL Basics) <span class="qm-num">31</span></div>
++        <div class="nav-item" onclick="scrollToSection('sqlDdl')">≡ƒףנ ╫ס╫á╫ש╫ש╫¬ ╫₧╫ס╫á╫ש╫¥ (DDL) <span class="qm-num">32</span></div>
++        <div class="nav-item" onclick="scrollToSection('sqlDml')">Γ£ם∩╕ן ╫á╫ש╫פ╫ץ╫£ ╫פ╫á╫¬╫ץ╫á╫ש╫¥ (DML) <span class="qm-num">33</span></div>
++        <div class="nav-item" onclick="scrollToSection('sqlDql')">≡ƒפמ ╫⌐╫£╫ש╫ñ╫¬ ╫á╫¬╫ץ╫á╫ש╫¥ (DQL) <span class="qm-num">34</span></div>
++        <div class="nav-item" onclick="scrollToSection('sqlJoins')">≡ƒפק ╫ק╫ש╫ס╫ץ╫¿ ╫ר╫ס╫£╫נ╫ץ╫¬ (JOINs) <span class="qm-num">35</span></div>
++        <div class="nav-item" onclick="scrollToSection('sqlNode')">≡ƒפל ╫ק╫ש╫ס╫ץ╫¿ ╫£-Node.js <span class="qm-num">36</span></div>
+       </div>
+ 
+       <div class="nav-section">
+@@ -227,17 +229,25 @@
+   <script src="content_big_picture.js?v=1"></script>
+   <script src="content_projects_data.js?v=12"></script>
+   <script src="content_quiz_data.js?v=12"></script>
+-  
+-  <!-- New Subagent Processed Content -->
+-  <script src="content_git.js" onerror="this.onerror=null; console.log('git not ready yet');"></script>
+-  <script src="content_async_extra.js" onerror="this.onerror=null; console.log('async extra not ready yet');"></script>
+-  <script src="content_express_extra.js" onerror="this.onerror=null; console.log('express extra not ready yet');"></script>
+-  <script src="content_fetch_extra.js" onerror="this.onerror=null; console.log('fetch extra not ready yet');"></script>
+-  <script src="content_callbacks_extra.js" onerror="this.onerror=null; console.log('callbacks extra not ready yet');"></script>
+-  <script src="content_promises_extra.js" onerror="this.onerror=null; console.log('promises extra not ready yet');"></script>
+-  <script src="content_object_methods.js" onerror="this.onerror=null; console.log('object methods not ready yet');"></script>
+-  <script src="content_array_methods_extra.js" onerror="this.onerror=null; console.log('array methods extra not ready yet');"></script>
+-
+-  <script src="app.js?v=24"></script>
++
++  <!-- New pedagogical modules -->
++  <script src="content_intro_js.js?v=1"></script>
++  <script src="content_extras_classroom.js?v=1"></script>
++  <script src="content_async_classroom.js?v=1"></script>
++  <script src="content_db_classroom.js?v=1"></script>
++  <script src="content_testing_classroom.js?v=1"></script>
++  <script src="content_basics.js?v=1"></script>
++  <script src="content_conditions.js?v=1"></script>
++  <script src="content_english.js?v=1"></script>
++  <script src="content_postman.js?v=1"></script>
++  <script src="content_express.js?v=1"></script>
++  <script src="content_dom.js?v=1"></script>
++  <script src="content_vscode.js?v=1"></script>
++  <script src="content_advanced_js.js?v=1"></script>
++  <script src="content_git.js?v=1"></script>
++  <script src="content_sql.js?v=1"></script>
++  <script src="content_docker.js?v=1"></script>
++
++  <script src="app.js?v=30"></script>
+ </body>
+ </html>
