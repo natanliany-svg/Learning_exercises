@@ -183,15 +183,9 @@ function scrollToSection(id) {
 
         card.classList.add('open');
         
+        // Use scrollIntoView which now respects scroll-margin-top in CSS
         setTimeout(() => {
-            const headerOffset = 80;
-            const elementPosition = card.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.scrollY - headerOffset;
-            
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 50);
     }
     updateProgressBar();
@@ -284,16 +278,10 @@ function onCardClick(topicKey) {
             // Also smoothly update progress bar during the transition
             updateProgressBar();
             
+            // Wait for transition to start and then scroll cleanly to it
             setTimeout(() => {
-                const headerOffset = 80;
-                const elementPosition = card.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.scrollY - headerOffset;
-                
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }, 50);
+                card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
             
         } else {
             card.classList.remove('open');
@@ -408,14 +396,11 @@ function renderAllContent() {
                         visHtml += `</div>`;
                     }
 
-                    if (rawContent.startsWith('<div class="card-body') && rawContent.includes('">')) {
-                        wrappedContent = rawContent.replace(
-                            /<div class="card-body[^>]*>/,
-                            match => match + '<div class="card-body-inner">' + visHtml
-                        ).replace(/<\/div>\s*$/, '</div></div>');
-                    } else {
-                        wrappedContent = `<div class="card-body"><div class="card-body-inner">${visHtml}${rawContent}</div></div>`;
-                    }
+                    // Simplify and fix the wrapper logic
+                    // Replace any nested card-body with a regular div to prevent grid/height collapse
+                    rawContent = rawContent.replace(/<div class="card-body[^>]*>/g, '<div>');
+                    
+                    wrappedContent = `<div class="card-body"><div class="card-body-inner">${visHtml}${rawContent}</div></div>`;
                     
                     html += `
                         <div class="card" id="card-${topicKey}" data-pinned="false">
