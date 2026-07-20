@@ -3,15 +3,23 @@ let activeProject = 'bank';
 let isPlanSaved = false;
 
 const modalData = {
-    ...contentIntroJsClassroom,
+    ...contentPart1,
+    ...contentPart2,
+    ...contentPart3,
+    ...asyncLearningContent,
+    ...serversContent,
+    ...bigPictureContent,
+    ...contentBasicsClassroom,
+    ...contentConditionsClassroom,
+    ...contentEnglishClassroom,
+    ...contentExpressClassroom,
+    ...contentPostmanClassroom,
+    ...contentDomClassroom,
+    ...contentVsCodeClassroom,
     ...contentAdvancedJsClassroom,
-    ...contentAsyncClassroom,
     ...contentGitClassroom,
-    ...contentServersClassroom,
-    ...contentDockerClassroom,
-    ...contentDbClassroom,
-    ...contentTestingClassroom,
-    ...contentExtrasClassroom
+    ...contentSqlClassroom,
+    ...contentDockerClassroom
 };
 
 // Normalize modalData formats
@@ -59,52 +67,52 @@ Object.keys(modalData).forEach(key => {
 
 const sectionsList = [
     {
-      id: 'section-intro-js',
-      title: '🧱 מבוא ל-JavaScript',
-      subtitle: 'התקנות, משתנים, לולאות, מערכים, אובייקטים, Closures ומודולים',
-      topics: ['installations', 'basics', 'conditions', 'loops', 'arraysObjects', 'functions', 'stringMethods', 'objectMethods', 'arrayMethods', 'closures', 'factories', 'debugging', 'modules', 'cleanCode', 'projectBank']
+      id: 'section-basics',
+      title: '🧱 יסודות השפה ולולאות',
+      subtitle: 'משתנים, תנאים, לולאות, פונקציות, קלוז׳רים ומודולים ב-JavaScript',
+      topics: ['installations', 'basics', 'conditions', 'loops', 'arraysObjects', 'functions', 'closures', 'factories', 'debugging', 'importExportEs6', 'modulesPackageNode', 'cleanCode', 'projectBank']
     },
     {
-      id: 'section-async',
-      title: '⚡ תכנות אסינכרוני',
-      subtitle: 'Single Thread, Event Loop, Callbacks, Fetch ו-Promises',
-      topics: ['singleThread', 'blocking', 'eventLoop', 'callbacks', 'fetch', 'promises', 'asyncAwait', 'asyncProject', 'studyPlannerProject', 'movieManagerProject']
-    },
-    {
-      id: 'section-git',
-      title: '🐙 ניהול גרסאות - Git',
-      subtitle: 'Git Basic, Branches, Remote, Merge, Workflow',
-      topics: ['gitInit', 'gitStatus', 'gitAdd', 'gitCommit', 'gitPush', 'gitPull']
-    },
-    {
-      id: 'section-servers',
+      id: 'section-web',
       title: '🌐 שרתים ו-Web',
-      subtitle: 'HTTP, Express, Routing, Middleware ופרויקטים',
-      topics: ['httpBasics', 'httpVanillaRouting', 'httpGetData', 'vigilArchive', 'expressBasic', 'expressBody', 'expressParamsQuery', 'expressRouter', 'dotenv', 'expressShop', 'expressMiddleware', 'expressErrorHandling', 'restaurantApi', 'ironDomeOps']
+      subtitle: 'מניפולציית DOM, שרתי HTTP, פרמטרים ושרתי Express',
+      topics: ['dom', 'vanillaServer', 'httpParams', 'express']
     },
     {
       id: 'section-docker',
       title: '🐳 Docker & Containers',
-      subtitle: 'מבוא, Dockerfile, ו-Docker Compose',
-      topics: ['dockerIntro', 'dockerfile', 'dockerfileInstructions', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerMultiStage', 'dockerComposeAdvanced']
+      subtitle: 'מבוא, קונטיינרים, ווליומים, פקודות ו-Docker Compose',
+      topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
     },
     {
-      id: 'section-db',
-      title: '🗄️ מסדי נתונים (DB & SQL)',
-      subtitle: 'SQL, MongoDB, Supabase, Relational vs NoSQL',
-      topics: ['sqlBasics', 'mysql', 'sqlJoins', 'sqlNode', 'dbCrudProject', 'dbDesign', 'supabase', 'relationalVsNosql', 'mongodb', 'mongodbOperators', 'mongodbCompass', 'dbMongoose', 'mongodbAtlas', 'mongodbProject1', 'mongodbProject2']
+      id: 'section-async-full',
+      title: '⚡ תכנות אסינכרוני מתקדם',
+      subtitle: 'לולאת האירועים, Callbacks, Promises, Fetch ו-Async/Await',
+      topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
     },
     {
-      id: 'section-testing',
-      title: '🧪 בדיקות תוכנה (Testing)',
-      subtitle: 'Testing Basic, Server Testing ופרויקט בדיקות',
-      topics: ['testingBasic', 'serverTesting', 'testingProject']
+      id: 'section-methods',
+      title: '🛠️ פונקציות מתקדמות',
+      subtitle: 'מתודות מערכים, מתודות מחרוזות, מתודות אובייקטים ושרשור פונקציות',
+      topics: ['arrayMethods', 'stringMethods', 'objectMethods', 'methodChaining']
     },
     {
-      id: 'section-extras',
-      title: '✨ תוספות והעשרה',
-      subtitle: 'משובים, בחנים, כלים נוספים, אנגלית טכנית ומחוונים',
-      topics: ['weeklyFeedback', 'syllabus', 'zoomLinks', 'pitStopQueue', 'techEnglish', 'quiz']
+      id: 'section-tools',
+      title: '🔧 כלים, תוספות ושרתים מתקדמים',
+      subtitle: 'חוקי ברזל, ספריות, בחנים, אנגלית טכנולוגית, Express מתקדם',
+      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide', 'asyncTest', 'mahatPrep', 'staffMail', 'submitPractice', 'microMacro', 'realWorldQuiz']
+    },
+    {
+      id: 'section-git',
+      title: '🐙 ניהול גרסאות - Git',
+      subtitle: 'יצירת קלסרים, צילומי מצב, ושליחה לענן',
+      topics: ['gitInit', 'gitStatus', 'gitAdd', 'gitCommit', 'gitPush', 'gitPull', 'gitBranches', 'gitRemote', 'gitMerge', 'gitWorkflow', 'gitTeamProject']
+    },
+    {
+      id: 'section-sql',
+      title: '🗄️ מסדי נתונים - SQL',
+      subtitle: 'מושגי יסוד, DDL, DML, DQL, JOINs וחיבור ב-Node.js',
+      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
     }
 ];
 
