@@ -30,7 +30,7 @@ const contentExtrasClassroom = {
     zoomLinks: {
         title: "קישורי זום - הכניסה לכיתה הוירטואלית",
         visualizerSteps: [
-            { action: "checkCalendar", text: "<b>שלב 1: תזמון -</b> בודקים את הלו"ז המדויק לשיעור של היום." },
+            { action: "checkCalendar", text: "<b>שלב 1: תזמון -</b> בודקים את הלו\\\"ז המדויק לשיעור של היום." },
             { action: "setupDesk", text: "<b>שלב 2: סביבת עבודה -</b> מוודאים שמצלמה ומיקרופון פועלים, בחדר שקט וללא הפרעות." },
             { action: "clickLink", effect: "pulse", text: "<b>שלב 3: התחברות -</b> לוחצים על הלינק ונכנסים לכיתה הווירטואלית." }
         ],

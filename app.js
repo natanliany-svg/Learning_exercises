@@ -7,7 +7,7 @@ const modalData = {
     ...contentPart2,
     ...contentPart3,
     ...asyncLearningContent,
-    ...serversContent,
+    ...contentServersClassroom,
     ...bigPictureContent,
     ...contentBasicsClassroom,
     ...contentConditionsClassroom,
@@ -19,7 +19,12 @@ const modalData = {
     ...contentAdvancedJsClassroom,
     ...contentGitClassroom,
     ...contentSqlClassroom,
-    ...contentDockerClassroom
+    ...contentDockerClassroom,
+    ...contentIntroJsClassroom,
+    ...contentExtrasClassroom,
+    ...contentAsyncClassroom,
+    ...contentDbClassroom,
+    ...contentTestingClassroom
 };
 
 // Normalize modalData formats
@@ -76,7 +81,7 @@ const sectionsList = [
       id: 'section-web',
       title: '🌐 שרתים ו-Web',
       subtitle: 'מניפולציית DOM, שרתי HTTP, פרמטרים ושרתי Express',
-      topics: ['dom', 'vanillaServer', 'httpParams', 'express']
+      topics: ['dom', 'httpBasics', 'httpVanillaRouting', 'httpGetData', 'vigilArchive', 'expressBasic', 'expressBody', 'expressParamsQuery', 'expressRouter', 'dotenv', 'expressShop', 'expressMiddleware', 'expressErrorHandling', 'restaurantApi', 'ironDomeOps']
     },
     {
       id: 'section-docker',
