@@ -8,27 +8,18 @@ const modalData = {
     ...contentPart3,
     ...asyncLearningContent,
     ...serversContent,
-    ...dockerBasicContent,
-    ...dockerComposeContent,
-    ...dockerAdvancedContent,
-    ...dockerImagesDeepContent,
-    ...dockerComposeAdvancedContent,
-    ...sqlBasicsContent,
-    ...sqlDdlContent,
-    ...sqlDmlContent,
-    ...sqlDqlContent,
-    ...sqlJoinsContent,
-    ...sqlNodeContent,
     ...bigPictureContent,
-    // Add subagent content safely
-    ...(typeof contentGit !== 'undefined' ? contentGit : {}),
-    ...(typeof contentAsyncExtra !== 'undefined' ? contentAsyncExtra : {}),
-    ...(typeof contentExpressExtra !== 'undefined' ? contentExpressExtra : {}),
-    ...(typeof contentFetchExtra !== 'undefined' ? contentFetchExtra : {}),
-    ...(typeof contentCallbacksExtra !== 'undefined' ? contentCallbacksExtra : {}),
-    ...(typeof contentPromisesExtra !== 'undefined' ? contentPromisesExtra : {}),
-    ...(typeof contentObjectMethodsExtra !== 'undefined' ? contentObjectMethodsExtra : {}),
-    ...(typeof contentArrayMethodsExtra !== 'undefined' ? contentArrayMethodsExtra : {})
+    ...contentBasicsClassroom,
+    ...contentConditionsClassroom,
+    ...contentEnglishClassroom,
+    ...contentExpressClassroom,
+    ...contentPostmanClassroom,
+    ...contentDomClassroom,
+    ...contentVsCodeClassroom,
+    ...contentAdvancedJsClassroom,
+    ...contentGitClassroom,
+    ...contentSqlClassroom,
+    ...contentDockerClassroom
 };
 
 // Normalize modalData formats
@@ -79,31 +70,13 @@ const sectionsList = [
       id: 'section-basics',
       title: '🧱 יסודות השפה ולולאות',
       subtitle: 'משתנים, תנאים, לולאות, פונקציות, קלוז׳רים ומודולים ב-JavaScript',
-      topics: ['basics', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring']
-    },
-    {
-      id: 'section-methods',
-      title: '🛠️ פונקציות מתקדמות (שיטות - Methods)',
-      subtitle: 'מתודות מערכים, מתודות מחרוזות, ומתודות אובייקטים',
-      topics: ['arrayMethods', 'arrayMethodsExtra', 'stringMethods', 'objectMethods', 'objectMethodsExtra']
-    },
-    {
-      id: 'section-async-full',
-      title: '⚡ תכנות אסינכרוני מתקדם',
-      subtitle: 'לולאת האירועים, Callbacks, Promises, Fetch ו-Async/Await',
-      topics: ['eventLoop', 'callbacksAsync', 'callbacksExtra', 'promisesFetch', 'promisesExtra', 'asyncAwait', 'asyncExtra']
+      topics: ['basics', 'conditions', 'loops', 'functions', 'closures', 'factories', 'modules', 'destructuring']
     },
     {
       id: 'section-web',
-      title: '🌐 שרתים ו-Web (צד שרת)',
+      title: '🌐 שרתים ו-Web',
       subtitle: 'מניפולציית DOM, שרתי HTTP, פרמטרים ושרתי Express',
-      topics: ['dom', 'vanillaServer', 'httpParams', 'express', 'expressExtra', 'fetchExtra']
-    },
-    {
-      id: 'section-sql',
-      title: '🗄️ מסדי נתונים - SQL',
-      subtitle: 'מושגי יסוד, DDL, DML, DQL, JOINs וחיבור ב-Node.js',
-      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
+      topics: ['dom', 'vanillaServer', 'httpParams', 'express']
     },
     {
       id: 'section-docker',
@@ -112,10 +85,34 @@ const sectionsList = [
       topics: ['dockerIntro', 'dockerfile', 'dockerCompose', 'dockerVolumes', 'dockerArchitecture', 'dockerCliMastery', 'dockerPortMapping', 'dockerImagesDeepDive', 'dockerfileInstructions', 'dockerMultiStage', 'dockerComposeAdvanced']
     },
     {
+      id: 'section-async-full',
+      title: '⚡ תכנות אסינכרוני מתקדם',
+      subtitle: 'לולאת האירועים, Callbacks, Promises, Fetch ו-Async/Await',
+      topics: ['eventLoop', 'callbacksAsync', 'promisesFetch', 'asyncAwait']
+    },
+    {
+      id: 'section-methods',
+      title: '🛠️ פונקציות מתקדמות',
+      subtitle: 'מתודות מערכים, מתודות מחרוזות, מתודות אובייקטים ושרשור פונקציות',
+      topics: ['arrayMethods', 'stringMethods', 'objectMethods', 'methodChaining']
+    },
+    {
       id: 'section-tools',
       title: '🔧 כלים, תוספות ושרתים מתקדמים',
       subtitle: 'חוקי ברזל, ספריות, בחנים, אנגלית טכנולוגית, Express מתקדם',
-      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide', 'gitProject']
+      topics: ['syntaxWarehouse', 'pythonVsJs', 'ironRules', 'keyboard', 'libraries', 'quiz', 'techEnglish', 'expressKids', 'expressMiddlewaresClassroom', 'expressValidationsClassroom', 'expressErrorHandlingClassroom', 'postmanGuide']
+    },
+    {
+      id: 'section-git',
+      title: '🐙 ניהול גרסאות - Git',
+      subtitle: 'יצירת קלסרים, צילומי מצב, ושליחה לענן',
+      topics: ['gitInit', 'gitStatus', 'gitAdd', 'gitCommit', 'gitPush', 'gitPull']
+    },
+    {
+      id: 'section-sql',
+      title: '🗄️ מסדי נתונים - SQL',
+      subtitle: 'מושגי יסוד, DDL, DML, DQL, JOINs וחיבור ב-Node.js',
+      topics: ['sqlBasics', 'sqlDdl', 'sqlDml', 'sqlDql', 'sqlJoins', 'sqlNode']
     }
 ];
 
@@ -1980,3 +1977,84 @@ window.updateVisSlide = function(container, current, total, topicKey) {
     btnPrev.disabled = (current === 0);
     btnNext.disabled = (current === total - 1);
 };
+
+// Tooltip click handler for mobile
+document.addEventListener('click', function(e) {
+    const tooltipEl = e.target.closest('[data-tooltip]');
+    if (tooltipEl) {
+        // Ensure it has the tooltip element inside
+        if (!tooltipEl.querySelector('.code-tooltip')) {
+            const tip = document.createElement('span');
+            tip.className = 'code-tooltip';
+            tip.innerHTML = tooltipEl.getAttribute('data-tooltip');
+            tooltipEl.classList.add('code-tooltip-container');
+            tooltipEl.appendChild(tip);
+        }
+    }
+});
+
+
+// Animated CLI handler
+function initAnimatedCLIs() {
+    document.querySelectorAll('.animated-cli').forEach(cli => {
+        if (cli.dataset.initialized) return;
+        cli.dataset.initialized = 'true';
+        const content = cli.querySelector('.animated-cli-content');
+        if (!content) return;
+        const rawText = content.innerHTML;
+        content.innerHTML = '';
+        
+        const lines = rawText.split('<br>').filter(l => l.trim() !== '');
+        let i = 0;
+        function typeLine() {
+            if (i >= lines.length) return;
+            const line = lines[i].trim();
+            const p = document.createElement('div');
+            p.className = 'cli-line';
+            
+            if (line.startsWith('$')) {
+                p.innerHTML = '<span class=\"cli-prompt\">$</span><span class=\"cli-text cli-typing\"></span>';
+                content.appendChild(p);
+                const textSpan = p.querySelector('.cli-text');
+                const targetText = line.substring(1).trim();
+                let charIndex = 0;
+                
+                const typeChar = setInterval(() => {
+                    if (charIndex >= targetText.length) {
+                        clearInterval(typeChar);
+                        textSpan.classList.remove('cli-typing');
+                        i++;
+                        setTimeout(typeLine, 300);
+                    } else {
+                        textSpan.textContent += targetText[charIndex];
+                        charIndex++;
+                    }
+                }, 50);
+            } else {
+                p.innerHTML = line;
+                p.style.color = '#94a3b8'; // command output color
+                content.appendChild(p);
+                i++;
+                setTimeout(typeLine, 100);
+            }
+        }
+        
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    typeLine();
+                    observer.disconnect();
+                }
+            });
+        });
+        observer.observe(cli);
+    });
+}
+
+// Call it after render
+const originalRender = renderAllContent;
+renderAllContent = function() {
+    originalRender();
+    setTimeout(initAnimatedCLIs, 200);
+};
+

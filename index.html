@@ -61,32 +61,13 @@
       <div class="nav-section">
         <span class="nav-label">יסודות ומתקדם</span>
         <div class="nav-item active" onclick="scrollToSection('basics')">📐 יסודות ומשתנים <span class="qm-num">1</span></div>
-        <div class="nav-item" onclick="scrollToSection('loops')">🔄 תנאים ולולאות <span class="qm-num">2</span></div>
-        <div class="nav-item" onclick="scrollToSection('functions')">🎯 פונקציות <span class="qm-num">3</span></div>
+        <div class="nav-item" onclick="scrollToSection('conditions')">🚦 תנאים <span class="qm-num">2</span></div>
+        <div class="nav-item" onclick="scrollToSection('loops')">🔄 לולאות <span class="qm-num">3</span></div>
+        <div class="nav-item" onclick="scrollToSection('functions')">🎯 פונקציות <span class="qm-num">4</span></div>
         <div class="nav-item" onclick="scrollToSection('closures')">🔒 קלוז'רים (Closures) <span class="qm-num">4</span></div>
         <div class="nav-item" onclick="scrollToSection('factories')">🏭 פונקציות מפעל <span class="qm-num">5</span></div>
         <div class="nav-item" onclick="scrollToSection('modules')">📦 מודולים (ES6) <span class="qm-num">6</span></div>
         <div class="nav-item" onclick="scrollToSection('destructuring')">🧩 פירוק מבנה <span class="qm-num">7</span></div>
-      </div>
-
-      <div class="nav-section">
-        <span class="nav-label">מתודות מובנות (שיטות)</span>
-        <div class="nav-item" onclick="scrollToSection('arrayMethods')">📊 מערכים ומתודות <span class="qm-num">16</span></div>
-        <div class="nav-item" onclick="scrollToSection('arrayMethodsExtra')">📈 תרגול מערכים נוסף <span class="qm-num">16a</span></div>
-        <div class="nav-item" onclick="scrollToSection('stringMethods')">📝 מחרוזות ומתודות <span class="qm-num">17</span></div>
-        <div class="nav-item" onclick="scrollToSection('objectMethods')">🗂️ אובייקטים ומתודות <span class="qm-num">18</span></div>
-        <div class="nav-item" onclick="scrollToSection('objectMethodsExtra')">📂 תרגול אובייקטים <span class="qm-num">18a</span></div>
-      </div>
-
-      <div class="nav-section">
-        <span class="nav-label">אסינכרוניות מקיפה</span>
-        <div class="nav-item" onclick="scrollToSection('eventLoop')">🔄 מנוע ה-Event Loop <span class="qm-num">12</span></div>
-        <div class="nav-item" onclick="scrollToSection('callbacksAsync')">📞 קולבקים ו-fs <span class="qm-num">13</span></div>
-        <div class="nav-item" onclick="scrollToSection('callbacksExtra')">☎️ תרגול קולבקים <span class="qm-num">13a</span></div>
-        <div class="nav-item" onclick="scrollToSection('promisesFetch')">🤝 הבטחות ו-Fetch <span class="qm-num">14</span></div>
-        <div class="nav-item" onclick="scrollToSection('promisesExtra')">🤞 תרגול Promises <span class="qm-num">14a</span></div>
-        <div class="nav-item" onclick="scrollToSection('asyncAwait')">⏳ Async / Await <span class="qm-num">15</span></div>
-        <div class="nav-item" onclick="scrollToSection('asyncExtra')">⚡ פרויקט אסינכרוני <span class="qm-num">15a</span></div>
       </div>
 
       <div class="nav-section">
@@ -95,18 +76,6 @@
         <div class="nav-item" onclick="scrollToSection('vanillaServer')">🖥️ שרת HTTP בסיסי <span class="qm-num">9</span></div>
         <div class="nav-item" onclick="scrollToSection('httpParams')">🧩 פרמטרים ב-HTTP <span class="qm-num">10</span></div>
         <div class="nav-item" onclick="scrollToSection('express')">🚀 שרתי Express <span class="qm-num">11</span></div>
-        <div class="nav-item" onclick="scrollToSection('expressExtra')">🏎️ תרגול Express <span class="qm-num">11a</span></div>
-        <div class="nav-item" onclick="scrollToSection('fetchExtra')">📡 תרגול Fetch <span class="qm-num">11b</span></div>
-      </div>
-
-      <div class="nav-section">
-        <span class="nav-label">מסדי נתונים ו-SQL</span>
-        <div class="nav-item" onclick="scrollToSection('sqlBasics')">🏗️ יסודות מסדי הנתונים <span class="qm-num">31</span></div>
-        <div class="nav-item" onclick="scrollToSection('sqlDdl')">📐 בניית מבנים (DDL) <span class="qm-num">32</span></div>
-        <div class="nav-item" onclick="scrollToSection('sqlDml')">✍️ ניהול הנתונים (DML) <span class="qm-num">33</span></div>
-        <div class="nav-item" onclick="scrollToSection('sqlDql')">🔎 שליפת נתונים (DQL) <span class="qm-num">34</span></div>
-        <div class="nav-item" onclick="scrollToSection('sqlJoins')">🔗 חיבור טבלאות (JOINs) <span class="qm-num">35</span></div>
-        <div class="nav-item" onclick="scrollToSection('sqlNode')">🔌 חיבור ל-Node.js <span class="qm-num">36</span></div>
       </div>
 
       <div class="nav-section">
@@ -125,6 +94,21 @@
       </div>
 
       <div class="nav-section">
+        <span class="nav-label">אסינכרוניות מקיפה</span>
+        <div class="nav-item" onclick="scrollToSection('eventLoop')">🔄 מנוע ה-Event Loop <span class="qm-num">12</span></div>
+        <div class="nav-item" onclick="scrollToSection('callbacksAsync')">📞 קולבקים ו-fs <span class="qm-num">13</span></div>
+        <div class="nav-item" onclick="scrollToSection('promisesFetch')">🤝 הבטחות ו-Fetch <span class="qm-num">14</span></div>
+        <div class="nav-item" onclick="scrollToSection('asyncAwait')">⏳ Async / Await <span class="qm-num">15</span></div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">מתודות מובנות</span>
+        <div class="nav-item" onclick="scrollToSection('arrayMethods')">📊 מערכים ומתודות <span class="qm-num">16</span></div>
+        <div class="nav-item" onclick="scrollToSection('stringMethods')">📝 מחרוזות ומתודות <span class="qm-num">17</span></div>
+        <div class="nav-item" onclick="scrollToSection('objectMethods')">🗂️ אובייקטים ומתודות <span class="qm-num">18</span></div>
+      </div>
+
+      <div class="nav-section">
         <span class="nav-label">עזרים וסימולטורים</span>
         <div class="nav-item" onclick="scrollToSection('syntaxWarehouse')">🏪 מחסן סינטקסים <span class="qm-num">19</span></div>
         <div class="nav-item" onclick="scrollToSection('pythonVsJs')">🐍 Python מול JS <span class="qm-num">20</span></div>
@@ -132,13 +116,31 @@
         <div class="nav-item" onclick="scrollToSection('keyboard')">⌨️ קיצורי VS Code <span class="qm-num">22</span></div>
         <div class="nav-item" onclick="scrollToSection('libraries')">📚 ספריות נפוצות <span class="qm-num">23</span></div>
         <div class="nav-item special" onclick="scrollToSection('quiz')">📝 סימולטור מבחן <span class="qm-num">24</span></div>
-        <div class="nav-item" onclick="scrollToSection('techEnglish')">🔤 אנגלית טכנולוגית <span class="qm-num">25</span></div>
-        <div class="nav-item" onclick="scrollToSection('expressKids')">👨‍🍳 שרת Express - אנלוגיה <span class="qm-num">26</span></div>
-        <div class="nav-item" onclick="scrollToSection('expressMiddlewaresClassroom')">🕵️‍♂️ שומרי הסף (Middlewares) <span class="qm-num">27</span></div>
-        <div class="nav-item" onclick="scrollToSection('expressValidationsClassroom')">📝 בקרת האיכות (Validations) <span class="qm-num">28</span></div>
-        <div class="nav-item" onclick="scrollToSection('expressErrorHandlingClassroom')">🚑 צוות ההצלה (Error Handling) <span class="qm-num">29</span></div>
-        <div class="nav-item" onclick="scrollToSection('postmanGuide')">📭 המדריך השלם ל-Postman <span class="qm-num">30</span></div>
-        <div class="nav-item" onclick="scrollToSection('gitProject')">🐙 פרויקט צוות ב-Git <span class="qm-num">31</span></div>
+                <div class="nav-item" onclick="scrollToSection('techEnglish')">🔤 אנגלית טכנולוגית <span class="qm-num">25</span></div>
+        <div class="nav-item" onclick="scrollToSection('expressKids')">👨‍🍳 שרת Express - אנלוגיית המסעדה המלאה <span class="qm-num">26</span></div>
+        <div class="nav-item" onclick="scrollToSection('expressMiddlewaresClassroom')">🕵️‍♂️ שומרי הסף והמנהלים (Middlewares) <span class="qm-num">27</span></div>
+        <div class="nav-item" onclick="scrollToSection('expressValidationsClassroom')">📝 בקרת האיכות של המטבח (Validations) <span class="qm-num">28</span></div>
+                        <div class="nav-item" onclick="scrollToSection('expressErrorHandlingClassroom')">🚑 צוות ההצלה של המסעדה (Error Handling) <span class="qm-num">29</span></div>
+                <div class="nav-item" onclick="scrollToSection('postmanGuide')">📭 המדריך השלם ל-Postman <span class="qm-num">30</span></div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">פרויקטי IDE אינטראקטיביים</span>
+        <div class="nav-item special" onclick="openIDE('bank')">🏦 Bank Account IDE</div>
+        <div class="nav-item special" onclick="openIDE('asyncFiles')">📂 Async Files IDE</div>
+        <div class="nav-item special" onclick="openIDE('studyPlanner')">📅 Study Planner IDE</div>
+        <div class="nav-item special" onclick="openIDE('movieCollection')">🎬 Movie Collection IDE</div>
+        <div class="nav-item special" onclick="openIDE('storeOnlineServer')">🛒 Store Server Express IDE</div>
+      </div>
+
+      <div class="nav-section">
+        <span class="nav-label">מסדי נתונים ו-SQL</span>
+        <div class="nav-item" onclick="scrollToSection('sqlBasics')">🏗️ יסודות מסדי הנתונים (SQL Basics) <span class="qm-num">31</span></div>
+        <div class="nav-item" onclick="scrollToSection('sqlDdl')">📐 בניית מבנים (DDL) <span class="qm-num">32</span></div>
+        <div class="nav-item" onclick="scrollToSection('sqlDml')">✍️ ניהול הנתונים (DML) <span class="qm-num">33</span></div>
+        <div class="nav-item" onclick="scrollToSection('sqlDql')">🔎 שליפת נתונים (DQL) <span class="qm-num">34</span></div>
+        <div class="nav-item" onclick="scrollToSection('sqlJoins')">🔗 חיבור טבלאות (JOINs) <span class="qm-num">35</span></div>
+        <div class="nav-item" onclick="scrollToSection('sqlNode')">🔌 חיבור ל-Node.js <span class="qm-num">36</span></div>
       </div>
 
       <div class="nav-section">
@@ -227,17 +229,20 @@
   <script src="content_big_picture.js?v=1"></script>
   <script src="content_projects_data.js?v=12"></script>
   <script src="content_quiz_data.js?v=12"></script>
-  
-  <!-- New Subagent Processed Content -->
-  <script src="content_git.js" onerror="this.onerror=null; console.log('git not ready yet');"></script>
-  <script src="content_async_extra.js" onerror="this.onerror=null; console.log('async extra not ready yet');"></script>
-  <script src="content_express_extra.js" onerror="this.onerror=null; console.log('express extra not ready yet');"></script>
-  <script src="content_fetch_extra.js" onerror="this.onerror=null; console.log('fetch extra not ready yet');"></script>
-  <script src="content_callbacks_extra.js" onerror="this.onerror=null; console.log('callbacks extra not ready yet');"></script>
-  <script src="content_promises_extra.js" onerror="this.onerror=null; console.log('promises extra not ready yet');"></script>
-  <script src="content_object_methods.js" onerror="this.onerror=null; console.log('object methods not ready yet');"></script>
-  <script src="content_array_methods_extra.js" onerror="this.onerror=null; console.log('array methods extra not ready yet');"></script>
 
-  <script src="app.js?v=24"></script>
+  <!-- New pedagogical modules -->
+  <script src="content_basics.js?v=1"></script>
+  <script src="content_conditions.js?v=1"></script>
+  <script src="content_english.js?v=1"></script>
+  <script src="content_postman.js?v=1"></script>
+  <script src="content_express.js?v=1"></script>
+  <script src="content_dom.js?v=1"></script>
+  <script src="content_vscode.js?v=1"></script>
+  <script src="content_advanced_js.js?v=1"></script>
+  <script src="content_git.js?v=1"></script>
+  <script src="content_sql.js?v=1"></script>
+  <script src="content_docker.js?v=1"></script>
+
+  <script src="app.js?v=28"></script>
 </body>
 </html>
